@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'DejaVuSansMono';
+  src: url('./DejaVuSansMono.eot');
+  src: url('./DejaVuSansMono.woff2') format('woff2'),
+       url('./DejaVuSansMono.woff') format('woff'),
+       url('./DejaVuSansMono.ttf') format('truetype'),
+       url('./DejaVuSansMono.svg#DejaVuSansMono') format('svg'),
+       url('./DejaVuSansMono.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+

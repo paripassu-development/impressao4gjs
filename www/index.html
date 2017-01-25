@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="bundle.css" rel="stylesheet">
+</head>
+<body>
+    <!-- pre load fonts -->
+    <span style="font-family: Consolas; visibility:hidden; "></span>
+    <span style="font-family: Telegrama-Render; visibility:hidden; "></span>
+    <span style="font-family: DejaVuSansMono; visibility:hidden; "></span>
+    <span style="font-family: DejaVuSansMono-Bold; visibility:hidden; "></span>
+
+    <div class="area">
+        <h2>INPUT</h2>
+        <div id="input-area">
+            <form>
+                <textarea id="code" name="code">
+{
+  "dimensoes": {
+    "resolucaoDpi": 300,
+    "alturaMm": 50,
+    "larguraMm": 150
+  }
+}
+                </textarea>
+            </form>
+        </div>
+        <button id="autoformat-btn">
+            Autoformat
+        </button>
+        <button id="create-btn">
+            Etiqueta
+        </button>
+    </div>
+
+    <div class="area">
+        <h2>CANVAS</h2>
+        <div id="canvas-area">
+        </div>
+    </div>
+
+    <div class="area">
+        <h2>EXPORT</h2>
+        <div id="export-area"></div>
+    </div>
+    <script src="bundle.js"></script>
+</body>
+</html>
