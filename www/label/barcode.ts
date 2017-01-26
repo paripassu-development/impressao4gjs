@@ -1,3 +1,4 @@
+import { mmPartial } from "./mm";
 import JsBarcode = require("jsbarcode");
 
 interface ICreateBarcodeOptions {
@@ -29,4 +30,36 @@ const createBarcode = (options: ICreateBarcodeOptions) => {
     return img;
 };
 
-export const barcode = {createBarcode};
+enum EnumBarcodeType {
+    EAN13,
+}
+interface IElementoBarcodeModel {
+    tipo: string;
+    tipoBarcode: EnumBarcodeType;
+    fonte: string;
+    tamanhoFonteMm: number;
+    xMm: number;
+    yMm: number;
+    larguraBarcodeMm: number;
+    alturaBarcodeMm: number;
+    valor: string;
+}
+const drawBarcode = (canvas: HTMLCanvasElement, dpi: number, model: IElementoBarcodeModel) => {
+    const mm = mmPartial(dpi);
+    const ctx: any = canvas.getContext("2d");
+    const barcodeImg = barcode.createBarcode({
+        barCodeHeight: mm(model.alturaBarcodeMm),
+        barcodeWidth: mm(model.larguraBarcodeMm),
+        font: model.fonte,
+        fontSize: mm(model.tamanhoFonteMm),
+        format: model.tipoBarcode.toString(),
+        text: model.valor,
+    });
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(barcodeImg, mm(model.xMm), mm(model.yMm));
+};
+
+export const barcode = {createBarcode, drawBarcode};

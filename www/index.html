@@ -21,7 +21,7 @@
   "dimensoes": {
     "resolucaoDpi": 300,
     "alturaMm": 50,
-    "larguraMm": 150
+    "larguraMm": 120
   },
   "elementos": [
     {
@@ -50,6 +50,14 @@
       "larguraBarcodeMm": 0.15,
       "alturaBarcodeMm": 3.5,
       "valor": "1234567890128"
+    },
+    {
+      "tipo": "qrcode",
+      "xMm": 0,
+      "yMm": 15,
+      "larguraMm": 5,
+      "alturaMm": 5,
+      "valor": "http://www.paripassu.com.br"
     }
   ]
 }
@@ -72,7 +80,13 @@
 
     <div class="area">
         <h2>EXPORT</h2>
-        <div id="export-area"></div>
+        <div id="export-area">
+            <button id="export-btn">
+                export
+            </button>
+            <div id="export">
+            </div>
+        </div>
     </div>
     <script src="bundle.js"></script>
 </body>

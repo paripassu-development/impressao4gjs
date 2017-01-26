@@ -1,6 +1,8 @@
 import * as _ from "lodash";
 import { barcode } from "./barcode";
 import { mmPartial } from "./mm";
+import { qrcode } from "./qrcode";
+import { text } from "./text";
 
 interface IEtiquetaDimensoes {
     resolucaoDpi: number;
@@ -29,10 +31,13 @@ const create = (id: string, model: IEtiquetaDocModel) => {
     _.each(model.elementos, (elemento: any) => {
         const tipos: any = {
             barcode: () => {
-                drawBarcode(canvas, model.dimensoes.resolucaoDpi, elemento);
+                barcode.drawBarcode(canvas, model.dimensoes.resolucaoDpi, elemento);
+            },
+            qrcode: () => {
+                qrcode.drawQrcode(canvas, model.dimensoes.resolucaoDpi, elemento);
             },
             texto: () => {
-                drawText(canvas, model.dimensoes.resolucaoDpi, elemento);
+                text.drawText(canvas, model.dimensoes.resolucaoDpi, elemento);
             },
         };
 
@@ -50,52 +55,4 @@ const drawBackground = (canvas: HTMLCanvasElement) => {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 };
 
-interface IElementoTextoModel {
-    tipo: string;
-    fonte: string;
-    alturaMm: number;
-    xMm: number;
-    yMm: number;
-    valor: string;
-}
-const drawText = (canvas: HTMLCanvasElement, dpi: number, model: IElementoTextoModel) => {
-    const mm = mmPartial(dpi);
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#000000";
-    ctx.font = `${mm(model.alturaMm)}px ${model.fonte}`;
-    ctx.fillText(model.valor, mm(model.xMm), mm(model.yMm));
-};
-
-enum EnumBarcodeType {
-    EAN13,
-}
-interface IElementoBarcodeModel {
-    tipo: string;
-    tipoBarcode: EnumBarcodeType;
-    fonte: string;
-    tamanhoFonteMm: number;
-    xMm: number;
-    yMm: number;
-    larguraBarcodeMm: number;
-    alturaBarcodeMm: number;
-    valor: string;
-}
-const drawBarcode = (canvas: HTMLCanvasElement, dpi: number, model: IElementoBarcodeModel) => {
-    const mm = mmPartial(dpi);
-    const ctx: any = canvas.getContext("2d");
-    const barcodeImg = barcode.createBarcode({
-        barCodeHeight: mm(model.alturaBarcodeMm),
-        barcodeWidth: mm(model.larguraBarcodeMm),
-        font: model.fonte,
-        fontSize: mm(model.tamanhoFonteMm),
-        format: model.tipoBarcode.toString(),
-        text: model.valor,
-    });
-    ctx.mozImageSmoothingEnabled = false;
-    ctx.webkitImageSmoothingEnabled = false;
-    ctx.msImageSmoothingEnabled = false;
-    ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(barcodeImg, mm(model.xMm), mm(model.yMm));
-};
-
-export const etiqueta = {create};
+export const etiqueta = { create };

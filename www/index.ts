@@ -14,6 +14,12 @@ document.getElementById("create-btn").onclick = () => {
     etiqueta.create("canvas-area", JSON.parse(editor.getValue()));
 };
 
+document.getElementById("export-btn").onclick = () => {
+    const canvas = document.getElementById("etiqueta-canvas") as HTMLCanvasElement;
+    const img = canvas.toDataURL("image/png", 1.0);
+    document.getElementById("export").innerHTML = "<img src=\"" + img + "\"/>";
+};
+
 document.addEventListener("DOMContentLoaded", (event) => {
     document.getElementById("create-btn").click();
 });
