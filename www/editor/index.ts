@@ -11,7 +11,7 @@ const createEditor = (id: string) => {
         viewportMargin: 1,
     });
 
-    editor.setSize(null, 100);
+    editor.setSize(null, 150);
 
     return editor;
 };

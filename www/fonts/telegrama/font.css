@@ -1,11 +1,11 @@
 @font-face {
-  font-family: 'Telegrama-Render';
-  src: url('./Telegrama-Render.eot');
-  src: url('./Telegrama-Render.woff2') format('woff2'),
-       url('./Telegrama-Render.woff') format('woff'),
-       url('./Telegrama-Render.ttf') format('truetype'),
-       url('./Telegrama-Render.svg#Telegrama-Render') format('svg'),
-       url('./Telegrama-Render.eot?#iefix') format('embedded-opentype');
+  font-family: 'Telegrama';
+  src: url('./Telegrama.eot');
+  src: url('./Telegrama.woff2') format('woff2'),
+       url('./Telegrama.woff') format('woff'),
+       url('./Telegrama.ttf') format('truetype'),
+       url('./Telegrama.svg#Telegrama') format('svg'),
+       url('./Telegrama.eot?#iefix') format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }
