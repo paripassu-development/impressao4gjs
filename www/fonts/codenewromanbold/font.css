@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'CodeNewRoman-Bold';
+  src: url('CodeNewRoman-Bold.eot');
+  src: url('CodeNewRoman-Bold.woff2') format('woff2'),
+       url('CodeNewRoman-Bold.woff') format('woff'),
+       url('CodeNewRoman-Bold.ttf') format('truetype'),
+       url('CodeNewRoman-Bold.svg#CodeNewRoman-Bold') format('svg'),
+       url('CodeNewRoman-Bold.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+

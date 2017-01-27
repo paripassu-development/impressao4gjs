@@ -29,7 +29,7 @@ document.getElementById("create-btn").onclick = () => {
         logradouroFornecedor: "logradouro fornecedor logradouro fornecedor logradouro fornecedor",
         nomeEmpresa: "Abacateiros do Sul",
         numeroFornecedor: "numero fornecedor",
-        site: "https://www.paripassu.com.br",
+        site: "paripassu.com.br",
         telefone: "48 99889988",
         textoProduto: "Tomate 2A LC CD KG - Tomate 2A LC CD KG",
         urlQrCode: "http://pqr.io?c=PNBJ20AIR1IR1ABT&p=152&u=kg&k=1",
@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                             "nome": "Consolas",
                             "alturaMm": 2.2,
                             "negrito": true,
+                            "forcaContorno": 2,
                         },
                         "valor": "RASTREAMENTO/LOTE",
                         "fn": "caixaAlta",
@@ -131,6 +132,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                             "nome": "Consolas",
                             "alturaMm": 2.8,
                             "negrito": true,
+                            "forcaContorno": 2,
                         },
                         "valor": "{{{codigoRastreamento}}}",
                         "fn": "caixaAlta",
@@ -146,7 +148,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                         },
                         "fonte": {
                             "nome": "Consolas",
-                            "alturaMm": 2.2,
+                            "alturaMm": 2.0,
                             "negrito": true,
                         },
                         "valor": "DATA DE ENTREGA",
@@ -163,8 +165,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
                         },
                         "fonte": {
                             "nome": "Consolas",
-                            "alturaMm": 3.5,
+                            "alturaMm": 3.2,
                             "negrito": true,
+                            "forcaContorno": 2,
                         },
                         "valor": "{{{dataEntrega}}}",
                         "fn": "caixaAlta",
@@ -173,14 +176,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
                         "tipo": "texto",
                         "posicao": {
                             "xMm": 2,
-                            "yMm": 17,
+                            "yMm": 17.5,
                         },
                         "dimensoes": {
                             "larguraMaximaMm": 22.5,
                         },
                         "fonte": {
                             "nome": "Consolas",
-                            "alturaMm": 2.2,
+                            "alturaMm": 2.0,
                             "negrito": true,
                         },
                         "valor": "DATA DE VALIDADE",
@@ -197,10 +200,29 @@ document.addEventListener("DOMContentLoaded", (event) => {
                         },
                         "fonte": {
                             "nome": "Consolas",
-                            "alturaMm": 3.5,
+                            "alturaMm": 3.2,
                             "negrito": true,
+                            "forcaContorno": 2,
                         },
                         "valor": "{{{dataValidade}}}",
+                        "fn": "caixaAlta",
+                    },
+                    {
+                        "tipo": "texto",
+                        "posicao": {
+                            "xMm": 2,
+                            "yMm": 23,
+                        },
+                        "dimensoes": {
+                            "larguraMaximaMm": 35,
+                        },
+                        "fonte": {
+                            "nome": "Consolas",
+                            "alturaMm": 2.2,
+                            "negrito": true,
+                            "forcaContorno": 2,
+                        },
+                        "valor": "RASTREIE EM {{{site}}}",
                         "fn": "caixaAlta",
                     },
 
@@ -208,5 +230,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
             },
         }));
     codeEditor.autoFormat(editor);
-    document.getElementById("create-btn").click();
+
+    setTimeout(() => { document.getElementById("create-btn").click(); }, 500);
 });

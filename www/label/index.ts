@@ -36,21 +36,25 @@ const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     // usando tamanhos de pixels oversampled, entao diminuir a visualizacao do canvas para o tamanho desejado
     canvas.style.width = (canvas.width / OVERSAMPLED_FACTOR) + "px";
     canvas.style.height = (canvas.height / OVERSAMPLED_FACTOR) + "px";
-    const ctx: any = canvas.getContext("2d");
+    const ctx: any = canvas.getContext("2d", {alpha: false});
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
     el.appendChild(canvas);
 
-    drawBackground(canvas);
+    drawBackground(ctx, canvas.width, canvas.height);
 
     _.each(model.desenho.elementos, (elemento: any) => {
         const tipos: any = {
             codigoBarras: () => {
-                barcode.drawBarcode(canvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                barcode.drawBarcode(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
             qrcode: () => {
-                qrcode.drawQrcode(canvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                qrcode.drawQrcode(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
             texto: () => {
-                text.drawText(canvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                text.drawText(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
         };
 
@@ -59,13 +63,32 @@ const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
         }
     });
 
+    redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
+
     return canvas;
 };
 
-const drawBackground = (canvas: HTMLCanvasElement) => {
-    const ctx = canvas.getContext("2d");
+const drawBackground = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
     ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, width, height);
+};
+
+const redrawWithoutGrayscale = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const data = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+        const brightness = (data[i] > 0 || data[i + 1] > 0 || data[i + 2] > 0) ? 255 : 0;
+        // red
+        data[i] = brightness;
+        // green
+        data[i + 1] = brightness;
+        // blue
+        data[i + 2] = brightness;
+    }
+
+    // overwrite original image
+    ctx.putImageData(imageData, 0, 0);
 };
 
 export const etiqueta = { create };

@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Unispace-Bold';
+    src: url('./Unispace-Bold.eot');
+    src: url('./Unispace-Bold.woff2') format('woff2'),
+    url('./Unispace-Bold.woff') format('woff'),
+    url('./Unispace-Bold.ttf') format('truetype'),
+    url('./Unispace-Bold.svg#Unispace-Bold') format('svg'),
+    url('./Unispace-Bold.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+

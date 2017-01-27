@@ -12,6 +12,7 @@ interface IelementoTextoModelFonte {
     nome: string;
     alturaMm: number;
     negrito?: boolean;
+    forcaContorno?: number;
 }
 interface IElementoTextoModel {
     tipo: string;
@@ -21,17 +22,19 @@ interface IElementoTextoModel {
     valor: string;
     fn: string;
 }
-const drawText = (canvas: HTMLCanvasElement, dpi: number, model: IElementoTextoModel, textBindings?: any) => {
+const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTextoModel, textBindings?: any) => {
     const mm = mmPartialOversampled(dpi);
-    const ctx = canvas.getContext("2d");
     ctx.fillStyle = "#000000";
-    /* style | variant | weight | stretch | size/line-height | family */
-    ctx.font = `normal normal ${model.fonte.negrito ? "900" : ""} normal ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
+    ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
     let renderedText = textBindings ? Mustache.render(model.valor, textBindings) : model.valor;
     if (textFunctions[model.fn] && textBindings) {
         renderedText = textFunctions[model.fn](renderedText);
     }
+    const originalLineWidth = ctx.lineWidth;
+    ctx.lineWidth = model.fonte.forcaContorno || 0;
     ctx.fillText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
+    ctx.strokeText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
+    ctx.lineWidth = originalLineWidth;
 };
 
 const textFunctions: any = {

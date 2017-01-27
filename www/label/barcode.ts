@@ -25,9 +25,8 @@ interface IElementoCodigoBarrasModel {
     tipoCodigoBarras: EnumBarcodeType;
     valor: string;
 }
-const drawBarcode = (canvas: HTMLCanvasElement, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
+const drawBarcode = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
     const mm = mmPartialOversampled(dpi);
-    const ctx: any = canvas.getContext("2d");
     const barcodeImg = barcode.createBarcode({
         barCodeHeight: mm(model.dimensoes.alturaCodigoBarrasMm),
         barcodeWidth: mm(model.dimensoes.larguraUnitariaCodigoBarrasMm),
@@ -36,10 +35,6 @@ const drawBarcode = (canvas: HTMLCanvasElement, dpi: number, model: IElementoCod
         format: model.tipoCodigoBarras.toString(),
         text: textBindings ? Mustache.render(model.valor, textBindings) : "1234567890128", // placeholder,
     });
-    ctx.mozImageSmoothingEnabled = false;
-    ctx.webkitImageSmoothingEnabled = false;
-    ctx.msImageSmoothingEnabled = false;
-    ctx.imageSmoothingEnabled = false;
     ctx.drawImage(barcodeImg, mm(model.posicao.xMm), mm(model.posicao.yMm));
 };
 

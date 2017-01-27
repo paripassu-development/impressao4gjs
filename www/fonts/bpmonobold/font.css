@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'BPmono-Bold';
+    src: url('./BPmono-Bold.eot');
+    src: url('./BPmono-Bold.woff2') format('woff2'),
+    url('./BPmono-Bold.woff') format('woff'),
+    url('./BPmono-Bold.ttf') format('truetype'),
+    url('./BPmono-Bold.svg#BPmono-Bold') format('svg'),
+    url('./BPmono-Bold.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+

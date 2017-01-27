@@ -17,18 +17,13 @@ interface IElementoQrcodeModel {
     posicao: IElementoQrcodeModelPosicao;
     dimensoes: IElementoQrcodeModelDimensoes;
 }
-const drawQrcode = (canvas: HTMLCanvasElement, dpi: number, model: IElementoQrcodeModel, textBindings?: any) => {
+const drawQrcode = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoQrcodeModel, textBindings?: any) => {
     const mm = mmPartialOversampled(dpi);
-    const ctx: any = canvas.getContext("2d");
     const qrcodeImg = createQrCode({
         height: mm(model.dimensoes.alturaMm),
         text: textBindings ? Mustache.render(model.valor, textBindings) : model.valor,
         width: mm(model.dimensoes.larguraMm),
     });
-    ctx.mozImageSmoothingEnabled = false;
-    ctx.webkitImageSmoothingEnabled = false;
-    ctx.msImageSmoothingEnabled = false;
-    ctx.imageSmoothingEnabled = false;
     ctx.drawImage(qrcodeImg, mm(model.posicao.xMm), mm(model.posicao.yMm));
 };
 
