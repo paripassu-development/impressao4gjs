@@ -1,3 +1,5 @@
+const OVERSAMPLED_FACTOR = 2;
+
 const mmPartial = (dpi: number) => {
     return (mm: number) => {
         const MM_INCH_RATIO = 25.4;
@@ -6,5 +8,13 @@ const mmPartial = (dpi: number) => {
     };
 };
 
-export { mmPartial };
+const mmPartialOversampled = (dpi: number) => {
+    return (mm: number) => {
+        const MM_INCH_RATIO = 25.4;
+        this.ppm = dpi / MM_INCH_RATIO;
+        return mm * this.ppm * OVERSAMPLED_FACTOR;
+    };
+};
+
+export { mmPartial, mmPartialOversampled, OVERSAMPLED_FACTOR };
 

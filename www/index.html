@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" name="viewport">
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="bundle.css" rel="stylesheet">
@@ -8,6 +9,7 @@
 <body>
     <!-- pre load fonts -->
     <span style="font-family: Consolas; visibility:hidden; "></span>
+    <span style="font-family: Consolas-Bold; visibility:hidden; "></span>
     <span style="font-family: Telegrama; visibility:hidden; "></span>
     <span style="font-family: DejaVuSansMono; visibility:hidden; "></span>
     <span style="font-family: DejaVuSansMono-Bold; visibility:hidden; "></span>
@@ -17,54 +19,6 @@
         <div id="input-area">
             <form>
                 <textarea id="code" name="code">
-{
-  "dimensoes": {
-    "resolucaoDpi": 203,
-    "alturaMm": 50,
-    "larguraMm": 120
-  },
-  "elementos": [
-    {
-      "tipo": "qrcode",
-      "xMm": 95,
-      "yMm": 5,
-      "larguraMm": 20,
-      "alturaMm": 20,
-      "valor": "{{{urlQrCode}}}"
-    },
-    {
-      "tipo": "codigoBarras",
-      "tipoCodigoBarras": "EAN13",
-      "fonte": "Telegrama",
-      "tamanhoFonteMm": 3,
-      "xMm": 64,
-      "yMm": 34,
-      "larguraCodigoBarrasMm": 0.35,
-      "alturaCodigoBarrasMm": 6,
-      "valor": "{{{ean13}}}"
-    },
-    {
-      "tipo": "texto",
-      "fonte": "Consolas",
-      "alturaMm": 3,
-      "tamanhoMaximoMm": 100,
-      "xMm": 94.75,
-      "yMm": 4,
-      "valor": "BY PARIPASSU"
-    },
-    {
-      "tipo": "texto",
-      "fonte": "Consolas",
-      "alturaMm": 3,
-      "tamanhoMaximoMm": 51,
-      "xMm": 38,
-      "yMm": 4,
-      "valor": "{{{nomeEmpresa}}}",
-      "fn": "caixaAlta"
-    }
-
-  ]
-}
                 </textarea>
             </form>
         </div>

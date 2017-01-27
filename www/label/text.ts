@@ -1,30 +1,41 @@
 import * as Mustache from "mustache";
-import { mmPartial } from "./mm";
+import { mmPartialOversampled } from "./mm";
 
-interface IElementoTextoModel {
-    tipo: string;
-    fonte: string;
-    alturaMm: number;
-    tamanhoMaximoMm: number;
+interface IelementoTextoModelPosicao {
     xMm: number;
     yMm: number;
+}
+interface IelementoTextoModelDimensoes {
+    larguraMaximaMm: number;
+}
+interface IelementoTextoModelFonte {
+    nome: string;
+    alturaMm: number;
+    negrito?: boolean;
+}
+interface IElementoTextoModel {
+    tipo: string;
+    posicao: IelementoTextoModelPosicao;
+    dimensoes: IelementoTextoModelDimensoes;
+    fonte: IelementoTextoModelFonte;
     valor: string;
     fn: string;
 }
 const drawText = (canvas: HTMLCanvasElement, dpi: number, model: IElementoTextoModel, textBindings?: any) => {
-    const mm = mmPartial(dpi);
+    const mm = mmPartialOversampled(dpi);
     const ctx = canvas.getContext("2d");
     ctx.fillStyle = "#000000";
-    ctx.font = `${mm(model.alturaMm)}px ${model.fonte}`;
+    /* style | variant | weight | stretch | size/line-height | family */
+    ctx.font = `normal normal ${model.fonte.negrito ? "900" : ""} normal ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
     let renderedText = textBindings ? Mustache.render(model.valor, textBindings) : model.valor;
-    if (textFunctions[model.fn]) {
+    if (textFunctions[model.fn] && textBindings) {
         renderedText = textFunctions[model.fn](renderedText);
     }
-    ctx.fillText(renderedText, mm(model.xMm), mm(model.yMm), mm(model.tamanhoMaximoMm));
+    ctx.fillText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
 };
 
 const textFunctions: any = {
-  "caixaAlta": (text: string) => { return text.toUpperCase(); }
+  "caixaAlta": (text: string) => { return text.toUpperCase(); },
 };
 
 export const text = { drawText };

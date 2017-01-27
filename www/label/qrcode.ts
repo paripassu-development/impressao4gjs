@@ -1,29 +1,35 @@
 import * as Mustache from "mustache";
-import { mmPartial } from "./mm";
+import { mmPartialOversampled } from "./mm";
 declare var require: any;
 const QRCode: any = require("qrcodejs2");
 
-interface IElementoQrcodeModel {
-    tipo: string;
-    valor: string;
+interface IElementoQrcodeModelPosicao {
     xMm: number;
     yMm: number;
+}
+interface IElementoQrcodeModelDimensoes {
     alturaMm: number;
     larguraMm: number;
 }
+interface IElementoQrcodeModel {
+    tipo: string;
+    valor: string;
+    posicao: IElementoQrcodeModelPosicao;
+    dimensoes: IElementoQrcodeModelDimensoes;
+}
 const drawQrcode = (canvas: HTMLCanvasElement, dpi: number, model: IElementoQrcodeModel, textBindings?: any) => {
-    const mm = mmPartial(dpi);
+    const mm = mmPartialOversampled(dpi);
     const ctx: any = canvas.getContext("2d");
     const qrcodeImg = createQrCode({
-        height: mm(model.alturaMm),
+        height: mm(model.dimensoes.alturaMm),
         text: textBindings ? Mustache.render(model.valor, textBindings) : model.valor,
-        width: mm(model.larguraMm),
+        width: mm(model.dimensoes.larguraMm),
     });
     ctx.mozImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
     ctx.msImageSmoothingEnabled = false;
     ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(qrcodeImg, mm(model.xMm), mm(model.yMm));
+    ctx.drawImage(qrcodeImg, mm(model.posicao.xMm), mm(model.posicao.yMm));
 };
 
 interface ICreateQrcodeOptions {
