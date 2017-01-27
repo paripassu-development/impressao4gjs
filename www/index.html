@@ -19,46 +19,50 @@
                 <textarea id="code" name="code">
 {
   "dimensoes": {
-    "resolucaoDpi": 300,
+    "resolucaoDpi": 203,
     "alturaMm": 50,
     "larguraMm": 120
   },
   "elementos": [
     {
-      "tipo": "texto",
-      "fonte": "Consolas",
-      "alturaMm": 3,
-      "xMm": 2,
-      "yMm": 3,
-      "valor": "valor do campo de texto com acentuação"
-    },
-    {
-      "tipo": "texto",
-      "fonte": "Telegrama",
-      "alturaMm": 3,
-      "xMm": 2,
-      "yMm": 8,
-      "valor": "foo bar"
-    },
-    {
-      "tipo": "barcode",
-      "tipoBarcode": "EAN13",
-      "fonte": "Consolas",
-      "tamanhoFonteMm": 2,
-      "xMm": 0,
-      "yMm": 30,
-      "larguraBarcodeMm": 0.15,
-      "alturaBarcodeMm": 3.5,
-      "valor": "1234567890128"
-    },
-    {
       "tipo": "qrcode",
-      "xMm": 0,
-      "yMm": 15,
-      "larguraMm": 5,
-      "alturaMm": 5,
-      "valor": "http://www.paripassu.com.br"
+      "xMm": 95,
+      "yMm": 5,
+      "larguraMm": 20,
+      "alturaMm": 20,
+      "valor": "{{{urlQrCode}}}"
+    },
+    {
+      "tipo": "codigoBarras",
+      "tipoCodigoBarras": "EAN13",
+      "fonte": "Telegrama",
+      "tamanhoFonteMm": 3,
+      "xMm": 64,
+      "yMm": 34,
+      "larguraCodigoBarrasMm": 0.35,
+      "alturaCodigoBarrasMm": 6,
+      "valor": "{{{ean13}}}"
+    },
+    {
+      "tipo": "texto",
+      "fonte": "Consolas",
+      "alturaMm": 3,
+      "tamanhoMaximoMm": 100,
+      "xMm": 94.75,
+      "yMm": 4,
+      "valor": "BY PARIPASSU"
+    },
+    {
+      "tipo": "texto",
+      "fonte": "Consolas",
+      "alturaMm": 3,
+      "tamanhoMaximoMm": 51,
+      "xMm": 38,
+      "yMm": 4,
+      "valor": "{{{nomeEmpresa}}}",
+      "fn": "caixaAlta"
     }
+
   ]
 }
                 </textarea>
@@ -74,6 +78,8 @@
 
     <div class="area">
         <h2>CANVAS</h2>
+        <div id="canvas-area-template">
+        </div>
         <div id="canvas-area">
         </div>
     </div>

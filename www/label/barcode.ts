@@ -1,3 +1,4 @@
+import * as Mustache from "mustache";
 import { mmPartial } from "./mm";
 import JsBarcode = require("jsbarcode");
 
@@ -9,7 +10,7 @@ interface ICreateBarcodeOptions {
     format: string;
     text: string;
 }
-const createBarcode = (options: ICreateBarcodeOptions) => {
+const createBarcode = (options: ICreateBarcodeOptions, textBindings?: any) => {
     const oldImg = document.getElementById("barcode-img");
     if (oldImg) {
         oldImg.remove();
@@ -23,7 +24,7 @@ const createBarcode = (options: ICreateBarcodeOptions) => {
             fontSize: options.fontSize,
             format: options.format,
             height: options.barCodeHeight,
-            margin: 0,
+            margin: 1,
             textMargin: 0,
             width: options.barcodeWidth,
         });
@@ -33,28 +34,28 @@ const createBarcode = (options: ICreateBarcodeOptions) => {
 enum EnumBarcodeType {
     EAN13,
 }
-interface IElementoBarcodeModel {
+interface IElementoCodigoBarrasModel {
     tipo: string;
-    tipoBarcode: EnumBarcodeType;
+    tipoCodigoBarras: EnumBarcodeType;
     fonte: string;
     tamanhoFonteMm: number;
     xMm: number;
     yMm: number;
-    larguraBarcodeMm: number;
-    alturaBarcodeMm: number;
+    larguraCodigoBarrasMm: number;
+    alturaCodigoBarrasMm: number;
     valor: string;
 }
-const drawBarcode = (canvas: HTMLCanvasElement, dpi: number, model: IElementoBarcodeModel) => {
+const drawBarcode = (canvas: HTMLCanvasElement, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
     const mm = mmPartial(dpi);
     const ctx: any = canvas.getContext("2d");
     const barcodeImg = barcode.createBarcode({
-        barCodeHeight: mm(model.alturaBarcodeMm),
-        barcodeWidth: mm(model.larguraBarcodeMm),
+        barCodeHeight: mm(model.alturaCodigoBarrasMm),
+        barcodeWidth: mm(model.larguraCodigoBarrasMm),
         font: model.fonte,
         fontSize: mm(model.tamanhoFonteMm),
-        format: model.tipoBarcode.toString(),
-        text: model.valor,
-    });
+        format: model.tipoCodigoBarras.toString(),
+        text: textBindings ? Mustache.render(model.valor, textBindings) : "1234567890128", // placeholder,
+    }, textBindings);
     ctx.mozImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
     ctx.msImageSmoothingEnabled = false;

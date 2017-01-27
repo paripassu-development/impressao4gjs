@@ -1,3 +1,4 @@
+import * as Mustache from "mustache";
 import { mmPartial } from "./mm";
 declare var require: any;
 const QRCode: any = require("qrcodejs2");
@@ -10,12 +11,12 @@ interface IElementoQrcodeModel {
     alturaMm: number;
     larguraMm: number;
 }
-const drawQrcode = (canvas: HTMLCanvasElement, dpi: number, model: IElementoQrcodeModel) => {
+const drawQrcode = (canvas: HTMLCanvasElement, dpi: number, model: IElementoQrcodeModel, textBindings?: any) => {
     const mm = mmPartial(dpi);
     const ctx: any = canvas.getContext("2d");
     const qrcodeImg = createQrCode({
         height: mm(model.alturaMm),
-        text: model.valor,
+        text: textBindings ? Mustache.render(model.valor, textBindings) : model.valor,
         width: mm(model.larguraMm),
     });
     ctx.mozImageSmoothingEnabled = false;

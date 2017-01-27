@@ -13,14 +13,14 @@ interface IEtiquetaDocModel {
     dimensoes: IEtiquetaDimensoes;
     elementos: any[];
 }
-const create = (id: string, model: IEtiquetaDocModel) => {
+const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     const oldCanvas = document.getElementById("etiqueta-canvas");
     if (oldCanvas) {
         oldCanvas.remove();
     }
     const el = document.getElementById(id);
     const canvas = document.createElement("canvas");
-    canvas.id = "etiqueta-canvas";
+    canvas.id = id + "-etiqueta-canvas";
     const mm = mmPartial(model.dimensoes.resolucaoDpi);
     canvas.width = mm(model.dimensoes.larguraMm);
     canvas.height = mm(model.dimensoes.alturaMm);
@@ -30,14 +30,14 @@ const create = (id: string, model: IEtiquetaDocModel) => {
 
     _.each(model.elementos, (elemento: any) => {
         const tipos: any = {
-            barcode: () => {
-                barcode.drawBarcode(canvas, model.dimensoes.resolucaoDpi, elemento);
+            codigoBarras: () => {
+                barcode.drawBarcode(canvas, model.dimensoes.resolucaoDpi, elemento, textBindings);
             },
             qrcode: () => {
-                qrcode.drawQrcode(canvas, model.dimensoes.resolucaoDpi, elemento);
+                qrcode.drawQrcode(canvas, model.dimensoes.resolucaoDpi, elemento, textBindings);
             },
             texto: () => {
-                text.drawText(canvas, model.dimensoes.resolucaoDpi, elemento);
+                text.drawText(canvas, model.dimensoes.resolucaoDpi, elemento, textBindings);
             },
         };
 
