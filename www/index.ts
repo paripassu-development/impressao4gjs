@@ -38,8 +38,47 @@ document.getElementById("create-btn").onclick = () => {
 
 document.getElementById("export-btn").onclick = () => {
     const canvas = document.getElementById("canvas-area-etiqueta-canvas") as HTMLCanvasElement;
-    const img = canvas.toDataURL("image/png", 1.0);
+    const canvasFinal = document.createElement("canvas") as HTMLCanvasElement;
+    canvasFinal.width = canvas.height;
+    canvasFinal.height = canvas.width;
+    const ctx = canvasFinal.getContext("2d");
+    ctx.save();
+    ctx.translate(canvasFinal.width, 0);
+    const degrees = 90;
+    ctx.rotate(degrees * Math.PI / 180);
+    ctx.drawImage(canvas, 0, 0);
+    ctx.restore();
+    const el = document.getElementById("canvas-area-final");
+    el.appendChild(canvasFinal);
+    const img = canvasFinal.toDataURL("image/png", 1.0);
     document.getElementById("export").innerHTML = "<img src=\"" + img + "\"/>";
+};
+
+document.getElementById("send-btn").onclick = () => {
+    const canvas = document.getElementById("canvas-area-etiqueta-canvas") as HTMLCanvasElement;
+    const canvasFinal = document.createElement("canvas") as HTMLCanvasElement;
+    canvasFinal.width = canvas.height;
+    canvasFinal.height = canvas.width;
+    const ctx = canvasFinal.getContext("2d");
+    ctx.save();
+    ctx.translate(canvasFinal.width, 0);
+    const degrees = 90;
+    ctx.rotate(degrees * Math.PI / 180);
+    ctx.drawImage(canvas, 0, 0);
+    ctx.restore();
+    const el = document.getElementById("canvas-area-final");
+    el.appendChild(canvasFinal);
+    const dataURL = canvasFinal.toDataURL("image/png", 1.0);
+    const formData = new FormData();
+    formData.append("etiquetaPngBase64", dataURL.replace("data:image/png;base64,", ""));
+    const model = JSON.parse(editor.getValue());
+    formData.append("opcoesImpressao", JSON.stringify({impressao: model.impressao, etiqueta: model.etiqueta}));
+    formData.append("nomeImpressora", "\\\\PARIPASSU000244\\ZDesigner ZT230-200dpi ZPL (Copiar 1)");
+    formData.append("modo", "ZDesigner TLP 2844");
+    formData.append("quantidadeEtiquetas", "4");
+    const request = new XMLHttpRequest();
+    request.open("POST", "http://localhost:58080/impressoras/jobs/custom");
+    request.send(formData);
 };
 
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -47,6 +86,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
         {
             "impressao": {
                 "resolucaoDpi": 203,
+                "etiquetasPorPagina": 4,
+                "margemXMm": 0,
+                "margemYMm": 0,
+                "gapXMm": 2,
+                "larguraPaginaMm": 106,
+                "orientacaoEtiqueta": "vertical",
             },
             "etiqueta": {
                 "dimensoes": {
@@ -97,6 +142,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                             "nome": "Consolas",
                             "alturaMm": 3,
                             "negrito": true,
+                            "forcaContorno": 1.5,
                         },
                         "valor": "{{{textoProduto}}}",
                         "fn": "caixaAlta",
@@ -114,7 +160,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                             "nome": "Consolas",
                             "alturaMm": 2.2,
                             "negrito": true,
-                            "forcaContorno": 2,
+                            "forcaContorno": 1.5,
                         },
                         "valor": "RASTREAMENTO/LOTE",
                         "fn": "caixaAlta",
@@ -132,7 +178,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                             "nome": "Consolas",
                             "alturaMm": 2.8,
                             "negrito": true,
-                            "forcaContorno": 2,
+                            "forcaContorno": 1.5,
                         },
                         "valor": "{{{codigoRastreamento}}}",
                         "fn": "caixaAlta",
@@ -167,7 +213,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                             "nome": "Consolas",
                             "alturaMm": 3.2,
                             "negrito": true,
-                            "forcaContorno": 2,
+                            "forcaContorno": 1.5,
                         },
                         "valor": "{{{dataEntrega}}}",
                         "fn": "caixaAlta",
@@ -202,7 +248,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                             "nome": "Consolas",
                             "alturaMm": 3.2,
                             "negrito": true,
-                            "forcaContorno": 2,
+                            "forcaContorno": 1.5,
                         },
                         "valor": "{{{dataValidade}}}",
                         "fn": "caixaAlta",
@@ -220,7 +266,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                             "nome": "Consolas",
                             "alturaMm": 2.2,
                             "negrito": true,
-                            "forcaContorno": 2,
+                            "forcaContorno": 1.5,
                         },
                         "valor": "RASTREIE EM {{{site}}}",
                         "fn": "caixaAlta",

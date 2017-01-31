@@ -1,4 +1,4 @@
-const OVERSAMPLED_FACTOR = 2;
+const OVERSAMPLED_FACTOR = 1;
 
 const mmPartial = (dpi: number) => {
     return (mm: number) => {

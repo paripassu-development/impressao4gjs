@@ -6,6 +6,12 @@ import { text } from "./text";
 
 interface IImpressao {
     resolucaoDpi: number;
+    etiquetasPorPagina: number;
+    margemXMm: number;
+    margemYMm: number;
+    gapXMm: number;
+    larguraPaginaMm: number;
+    orientacaoEtiqueta: string;
 }
 interface IEtiqueta {
     dimensoes: IEtiquetaDimensoes;
