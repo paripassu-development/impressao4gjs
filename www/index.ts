@@ -38,34 +38,14 @@ document.getElementById("create-btn").onclick = () => {
 
 document.getElementById("export-btn").onclick = () => {
     const canvas = document.getElementById("canvas-area-etiqueta-canvas") as HTMLCanvasElement;
-    const canvasFinal = document.createElement("canvas") as HTMLCanvasElement;
-    canvasFinal.width = canvas.height;
-    canvasFinal.height = canvas.width;
-    const ctx = canvasFinal.getContext("2d");
-    ctx.save();
-    ctx.translate(canvasFinal.width, 0);
-    const degrees = 90;
-    ctx.rotate(degrees * Math.PI / 180);
-    ctx.drawImage(canvas, 0, 0);
-    ctx.restore();
+    const canvasFinal = etiqueta.exportCanvas(canvas.id, JSON.parse(editor.getValue()).impressao.orientacaoEtiquetaGraus);
     const el = document.getElementById("canvas-area-final");
     el.appendChild(canvasFinal);
-    const img = canvasFinal.toDataURL("image/png", 1.0);
-    document.getElementById("export").innerHTML = "<img src=\"" + img + "\"/>";
 };
 
 document.getElementById("send-btn").onclick = () => {
     const canvas = document.getElementById("canvas-area-etiqueta-canvas") as HTMLCanvasElement;
-    const canvasFinal = document.createElement("canvas") as HTMLCanvasElement;
-    canvasFinal.width = canvas.height;
-    canvasFinal.height = canvas.width;
-    const ctx = canvasFinal.getContext("2d");
-    ctx.save();
-    ctx.translate(canvasFinal.width, 0);
-    const degrees = 90;
-    ctx.rotate(degrees * Math.PI / 180);
-    ctx.drawImage(canvas, 0, 0);
-    ctx.restore();
+    const canvasFinal = etiqueta.exportCanvas(canvas.id, JSON.parse(editor.getValue()).impressao.orientacaoEtiquetaGraus);
     const el = document.getElementById("canvas-area-final");
     el.appendChild(canvasFinal);
     const dataURL = canvasFinal.toDataURL("image/png", 1.0);
@@ -91,7 +71,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 "margemYMm": 0,
                 "gapXMm": 2,
                 "larguraPaginaMm": 106,
-                "orientacaoEtiqueta": "vertical",
+                "orientacaoEtiquetaGraus": 0,
             },
             "etiqueta": {
                 "dimensoes": {

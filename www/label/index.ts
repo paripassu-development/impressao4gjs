@@ -11,7 +11,7 @@ interface IImpressao {
     margemYMm: number;
     gapXMm: number;
     larguraPaginaMm: number;
-    orientacaoEtiqueta: string;
+    orientacaoEtiquetaGraus: number;
 }
 interface IEtiqueta {
     dimensoes: IEtiquetaDimensoes;
@@ -97,4 +97,50 @@ const redrawWithoutGrayscale = (ctx: CanvasRenderingContext2D, width: number, he
     ctx.putImageData(imageData, 0, 0);
 };
 
-export const etiqueta = { create };
+const exportCanvas = (id: string, orientationDegrees: number) => {
+    const canvas = document.getElementById(id) as HTMLCanvasElement;
+    const oldCanvas = document.getElementById(id + "-export-canvas");
+    if (oldCanvas) {
+        oldCanvas.remove();
+    }
+    const canvasFinal = document.createElement("canvas") as HTMLCanvasElement;
+    canvasFinal.id = id + "-export-canvas";
+    if (orientationDegrees === 90) {
+        canvasFinal.width = canvas.height;
+        canvasFinal.height = canvas.width;
+        const ctx = canvasFinal.getContext("2d");
+        ctx.save();
+        ctx.translate(canvasFinal.width, 0);
+        ctx.rotate(orientationDegrees * Math.PI / 180);
+        ctx.drawImage(canvas, 0, 0);
+        ctx.restore();
+    } else if (orientationDegrees === 180) {
+        canvasFinal.width = canvas.width;
+        canvasFinal.height = canvas.height;
+        const ctx = canvasFinal.getContext("2d");
+        ctx.save();
+        ctx.translate(canvas.width, canvas.height);
+        ctx.rotate(orientationDegrees * Math.PI / 180);
+        ctx.drawImage(canvas, 0, 0);
+        ctx.restore();
+    } else if (orientationDegrees === 270) {
+        canvasFinal.width = canvas.height;
+        canvasFinal.height = canvas.width;
+        const ctx = canvasFinal.getContext("2d");
+        ctx.save();
+        ctx.translate(0, canvas.width);
+        ctx.rotate(orientationDegrees * Math.PI / 180);
+        ctx.drawImage(canvas, 0, 0);
+        ctx.restore();
+    } else {
+        canvasFinal.width = canvas.width;
+        canvasFinal.height = canvas.height;
+        const ctx = canvasFinal.getContext("2d");
+        ctx.save();
+        ctx.drawImage(canvas, 0, 0);
+        ctx.restore();
+    }
+    return canvasFinal;
+};
+
+export const etiqueta = { create, exportCanvas };
