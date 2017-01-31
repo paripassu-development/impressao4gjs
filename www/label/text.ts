@@ -1,14 +1,14 @@
 import * as Mustache from "mustache";
-import { mmPartialOversampled } from "./mm";
+import { mmPartial } from "./mm";
 
-interface IelementoTextoModelPosicao {
+interface IElementoTextoModelPosicao {
     xMm: number;
     yMm: number;
 }
-interface IelementoTextoModelDimensoes {
+interface IElementoTextoModelDimensoes {
     larguraMaximaMm: number;
 }
-interface IelementoTextoModelFonte {
+interface IElementoTextoModelFonte {
     nome: string;
     alturaMm: number;
     negrito?: boolean;
@@ -16,26 +16,26 @@ interface IelementoTextoModelFonte {
 }
 interface IElementoTextoModel {
     tipo: string;
-    posicao: IelementoTextoModelPosicao;
-    dimensoes: IelementoTextoModelDimensoes;
-    fonte: IelementoTextoModelFonte;
+    posicao: IElementoTextoModelPosicao;
+    dimensoes: IElementoTextoModelDimensoes;
+    fonte: IElementoTextoModelFonte;
     valor: string;
     fn: string;
 }
 const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTextoModel, textBindings?: any) => {
-    const mm = mmPartialOversampled(dpi);
+    const mm = mmPartial(dpi);
+    ctx.save();
     ctx.fillStyle = "#000000";
     ctx.strokeStyle = "#000000";
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
-    let renderedText = textBindings ? Mustache.render(model.valor, textBindings) : model.valor;
+    let renderedText = textBindings ? Mustache.render(model.valor, textBindings) : model.valor.replace("{{{", "<").replace("}}}", ">");
     if (textFunctions[model.fn] && textBindings) {
         renderedText = textFunctions[model.fn](renderedText);
     }
-    const originalLineWidth = ctx.lineWidth;
     ctx.lineWidth = model.fonte.forcaContorno || 0;
     ctx.strokeText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
     ctx.fillText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
-    ctx.lineWidth = originalLineWidth;
+    ctx.restore();
 };
 
 const textFunctions: any = {

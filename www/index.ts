@@ -67,11 +67,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
             "impressao": {
                 "resolucaoDpi": 203,
                 "etiquetasPorPagina": 4,
-                "margemXMm": 0,
-                "margemYMm": 0,
                 "gapXMm": 2,
                 "larguraPaginaMm": 106,
-                "orientacaoEtiquetaGraus": 0,
+                "margemXMm": 0,
+                "margemYMm": 0,
+                "orientacaoEtiquetaGraus": 90,
             },
             "etiqueta": {
                 "dimensoes": {

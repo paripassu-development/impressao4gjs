@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import { barcode } from "./barcode";
-import { mmPartialOversampled, OVERSAMPLED_FACTOR } from "./mm";
+import { mmPartial } from "./mm";
 import { qrcode } from "./qrcode";
 import { text } from "./text";
 
@@ -36,12 +36,11 @@ const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     const el = document.getElementById(id);
     const canvas = document.createElement("canvas");
     canvas.id = id + "-etiqueta-canvas";
-    const mm = mmPartialOversampled(model.impressao.resolucaoDpi);
+    const mm = mmPartial(model.impressao.resolucaoDpi);
     canvas.width = mm(model.etiqueta.dimensoes.larguraMm);
     canvas.height = mm(model.etiqueta.dimensoes.alturaMm);
-    // usando tamanhos de pixels oversampled, entao diminuir a visualizacao do canvas para o tamanho desejado
-    canvas.style.width = (canvas.width / OVERSAMPLED_FACTOR) + "px";
-    canvas.style.height = (canvas.height / OVERSAMPLED_FACTOR) + "px";
+    canvas.style.width = (canvas.width) + "px";
+    canvas.style.height = (canvas.height) + "px";
     const ctx: any = canvas.getContext("2d", {alpha: false});
     ctx.mozImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
@@ -84,13 +83,13 @@ const redrawWithoutGrayscale = (ctx: CanvasRenderingContext2D, width: number, he
     const data = imageData.data;
 
     for (let i = 0; i < data.length; i += 4) {
-        const brightness = (data[i] > 0 || data[i + 1] > 0 || data[i + 2] > 0) ? 255 : 0;
+        const value = (data[i] > 0 || data[i + 1] > 0 || data[i + 2] > 0) ? 255 : 0;
         // red
-        data[i] = brightness;
+        data[i] = value;
         // green
-        data[i + 1] = brightness;
+        data[i + 1] = value;
         // blue
-        data[i + 2] = brightness;
+        data[i + 2] = value;
     }
 
     // overwrite original image

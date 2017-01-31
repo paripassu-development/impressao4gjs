@@ -1,5 +1,5 @@
 import * as Mustache from "mustache";
-import { mmPartialOversampled } from "./mm";
+import { mmPartial } from "./mm";
 import JsBarcode = require("jsbarcode");
 
 enum EnumBarcodeType {
@@ -26,7 +26,7 @@ interface IElementoCodigoBarrasModel {
     valor: string;
 }
 const drawBarcode = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
-    const mm = mmPartialOversampled(dpi);
+    const mm = mmPartial(dpi);
     const barcodeImg = barcode.createBarcode({
         barCodeHeight: mm(model.dimensoes.alturaCodigoBarrasMm),
         barcodeWidth: mm(model.dimensoes.larguraUnitariaCodigoBarrasMm),
