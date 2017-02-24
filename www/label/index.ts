@@ -4,7 +4,7 @@ import { mmPartial } from "./mm";
 import { qrcode } from "./qrcode";
 import { text } from "./text";
 
-interface IImpressao {
+export interface IImpressao {
     resolucaoDpi: number;
     etiquetasPorPagina: number;
     margemXMm: number;
@@ -13,17 +13,17 @@ interface IImpressao {
     larguraPaginaMm: number;
     orientacaoEtiquetaGraus: number;
 }
-interface IEtiqueta {
+export interface IEtiqueta {
     dimensoes: IEtiquetaDimensoes;
 }
-interface IEtiquetaDimensoes {
+export interface IEtiquetaDimensoes {
     alturaMm: number;
     larguraMm: number;
 }
-interface IDesenho {
+export interface IDesenho {
     elementos: any[];
 }
-interface IEtiquetaDocModel {
+export interface IEtiquetaDocModel {
     impressao: IImpressao;
     etiqueta: IEtiqueta;
     desenho: IDesenho;
