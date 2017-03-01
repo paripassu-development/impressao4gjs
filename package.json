@@ -24,11 +24,9 @@
   },
   "dependencies": {
     "@types/codemirror": "0.0.37",
-    "@types/lodash": "4.14.50",
     "@types/mustache": "0.8.29",
     "codemirror": "5.23.0",
     "jsbarcode": "3.5.8",
-    "lodash": "4.17.4",
     "mustache": "2.3.0",
     "qrcodejs2": "0.0.2"
   }

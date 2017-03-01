@@ -50,7 +50,7 @@ const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
 
     drawBackground(ctx, canvas.width, canvas.height);
 
-    _.each(model.desenho.elementos, (elemento: any) => {
+    model.desenho.elementos.forEach((elemento: any) => {
         const tipos: any = {
             codigoBarras: () => {
                 barcode.drawBarcode(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
