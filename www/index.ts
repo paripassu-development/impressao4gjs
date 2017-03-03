@@ -1,7 +1,7 @@
 import * as codeEditor from "./editor";
 import "./fonts/index.css";
 import "./index.html";
-import { etiqueta } from "./label";
+import { etiqueta } from "./label/index";
 import "./styles.css";
 
 const editor = codeEditor.createEditor("code");

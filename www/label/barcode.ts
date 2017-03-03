@@ -32,7 +32,7 @@ const drawBarcode = (ctx: CanvasRenderingContext2D, dpi: number, model: IElement
         barcodeWidth: mm(model.dimensoes.larguraUnitariaCodigoBarrasMm),
         font: model.fonte.nome,
         fontSize: mm(model.fonte.alturaMm),
-        format: model.tipoCodigoBarras.toString(),
+        format: EnumBarcodeType[model.tipoCodigoBarras],
         text: textBindings ? Mustache.render(model.valor, textBindings) : "1234567890128", // placeholder,
     });
     ctx.drawImage(barcodeImg, mm(model.posicao.xMm), mm(model.posicao.yMm));

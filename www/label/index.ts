@@ -1,4 +1,3 @@
-import * as _ from "lodash";
 import { barcode } from "./barcode";
 import { mmPartial } from "./mm";
 import { qrcode } from "./qrcode";
