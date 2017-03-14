@@ -68,7 +68,7 @@ module.exports = {
     devServer: {
         contentBase: path.resolve("target/dist"),
         compress: true,
-        port: 9000
+        port: 8086
     },
     devtool: "source-map"
 };
