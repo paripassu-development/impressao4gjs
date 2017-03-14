@@ -4,7 +4,7 @@ import { mmPartial } from "./mm";
 interface IElementoTextoModelPosicao {
     xMm: number;
     yMm: number;
-    align: string;
+    alinhar: string;
 }
 interface IElementoTextoModelDimensoes {
     larguraMaximaMm: number;
@@ -27,7 +27,7 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
     if(!isVariableBindingEmpty(model, textBindings)) {
         const mm = mmPartial(dpi);
         ctx.save();
-        ctx.textAlign = model.posicao.align || "start";
+        ctx.textAlign = model.posicao.alinhar || "start";
         ctx.fillStyle = "#000000";
         ctx.strokeStyle = "#000000";
         ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
