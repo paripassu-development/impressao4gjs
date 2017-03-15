@@ -62,7 +62,7 @@ const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
                 text.drawText(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
             tabelaNutricional: () => {
-                tabelaNutricional.drawTable(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                tabelaNutricional.drawTable(ctx, model.impressao.resolucaoDpi, elemento);
             },
         };
 
