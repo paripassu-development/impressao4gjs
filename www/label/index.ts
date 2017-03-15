@@ -2,6 +2,7 @@ import { barcode } from "./barcode";
 import { mmPartial } from "./mm";
 import { qrcode } from "./qrcode";
 import { text } from "./text";
+import { tabelaNutricional } from "./tabela-nutricional";
 
 export interface IImpressao {
     resolucaoDpi: number;
@@ -59,6 +60,9 @@ const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
             },
             texto: () => {
                 text.drawText(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+            },
+            tabelaNutricional: () => {
+                tabelaNutricional.drawTable(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
         };
 
