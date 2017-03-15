@@ -4,6 +4,7 @@ import { mmPartial } from "./mm";
 interface IElementoTextoModelPosicao {
     xMm: number;
     yMm: number;
+    alinhar: string;
 }
 interface IElementoTextoModelDimensoes {
     larguraMaximaMm: number;
@@ -23,19 +24,39 @@ interface IElementoTextoModel {
     fn: string;
 }
 const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTextoModel, textBindings?: any) => {
-    const mm = mmPartial(dpi);
-    ctx.save();
-    ctx.fillStyle = "#000000";
-    ctx.strokeStyle = "#000000";
-    ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
-    let renderedText = textBindings ? Mustache.render(model.valor, textBindings) : model.valor.replace("{{{", "<").replace("}}}", ">");
-    if (textFunctions[model.fn] && textBindings) {
-        renderedText = textFunctions[model.fn](renderedText);
+    if(!isVariableBindingEmpty(model, textBindings)) {
+        const mm = mmPartial(dpi);
+        ctx.save();
+        ctx.textAlign = model.posicao.alinhar || "start";
+        ctx.fillStyle = "#000000";
+        ctx.strokeStyle = "#000000";
+        ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
+        let renderedText = textBindings ? Mustache.render(model.valor, textBindings) : model.valor.replace("{{{", "<").replace("}}}", ">");
+        if (textFunctions[model.fn] && textBindings) {
+            renderedText = textFunctions[model.fn](renderedText);
+        }
+        ctx.lineWidth = model.fonte.forcaContorno || 0;
+        ctx.strokeText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
+        ctx.fillText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
+        ctx.restore();
     }
-    ctx.lineWidth = model.fonte.forcaContorno || 0;
-    ctx.strokeText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
-    ctx.fillText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
-    ctx.restore();
+};
+
+const isVariableBindingEmpty = (model: IElementoTextoModel, textBindings?: any) => {
+    let valor = model.valor;
+    if(indexStartVariable(valor) > 0 && indexLastVariable(valor) > 0){
+        let variable = valor.substr(indexStartVariable(valor), indexLastVariable(valor));
+        return !Mustache.render(variable, textBindings);
+    }
+    return false;
+};
+
+const indexStartVariable = (valor: string) => {
+    return valor.indexOf('{');
+};
+
+const indexLastVariable = (valor: string) => {
+    return valor.lastIndexOf('}');
 };
 
 const textFunctions: any = {

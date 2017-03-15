@@ -11,14 +11,13 @@ document.getElementById("autoformat-btn").onclick = () => {
 };
 
 document.getElementById("create-btn").onclick = () => {
-    etiqueta.create("canvas-area-template", JSON.parse(editor.getValue()));
     etiqueta.create("canvas-area", JSON.parse(editor.getValue()), {
         bairroFornecedor: "bairro do fornecedor",
         codigoFornecedor: "1234",
         codigoRastreamento: "PN7NWCJ0FERB9DH0",
-        codigoRastreamentoNumerico: "321321321321",
+        codigoRastreamentoNumerico: "H22476123456",
         complemento: "complemento complemento",
-        complementoFornecedor: "complemento fornecedor",
+        complementoFornecedor: "complemento fornecedorRn",
         dataEmbalagem: "26/01/2017",
         dataEntrega: "03/07/2013",
         dataFabricacao: "26/01/2017",
@@ -28,12 +27,27 @@ document.getElementById("create-btn").onclick = () => {
         localizacaoFornecedor: "localização fornecedor",
         logradouroFornecedor: "logradouro fornecedor logradouro fornecedor logradouro fornecedor",
         nomeEmpresa: "Abacateiros do Sul",
-        numeroFornecedor: "numero fornecedor",
+        numeroFornecedor: "320",
         site: "paripassu.com.br",
         telefone: "48 99889988",
         textoProduto: "Tomate 2A LC CD KG - Tomate 2A LC CD KG",
         urlQrCode: "http://pqr.io?c=PNBJ20AIR1IR1ABT&p=152&u=kg&k=1",
+        precoVarejo: "12,96",
+        unidadeEmbalagem: "un",
+        nomeDocumentoMeuCadastro: "cnpj",
+        documentoMeuCadastro: "78.425.986/0036-15",
+        inscricaoRuralMeuCadastro: "12345678",
+        logradouroNumeroBairroMeuCadastro: "Servidão caminho da cruz, 240, Monte Verde",
+        codigoPostalMeuCadastro: "88032-650",
+        cidadeUFMeuCadastro: "Florianópolis-SC",
+        nomeFornecedor: "Abacateiros de Jaragua do sul do estado de Santa Catarina - Brasil",
+        logradouroNumeroBairroFornecedor: "Servidão Sérgio Machado, 240, Vale do Carangola",
+        codigoPostalFornecedor: '25715-416',
+        cidadeUFFornecedor: "Petrópolis-RJ",
+        dataConsolidacao: "13/03/2017",
+
     });
+    //etiqueta.create("canvas-area-template", JSON.parse(editor.getValue()));
 };
 
 document.getElementById("export-btn").onclick = () => {
@@ -53,9 +67,9 @@ document.getElementById("send-btn").onclick = () => {
     formData.append("etiquetaPngBase64", dataURL.replace("data:image/png;base64,", ""));
     const model = JSON.parse(editor.getValue());
     formData.append("opcoesImpressao", JSON.stringify({impressao: model.impressao, etiqueta: model.etiqueta}));
-    formData.append("nomeImpressora", "\\\\PARIPASSU000244\\ZDesigner ZT230-200dpi ZPL (Copiar 1)");
-    formData.append("modo", "ZDesigner TLP 2844");
-    formData.append("quantidadeEtiquetas", "4");
+    formData.append("nomeImpressora", "DATAMAX Allegro (1 redirecionada)");
+    formData.append("modo", "Datamax Allegro");
+    formData.append("quantidadeEtiquetas", "7");
     const request = new XMLHttpRequest();
     request.open("POST", "http://localhost:58080/impressoras/jobs/custom");
     request.send(formData);
