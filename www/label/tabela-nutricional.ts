@@ -56,26 +56,34 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
     ctx.save();
     ctx.fillStyle = BLACK;
     ctx.strokeStyle = BLACK;
-    ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
     ctx.lineWidth = model.fonte.forcaContorno || 0;
     let yMm = model.posicao.yMm;
-    const alturaLinhaMm = model.fonte.alturaMm + 0.2;
-    ctx.textAlign = TextAlign.LEFT;
+    const posicaoCentralizada = model.dimensoes.larguraMaximaMm / 2;
+    const alturaLinhaMm = model.fonte.alturaMm * 1.2;
+    const lineStrokeGap = alturaLinhaMm / 3;
+
+    ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm * 1.5)}px ${model.fonte.nome}`;
+
+    ctx.textAlign = TextAlign.CENTER;
     ctx.strokeText(model.informacoesNutricionais.textoInformacaoNutricional,
-        mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-    yMm += alturaLinhaMm;
+        mm(model.posicao.xMm + posicaoCentralizada), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+    yMm += alturaLinhaMm * 1.1;
+
+    ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
+
     ctx.strokeText(model.informacoesNutricionais.textoPorcaoCaseira,
-        mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+        mm(model.posicao.xMm + posicaoCentralizada), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+    yMm += lineStrokeGap;
+    drawLine(ctx, model, yMm, mm);
     yMm += alturaLinhaMm;
     ctx.textAlign = TextAlign.LEFT;
     ctx.strokeText(model.informacoesNutricionais.textoQuantidadePorPorcao,
         mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
     ctx.textAlign = TextAlign.RIGHT;
     ctx.strokeText(model.informacoesNutricionais.textoAbreviadoValorDiario,
-        mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-    yMm += alturaLinhaMm;
-    ctx.textAlign = TextAlign.CENTER;
-    ctx.strokeRect(mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm), 1);
+        mm(model.dimensoes.larguraMaximaMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+    yMm += lineStrokeGap;
+    drawLine(ctx, model, yMm, mm);
     nutrientes.forEach((nutriente: any) => {
         const informacoesNutriente = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
         if ( informacoesNutriente !== undefined ) {
@@ -84,16 +92,25 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
             ctx.strokeText(informacoesNutriente.nome,
                 mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
             ctx.textAlign = TextAlign.RIGHT;
-            ctx.strokeText(informacoesNutriente.qtPorcao,
-                mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+            if (nutriente === "valorEnergetico") {
+                ctx.strokeText(model.informacoesNutricionais.textoProporcaoCalorias,
+                    mm(model.dimensoes.larguraMaximaMm - (alturaLinhaMm * 3.2)), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+            }else{
+                ctx.strokeText(informacoesNutriente.qtPorcao,
+                    mm(model.dimensoes.larguraMaximaMm - (alturaLinhaMm * 6)), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+            }
             ctx.strokeText(informacoesNutriente.valDiario,
-                mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-            yMm += alturaLinhaMm;
-            ctx.textAlign = TextAlign.CENTER;
-            ctx.strokeRect(mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm), 1);
+                mm(model.dimensoes.larguraMaximaMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+            yMm += lineStrokeGap;
+            drawLine(ctx, model, yMm, mm);
         }
     });
     ctx.restore();
+};
+
+const drawLine = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
+    ctx.textAlign = TextAlign.LEFT;
+    ctx.strokeRect(mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm), 1);
 };
 
 const BLACK = "#000000";
