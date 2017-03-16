@@ -86,7 +86,8 @@ const redrawWithoutGrayscale = (ctx: CanvasRenderingContext2D, width: number, he
     const data = imageData.data;
 
     for (let i = 0; i < data.length; i += 4) {
-        const value = (data[i] > 0 || data[i + 1] > 0 || data[i + 2] > 0) ? 255 : 0;
+        //const value = (data[i] > 150 || data[i + 1] > 150 || data[i + 2] > 150) ? 255 : 0;
+        const value = (data[i] + data[i+1] + data[i+2] / 3) > 400 ? 255 : 0;
         // red
         data[i] = value;
         // green

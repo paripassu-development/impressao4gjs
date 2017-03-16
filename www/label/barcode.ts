@@ -2,9 +2,6 @@ import * as Mustache from "mustache";
 import { mmPartial } from "./mm";
 import JsBarcode = require("jsbarcode");
 
-enum EnumBarcodeType {
-    EAN13,
-}
 interface IElementoCodigoBarrasModelPosicao {
     xMm: number;
     yMm: number;
@@ -22,20 +19,22 @@ interface IElementoCodigoBarrasModel {
     posicao: IElementoCodigoBarrasModelPosicao;
     dimensoes: IElementoCodigoBarrasModelDimensoes;
     fonte: IElementoCodigoBarrasModelFonte;
-    tipoCodigoBarras: EnumBarcodeType;
+    tipoCodigoBarras: string;
     valor: string;
 }
 const drawBarcode = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
     const mm = mmPartial(dpi);
+    ctx.save();
     const barcodeImg = barcode.createBarcode({
         barCodeHeight: mm(model.dimensoes.alturaCodigoBarrasMm),
         barcodeWidth: mm(model.dimensoes.larguraUnitariaCodigoBarrasMm),
         font: model.fonte.nome,
         fontSize: mm(model.fonte.alturaMm),
-        format: EnumBarcodeType[model.tipoCodigoBarras],
+        format: model.tipoCodigoBarras,
         text: textBindings ? Mustache.render(model.valor, textBindings) : "1234567890128", // placeholder,
     });
-    ctx.drawImage(barcodeImg, mm(model.posicao.xMm), mm(model.posicao.yMm));
+    ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
+    ctx.restore();
 };
 
 interface ICreateBarcodeOptions {
