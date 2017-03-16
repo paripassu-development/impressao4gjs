@@ -42,12 +42,27 @@ document.getElementById("create-btn").onclick = () => {
         cidadeUFMeuCadastro: "Florianópolis-SC",
         nomeFornecedor: "Abacateiros de Jaragua do sul do estado de Santa Catarina - Brasil",
         logradouroNumeroBairroFornecedor: "Servidão Sérgio Machado, 240, Vale do Carangola",
-        codigoPostalFornecedor: '25715-416',
+        codigoPostalFornecedor: "25715-416",
         cidadeUFFornecedor: "Petrópolis-RJ",
         dataConsolidacao: "13/03/2017",
-
+        valorEnergeticoQtPorcao: "2",
+        valorEnergeticoValDiario: "3",
+        sodioQtPorcao: "4",
+        sodioValDiario: "5",
+        proteinasQtPorcao: "6",
+        proteinasValDiario: "7",
+        gordurasTotaisQtPorcao: "8",
+        gordurasTotaisValDiario: "9",
+        gorduraTransQtPorcao: "0",
+        gorduraTransValDiario: "0",
+        gorduraSaturadaQtPorcao: "0",
+        gorduraSaturadaValDiario: "**",
+        fibraAlimentarQtPorcao: "11",
+        fibraAlimentarValDiario: "22",
+        carboidratosQtPorcao: "33",
+        carboidratosValDiario: "44",
     });
-    //etiqueta.create("canvas-area-template", JSON.parse(editor.getValue()));
+    // etiqueta.create("canvas-area-template", JSON.parse(editor.getValue()));
 };
 
 document.getElementById("export-btn").onclick = () => {
