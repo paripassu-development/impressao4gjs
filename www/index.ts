@@ -30,7 +30,7 @@ document.getElementById("create-btn").onclick = () => {
         numeroFornecedor: "320",
         site: "paripassu.com.br",
         telefone: "48 99889988",
-        textoProduto: "Tomate 2A LC CD KG - Tomate 2A LC CD KG",
+        textoProduto: "Pimentão Misto",
         urlQrCode: "http://pqr.io?c=PNBJ20AIR1IR1ABT&p=152&u=kg&k=1",
         precoVarejo: "12,96",
         unidadeEmbalagem: "un",
@@ -45,6 +45,11 @@ document.getElementById("create-btn").onclick = () => {
         codigoPostalFornecedor: "25715-416",
         cidadeUFFornecedor: "Petrópolis-RJ",
         dataConsolidacao: "13/03/2017",
+        nomeMeuCadastro: "FRUTAS CANTU NORDESTE",
+        labelAbreviadaCapacidade: "Peso Líq.",
+        capacidadeEmbalagem: "0,999",
+        capacidadeUnidadeEmbalagem: "0,999g",
+        ingredientes: "Pimentão misto",
         valorEnergeticoQtPorcao: "2",
         valorEnergeticoValDiario: "3",
         sodioQtPorcao: "4",
@@ -61,7 +66,7 @@ document.getElementById("create-btn").onclick = () => {
         fibraAlimentarValDiario: "22",
         carboidratosQtPorcao: "33",
         carboidratosValDiario: "44",
-        porcao: "Caixa 1kg",
+        porcao: "Caixa 3kg",
     });
     // etiqueta.create("canvas-area-template", JSON.parse(editor.getValue()));
 };
@@ -83,9 +88,9 @@ document.getElementById("send-btn").onclick = () => {
     formData.append("etiquetaPngBase64", dataURL.replace("data:image/png;base64,", ""));
     const model = JSON.parse(editor.getValue());
     formData.append("opcoesImpressao", JSON.stringify({impressao: model.impressao, etiqueta: model.etiqueta}));
-    formData.append("nomeImpressora", "DATAMAX Allegro (1 redirecionada)");
-    formData.append("modo", "Datamax Allegro");
-    formData.append("quantidadeEtiquetas", "7");
+    formData.append("nomeImpressora", "\\\\DESKTOP-UCPGNLU\\Argox OS-214 plus PPLA");
+    formData.append("modo", "Argox OS-214");
+    formData.append("quantidadeEtiquetas", "5");
     const request = new XMLHttpRequest();
     request.open("POST", "http://localhost:58080/impressoras/jobs/custom");
     request.send(formData);

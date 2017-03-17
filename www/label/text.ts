@@ -5,6 +5,7 @@ interface IElementoTextoModelPosicao {
     xMm: number;
     yMm: number;
     alinhar: string;
+    rotacao: number;
 }
 interface IElementoTextoModelDimensoes {
     larguraMaximaMm: number;
@@ -26,10 +27,12 @@ interface IElementoTextoModel {
 const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTextoModel, textBindings?: any) => {
     if(!isVariableBindingEmpty(model, textBindings)) {
         const mm = mmPartial(dpi);
+        let degrees = model.posicao.rotacao || 0;
         ctx.save();
         ctx.textAlign = model.posicao.alinhar || "start";
         ctx.fillStyle = "#000000";
         ctx.strokeStyle = "#000000";
+        ctx.rotate(degrees * Math.PI / 180);
         ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
         let renderedText = textBindings ? Mustache.render(model.valor, textBindings) : model.valor.replace("{{{", "<").replace("}}}", ">");
         if (textFunctions[model.fn] && textBindings) {
