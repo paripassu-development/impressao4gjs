@@ -9,7 +9,7 @@ const splitLines =  (texto: string, caracteresPorLinha: number): string[] => {
         if (linhaAtual === "") {
             linhaAtual += palavra;
         } else if ((linhaAtual.length + palavra.length + 1) <= caracteresPorLinha) {
-        linhaAtual += " " + palavra;
+            linhaAtual += " " + palavra;
         } else {
             linhas.push(linhaAtual);
             linhaAtual = palavra;

@@ -106,7 +106,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
 
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
 
-    strokeAlignedText(ctx, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoPorcaoCaseira"), model.posicao.xMm, yMm, mm, TextAlign.CENTER);
+    strokeAlignedText(ctx, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings), model.posicao.xMm, yMm, mm, TextAlign.CENTER);
 
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
