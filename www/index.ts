@@ -61,6 +61,7 @@ document.getElementById("create-btn").onclick = () => {
         fibraAlimentarValDiario: "22",
         carboidratosQtPorcao: "33",
         carboidratosValDiario: "44",
+        porcao: "Caixa 1kg",
     });
     // etiqueta.create("canvas-area-template", JSON.parse(editor.getValue()));
 };
