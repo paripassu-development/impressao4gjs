@@ -58,15 +58,13 @@ document.getElementById("create-btn").onclick = () => {
         proteinasValDiario: "7",
         gordurasTotaisQtPorcao: "8",
         gordurasTotaisValDiario: "9",
-        gorduraTransQtPorcao: "0",
-        gorduraTransValDiario: "0",
-        gorduraSaturadaQtPorcao: "0",
-        gorduraSaturadaValDiario: "**",
+        gorduraTransValDiario: "**",
         fibraAlimentarQtPorcao: "11",
         fibraAlimentarValDiario: "22",
         carboidratosQtPorcao: "33",
         carboidratosValDiario: "44",
         porcao: "Caixa 3kg",
+        valorProporcaoCalorias: "999 kcal = 4180kj",
     });
     // etiqueta.create("canvas-area-template", JSON.parse(editor.getValue()));
 };
