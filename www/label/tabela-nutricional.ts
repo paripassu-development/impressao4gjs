@@ -65,7 +65,7 @@ const informacoesPadraoZero = [
     "gorduraTransQtPorcao",
     "gorduraTransValDiario",
     "gorduraSaturadaQtPorcao",
-    "gorduraSaturadaValDiario*",
+    "gorduraSaturadaValDiario",
     "fibraAlimentarQtPorcao",
     "fibraAlimentarValDiario",
     "carboidratosQtPorcao",
@@ -85,11 +85,12 @@ interface IElementoTabelaNutricionalModel {
 const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
     if (textBindings) {
         informacoesPadraoZero.forEach((nomeInfo: string) => {
-            if (!textBindings[nomeInfo]) {
+            if (textBindings[nomeInfo] === undefined) {
                 textBindings[nomeInfo] = "0";
             }
         });
     }
+    console.log(JSON.stringify(textBindings));
     const mm = mmPartial(dpi);
     ctx.save();
     ctx.fillStyle = BLACK;
@@ -129,7 +130,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
                 mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
 
             if (nutriente === "valorEnergetico") {
-                strokeAlignedText(ctx, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoProporcaoCalorias"), model.posicao.xMm - (alturaLinhaMm * 3.2), yMm, mm, TextAlign.RIGHT);
+                strokeAlignedText(ctx, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoProporcaoCalorias, textBindings), model.posicao.xMm - (alturaLinhaMm * 3), yMm, mm, TextAlign.RIGHT);
             } else {
                 strokeAlignedText(ctx, larguraMaxima, fillTemplate(informacoesNutriente.qtPorcao, textBindings), model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
             }
