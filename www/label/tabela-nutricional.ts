@@ -44,13 +44,13 @@ interface IElementoTabelaNutricionalOpcoes {
 
 const nutrientes = [
     "valorEnergetico",
-    "sodio",
+    "carboidratos",
     "proteinas",
     "gordurasTotais",
-    "gorduraTrans",
     "gorduraSaturada",
+    "gorduraTrans",
     "fibraAlimentar",
-    "carboidratos",
+    "sodio",
 ]
 
 const informacoesPadraoZero = [
