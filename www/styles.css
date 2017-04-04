@@ -2,3 +2,51 @@
     width: 100%;
     background-color: cornflowerblue;
 }
+
+.code-editor {
+    width: auto;
+}
+
+.CodeMirror {
+    display: inline-block;
+}
+
+div.code-wrapper{
+    width: 69%;
+}
+
+div.code-wrapper.open{
+    width: 100%;
+}
+
+.code-wrapper,
+.value-wrapper {
+    display: inline-block;
+}
+
+.value-editor + .CodeMirror {
+    width: 100%;
+}
+
+.code-editor + .CodeMirror {
+    width: 100%;
+}
+
+div.value-wrapper.close{
+    visibility: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.value-wrapper{
+    width: 30%;
+}
+
+.values-btn {
+    margin-left: 40px;
+}
+
+.code-wrapper > span,
+.value-wrapper > span {
+    display: block;
+}

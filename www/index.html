@@ -1,58 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" name="viewport">
+    <meta content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"
+          name="viewport">
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="bundle.css" rel="stylesheet">
 </head>
 <body>
-    <!-- pre load fonts -->
-    <!--<span style="font-family: BPmono-Bold; visibility:hidden; "></span>-->
-    <!--<span style="font-family: CodeNewRoman-Bold; visibility:hidden; "></span>-->
-    <span style="font-family: Consolas; visibility:hidden; "></span>
-    <!--<span style="font-family: DejaVuSansMono; visibility:hidden; "></span>-->
-    <!--<span style="font-family: DejaVuSansMono-Bold; visibility:hidden; "></span>-->
-    <!--<span style="font-family: Telegrama; visibility:hidden; "></span>-->
-    <!--<span style="font-family: Unispace-Bold; visibility:hidden; "></span>-->
+<!-- pre load fonts -->
+<!--<span style="font-family: BPmono-Bold; visibility:hidden; "></span>-->
+<!--<span style="font-family: CodeNewRoman-Bold; visibility:hidden; "></span>-->
+<span style="font-family: Consolas; visibility:hidden; "></span>
+<!--<span style="font-family: DejaVuSansMono; visibility:hidden; "></span>-->
+<!--<span style="font-family: DejaVuSansMono-Bold; visibility:hidden; "></span>-->
+<!--<span style="font-family: Telegrama; visibility:hidden; "></span>-->
+<!--<span style="font-family: Unispace-Bold; visibility:hidden; "></span>-->
 
-    <div class="area">
-        <h2>INPUT</h2>
-        <div id="input-area">
-            <form>
-                <textarea id="code" name="code">
+<div class="area">
+    <h2>INPUT</h2>
+    <div id="input-area">
+        <form>
+            <div id="code-wrapper" class="code-wrapper open">
+                <span><strong>MODEL</strong></span>
+                <textarea class="code-editor" id="code" name="code">
                 </textarea>
-            </form>
-        </div>
-        <button id="autoformat-btn">
-            Autoformat
-        </button>
-        <button id="create-btn">
-            Etiqueta
-        </button>
-        <button id="export-btn">
-            export
-        </button>
-        <button id="send-btn">
-            send
-        </button>
-    </div>
-
-    <div class="area">
-        <h2>CANVAS</h2>
-        <div id="canvas-area-template">
-        </div>
-        <div id="canvas-area">
-        </div>
-    </div>
-
-    <div class="area">
-        <h2>EXPORT</h2>
-        <div id="export-area">
-            <div id="canvas-area-final">
             </div>
+            <div id="value-wrapper" class="value-wrapper close">
+                <span><strong>VALUES</strong></span>
+                    <textarea class="value-editor" id="values" name="values">
+                    </textarea>
+            </div>
+        </form>
+    </div>
+    <button id="autoformat-btn">
+        Autoformat
+    </button>
+    <button id="create-btn">
+        Etiqueta
+    </button>
+    <button id="export-btn">
+        export
+    </button>
+    <button id="send-btn">
+        send
+    </button>
+    <button id="values-btn" class="values-btn">
+        values
+    </button>
+</div>
+
+<div class="area">
+    <h2>CANVAS</h2>
+    <div id="canvas-area-template">
+    </div>
+    <div id="canvas-area">
+    </div>
+</div>
+
+<div class="area">
+    <h2>EXPORT</h2>
+    <div id="export-area">
+        <div id="canvas-area-final">
         </div>
     </div>
-    <script src="bundle.js"></script>
+</div>
+<script src="bundle.js"></script>
 </body>
 </html>
