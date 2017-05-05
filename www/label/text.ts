@@ -47,7 +47,7 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
 
 const isVariableBindingEmpty = (model: IElementoTextoModel, textBindings?: any) => {
     let valor = model.valor;
-    if(indexStartVariable(valor) > 0 && indexLastVariable(valor) > 0){
+    if(textBindings && indexStartVariable(valor) > 0 && indexLastVariable(valor) > 0){
         let variable = valor.substr(indexStartVariable(valor), indexLastVariable(valor));
         return !Mustache.render(variable, textBindings);
     }

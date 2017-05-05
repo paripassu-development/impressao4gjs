@@ -22,10 +22,10 @@ interface IElementoCodigoBarrasModel {
     tipoCodigoBarras: string;
     valor: string;
 }
-const drawBarcode = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
+const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
     const mm = mmPartial(dpi);
     ctx.save();
-    const barcodeImg = barcode.createBarcode({
+    const barcodeImg = barcode.createBarcode(id, {
         barCodeHeight: mm(model.dimensoes.alturaCodigoBarrasMm),
         barcodeWidth: mm(model.dimensoes.larguraUnitariaCodigoBarrasMm),
         font: model.fonte.nome,
@@ -45,7 +45,7 @@ interface ICreateBarcodeOptions {
     format: string;
     text: string;
 }
-const createBarcode = (options: ICreateBarcodeOptions) => {
+const createBarcode = (id: string, options: ICreateBarcodeOptions) => {
     const oldImg = document.getElementById("barcode-img");
     if (oldImg) {
         oldImg.remove();
@@ -53,7 +53,7 @@ const createBarcode = (options: ICreateBarcodeOptions) => {
     const img = document.createElement("img");
     img.id = "barcode-img";
     img.style.display = "none";
-    document.getElementById("canvas-area").appendChild(img);
+    document.getElementById(id).appendChild(img);
     JsBarcode("#barcode-img", options.text, {
         font: options.font || "OCR-B",
         fontSize: options.fontSize,

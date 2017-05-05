@@ -36,8 +36,8 @@ document.getElementById("create-btn").onclick = () => {
     //etiqueta.create("canvas-area", JSON.parse(modelEditor.getValue()), dadosLongos);
     let modelJson = modelEditor.getValue();
     let valuesObj = _.isEmpty(valueEditor.getValue()) ? dadosDefault : JSON.parse(valueEditor.getValue());
+    etiqueta.create("canvas-area-template", JSON.parse(modelJson));
     etiqueta.create("canvas-area", JSON.parse(modelJson), valuesObj);
-    // etiqueta.create("canvas-area-template", JSON.parse(modelEditor.getValue()));
     save(modelJson, JSON.stringify(valuesObj));
 };
 

@@ -1,8 +1,8 @@
 import { barcode } from "./barcode";
 import { mmPartial } from "./mm";
 import { qrcode } from "./qrcode";
-import { text } from "./text";
 import { tabelaNutricional } from "./tabela-nutricional";
+import { text } from "./text";
 
 export interface IImpressao {
     resolucaoDpi: number;
@@ -53,10 +53,10 @@ const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     model.desenho.elementos.forEach((elemento: any) => {
         const tipos: any = {
             codigoBarras: () => {
-                barcode.drawBarcode(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
             qrcode: () => {
-                qrcode.drawQrcode(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                qrcode.drawQrcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
             texto: () => {
                 text.drawText(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
@@ -86,8 +86,8 @@ const redrawWithoutGrayscale = (ctx: CanvasRenderingContext2D, width: number, he
     const data = imageData.data;
 
     for (let i = 0; i < data.length; i += 4) {
-        //const value = (data[i] > 150 || data[i + 1] > 150 || data[i + 2] > 150) ? 255 : 0;
-        const value = (data[i] + data[i+1] + data[i+2] / 3) > 400 ? 255 : 0;
+        // const value = (data[i] > 150 || data[i + 1] > 150 || data[i + 2] > 150) ? 255 : 0;
+        const value = (data[i] + data[i + 1] + data[i + 2] / 3) > 400 ? 255 : 0;
         // red
         data[i] = value;
         // green
