@@ -51,7 +51,7 @@ const nutrientes = [
     "gorduraTrans",
     "fibraAlimentar",
     "sodio",
-]
+];
 
 const informacoesPadraoZero = [
     "valorEnergeticoQtPorcao",
@@ -90,7 +90,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
             }
         });
     }
-    console.log(JSON.stringify(textBindings));
     const mm = mmPartial(dpi);
     ctx.save();
     ctx.fillStyle = BLACK;
@@ -157,7 +156,7 @@ function fillTemplate(valor: string, textBindings: any) {
     return textBindings ? Mustache.render(valor, textBindings) : valor.replace("{{{", "<").replace("}}}", ">");
 }
 
-function getOrDefault(object: any, param: string): string{
+function getOrDefault(object: any, param: string): string {
     return object[param] ? object[param] : "<" + param + ">";
 }
 
