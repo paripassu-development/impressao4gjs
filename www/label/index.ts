@@ -1,6 +1,6 @@
+import { canvasUtils } from "./../core/util/canvas-utils";
 import { barcode } from "./barcode";
 import { barraOrigemRastreada } from "./barra-origem-rastreada";
-import { canvasUtils } from "./canvas-utils";
 import { mmPartial } from "./mm";
 import { qrcode } from "./qrcode";
 import { tabelaNutricional } from "./tabela-nutricional";

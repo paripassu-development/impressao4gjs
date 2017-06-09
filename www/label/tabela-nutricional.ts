@@ -1,6 +1,6 @@
 import * as Mustache from "mustache";
+import { splitLines, strokeAlignedText, TextAlign } from "./../core/util/text-utils";
 import { mmPartial } from "./mm";
-import { splitLines, strokeAlignedText, TextAlign } from "./text-utils";
 
 const BLACK = "#000000";
 

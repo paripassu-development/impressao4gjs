@@ -1,5 +1,6 @@
-import { canvasUtils } from "./canvas-utils";
-import { DrawUtils } from "./draw-utils";
+import { barraOrigemRastreadaConstants } from "./../core/constants/constants-impressao";
+import { canvasUtils } from "./../core/util/canvas-utils";
+import { DrawUtils } from "./../core/util/draw-utils";
 import { mmPartial } from "./mm";
 
 const corPreta: string = "#000000";
@@ -64,30 +65,52 @@ const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastr
     document.getElementById(id).appendChild(canvas);
     const ctx = canvasUtils.createContext(canvas);
     canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
-    const taxaEscalaAltura = options.alturaMm / 32;
-    const taxaEscalaLargura = options.larguraMm / 776;
+    const taxaEscalaAltura = options.alturaMm / barraOrigemRastreadaConstants.ALTURA_BARRA;
+    const taxaEscalaLargura = options.larguraMm / barraOrigemRastreadaConstants.LARGURA_BARRA;
     ctx.scale(taxaEscalaLargura, taxaEscalaAltura);
     const drawUtils = new DrawUtils(ctx);
 
-    // Primeiro
-    const xValues = [0, 48, 32, 48, 0];
-    const yValues = [0, 0, 16, 32, 32];
-    drawUtils.polygon(xValues, yValues, options.corBarra);
+    // Primeiro    
+    const coordenadas = [
+                            {x: 0, y: 0},
+                            {x: 48, y: 0},
+                            {x: barraOrigemRastreadaConstants.ALTURA_BARRA, y: 16},
+                            {x: 48, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+                            {x: 0, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+                        ];
+    drawUtils.polygon(coordenadas, options.corBarra);
 
     // Segundo 
-    const xValues2 = [502, 534, 518, 534, 502, 486];
-    const yValues2 = [0,   0,   16,  32,  32,  16];
-    drawUtils.polygon(xValues2, yValues2, options.corBarra);
+    const coordenadas2 = [
+                            {x: 502, y: 0},
+                            {x: 534, y: 0},
+                            {x: 518, y: 16},
+                            {x: 534, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+                            {x: 502, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+                            {x: 486, y: 16},
+                        ];
+    drawUtils.polygon(coordenadas2, options.corBarra);
 
     // Terceiro
-    const xValues3 = [550, 582, 566, 582, 550, 534];
-    const yValues3 = [0, 0, 16, 32, 32, 16];
-    drawUtils.polygon(xValues3, yValues3, options.corBarra);
+    const coordenadas3 = [
+                            {x: 550, y: 0},
+                            {x: 582, y: 0},
+                            {x: 566, y: 16},
+                            {x: 582, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+                            {x: 550, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+                            {x: 534, y: 16},
+                        ];
+    drawUtils.polygon(coordenadas3, options.corBarra);
 
-     // Quarto
-    const xValues4 = [598, 776, 776, 598, 582];
-    const yValues4 = [0, 0, 32, 32, 16];
-    drawUtils.polygon(xValues4, yValues4, options.corBarra);
+    // Quarto
+    const coordenadas4 = [
+                            {x: 598, y: 0},
+                            {x: barraOrigemRastreadaConstants.LARGURA_BARRA, y: 0},
+                            {x: barraOrigemRastreadaConstants.LARGURA_BARRA, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+                            {x: 598, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+                            {x: 582, y: 16},
+                        ];
+    drawUtils.polygon(coordenadas4, options.corBarra);
 
     const textoBarra = options.valorTexto || "PRODUTO COM ORIGEM RASTREADA";
     ctx.fillStyle = corPreta;
@@ -97,8 +120,8 @@ const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastr
     ctx.lineWidth = options.forcaContorno || 0;
     const posicaoX = 68;
     const posicaoY = 24;
-    ctx.strokeText(textoBarra, posicaoX, posicaoY);
-    ctx.fillText(textoBarra, posicaoX, posicaoY);
+    ctx.strokeText(textoBarra, posicaoX, posicaoY, 400);
+    ctx.fillText(textoBarra, posicaoX, posicaoY, 400);
     return document.getElementById(nomeElementoCanvas) as HTMLCanvasElement;
 };
 

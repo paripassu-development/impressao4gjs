@@ -12,8 +12,8 @@ const createCanvas = (nomeElementoCanvas: string, larguraMm: number, alturaMm: n
     return canvas;
 };
 
-const createContext = (elementCavnas: HTMLCanvasElement) => {
-    const ctx: any = elementCavnas.getContext("2d", {alpha: false});
+const createContext = (elementCanvas: HTMLCanvasElement) => {
+    const ctx: any = elementCanvas.getContext("2d", {alpha: false});
     ctx.mozImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
     ctx.msImageSmoothingEnabled = false;

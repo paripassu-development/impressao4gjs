@@ -6,15 +6,20 @@ class DrawUtils {
         this.ctx = ctx;
     }
 
-    public polygon(xPontos: number[], yPontos: number[], corPreenchimento: string) {
+    public polygon(coordenadas: ICoordenada[], corPreenchimento: string) {
         this.ctx.beginPath();
-        for (let i = 0; xPontos.length >= i; i++) {
-            this.ctx.lineTo(xPontos[i], yPontos[i]);
-        }
+        coordenadas.forEach((coordenada) => {
+            this.ctx.lineTo(coordenada.x, coordenada.y);
+        });
         this.ctx.closePath();
         this.ctx.fillStyle = corPreenchimento;
         this.ctx.fill();
     };
+}
+
+interface ICoordenada {
+    x: number;
+    y: number;
 }
 
 export { DrawUtils };
