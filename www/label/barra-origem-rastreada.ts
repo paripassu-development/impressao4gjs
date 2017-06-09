@@ -31,7 +31,7 @@ interface IElementoBarraOrigemRastreadaModel {
 const drawBarraOrigemRastreada = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoBarraOrigemRastreadaModel) => {
     const mm = mmPartial(dpi);
     ctx.save();
-    const barraOrigemRastreada = createBarraOrigemRastreada(id, dpi, {
+    const barraOrigemRastreada = createBarraOrigemRastreada(id, {
         corBarra: corPreta,
         alturaMm: mm(model.dimensoes.alturaMm),
         larguraMm: mm(model.dimensoes.larguraMm),
@@ -57,8 +57,7 @@ interface ICreateBarraOrigemRastreadaOptions {
   nomeFonte: string;
 }
 
-const createBarraOrigemRastreada = (id: string, dpi: number, options: ICreateBarraOrigemRastreadaOptions) => {
-    const mm = mmPartial(dpi);
+const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastreadaOptions) => {
     const nomeElementoCanvas = "barra-origem-rastreada-img";
     const canvas = canvasUtils.createCanvas(nomeElementoCanvas, options.larguraMm, options.alturaMm);
     canvas.style.display = "none";
