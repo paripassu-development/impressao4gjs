@@ -1,4 +1,6 @@
+import { canvasUtils } from "./../core/util/canvas-utils";
 import { barcode } from "./barcode";
+import { barraOrigemRastreada } from "./barra-origem-rastreada";
 import { mmPartial } from "./mm";
 import { qrcode } from "./qrcode";
 import { tabelaNutricional } from "./tabela-nutricional";
@@ -29,26 +31,14 @@ export interface IEtiquetaDocModel {
     desenho: IDesenho;
 }
 const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
-    const oldCanvas = document.getElementById(id + "-etiqueta-canvas");
-    if (oldCanvas) {
-        oldCanvas.remove();
-    }
-    const el = document.getElementById(id);
-    const canvas = document.createElement("canvas");
-    canvas.id = id + "-etiqueta-canvas";
+    const nomeElementoCanvas = id + "-etiqueta-canvas";
     const mm = mmPartial(model.impressao.resolucaoDpi);
-    canvas.width = mm(model.etiqueta.dimensoes.larguraMm);
-    canvas.height = mm(model.etiqueta.dimensoes.alturaMm);
-    canvas.style.width = (canvas.width) + "px";
-    canvas.style.height = (canvas.height) + "px";
-    const ctx: any = canvas.getContext("2d", {alpha: false});
-    ctx.mozImageSmoothingEnabled = false;
-    ctx.webkitImageSmoothingEnabled = false;
-    ctx.msImageSmoothingEnabled = false;
-    ctx.imageSmoothingEnabled = false;
+    const canvas = canvasUtils.createCanvas(nomeElementoCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
+    const ctx = canvasUtils.createContext(canvas);
+    const el = document.getElementById(id);
     el.appendChild(canvas);
 
-    drawBackground(ctx, canvas.width, canvas.height);
+    canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
 
     model.desenho.elementos.forEach((elemento: any) => {
         const tipos: any = {
@@ -64,6 +54,9 @@ const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
             tabelaNutricional: () => {
                 tabelaNutricional.drawTable(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
+            barraOrigemRastreada: () => {
+                barraOrigemRastreada.drawBarraOrigemRastreada(id, ctx, model.impressao.resolucaoDpi, elemento);
+            },
         };
 
         if (tipos[elemento.tipo]) {
@@ -74,11 +67,6 @@ const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
 
     return canvas;
-};
-
-const drawBackground = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(0, 0, width, height);
 };
 
 const redrawWithoutGrayscale = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
