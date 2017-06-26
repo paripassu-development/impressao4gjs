@@ -3,6 +3,10 @@
     background-color: cornflowerblue;
 }
 
+.area canvas{
+    border: solid 1px;
+}
+
 .code-editor {
     width: auto;
 }
