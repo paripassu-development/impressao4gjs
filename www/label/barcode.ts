@@ -33,8 +33,12 @@ const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, mod
         format: model.tipoCodigoBarras,
         text: textBindings ? Mustache.render(model.valor, textBindings) : "1234567890128", // placeholder,
     });
-    barcodeImg.addEventListener('load', function () { // aguarda load da imagem no DOM
-        ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
+    
+    return new Promise(function (resolve, reject) {
+        barcodeImg.addEventListener('load', function () { // aguarda load da imagem no DOM
+            ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
+            resolve();
+        });
     });
 };
 

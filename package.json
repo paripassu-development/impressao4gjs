@@ -25,6 +25,7 @@
   "dependencies": {
     "@types/codemirror": "0.0.37",
     "@types/mustache": "0.8.29",
+    "@types/es6-promise": "0.0.32",
     "codemirror": "5.23.0",
     "jsbarcode": "3.8.0",
     "lodash": "3.10.1",

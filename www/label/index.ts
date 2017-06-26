@@ -42,8 +42,8 @@ const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
 
     model.desenho.elementos.forEach((elemento: any) => {
         const tipos: any = {
-            codigoBarras: () => {
-                barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+            codigoBarras: async () => {
+                await barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
             qrcode: () => {
                 qrcode.drawQrcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
