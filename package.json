@@ -27,7 +27,7 @@
     "@types/mustache": "0.8.29",
     "codemirror": "5.23.0",
     "jsbarcode": "3.8.0",
-    "lodash": "4.17.4",
+    "lodash": "3.10.1",
     "mustache": "2.3.0",
     "qrcodejs2": "0.0.2"
   }

@@ -57,7 +57,7 @@ const createBarcode = (id: string, options: ICreateBarcodeOptions) => {
     img.id = "barcode-img";
     img.style.display = "none";
     document.getElementById(id).appendChild(img);
-    const lpaddedText = _.padStart(options.text, 12,'0');
+    const lpaddedText = _.padLeft(options.text, 12,'0');
     JsBarcode("#barcode-img", lpaddedText, {
         font: options.font || "OCR-B",
         fontSize: options.fontSize,
