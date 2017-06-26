@@ -42,8 +42,12 @@ div.value-wrapper.close{
     width: 30%;
 }
 
-.values-btn {
+.template-btn {
     margin-left: 40px;
+}
+
+.hidden {
+    display: none;
 }
 
 .code-wrapper > span,

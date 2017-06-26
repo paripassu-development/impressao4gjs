@@ -75,6 +75,14 @@ document.getElementById("values-btn").onclick = () => {
     document.getElementById("code-wrapper").classList.toggle("open");
 };
 
+document.getElementById("template-btn").onclick = () => {
+    document.getElementById("canvas-area-template").classList.toggle("hidden");
+};
+
+document.getElementById("help-btn").onclick = () => {
+    alert('ATALHOS DO EDITOR\nCtrl-F: pesquisar\nCtrl-G: encontrar o próximo\nShift-Ctrl-G: encontrar o anterior\nShift-Ctrl-F: substituir\nShift-Ctrl-R: substituir todos\nF11: editor em tela-cheia');
+};
+
 document.addEventListener("DOMContentLoaded", (event) => {
     let initialModel = getModel() || JSON.stringify(modelDefault);
     let initialValue = getValues() || JSON.stringify(dadosDefault);
