@@ -1,6 +1,7 @@
 import * as Mustache from "mustache";
 import { mmPartial } from "./mm";
 import JsBarcode = require("jsbarcode");
+const _ : any = require('lodash');
 
 interface IElementoCodigoBarrasModelPosicao {
     xMm: number;
@@ -33,7 +34,9 @@ const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, mod
         text: textBindings ? Mustache.render(model.valor, textBindings) : "1234567890128", // placeholder,
     });
     ctx.save();
-    ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
+    barcodeImg.addEventListener('load', function () {
+        ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
+    });
     ctx.restore();
 };
 
@@ -54,7 +57,8 @@ const createBarcode = (id: string, options: ICreateBarcodeOptions) => {
     img.id = "barcode-img";
     img.style.display = "none";
     document.getElementById(id).appendChild(img);
-    JsBarcode("#barcode-img", options.text, {
+    const lpaddedText = _.padStart(options.text, 12,'0');
+    JsBarcode("#barcode-img", lpaddedText, {
         font: options.font || "OCR-B",
         fontSize: options.fontSize,
         format: options.format,
