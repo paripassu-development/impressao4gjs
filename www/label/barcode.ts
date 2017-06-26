@@ -34,7 +34,7 @@ const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, mod
         text: textBindings ? Mustache.render(model.valor, textBindings) : "1234567890128", // placeholder,
     });
     ctx.save();
-    barcodeImg.addEventListener('load', function () {
+    barcodeImg.addEventListener('load', function () { // aguarda load da imagem no DOM
         ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
     });
     ctx.restore();
