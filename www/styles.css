@@ -3,6 +3,10 @@
     background-color: cornflowerblue;
 }
 
+.area canvas{
+    border: solid 1px;
+}
+
 .code-editor {
     width: auto;
 }
@@ -42,8 +46,12 @@ div.value-wrapper.close{
     width: 30%;
 }
 
-.values-btn {
+.template-btn {
     margin-left: 40px;
+}
+
+.hidden {
+    display: none;
 }
 
 .code-wrapper > span,
