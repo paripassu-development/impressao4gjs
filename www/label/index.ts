@@ -30,42 +30,54 @@ export interface IEtiquetaDocModel {
     etiqueta: IEtiqueta;
     desenho: IDesenho;
 }
-const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
+const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     const nomeElementoCanvas = id + "-etiqueta-canvas";
     const mm = mmPartial(model.impressao.resolucaoDpi);
     const canvas = canvasUtils.createCanvas(nomeElementoCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
     const ctx = canvasUtils.createContext(canvas);
     const el = document.getElementById(id);
     el.appendChild(canvas);
-
+    const promises: Promise<any>[] = [];
     canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
 
     model.desenho.elementos.forEach((elemento: any) => {
         const tipos: any = {
-            codigoBarras: async () => {
-                await barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+            codigoBarras: async (): Promise<any> => {
+                return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
-            qrcode: () => {
-                qrcode.drawQrcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+            qrcode: (): Promise<any> => {
+                return new Promise((resolve) => {
+                    qrcode.drawQrcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                    resolve();
+                });
             },
-            texto: () => {
-                text.drawText(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+            texto: (): Promise<any> => {
+                return new Promise((resolve) => {
+                    text.drawText(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                    resolve();
+                });
             },
-            tabelaNutricional: () => {
-                tabelaNutricional.drawTable(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+            tabelaNutricional: (): Promise<any> => {
+                return new Promise((resolve) => {
+                    tabelaNutricional.drawTable(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                    resolve();
+                });
             },
-            barraOrigemRastreada: () => {
-                barraOrigemRastreada.drawBarraOrigemRastreada(id, ctx, model.impressao.resolucaoDpi, elemento);
+            barraOrigemRastreada: (): Promise<any> => {
+                return new Promise((resolve) => {
+                    barraOrigemRastreada.drawBarraOrigemRastreada(id, ctx, model.impressao.resolucaoDpi, elemento);
+                    resolve();
+                });
             },
         };
 
         if (tipos[elemento.tipo]) {
-            tipos[elemento.tipo]();
+            promises.push(tipos[elemento.tipo]());
         }
     });
 
+    await Promise.all(promises);
     redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
-
     return canvas;
 };
 
