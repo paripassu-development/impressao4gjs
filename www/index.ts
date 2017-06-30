@@ -32,12 +32,12 @@ document.getElementById("autoformat-btn").onclick = () => {
     codeEditor.autoFormat(valueEditor);
 };
 
-document.getElementById("create-btn").onclick = () => {
+document.getElementById("create-btn").onclick = async () => {
     //etiqueta.create("canvas-area", JSON.parse(modelEditor.getValue()), dadosLongos);
     let modelJson = modelEditor.getValue();
     let valuesObj = _.isEmpty(valueEditor.getValue()) ? dadosDefault : JSON.parse(valueEditor.getValue());
-    etiqueta.create("canvas-area-template", JSON.parse(modelJson));
-    etiqueta.create("canvas-area", JSON.parse(modelJson), valuesObj);
+    await etiqueta.create("canvas-area-template", JSON.parse(modelJson));
+    await etiqueta.create("canvas-area", JSON.parse(modelJson), valuesObj);
     save(modelJson, JSON.stringify(valuesObj));
 };
 
