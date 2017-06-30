@@ -1,6 +1,7 @@
 import * as Mustache from "mustache";
 import { mmPartial } from "./mm";
 import JsBarcode = require("jsbarcode");
+const _ : any = require('lodash');
 
 interface IElementoCodigoBarrasModelPosicao {
     xMm: number;
@@ -22,9 +23,9 @@ interface IElementoCodigoBarrasModel {
     tipoCodigoBarras: string;
     valor: string;
 }
-const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
-    const mm = mmPartial(dpi);
-    const promise = barcode.createBarcode(id, {
+const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
+    const mm = mmPartial(dpi);    
+    const barcodeImg = barcode.createBarcode(id, {
         barCodeHeight: mm(model.dimensoes.alturaCodigoBarrasMm),
         barcodeWidth: mm(model.dimensoes.larguraUnitariaCodigoBarrasMm),
         font: model.fonte.nome,
@@ -32,8 +33,12 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
         format: model.tipoCodigoBarras,
         text: textBindings ? Mustache.render(model.valor, textBindings) : "1234567890128", // placeholder,
     });
-    return promise.then((barcodeImg: HTMLCanvasElement) => {
-        return ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
+    
+    return new Promise(function (resolve, reject) {
+        barcodeImg.addEventListener('load', function () { // aguarda load da imagem no DOM
+            ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
+            resolve();
+        });
     });
 };
 
@@ -54,21 +59,17 @@ const createBarcode = (id: string, options: ICreateBarcodeOptions) => {
     img.id = "barcode-img";
     img.style.display = "none";
     document.getElementById(id).appendChild(img);
-
-    return new Promise((resolve, reject) => {
-        JsBarcode("#barcode-img", options.text, {
-            font: options.font || "OCR-B",
-            fontSize: options.fontSize,
-            format: options.format,
-            height: options.barCodeHeight,
-            margin: 1,
-            textMargin: 0,
-            width: options.barcodeWidth,
-        });
-        img.onload = () => {
-            resolve(img);
-        };
+    const lpaddedText = _.padLeft(options.text, 12,'0');
+    JsBarcode("#barcode-img", lpaddedText, {
+        font: options.font || "OCR-B",
+        fontSize: options.fontSize,
+        format: options.format,
+        height: options.barCodeHeight,
+        margin: 1,
+        textMargin: 0,
+        width: options.barcodeWidth,
     });
+    return img;
 };
 
-export const barcode = { createBarcode, drawBarcode };
+export const barcode = {createBarcode, drawBarcode};

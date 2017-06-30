@@ -30,7 +30,7 @@ export interface IEtiquetaDocModel {
     etiqueta: IEtiqueta;
     desenho: IDesenho;
 }
-const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
+const create = (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     const nomeElementoCanvas = id + "-etiqueta-canvas";
     const mm = mmPartial(model.impressao.resolucaoDpi);
     const canvas = canvasUtils.createCanvas(nomeElementoCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
