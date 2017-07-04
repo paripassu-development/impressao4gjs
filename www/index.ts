@@ -3,8 +3,8 @@ import "./fonts/index.css";
 import "./index.html";
 import { etiqueta } from "./label/index";
 import "./styles.css";
-declare var require: any;
-const _ : any = require('lodash');
+declare var require:any;
+const _:any = require('lodash');
 
 const modelEditor = codeEditor.createEditor("code");
 const valueEditor = codeEditor.createEditor("values");
@@ -12,18 +12,18 @@ const STORAGE_NAMESPACE = "impressao4gjs.etiqueta";
 const STORAGE_KEY_MODEL = "lastmodel";
 const STORAGE_KEY_VALUES = "lastvalues";
 
-const save = function (model: string, values: string) {
-    localStorage.setItem(STORAGE_NAMESPACE+'.'+STORAGE_KEY_MODEL, model);
-    localStorage.setItem(STORAGE_NAMESPACE+'.'+STORAGE_KEY_VALUES, values);
+const save = function (model:string, values:string) {
+    localStorage.setItem(STORAGE_NAMESPACE + '.' + STORAGE_KEY_MODEL, model);
+    localStorage.setItem(STORAGE_NAMESPACE + '.' + STORAGE_KEY_VALUES, values);
 };
 
 const getModel = function () {
-    let savedModel = localStorage.getItem(STORAGE_NAMESPACE+'.'+STORAGE_KEY_MODEL);
+    let savedModel = localStorage.getItem(STORAGE_NAMESPACE + '.' + STORAGE_KEY_MODEL);
     return _.isEmpty(savedModel) ? null : savedModel;
 };
 
 const getValues = function () {
-    let savedValue = localStorage.getItem(STORAGE_NAMESPACE+'.'+STORAGE_KEY_VALUES);
+    let savedValue = localStorage.getItem(STORAGE_NAMESPACE + '.' + STORAGE_KEY_VALUES);
     return _.isEmpty(savedValue) ? null : savedValue;
 };
 
@@ -92,7 +92,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
     codeEditor.autoFormat(modelEditor);
     codeEditor.autoFormat(valueEditor);
 
-    setTimeout(() => { document.getElementById("create-btn").click(); }, 500);
+    setTimeout(() => {
+        document.getElementById("create-btn").click();
+    }, 500);
 });
 
 const modelDefault = {
@@ -280,70 +282,76 @@ const modelDefault = {
 
 const dadosDefault = {
     bairroFornecedor: "bairro do fornecedor",
-        codigoFornecedor: "1234",
-        codigoRastreamento: "PN7NWCJ0FERB9DH0",
-        codigoRastreamentoNumerico: "N22476123456",
-        complemento: "complemento complemento",
-        complementoFornecedor: "complemento fornecedorRn",
-        dataEmbalagem: "26/01/2017",
-        dataEntrega: "03/07/2013",
-        dataFabricacao: "26/01/2017",
-        dataValidade: "04/07/2013",
-        documentoFornecedor: "321321321321",
-        ean13: "9780201485677",
-        localizacaoFornecedor: "localização fornecedor",
-        logradouroFornecedor: "logradouro fornecedor logradouro fornecedor logradouro fornecedor",
-        nomeEmpresa: "Abacateiros do Sul",
-        numeroFornecedor: "320",
-        nomeProdutor: "Fazenda Rei do Gado",
-        site: "paripassu.com.br",
-        telefone: "48 99889988",
-        textoProduto: "Pimentão Misto",
-        urlQrCode: "http://pqr.io?c=PNBJ20AIR1IR1ABT&p=152&u=kg&k=1",
-        precoVarejo: "12,96",
-        unidadeEmbalagem: "un",
-        nomeDocumentoMeuCadastro: "cnpj",
-        documentoMeuCadastro: "78.425.986/0036-15",
-        inscricaoRuralMeuCadastro: "12345678",
-        nomeDocumentoProdutor: "cnpj",
-        documentoProdutor: "78.425.986/0036-16",
-        inscricaoRuralProdutor: "87654321",
-        logradouroNumeroBairroMeuCadastro: "Servidão caminho da cruz, 240, Monte Verde",
-        codigoPostalMeuCadastro: "88032-650",
-        cidadeUFMeuCadastro: "Florianópolis-SC",
-        nomeFornecedor: "Abacateiros de Jaragua do sul do estado de Santa Catarina - Brasil",
-        logradouroNumeroBairroFornecedor: "Servidão Sérgio Machado, 240, Vale do Carangola",
-        logradouroNumeroBairroProdutor: "Servidão Sérgio Machado, 240, Vale do Carangola",
-        codigoPostalFornecedor: "25715-416",
-        cidadeUFFornecedor: "Petrópolis-RJ",
-        dataConsolidacao: "13/03/2017",
-        nomeMeuCadastro: "FRUTAS CANTU NORDESTE",
-        labelAbreviadaCapacidade: "Peso Líq.",
-        capacidadeEmbalagem: "0,999",
-        capacidadeUnidadeEmbalagem: "0,999g",
-        ingredientes: "Pimentão misto",
-        valorEnergeticoQtPorcao: "2",
-        valorEnergeticoValDiario: "3",
-        sodioQtPorcao: "4",
-        sodioValDiario: "5",
-        proteinasQtPorcao: "6",
-        proteinasValDiario: "7",
-        gordurasTotaisQtPorcao: "8",
-        gordurasTotaisValDiario: "9",
-        gorduraTransValDiario: "**",
-        fibraAlimentarQtPorcao: "11",
-        fibraAlimentarValDiario: "22",
-        carboidratosQtPorcao: "33",
-        carboidratosValDiario: "44",
-        porcao: "Caixa 3kg",
-        valorProporcaoCalorias: "999 kcal = 4180kj",
-        paisMunicipioMeuCadastro: "São Paulo - SP",
-        paisMunicipioProdutor: "Florianópolis - SC",
-        variedade: "caturra",
-        calibre: "52",
-        categoria: "Não sei",
-        infoConservacao: "Manter em local seco e arejado, a 15ºC",
-        pesoLiquido: "1,99 KG",
+    codigoFornecedor: "1234",
+    codigoRastreamento: "PN7NWCJ0FERB9DH0",
+    codigoRastreamentoNumerico: "N22476123456",
+    complemento: "complemento complemento",
+    complementoFornecedor: "complemento fornecedorRn",
+    dataEmbalagem: "26/01/2017",
+    dataEntrega: "03/07/2013",
+    dataFabricacao: "26/01/2017",
+    dataValidade: "04/07/2013",
+    documentoFornecedor: "321321321321",
+    ean13: "9780201485677",
+    localizacaoFornecedor: "localização fornecedor",
+    logradouroFornecedor: "logradouro fornecedor logradouro fornecedor logradouro fornecedor",
+    nomeEmpresa: "Abacateiros do Sul",
+    numeroFornecedor: "320",
+    nomeProdutor: "Fazenda Rei do Gado",
+    site: "paripassu.com.br",
+    telefone: "48 99889988",
+    textoProduto: "Pimentão Misto",
+    urlQrCode: "http://pqr.io?c=PNBJ20AIR1IR1ABT&p=152&u=kg&k=1",
+    precoVarejo: "12,96",
+    unidadeEmbalagem: "un",
+    nomeDocumentoMeuCadastro: "cnpj",
+    documentoMeuCadastro: "78.425.986/0036-15",
+    inscricaoRuralMeuCadastro: "12345678",
+    nomeDocumentoProdutor: "cnpj",
+    documentoProdutor: "78.425.986/0036-16",
+    inscricaoRuralProdutor: "87654321",
+    logradouroNumeroBairroMeuCadastro: "Servidão caminho da cruz, 240, Monte Verde",
+    codigoPostalMeuCadastro: "88032-650",
+    cidadeUFMeuCadastro: "Florianópolis-SC",
+    nomeFornecedor: "Abacateiros de Jaragua do sul do estado de Santa Catarina - Brasil",
+    logradouroNumeroBairroFornecedor: "Servidão Sérgio Machado, 240, Vale do Carangola",
+    logradouroNumeroBairroProdutor: "Servidão Sérgio Machado, 240, Vale do Carangola",
+    codigoPostalFornecedor: "25715-416",
+    cidadeUFFornecedor: "Petrópolis-RJ",
+    dataConsolidacao: "13/03/2017",
+    nomeMeuCadastro: "FRUTAS CANTU NORDESTE",
+    labelAbreviadaCapacidade: "Peso Líq.",
+    capacidadeEmbalagem: "0,999",
+    capacidadeUnidadeEmbalagem: "0,999g",
+    ingredientes: "Pimentão misto",
+    valorEnergeticoQtPorcao: "2",
+    valorEnergeticoValDiario: "3",
+    sodioQtPorcao: "4",
+    sodioValDiario: "5",
+    proteinasQtPorcao: "6",
+    proteinasValDiario: "7",
+    gordurasTotaisQtPorcao: "8",
+    gordurasTotaisValDiario: "9",
+    gorduraTransValDiario: "**",
+    fibraAlimentarQtPorcao: "11",
+    fibraAlimentarValDiario: "22",
+    carboidratosQtPorcao: "33",
+    carboidratosValDiario: "44",
+    porcao: "Caixa 3kg",
+    valorProporcaoCalorias: "999 kcal = 4180kj",
+    paisMunicipioMeuCadastro: "São Paulo - SP",
+    paisMunicipioProdutor: "Florianópolis - SC",
+    variedade: "caturra",
+    calibre: "52",
+    categoria: "Não sei",
+    infoConservacao: "Manter em local seco e arejado, a 15ºC",
+    pesoLiquido: "1,99 KG",
+    nomeDestino: "João Machado",
+    nomeDocumentoDestino: "cpf",
+    documentoDestino: "571.331.716-19",
+    logradouroDestino: "logradouro Destino",
+    localizacaoDestino: "localização destino",
+    sacDestino: "(48) 99999-9999"
 };
 
 const dadosLongos = {
@@ -412,4 +420,10 @@ const dadosLongos = {
     categoria: "Não sei Não sei Não sei Não sei Não sei Não sei Não sei",
     infoConservacao: "Manter em local seco e arejado, a 15ºC, longe da luz do sol. Consumir em até 3 dias após aberto.",
     pesoLiquido: "1,99 KG",
+    nomeDestino: "João Machado",
+    nomeDocumentoDestino: "cpf",
+    documentoDestino: "571.331.716-19",
+    logradouroDestino: "logradouro",
+    localizacaoDestino: "localização destino",
+    sacDestino: "(48) 99999-9999"
 };
