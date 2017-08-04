@@ -29,6 +29,14 @@ export interface IEtiquetaDocModel {
     impressao: IImpressao;
     etiqueta: IEtiqueta;
     desenho: IDesenho;
+    tela: ITela;
+}
+export interface ITela {
+    campos: ICampos;
+}
+export interface ICampos {
+    variavel: string;
+    rotulo: string;
 }
 const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     const nomeElementoCanvas = id + "-etiqueta-canvas";
