@@ -3,7 +3,7 @@
     background-color: cornflowerblue;
 }
 
-.area canvas{
+.area canvas {
     border: solid 1px;
 }
 
@@ -15,11 +15,11 @@
     display: inline-block;
 }
 
-div.code-wrapper{
+div.code-wrapper {
     width: 69%;
 }
 
-div.code-wrapper.open{
+div.code-wrapper.open {
     width: 100%;
 }
 
@@ -36,13 +36,13 @@ div.code-wrapper.open{
     width: 100%;
 }
 
-div.value-wrapper.close{
+div.value-wrapper.close {
     visibility: hidden;
     position: absolute;
     z-index: -1;
 }
 
-.value-wrapper{
+.value-wrapper {
     width: 30%;
 }
 
@@ -57,4 +57,16 @@ div.value-wrapper.close{
 .code-wrapper > span,
 .value-wrapper > span {
     display: block;
+}
+
+.area > h2 {
+    margin-top: 0;
+    display: inline-block;
+    max-width: 50%;
+}
+
+img.rotacao {
+    float: right;
+    margin-left: 5px;
+    height: 60px;
 }
