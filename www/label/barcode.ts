@@ -35,11 +35,11 @@ const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, mod
         text: textBindings ? Mustache.render(model.valor, textBindings) : "1234567890128", // placeholder,
     });
 
-    let degrees = model.posicao.rotacao || 0;
-    ctx.save();
-    ctx.rotate(degrees * Math.PI / 180);
     return new Promise((resolve, reject) => {
         barcodeImg.onload = () => { // aguarda load da imagem no DOM
+            let degrees = model.posicao.rotacao || 0;
+            ctx.save();
+            ctx.rotate(degrees * Math.PI / 180);
             ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
             ctx.restore();
             resolve();
