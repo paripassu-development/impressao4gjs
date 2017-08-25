@@ -26,25 +26,31 @@ interface IElementoCodigoBarrasModel {
 }
 const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
     const mm = mmPartial(dpi);
-    const barcodeImg = barcode.createBarcode(id, {
-        barCodeHeight: mm(model.dimensoes.alturaCodigoBarrasMm),
-        barcodeWidth: mm(model.dimensoes.larguraUnitariaCodigoBarrasMm),
-        font: model.fonte.nome,
-        fontSize: mm(model.fonte.alturaMm),
-        format: model.tipoCodigoBarras,
-        text: textBindings ? Mustache.render(model.valor, textBindings) : "1234567890128", // placeholder,
-    });
-
-    return new Promise((resolve, reject) => {
-        barcodeImg.onload = () => { // aguarda load da imagem no DOM
-            let degrees = model.posicao.rotacao || 0;
-            ctx.save();
-            ctx.rotate(degrees * Math.PI / 180);
-            ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
-            ctx.restore();
-            resolve();
-        };
-    });
+    const ean = Mustache.render(model.valor, textBindings);
+    let barcodeImg: HTMLImageElement;
+    
+    if(!_.isEmpty(ean)){
+        barcodeImg = barcode.createBarcode(id, {
+            barCodeHeight: mm(model.dimensoes.alturaCodigoBarrasMm),
+            barcodeWidth: mm(model.dimensoes.larguraUnitariaCodigoBarrasMm),
+            font: model.fonte.nome,
+            fontSize: mm(model.fonte.alturaMm),
+            format: model.tipoCodigoBarras,
+            text: ean, 
+        });
+        
+        return new Promise((resolve, reject) => {
+            barcodeImg.onload = () => { // aguarda load da imagem no DOM
+                let degrees = model.posicao.rotacao || 0;
+                ctx.save();
+                ctx.rotate(degrees * Math.PI / 180);
+                ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
+                ctx.restore();
+                resolve();
+            };
+        });
+    }
+    return Promise.resolve();
 };
 
 interface ICreateBarcodeOptions {
