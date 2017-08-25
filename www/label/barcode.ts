@@ -27,10 +27,9 @@ interface IElementoCodigoBarrasModel {
 const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
     const mm = mmPartial(dpi);
     const ean = Mustache.render(model.valor, textBindings);
-    let barcodeImg: HTMLImageElement;
     
     if(!_.isEmpty(ean)){
-        barcodeImg = barcode.createBarcode(id, {
+        let barcodeImg = barcode.createBarcode(id, {
             barCodeHeight: mm(model.dimensoes.alturaCodigoBarrasMm),
             barcodeWidth: mm(model.dimensoes.larguraUnitariaCodigoBarrasMm),
             font: model.fonte.nome,
