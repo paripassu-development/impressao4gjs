@@ -24,7 +24,7 @@ interface IElementoCodigoBarrasModel {
     tipoCodigoBarras: string;
     valor: string;
 }
-const formatEam = (ean: string) => {
+const formatEan = (ean: string) => {
     // deixa com 12 digitos para o digito verificador ser
     // gerado pela lib de codigo de barras
     // edita somente se não for vazio
@@ -41,7 +41,7 @@ const formatEam = (ean: string) => {
 };
 const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
     const mm = mmPartial(dpi);
-    const ean = formatEam(Mustache.render(model.valor, textBindings));
+    const ean = formatEan(Mustache.render(model.valor, textBindings));
     
     if(!_.isEmpty(ean)){
         let barcodeImg = barcode.createBarcode(id, {
