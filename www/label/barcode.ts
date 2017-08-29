@@ -24,9 +24,24 @@ interface IElementoCodigoBarrasModel {
     tipoCodigoBarras: string;
     valor: string;
 }
+const formatEan = (ean: string) => {
+    // deixa com 12 digitos para o digito verificador ser
+    // gerado pela lib de codigo de barras
+    // edita somente se não for vazio
+    if (!_.isEmpty(ean)) {
+        if (ean.length > 13) {
+            ean = ean.substring(1, 13);
+        } else if (ean.length == 13) {
+            ean = ean.substring(0, 12);
+        } else if (ean.length < 12) {
+            ean = ean.substring(0, ean.length - 1);
+        }
+    }
+    return ean;
+};
 const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
     const mm = mmPartial(dpi);
-    const ean = Mustache.render(model.valor, textBindings);
+    const ean = formatEan(Mustache.render(model.valor, textBindings));
     
     if(!_.isEmpty(ean)){
         let barcodeImg = barcode.createBarcode(id, {
