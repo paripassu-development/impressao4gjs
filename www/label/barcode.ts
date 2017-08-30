@@ -24,7 +24,17 @@ interface IElementoCodigoBarrasModel {
     tipoCodigoBarras: string;
     valor: string;
 }
-const formatEan = (ean: string) => {
+const formatEan = (ean: string, tipoCodigoBarras: string) => {
+    switch(tipoCodigoBarras.toLowerCase()){
+        case 'ean13':
+            return formatEan13(ean);
+        case 'itf14':
+            return formatDun14(ean);
+        default:
+            return formatIntercalado2De5(ean);
+    }
+};
+const formatEan13 = (ean: string) => {
     // deixa com 12 digitos para o digito verificador ser
     // gerado pela lib de codigo de barras
     // edita somente se não for vazio
@@ -39,9 +49,32 @@ const formatEan = (ean: string) => {
     }
     return ean;
 };
+const formatDun14 = (ean: string) => {
+    // deixa com 13 digitos para o digito verificador ser
+    // gerado pela lib de codigo de barras
+    // edita somente se não for vazio
+    if (!_.isEmpty(ean)) {
+        if (ean.length > 14) {
+            ean = ean.substring(1, 14);
+        } else if (ean.length == 14) {
+            ean = ean.substring(0, 13);
+        } else if (ean.length < 13) {
+            ean = ean.substring(0, ean.length - 1);
+        }
+    }
+    return ean;
+};
+const formatIntercalado2De5 = (ean: string) => {
+    if (!_.isEmpty(ean)) {
+        if (ean.length == 13) {
+            ean = '0'+ean;
+        }
+    }
+    return ean;
+};
 const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
     const mm = mmPartial(dpi);
-    const ean = formatEan(Mustache.render(model.valor, textBindings));
+    const ean = textBindings ? formatEan(Mustache.render(model.valor, textBindings), model.tipoCodigoBarras) : "000000000000";
     
     if(!_.isEmpty(ean)){
         let barcodeImg = barcode.createBarcode(id, {
