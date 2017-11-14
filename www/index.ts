@@ -318,7 +318,6 @@ const dadosDefault = {
     gordurasTotaisValDiario: "9",
     gorduraTransQtPorcao: "0",
     gorduraTransValDiario: "**",
-    infoConservacao: "Manter em local seco e arejado, a 15ºC",
     ingredientes: "Pimentão misto",
     inscricaoRuralMeuCadastro: "12345678",
     inscricaoRuralProdutor: "87654321",
@@ -362,7 +361,10 @@ const dadosDefault = {
     valorEnergeticoQtPorcao: "2",
     valorEnergeticoValDiario: "3",
     variedade: "caturra",
-    zonaProducao: "valor"
+    zonaProducao: "valor",
+    infoRefrigeracaoConservacao: "Manter na geladeira 20º",
+    infoConsumo: "Comer gelado"
+
 };
 
 const dadosLongos = {
@@ -429,7 +431,6 @@ const dadosLongos = {
     variedade: "caturra caturra caturra caturra caturra",
     calibre: "528784848748848484884848484846446156846464646484644",
     categoria: "Não sei Não sei Não sei Não sei Não sei Não sei Não sei",
-    infoConservacao: "Manter em local seco e arejado, a 15ºC, longe da luz do sol. Consumir em até 3 dias após aberto.",
     pesoLiquido: "1,99 KG",
     nomeDestino: "João Machado",
     nomeDocumentoDestino: "cpf",
