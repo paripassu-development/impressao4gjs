@@ -364,9 +364,6 @@ const dadosDefault = {
     valorEnergeticoValDiario: "3",
     variedade: "caturra",
     zonaProducao: "valor",
-    infoRefrigeracaoConservacao: "Manter na geladeira 20º",
-    infoConsumo: "Comer gelado"
-
 };
 
 const dadosLongos = {
