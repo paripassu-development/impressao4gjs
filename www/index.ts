@@ -305,7 +305,6 @@ const dadosDefault = {
     dataProducao: "valor",
     dataValidade: "04/07/2013",
     documentoDestino: "571.331.716-19",
-    documentoFornecedor: "321321321321",
     documentoMeuCadastro: "78.425.986/0036-15",
     documentoProdutor: "78.425.986/0036-16",
     ean13: "valor",
