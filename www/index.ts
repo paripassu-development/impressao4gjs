@@ -345,6 +345,7 @@ const dadosDefault = {
     observacao2: "valor",
     paisMunicipioMeuCadastro: "São Paulo - SP",
     paisMunicipioProdutor: "Florianópolis - SC",
+    periodoValidadeNutricional: "15",
     pesoLiquido: "1,99 KG",
     pesoLiquidoNutricional: "valor",
     porcao: "Caixa 3kg",
