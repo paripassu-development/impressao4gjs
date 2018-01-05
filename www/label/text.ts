@@ -1,5 +1,6 @@
 import * as Mustache from "mustache";
 import { mmPartial } from "./mm";
+import {splitLines, strokeAlignedText, TextAlign} from "../core/util/text-utils";
 
 interface IElementoTextoModelPosicao {
     xMm: number;
@@ -13,6 +14,7 @@ interface IElementoTextoModelDimensoes {
 interface IElementoTextoModelFonte {
     nome: string;
     alturaMm: number;
+    alturaMinimaMm: number;
     negrito?: boolean;
     forcaContorno?: number;
 }
@@ -21,13 +23,16 @@ interface IElementoTextoModel {
     posicao: IElementoTextoModelPosicao;
     dimensoes: IElementoTextoModelDimensoes;
     fonte: IElementoTextoModelFonte;
+    multiplasLinhas: boolean;
+    maxLinhas: number;
     valor: string;
     fn: string;
 }
+
 const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTextoModel, textBindings?: any) => {
-    if(!isVariableBindingEmpty(model, textBindings)) {
+    if (!isVariableBindingEmpty(model, textBindings)) {
         const mm = mmPartial(dpi);
-        let degrees = model.posicao.rotacao || 0;
+        const degrees = model.posicao.rotacao || 0;
         ctx.save();
         ctx.textAlign = model.posicao.alinhar || "start";
         ctx.fillStyle = "#000000";
@@ -39,27 +44,44 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
             renderedText = textFunctions[model.fn](renderedText);
         }
         ctx.lineWidth = model.fonte.forcaContorno || 0;
-        ctx.strokeText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
-        ctx.fillText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
+
+        if (model.multiplasLinhas) {
+            let yMm = model.posicao.yMm;
+            const alturaLinhaMm = model.fonte.alturaMm;
+            const linhasInformacoesAdicionais = getMultiplasLinhas(renderedText);
+            linhasInformacoesAdicionais.forEach((linha: string) => {
+                strokeAlignedText(ctx, model.dimensoes.larguraMaximaMm, linha, model.posicao.xMm, yMm, mm, TextAlign.CENTER);
+                yMm += alturaLinhaMm;
+            });
+        } else {
+            ctx.strokeText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
+            ctx.fillText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
+        }
+
         ctx.restore();
+    }
+
+    function getMultiplasLinhas(texto: string): string[] {
+        // TODO fazer a lógico de diminuir a letra até caber em todas as linhas e se não couber, colocar os ...
+        return splitLines(texto, 16);
     }
 };
 
 const isVariableBindingEmpty = (model: IElementoTextoModel, textBindings?: any) => {
-    let valor = model.valor;
+    const valor = model.valor;
     if(textBindings && indexStartVariable(valor) > 0 && indexLastVariable(valor) > 0){
-        let variable = valor.substr(indexStartVariable(valor), indexLastVariable(valor));
+        const variable = valor.substr(indexStartVariable(valor), indexLastVariable(valor));
         return !Mustache.render(variable, textBindings);
     }
     return false;
 };
 
 const indexStartVariable = (valor: string) => {
-    return valor.indexOf('{');
+    return valor.indexOf("{");
 };
 
 const indexLastVariable = (valor: string) => {
-    return valor.lastIndexOf('}');
+    return valor.lastIndexOf("}");
 };
 
 const textFunctions: any = {

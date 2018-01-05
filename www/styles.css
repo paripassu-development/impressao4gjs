@@ -1,6 +1,15 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+}
+
 .area {
     width: 100%;
-    background-color: cornflowerblue;
 }
 
 .area canvas {
@@ -16,7 +25,7 @@
 }
 
 div.code-wrapper {
-    width: 69%;
+    width: 70%;
 }
 
 div.code-wrapper.open {
@@ -46,10 +55,6 @@ div.value-wrapper.close {
     width: 30%;
 }
 
-.template-btn {
-    margin-left: 40px;
-}
-
 .hidden {
     display: none;
 }
@@ -65,7 +70,46 @@ div.value-wrapper.close {
 }
 
 img.rotacao {
-    float: right;
-    margin-left: 5px;
     height: 60px;
+}
+
+#model-buttons {
+    margin: auto;
+    display: inline-block;
+}
+
+.panel {
+    border: 1px solid #c1c1c1;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+    margin: 10px;
+}
+
+.panel .panel-heading {
+    padding: 10px;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.panel .panel-body {
+    padding: 10px;
+}
+
+.panel .panel-footer {
+    padding: 10px;
+    border-top: 1px solid #c1c1c1;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.clearfix:after, .clearfix:before {
+    display: table;
+    content: " ";
+}
+
+.clearfix:after {
+    clear: both;
 }
