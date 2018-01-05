@@ -1,6 +1,6 @@
 import * as Mustache from "mustache";
+import {splitLines, splitLinesAutoSize, strokeAlignedText, TextAlign} from "../core/util/text-utils";
 import { mmPartial } from "./mm";
-import {splitLines, strokeAlignedText, TextAlign} from "../core/util/text-utils";
 
 interface IElementoTextoModelPosicao {
     xMm: number;
@@ -11,6 +11,10 @@ interface IElementoTextoModelPosicao {
 interface IElementoTextoModelDimensoes {
     larguraMaximaMm: number;
 }
+interface IElementoTextoModelmultiplasLinhas {
+    numeroMaximoDeLinhas: number;
+}
+
 interface IElementoTextoModelFonte {
     nome: string;
     alturaMm: number;
@@ -23,7 +27,7 @@ interface IElementoTextoModel {
     posicao: IElementoTextoModelPosicao;
     dimensoes: IElementoTextoModelDimensoes;
     fonte: IElementoTextoModelFonte;
-    multiplasLinhas: boolean;
+    multiplasLinhas: IElementoTextoModelmultiplasLinhas;
     maxLinhas: number;
     valor: string;
     fn: string;
@@ -45,12 +49,16 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
         }
         ctx.lineWidth = model.fonte.forcaContorno || 0;
 
-        if (model.multiplasLinhas) {
+        if (!!model.multiplasLinhas) {
             let yMm = model.posicao.yMm;
             const alturaLinhaMm = model.fonte.alturaMm;
-            const linhasInformacoesAdicionais = getMultiplasLinhas(renderedText);
-            linhasInformacoesAdicionais.forEach((linha: string) => {
-                strokeAlignedText(ctx, model.dimensoes.larguraMaximaMm, linha, model.posicao.xMm, yMm, mm, TextAlign.CENTER);
+            const larguraMaxima = model.dimensoes.larguraMaximaMm;
+            const maximoNumeroDeLinhas = model.multiplasLinhas.numeroMaximoDeLinhas || -1;
+            let linhas = getMultiplasLinhas(ctx, model, renderedText, larguraMaxima, maximoNumeroDeLinhas, dpi);
+            linhas = justify(ctx, mm(larguraMaxima), linhas);
+            linhas.forEach((linha: string) => {
+                ctx.strokeText(linha, mm(model.posicao.xMm), mm(yMm), mm(larguraMaxima));
+                ctx.fillText(linha, mm(model.posicao.xMm), mm(yMm), mm(larguraMaxima));
                 yMm += alturaLinhaMm;
             });
         } else {
@@ -61,15 +69,48 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
         ctx.restore();
     }
 
-    function getMultiplasLinhas(texto: string): string[] {
-        // TODO fazer a lógico de diminuir a letra até caber em todas as linhas e se não couber, colocar os ...
-        return splitLines(texto, 16);
+    function justify(context: CanvasRenderingContext2D, maxLen: number, lines: string[]) {
+        if (lines.length > 1) {
+            let numWords;
+            let spaceLength;
+            let numOfSpaces;
+            let num;
+            let filler;
+            const delimiter = "\u200A";
+            for (let i = 0; i < lines.length - 1; i++) {
+                numWords = lines[i].trim().split(/\s+/).length;
+                if (numWords <= 1) {
+                    continue;
+                }
+
+                lines[i] = lines[i].trim().split(/\s+/).join(delimiter);
+                spaceLength = context.measureText(delimiter).width;
+                numOfSpaces = (maxLen - context.measureText(lines[i]).width) / spaceLength;
+                num = numOfSpaces / (numWords - 1);
+                filler = "";
+
+                for (let j = 0; j < num; j++) {
+                    filler += delimiter;
+                }
+                lines[i] = lines[i].trim().split(delimiter).join(filler);
+            }
+        }
+        return lines;
+    }
+
+    function getMultiplasLinhas(context: CanvasRenderingContext2D, model: IElementoTextoModel, texto: string,
+                                larguraMaxima: number, maximoNumeroDeLinhas: number, dpi: number): string[] {
+        if (maximoNumeroDeLinhas > 0) {
+            return splitLinesAutoSize(context, model, texto, larguraMaxima, maximoNumeroDeLinhas, dpi);
+        } else {
+            return splitLines(texto, larguraMaxima);
+        }
     }
 };
 
 const isVariableBindingEmpty = (model: IElementoTextoModel, textBindings?: any) => {
     const valor = model.valor;
-    if(textBindings && indexStartVariable(valor) > 0 && indexLastVariable(valor) > 0){
+    if (textBindings && indexStartVariable(valor) > 0 && indexLastVariable(valor) > 0) {
         const variable = valor.substr(indexStartVariable(valor), indexLastVariable(valor));
         return !Mustache.render(variable, textBindings);
     }
