@@ -14,6 +14,7 @@ interface IElementoTextoModelDimensoes {
 interface IElementoTextoModelmultiplasLinhas {
     numeroMaximoDeLinhas: number;
     alturaMinimaFonteMm: number;
+    textoJustificado: boolean;
 }
 interface IElementoTextoModelFonte {
     nome: string;
@@ -56,7 +57,9 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
             const maximoNumeroDeLinhas = model.multiplasLinhas.numeroMaximoDeLinhas || -1;
             const alturaMinimaFonteMm = model.multiplasLinhas.alturaMinimaFonteMm ? model.multiplasLinhas.alturaMinimaFonteMm : ALTURA_MINIMA_FONT_MM;
             let linhas = getMultiplasLinhas(ctx, model, renderedText, larguraMaxima, maximoNumeroDeLinhas, alturaMinimaFonteMm, dpi);
-            linhas = justify(ctx, mm(larguraMaxima), linhas);
+            if (model.multiplasLinhas.textoJustificado) {
+                linhas = justify(ctx, mm(larguraMaxima), linhas);
+            }
             linhas.forEach((linha: string) => {
                 ctx.strokeText(linha, mm(model.posicao.xMm), mm(yMm), mm(larguraMaxima));
                 ctx.fillText(linha, mm(model.posicao.xMm), mm(yMm), mm(larguraMaxima));
@@ -87,6 +90,22 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
                 lines[i] = lines[i].trim().split(/\s+/).join(delimiter);
                 spaceLength = context.measureText(delimiter).width;
                 numOfSpaces = (maxLen - context.measureText(lines[i]).width) / spaceLength;
+
+                // const splitLine = lines[i].trim().split(delimiter);
+                // const splitLineLenght = splitLine.length;
+                // let spacesCount = 0
+                // let lineWordsCount = 0;
+
+                // while ( spacesCount < numOfSpaces) {
+                //     while ( spacesCount < numOfSpaces && lineWordsCount < splitLineLenght - 1) {
+                //         splitLine[lineWordsCount].concat(delimiter);
+                //         lineWordsCount++;
+                //         spacesCount++;
+                //     }
+                // }
+
+                // lines[i] = splitLine.join();
+
                 num = numOfSpaces / (numWords - 1);
                 filler = "";
 

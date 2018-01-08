@@ -34,7 +34,9 @@ const splitLinesAutoSize =  (context: CanvasRenderingContext2D , model: any, tex
     let linhaAtual = "";
     let linhaAtualWidth = getTextWidth(linhaAtual, context, dpi);
     const spaceWidth = getTextWidth(" ", context, dpi);
-    const palavras: string[] = texto.replace(/,\S/g, ", ").split(" "); // o replace adiciona um espaço em branco após qualquer occorência de vírgula que não seja seguida de espaço (usado para evitar que múltiplas palavras sejam vistas como uma)
+    texto = texto.replace(/\s{2,}/g, " ").trim() ; // remove espaços estras entre palavras
+    texto = texto.replace(/,(\S)/g, ", $1"); // adiciona um espaço em branco após qualquer occorência de vírgula que não seja seguida de espaço (usado para evitar que múltiplas palavras sejam vistas como uma)
+    const palavras: string[] = texto.split(" ");
 
     palavras.forEach((palavra: string, index: number) => {
         const palavraWidth = getTextWidth(palavra, context, dpi);
