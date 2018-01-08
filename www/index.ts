@@ -1,10 +1,11 @@
 import * as codeEditor from "./editor";
 import "./fonts/index.css";
 import "./index.html";
-import { etiqueta } from "./label/index";
+import {etiqueta} from "./label/index";
 import "./styles.css";
-declare var require:any;
-const _:any = require('lodash');
+
+declare var require: any;
+const _: any = require('lodash');
 
 const modelEditor = codeEditor.createEditor("code");
 const valueEditor = codeEditor.createEditor("values");
@@ -12,18 +13,18 @@ const STORAGE_NAMESPACE = "impressao4gjs.etiqueta";
 const STORAGE_KEY_MODEL = "lastmodel";
 const STORAGE_KEY_VALUES = "lastvalues";
 
-const save = function (model:string, values:string) {
-    localStorage.setItem(STORAGE_NAMESPACE + '.' + STORAGE_KEY_MODEL, model);
-    localStorage.setItem(STORAGE_NAMESPACE + '.' + STORAGE_KEY_VALUES, values);
+const save = (model: string, values: string) => {
+    localStorage.setItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_MODEL, model);
+    localStorage.setItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_VALUES, values);
 };
 
 const getModel = function () {
-    let savedModel = localStorage.getItem(STORAGE_NAMESPACE + '.' + STORAGE_KEY_MODEL);
+    const savedModel = localStorage.getItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_MODEL);
     return _.isEmpty(savedModel) ? null : savedModel;
 };
 
 const getValues = function () {
-    let savedValue = localStorage.getItem(STORAGE_NAMESPACE + '.' + STORAGE_KEY_VALUES);
+    const savedValue = localStorage.getItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_VALUES);
     return _.isEmpty(savedValue) ? null : savedValue;
 };
 
@@ -32,26 +33,37 @@ document.getElementById("autoformat-btn").onclick = () => {
     codeEditor.autoFormat(valueEditor);
 };
 
-document.getElementById("create-btn").onclick = async () => {
-    //etiqueta.create("canvas-area", JSON.parse(modelEditor.getValue()), dadosLongos);
-    let modelJson = modelEditor.getValue();
-    let valuesObj = _.isEmpty(valueEditor.getValue()) ? dadosDefault : JSON.parse(valueEditor.getValue());
+async function onClickCreateButton() {
+    // etiqueta.create("canvas-area", JSON.parse(modelEditor.getValue()), dadosLongos);
+    const modelJson = modelEditor.getValue();
+    const valuesObj = _.isEmpty(valueEditor.getValue()) ? dadosDefault : JSON.parse(valueEditor.getValue());
     await etiqueta.create("canvas-area-template", JSON.parse(modelJson));
     await etiqueta.create("canvas-area", JSON.parse(modelJson), valuesObj);
     save(modelJson, JSON.stringify(valuesObj));
-};
+}
 
-document.getElementById("export-btn").onclick = () => {
-    let modelJson = modelEditor.getValue();
+function onClickExportButton() {
+    const modelJson = modelEditor.getValue();
     const canvas = document.getElementById("canvas-area-etiqueta-canvas") as HTMLCanvasElement;
     const canvasFinal = etiqueta.exportCanvas(canvas.id, JSON.parse(modelJson).impressao.orientacaoEtiquetaGraus);
     const el = document.getElementById("canvas-area-final");
     el.appendChild(canvasFinal);
     save(modelJson, valueEditor.getValue());
+}
+
+document.getElementById("create-btn").onclick = async () => {
+    await onClickCreateButton();
+    onClickExportButton();
+};
+
+document.getElementById("export-btn").onclick = async () => {
+    document.getElementById("panel-canvas-area-final").classList.toggle("hidden");
+    await onClickCreateButton();
+    onClickExportButton();
 };
 
 document.getElementById("send-btn").onclick = () => {
-    let modelJson = modelEditor.getValue();
+    const modelJson = modelEditor.getValue();
     const canvas = document.getElementById("canvas-area-etiqueta-canvas") as HTMLCanvasElement;
     const canvasFinal = etiqueta.exportCanvas(canvas.id, JSON.parse(modelJson).impressao.orientacaoEtiquetaGraus);
     const el = document.getElementById("canvas-area-final");
@@ -76,16 +88,16 @@ document.getElementById("values-btn").onclick = () => {
 };
 
 document.getElementById("template-btn").onclick = () => {
-    document.getElementById("canvas-area-template").classList.toggle("hidden");
+    document.getElementById("panel-canvas-area-template").classList.toggle("hidden");
 };
 
 document.getElementById("help-btn").onclick = () => {
-    alert('ATALHOS DO EDITOR\nCtrl-F: pesquisar\nCtrl-G: encontrar o próximo\nShift-Ctrl-G: encontrar o anterior\nShift-Ctrl-F: substituir\nShift-Ctrl-R: substituir todos\nF11: editor em tela-cheia');
+    alert("ATALHOS DO EDITOR\nCtrl-F: pesquisar\nCtrl-G: encontrar o próximo\nShift-Ctrl-G: encontrar o anterior\nShift-Ctrl-F: substituir\nShift-Ctrl-R: substituir todos\nF11: editor em tela-cheia");
 };
 
 document.addEventListener("DOMContentLoaded", (event) => {
-    let initialModel = getModel() || JSON.stringify(modelDefault);
-    let initialValue = getValues() || JSON.stringify(dadosDefault);
+    const initialModel = getModel() || JSON.stringify(modelDefault);
+    const initialValue = getValues() || JSON.stringify(dadosDefault);
 
     modelEditor.setValue(initialModel);
     valueEditor.setValue(initialValue);

@@ -1,10 +1,10 @@
-var splitLines = function (texto, caracteresPorLinha) {
+let splitLines = function (texto, caracteresPorLinha) {
     if (texto == null || texto === "") {
         return [texto];
     }
-    var linhas = [];
-    var linhaAtual = "";
-    var palavras = texto.split(" ");
+    let linhas = [];
+    let linhaAtual = "";
+    let palavras = texto.split(" ");
     palavras.forEach(function (palavra, index) {
         if (linhaAtual === "") {
             linhaAtual += palavra;
@@ -23,8 +23,8 @@ var splitLines = function (texto, caracteresPorLinha) {
     return linhas;
 };
 exports.splitLines = splitLines;
-var strokeAlignedText = function (ctx, larguraMaxima, text, xMm, yMm, mm, textAlign) {
-    var x = xMm;
+let strokeAlignedText = function (ctx, larguraMaxima, text, xMm, yMm, mm, textAlign) {
+    let x = xMm;
     if (textAlign === TextAlign.CENTER) {
         x = xMm + larguraMaxima / 2;
     }
@@ -36,7 +36,7 @@ var strokeAlignedText = function (ctx, larguraMaxima, text, xMm, yMm, mm, textAl
     ctx.fillText(text, mm(x), mm(yMm), mm(larguraMaxima));
 };
 exports.strokeAlignedText = strokeAlignedText;
-var TextAlign = {
+let TextAlign = {
     LEFT: "left",
     RIGHT: "right",
     CENTER: "center"
