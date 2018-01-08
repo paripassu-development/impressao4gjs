@@ -113,3 +113,18 @@ img.rotacao {
 .clearfix:after {
     clear: both;
 }
+
+.header {
+    display: flex;
+}
+
+.header-left {
+    display: inline-block;
+    width: calc(100% - 325px);
+    padding: 10px;
+}
+
+.header-right {
+    width: 320px;
+    display: inline-block;
+}

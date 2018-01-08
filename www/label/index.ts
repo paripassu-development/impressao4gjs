@@ -1,10 +1,11 @@
-import { canvasUtils } from "./../core/util/canvas-utils";
-import { barcode } from "./barcode";
-import { barraOrigemRastreada } from "./barra-origem-rastreada";
-import { mmPartial } from "./mm";
-import { qrcode } from "./qrcode";
-import { tabelaNutricional } from "./tabela-nutricional";
-import { text } from "./text";
+import {canvasUtils} from "./../core/util/canvas-utils";
+import {barcode} from "./barcode";
+import {barraOrigemRastreada} from "./barra-origem-rastreada";
+import {mmPartial} from "./mm";
+import {qrcode} from "./qrcode";
+import {tabelaNutricional} from "./tabela-nutricional";
+import {text} from "./text";
+import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
 
 export interface IImpressao {
     resolucaoDpi: number;
@@ -68,6 +69,12 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             tabelaNutricional: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricional.drawTable(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                    resolve();
+                });
+            },
+            tabelaNutricionalEmLinha: (): Promise<any> => {
+                return new Promise((resolve) => {
+                    tabelaNutricionalInline.drawTable(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },

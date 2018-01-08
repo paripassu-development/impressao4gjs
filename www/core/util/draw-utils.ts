@@ -14,7 +14,7 @@ class DrawUtils {
         this.ctx.closePath();
         this.ctx.fillStyle = corPreenchimento;
         this.ctx.fill();
-    };
+    }
 }
 
 interface ICoordenada {

@@ -8,10 +8,11 @@ interface IElementoTextoModelPosicao {
     alinhar: string;
     rotacao: number;
 }
+
 interface IElementoTextoModelDimensoes {
     larguraMaximaMm: number;
 }
-interface IElementoTextoModelmultiplasLinhas {
+export interface IElementoTextoModelmultiplasLinhas {
     numeroMaximoDeLinhas: number;
     alturaMinimaFonteMm: number;
     alinhamento: string;
@@ -23,6 +24,7 @@ interface IElementoTextoModelFonte {
     negrito?: boolean;
     forcaContorno?: number;
 }
+
 interface IElementoTextoModel {
     tipo: string;
     posicao: IElementoTextoModelPosicao;
@@ -104,7 +106,9 @@ const indexLastVariable = (valor: string) => {
 };
 
 const textFunctions: any = {
-  "caixaAlta": (text: string) => { return text.toUpperCase(); },
+    "caixaAlta": (text: string) => {
+        return text.toUpperCase();
+    },
 };
 
 const ALTURA_MINIMA_FONT_MM = 1.2;

@@ -16,7 +16,7 @@ const splitLines =  (texto: string, caracteresPorLinha: number): string[] => {
             linhas.push(linhaAtual);
             linhaAtual = palavra;
         }
-        if (!palavras[index + 1] && linhaAtual) {
+        if (palavras[index + 1] == null && linhaAtual) {
             linhas.push(linhaAtual);
         }
     });

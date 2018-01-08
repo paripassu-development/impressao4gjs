@@ -1,6 +1,7 @@
-import * as Mustache from "mustache";
-import { splitLines, strokeAlignedText, TextAlign } from "./../core/util/text-utils";
-import { mmPartial } from "./mm";
+import {splitLines, strokeAlignedText, TextAlign} from "./../core/util/text-utils";
+import {mmPartial} from "./mm";
+import {fillTemplate, getOrDefault} from "../core/util/param-utils";
+import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
 
 const BLACK = "#000000";
 
@@ -8,27 +9,33 @@ interface IElementoTabelaNutricionalModelPosicao {
     xMm: number;
     yMm: number;
 }
+
 interface IElementoTabelaNutricionalModelDimensoes {
     larguraMaximaMm: number;
 }
+
 interface IElementoTabelaNutricionalModelFonte {
     nome: string;
     alturaMm: number;
     negrito?: boolean;
     forcaContorno?: number;
 }
+
 interface IInformacoesNutriente {
     nome: string;
     qtPorcao: string;
     valDiario: string;
 }
+
 interface IInformacoesNutrientesTabelaNutricional {
     [key: string]: IInformacoesNutriente;
 }
+
 interface IElementoTabelaNutricionalInformacoesAdicionais {
     texto: string;
     caracteresPorLinha: number;
 }
+
 interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoInformacaoNutricional: string;
     textoQuantidadePorPorcao: string;
@@ -53,25 +60,6 @@ const nutrientes = [
     "sodio",
 ];
 
-const informacoesPadraoZero = [
-    "valorEnergeticoQtPorcao",
-    "valorEnergeticoValDiario",
-    "sodioQtPorcao",
-    "sodioValDiario",
-    "proteinasQtPorcao",
-    "proteinasValDiario",
-    "gordurasTotaisQtPorcao",
-    "gordurasTotaisValDiario",
-    "gorduraTransQtPorcao",
-    "gorduraTransValDiario",
-    "gorduraSaturadaQtPorcao",
-    "gorduraSaturadaValDiario",
-    "fibraAlimentarQtPorcao",
-    "fibraAlimentarValDiario",
-    "carboidratosQtPorcao",
-    "carboidratosValDiario",
-];
-
 interface IElementoTabelaNutricionalModel {
     tipo: string;
     posicao: IElementoTabelaNutricionalModelPosicao;
@@ -83,13 +71,7 @@ interface IElementoTabelaNutricionalModel {
 }
 
 const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
-    if (textBindings) {
-        informacoesPadraoZero.forEach((nomeInfo: string) => {
-            if (textBindings[nomeInfo] === undefined) {
-                textBindings[nomeInfo] = "0";
-            }
-        });
-    }
+    setInformacoesPadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
     ctx.fillStyle = BLACK;
@@ -122,7 +104,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
     drawLine(ctx, model, yMm, mm);
     nutrientes.forEach((nutriente: any) => {
         const informacoesNutriente = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
-        if ( informacoesNutriente !== undefined ) {
+        if (informacoesNutriente !== undefined) {
             yMm += alturaLinhaMm;
             ctx.textAlign = TextAlign.LEFT;
             ctx.strokeText(getOrDefault(informacoesNutriente, "nome"),
@@ -152,14 +134,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
     ctx.restore();
 };
 
-function fillTemplate(valor: string, textBindings: any) {
-    return textBindings ? Mustache.render(valor, textBindings) : valor.replace("{{{", "<").replace("}}}", ">");
-}
-
-function getOrDefault(object: any, param: string): string {
-    return object[param] ? object[param] : "<" + param + ">";
-}
-
 const drawLine = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
     if (model.opcoes != null && model.opcoes.ocultarLinhas) {
         return;
@@ -168,4 +142,4 @@ const drawLine = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricion
     ctx.strokeRect(mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm), 1);
 };
 
-export const tabelaNutricional = { drawTable };
+export const tabelaNutricional = {drawTable};
