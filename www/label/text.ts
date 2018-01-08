@@ -13,8 +13,8 @@ interface IElementoTextoModelDimensoes {
 }
 interface IElementoTextoModelmultiplasLinhas {
     numeroMaximoDeLinhas: number;
+    alturaMinimaFonteMm: number;
 }
-
 interface IElementoTextoModelFonte {
     nome: string;
     alturaMm: number;
@@ -54,7 +54,8 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
             const alturaLinhaMm = model.fonte.alturaMm;
             const larguraMaxima = model.dimensoes.larguraMaximaMm;
             const maximoNumeroDeLinhas = model.multiplasLinhas.numeroMaximoDeLinhas || -1;
-            let linhas = getMultiplasLinhas(ctx, model, renderedText, larguraMaxima, maximoNumeroDeLinhas, dpi);
+            const alturaMinimaFonteMm = model.multiplasLinhas.alturaMinimaFonteMm ? model.multiplasLinhas.alturaMinimaFonteMm : ALTURA_MINIMA_FONT_MM;
+            let linhas = getMultiplasLinhas(ctx, model, renderedText, larguraMaxima, maximoNumeroDeLinhas, alturaMinimaFonteMm, dpi);
             linhas = justify(ctx, mm(larguraMaxima), linhas);
             linhas.forEach((linha: string) => {
                 ctx.strokeText(linha, mm(model.posicao.xMm), mm(yMm), mm(larguraMaxima));
@@ -99,9 +100,9 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
     }
 
     function getMultiplasLinhas(context: CanvasRenderingContext2D, model: IElementoTextoModel, texto: string,
-                                larguraMaxima: number, maximoNumeroDeLinhas: number, dpi: number): string[] {
+                                larguraMaxima: number, maximoNumeroDeLinhas: number, alturaMinimaFonteMm: number, dpi: number): string[] {
         if (maximoNumeroDeLinhas > 0) {
-            return splitLinesAutoSize(context, model, texto, larguraMaxima, maximoNumeroDeLinhas, dpi);
+            return splitLinesAutoSize(context, model, texto, larguraMaxima, maximoNumeroDeLinhas, alturaMinimaFonteMm, dpi);
         } else {
             return splitLines(texto, larguraMaxima);
         }
@@ -128,5 +129,7 @@ const indexLastVariable = (valor: string) => {
 const textFunctions: any = {
   "caixaAlta": (text: string) => { return text.toUpperCase(); },
 };
+
+const ALTURA_MINIMA_FONT_MM = 1.2;
 
 export const text = { drawText };

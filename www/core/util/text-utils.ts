@@ -24,7 +24,7 @@ const splitLines =  (texto: string, caracteresPorLinha: number): string[] => {
 }
 
 const splitLinesAutoSize =  (context: CanvasRenderingContext2D , model: any, texto: string,
-                             larguraMaxima: number, maximoNumeroDeLinhas: number, dpi: number): string[] => {
+                             larguraMaxima: number, maximoNumeroDeLinhas: number, alturaMinimaFonteMm: number, dpi: number): string[] => {
     if (texto == null || texto === "") {
         return [texto];
     }
@@ -34,7 +34,7 @@ const splitLinesAutoSize =  (context: CanvasRenderingContext2D , model: any, tex
     let linhaAtual = "";
     let linhaAtualWidth = getTextWidth(linhaAtual, context, dpi);
     const spaceWidth = getTextWidth(" ", context, dpi);
-    const palavras: string[] = texto.replace(/,(?=\S)/, ", ").split(" "); // o replace adiciona um espaço em branco em qualquer virgula seguida de caracteres
+    const palavras: string[] = texto.replace(/,\S/g, ", ").split(" "); // o replace adiciona um espaço em branco após qualquer occorência de vírgula que não seja seguida de espaço (usado para evitar que múltiplas palavras sejam vistas como uma)
 
     palavras.forEach((palavra: string, index: number) => {
         const palavraWidth = getTextWidth(palavra, context, dpi);
@@ -56,14 +56,14 @@ const splitLinesAutoSize =  (context: CanvasRenderingContext2D , model: any, tex
 
     if (linhas.length <= maximoNumeroDeLinhas) {
         return linhas;
-    } else if (linhas.length > maximoNumeroDeLinhas && alturaFontMm <= ALTURA_MINIMA_FONT) {
+    } else if (linhas.length > maximoNumeroDeLinhas && alturaFontMm <= alturaMinimaFonteMm) {
         return truncaLinhas(linhas, maximoNumeroDeLinhas, larguraMaxima, context, dpi);
     } else {
         const mm = mmPartial(dpi);
-        alturaFontMm = (alturaFontMm * 0.8) >= ALTURA_MINIMA_FONT ? (alturaFontMm * 0.8) : ALTURA_MINIMA_FONT; // diminui o tamanho da fonte gradativamente em 20% até a no máximo ter ALTURA_MINIMA_FONT
+        alturaFontMm = (alturaFontMm * 0.8) >= alturaMinimaFonteMm ? (alturaFontMm * 0.9) : alturaMinimaFonteMm; // diminui o tamanho da fonte gradativamente em 10% até a no máximo ter "alturaMinimaFonteMm"
         context.font = `${model.fonte.negrito ? "bold" : ""} ${mm(alturaFontMm)}px ${model.fonte.nome}`; // atualiza o tamanho da fonte do context
         model.fonte.alturaMm = alturaFontMm;
-        return splitLinesAutoSize(context, model, texto, larguraMaxima, maximoNumeroDeLinhas, dpi); // chama a função recursivamente com o tamanho da fonte atualizado
+        return splitLinesAutoSize(context, model, texto, larguraMaxima, maximoNumeroDeLinhas, alturaMinimaFonteMm, dpi); // chama a função recursivamente com o tamanho da fonte atualizado
     }
 }
 
@@ -102,8 +102,6 @@ const strokeAlignedText = (ctx: CanvasRenderingContext2D, larguraMaxima: number,
     ctx.fillText(text, mm(x), mm(yMm), mm(larguraMaxima));
 };
 
-const ALTURA_MINIMA_FONT = 1.3;
-
 const TextAlign = {
     LEFT: "left",
     RIGHT: "right",
@@ -111,4 +109,3 @@ const TextAlign = {
 };
 
 export {splitLines, splitLinesAutoSize, strokeAlignedText, TextAlign};
-
