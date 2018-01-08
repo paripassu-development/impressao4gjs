@@ -14,7 +14,7 @@ interface IElementoTextoModelDimensoes {
 interface IElementoTextoModelmultiplasLinhas {
     numeroMaximoDeLinhas: number;
     alturaMinimaFonteMm: number;
-    textoJustificado: boolean;
+    alinhamento: string;
 }
 interface IElementoTextoModelFonte {
     nome: string;
@@ -56,14 +56,17 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
             const larguraMaxima = model.dimensoes.larguraMaximaMm;
             const maximoNumeroDeLinhas = model.multiplasLinhas.numeroMaximoDeLinhas || -1;
             const alturaMinimaFonteMm = model.multiplasLinhas.alturaMinimaFonteMm ? model.multiplasLinhas.alturaMinimaFonteMm : ALTURA_MINIMA_FONT_MM;
-            let linhas = getMultiplasLinhas(ctx, model, renderedText, larguraMaxima, maximoNumeroDeLinhas, alturaMinimaFonteMm, dpi);
-            if (model.multiplasLinhas.textoJustificado) {
-                linhas = justify(ctx, mm(larguraMaxima), linhas);
-            }
+            const linhas = getMultiplasLinhas(ctx, model, renderedText, larguraMaxima, maximoNumeroDeLinhas, alturaMinimaFonteMm, dpi);
+            let alinhamento = model.multiplasLinhas.alinhamento || "left";
+            let contaLinha = 0;
+
             linhas.forEach((linha: string) => {
-                ctx.strokeText(linha, mm(model.posicao.xMm), mm(yMm), mm(larguraMaxima));
-                ctx.fillText(linha, mm(model.posicao.xMm), mm(yMm), mm(larguraMaxima));
+                if (contaLinha === linhas.length - 1 && alinhamento === "justify") {
+                    alinhamento = "left";
+                }
+                strokeAlignedText(ctx, larguraMaxima, linha, model.posicao.xMm, yMm, mm, alinhamento);
                 yMm += alturaLinhaMm;
+                contaLinha++;
             });
         } else {
             ctx.strokeText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
@@ -71,51 +74,6 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
         }
 
         ctx.restore();
-    }
-
-    function justify(context: CanvasRenderingContext2D, maxLen: number, lines: string[]) {
-        if (lines.length > 1) {
-            let numWords;
-            let spaceLength;
-            let numOfSpaces;
-            let num;
-            let filler;
-            const delimiter = "\u200A";
-            for (let i = 0; i < lines.length - 1; i++) {
-                numWords = lines[i].trim().split(/\s+/).length;
-                if (numWords <= 1) {
-                    continue;
-                }
-
-                lines[i] = lines[i].trim().split(/\s+/).join(delimiter);
-                spaceLength = context.measureText(delimiter).width;
-                numOfSpaces = (maxLen - context.measureText(lines[i]).width) / spaceLength;
-
-                // const splitLine = lines[i].trim().split(delimiter);
-                // const splitLineLenght = splitLine.length;
-                // let spacesCount = 0
-                // let lineWordsCount = 0;
-
-                // while ( spacesCount < numOfSpaces) {
-                //     while ( spacesCount < numOfSpaces && lineWordsCount < splitLineLenght - 1) {
-                //         splitLine[lineWordsCount].concat(delimiter);
-                //         lineWordsCount++;
-                //         spacesCount++;
-                //     }
-                // }
-
-                // lines[i] = splitLine.join();
-
-                num = numOfSpaces / (numWords - 1);
-                filler = "";
-
-                for (let j = 0; j < num; j++) {
-                    filler += delimiter;
-                }
-                lines[i] = lines[i].trim().split(delimiter).join(filler);
-            }
-        }
-        return lines;
     }
 
     function getMultiplasLinhas(context: CanvasRenderingContext2D, model: IElementoTextoModel, texto: string,

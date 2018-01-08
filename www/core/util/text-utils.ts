@@ -98,16 +98,48 @@ const strokeAlignedText = (ctx: CanvasRenderingContext2D, larguraMaxima: number,
         x = xMm + larguraMaxima / 2;
     } else if (textAlign === TextAlign.RIGHT) {
         x = xMm + larguraMaxima;
+    } else if (textAlign === TextAlign.JUSTIFY) {
+        text = justifyText(ctx, mm(larguraMaxima), text);
     }
     ctx.textAlign = textAlign;
     ctx.strokeText(text, mm(x), mm(yMm), mm(larguraMaxima));
     ctx.fillText(text, mm(x), mm(yMm), mm(larguraMaxima));
 };
 
+const justifyText = (context: CanvasRenderingContext2D, maxLen: number, text: string): string => {
+    let numWords;
+    let spaceLength;
+    let numOfSpaces;
+    let num;
+    let filler;
+    const delimiter = "\u200A";
+    let textJustified;
+
+    numWords = text.trim().split(/\s+/).length;
+    if (numWords <= 1) {
+        return text;
+    }
+
+    textJustified = text.trim().split(/\s+/).join(delimiter);
+    spaceLength = context.measureText(delimiter).width;
+    numOfSpaces = (maxLen - context.measureText(text).width) / spaceLength;
+
+    num = numOfSpaces;
+    filler = "";
+
+    for (let j = 0; j < num; j++) {
+        filler += delimiter;
+    }
+    textJustified = textJustified.trim().split(delimiter).join(filler);
+
+    return textJustified;
+};
+
 const TextAlign = {
     LEFT: "left",
     RIGHT: "right",
     CENTER: "center",
+    JUSTIFY: "justify",
 };
 
 export {splitLines, splitLinesAutoSize, strokeAlignedText, TextAlign};
