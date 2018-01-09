@@ -20,32 +20,8 @@ interface IElementoTabelaNutricionalModelFonte {
     forcaContorno?: number;
 }
 
-interface IInformacoesNutriente {
-    nome: string;
-    qtPorcao: string;
-    valDiario: string;
-}
-
-interface IInformacoesNutrientesTabelaNutricional {
-    [key: string]: IInformacoesNutriente;
-}
-
 interface IElementoTabelaNutricionalInformacoesAdicionais {
     texto: string;
-    caracteresPorLinha: number;
-}
-
-interface IElementoTabelaNutricionalModelInformacoesNutricionais {
-    textoInformacaoNutricional: string;
-    textoQuantidadePorPorcao: string;
-    textoAbreviadoValorDiario: string;
-    textoPorcaoCaseira: string;
-    textoProporcaoCalorias: string;
-    informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
-}
-
-interface IElementoTabelaNutricionalOpcoes {
-    ocultarLinhas?: boolean;
 }
 
 interface IElementoTabelaNutricionalInlineModel {
@@ -53,9 +29,7 @@ interface IElementoTabelaNutricionalInlineModel {
     posicao: IElementoTabelaNutricionalModelPosicao;
     dimensoes: IElementoTabelaNutricionalModelDimensoes;
     fonte: IElementoTabelaNutricionalModelFonte;
-    informacoesNutricionais: IElementoTabelaNutricionalModelInformacoesNutricionais;
     informacoesAdicionais: IElementoTabelaNutricionalInformacoesAdicionais;
-    opcoes?: IElementoTabelaNutricionalOpcoes;
     multiplasLinhas: IElementoTextoModelmultiplasLinhas;
     larguraMaximaMm: number;
 }
