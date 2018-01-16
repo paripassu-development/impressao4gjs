@@ -31,9 +31,15 @@ export interface IEtiquetaDocModel {
     etiqueta: IEtiqueta;
     desenho: IDesenho;
     tela: ITela;
+    pdf: IPdf;
 }
 export interface ITela {
     campos: ICampos;
+}
+export interface IPdf {
+    pdfPadding: number;
+    etiquetaPadding: number;
+    etiquetaComBorda: boolean;
 }
 export interface ICampos {
     variavel: string;
