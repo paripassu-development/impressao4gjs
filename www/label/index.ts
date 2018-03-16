@@ -37,7 +37,7 @@ export interface ITela {
     campos: ICampos;
 }
 export interface IPdf {
-    pdfPadding: number;
+    pdfPadding:  number;
     etiquetaPadding: number;
     etiquetaComBorda: boolean;
 }

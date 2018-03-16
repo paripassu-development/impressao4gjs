@@ -1,6 +1,7 @@
 import * as Mustache from "mustache";
 import { mmPartial } from "./mm";
 import JsBarcode = require("jsbarcode");
+const bwipjs: any = require("bwip-js");
 const _ : any = require('lodash');
 
 interface IElementoCodigoBarrasModelPosicao {
@@ -15,8 +16,10 @@ interface IElementoCodigoBarrasModelDimensoes {
 interface IElementoCodigoBarrasModelFonte {
     nome: string;
     alturaMm: number;
+    alinhar: string;
 }
 interface IElementoCodigoBarrasModel {
+    mostraTexto: boolean;
     tipo: string;
     posicao: IElementoCodigoBarrasModelPosicao;
     dimensoes: IElementoCodigoBarrasModelDimensoes;
@@ -72,21 +75,35 @@ const formatIntercalado2De5 = (ean: string) => {
     }
     return ean;
 };
-const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any) => {
+let resolveDefaultValue = function (tipoCodigoBarras: string) {
+    switch(tipoCodigoBarras.toLowerCase()){
+        case 'ean13':
+            return "000000000000";
+        case 'itf14':
+            return "0000000000000";
+        case 'gs1-128':
+            return "(10)00000000000";
+        default:
+            return "0000000000000";
+    }
+};
+const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any): Promise<any> => {
     const mm = mmPartial(dpi);
-    const ean = textBindings ? formatEan(Mustache.render(model.valor, textBindings), model.tipoCodigoBarras) : "000000000000";
+    const ean = textBindings ? formatEan(Mustache.render(model.valor, textBindings), model.tipoCodigoBarras) : resolveDefaultValue(model.tipoCodigoBarras);
     
     if(!_.isEmpty(ean)){
-        let barcodeImg = barcode.createBarcode(id, {
-            barCodeHeight: mm(model.dimensoes.alturaCodigoBarrasMm),
-            barcodeWidth: mm(model.dimensoes.larguraUnitariaCodigoBarrasMm),
+        let barcodeImg = await barcode.createBarcode(id, dpi, {
+            barCodeHeight: model.dimensoes.alturaCodigoBarrasMm,
+            barcodeWidth: model.dimensoes.larguraUnitariaCodigoBarrasMm,
             font: model.fonte.nome,
-            fontSize: mm(model.fonte.alturaMm),
+            fontSize: model.fonte.alturaMm,
             format: model.tipoCodigoBarras,
-            text: ean, 
+            text: ean,
+            textAlign: model.fonte.alinhar,
+            displayValue: model.mostraTexto,
         });
         
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             barcodeImg.onload = () => { // aguarda load da imagem no DOM
                 let degrees = model.posicao.rotacao || 0;
                 ctx.save();
@@ -101,6 +118,8 @@ const drawBarcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, mod
 };
 
 interface ICreateBarcodeOptions {
+    textAlign: string;
+    displayValue: boolean;
     barCodeHeight: number;
     barcodeWidth: number;
     font?: string;
@@ -108,26 +127,56 @@ interface ICreateBarcodeOptions {
     format: string;
     text: string;
 }
-const createBarcode = (id: string, options: ICreateBarcodeOptions) => {
+const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions): Promise<HTMLImageElement> => {
     const oldImg = document.getElementById("barcode-img");
     if (oldImg) {
         oldImg.remove();
     }
-    const img = document.createElement("img");
+    const lpaddedText = _.padLeft(options.text, 12,'0');
+    let img = document.createElement("img");
     img.id = "barcode-img";
     img.style.display = "none";
-    document.getElementById(id).appendChild(img);
-    const lpaddedText = _.padLeft(options.text, 12,'0');
-    JsBarcode("#barcode-img", lpaddedText, {
-        font: options.font || "OCR-B",
-        fontSize: options.fontSize,
-        format: options.format,
-        height: options.barCodeHeight,
-        margin: 1,
-        textMargin: 0,
-        width: options.barcodeWidth,
+
+
+    const mm = mmPartial(dpi);
+    return new Promise((resolve, reject) => {
+        if(options.format==='gs1-128') {
+            const canvas = document.createElement("canvas");
+            // canvas.style.display = "none";
+            // document.getElementById(id).appendChild(canvas);
+            bwipjs(canvas, {
+                bcid:        options.format,       // Barcode type
+                text:        options.text,    // Text to encode
+                scale:       options.barcodeWidth*3,               // 3x scaling factor
+                height:      options.barCodeHeight,              // Bar height, in millimeters
+                includetext:  options.displayValue || true,            // Show human-readable text
+                // textfont: options.font || "OCR-B",
+                // textsize: options.fontSize,
+                // textxalign: options.textAlign || "center",
+            }, function (err: any) {
+                if (err) {
+                    console.log("Erro ao gerar o codigo de barras " + options.format);
+                } else {
+                    img.src = canvas.toDataURL('image/png');
+                }
+                resolve(img);
+            });
+        } else {
+            document.getElementById(id).appendChild(img);
+            JsBarcode("#barcode-img", lpaddedText, {
+                font: options.font || "OCR-B",
+                fontSize: mm(options.fontSize),
+                displayValue: options.displayValue || true,
+                format: options.format,
+                height: mm(options.barCodeHeight),
+                margin: 1,
+                textMargin: 0,
+                textAlign: options.textAlign || "center",
+                width: mm(options.barcodeWidth),
+            });
+            resolve(img);
+        }
     });
-    return img;
 };
 
 export const barcode = {createBarcode, drawBarcode};
