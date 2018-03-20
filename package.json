@@ -21,7 +21,6 @@
     "fs-extra": "^5.0.0",
     "klaw-sync": "^3.0.2",
     "source-map-loader": "^0.1.6",
-    "styles-loader": "0.0.0",
     "ts-loader": "^2.0.0",
     "tslint": "^4.3.1",
     "typescript": "^2.1.5",

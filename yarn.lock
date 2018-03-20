@@ -862,7 +862,7 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
-bwip-js@^1.6.3:
+bwip-js@1.6.3:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/bwip-js/-/bwip-js-1.6.3.tgz#c92af596a5422015cba7e2683ea4fe6d2baa7eb7"
   dependencies:
@@ -4089,10 +4089,6 @@ strip-eof@^1.0.0:
 strip-json-comments@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-1.0.4.tgz#1e15fbcac97d3ee99bf2d73b4c656b082bbafb91"
-
-styles-loader@0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/styles-loader/-/styles-loader-0.0.0.tgz#b4088f27588b632fde589d23175b7bb3cb8dbf78"
 
 supports-color@^0.2.0:
   version "0.2.0"
