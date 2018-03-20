@@ -7,6 +7,20 @@ import {tabelaNutricional} from "./tabela-nutricional";
 import {text} from "./text";
 import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
 
+export const GS1_DATE_PATTERN = "YYMMDD";
+export const BARCODE_IMG_ELEMENT_ID = "barcode-img";
+export const EAN13_DEFAULT = "ean13";
+export const ITF14_DEFAULT = "itf14";
+export const GS1_128_DEFAULT = "gs1-128";
+export const GS1128 = "gs1128";
+export const EAN128 = "ean128";
+export const EAN_128 = "ean-128";
+export const IDENTIFICADORES_DATAS = [
+    "11", // data producao
+    "12", // data validade
+    "13", // data embalagem
+];
+
 export interface IImpressao {
     resolucaoDpi: number;
     etiquetasPorPagina: number;
@@ -16,16 +30,20 @@ export interface IImpressao {
     larguraPaginaMm: number;
     orientacaoEtiquetaGraus: number;
 }
+
 export interface IEtiqueta {
     dimensoes: IEtiquetaDimensoes;
 }
+
 export interface IEtiquetaDimensoes {
     alturaMm: number;
     larguraMm: number;
 }
+
 export interface IDesenho {
     elementos: any[];
 }
+
 export interface IEtiquetaDocModel {
     impressao: IImpressao;
     etiqueta: IEtiqueta;
@@ -33,18 +51,22 @@ export interface IEtiquetaDocModel {
     tela: ITela;
     pdf: IPdf;
 }
+
 export interface ITela {
     campos: ICampos;
 }
+
 export interface IPdf {
-    pdfPadding:  number;
+    pdfPadding: number;
     etiquetaPadding: number;
     etiquetaComBorda: boolean;
 }
+
 export interface ICampos {
     variavel: string;
     rotulo: string;
 }
+
 const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     const nomeElementoCanvas = id + "-etiqueta-canvas";
     const mm = mmPartial(model.impressao.resolucaoDpi);
@@ -57,7 +79,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
 
     model.desenho.elementos.forEach((elemento: any) => {
         const tipos: any = {
-            codigoBarras: async(): Promise<any> => {
+            codigoBarras: async (): Promise<any> => {
                 return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
             },
             qrcode: (): Promise<any> => {
@@ -167,4 +189,4 @@ const exportCanvas = (id: string, orientationDegrees: number) => {
     return canvasFinal;
 };
 
-export const etiqueta = { create, exportCanvas };
+export const etiqueta = {create, exportCanvas};
