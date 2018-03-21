@@ -6,6 +6,7 @@ import "./styles.css";
 
 declare var require: any;
 const _: any = require('lodash');
+const $: any = require('jquery');
 
 const modelEditor = codeEditor.createEditor("code");
 const valueEditor = codeEditor.createEditor("values");
@@ -35,12 +36,32 @@ document.getElementById("autoformat-btn").onclick = () => {
     codeEditor.autoFormat(valueEditor);
 };
 
+let showErrors = function (err: any) {
+    if (err instanceof Array) {
+        err.forEach((error) => {
+            const label = document.createElement("p") as HTMLParagraphElement;
+            const text = document.createTextNode(error);
+            label.appendChild(text);
+            label.className = "error-label";
+            document.getElementById("code-wrapper").appendChild(label);
+        });
+    }
+};
+
+let clearErrors = function () {
+    $(".error-label").remove();
+};
+
 async function onClickCreateButton() {
-    // etiqueta.create("canvas-area", JSON.parse(modelEditor.getValue()), dadosLongos);
     const modelJson = modelEditor.getValue();
     const valuesObj = _.isEmpty(valueEditor.getValue()) ? dadosDefault : JSON.parse(valueEditor.getValue());
+    clearErrors();
+    try {
+        await etiqueta.create("canvas-area", JSON.parse(modelJson), valuesObj);
+    } catch (err) {
+        showErrors(err);
+    }
     await etiqueta.create("canvas-area-template", JSON.parse(modelJson));
-    await etiqueta.create("canvas-area", JSON.parse(modelJson), valuesObj);
     save(modelJson, JSON.stringify(valuesObj));
 }
 
@@ -379,77 +400,4 @@ const dadosDefault = {
     valorEnergeticoValDiario: "3",
     variedade: "caturra",
     zonaProducao: "norte",
-};
-
-const dadosLongos = {
-    bairroFornecedor: "bairro do fornecedor bairro do fornecedor bairro do fornecedor",
-    codigoFornecedor: "1234567891011121314151614",
-    codigoRastreamento: "PN7NWCJ0FERB9DH0",
-    codigoRastreamentoNumerico: "N22476123456",
-    complemento: "complemento complemento complemento",
-    complementoFornecedor: "complemento fornecedorRn",
-    dataEmbalagem: "26/01/2017",
-    dataEntrega: "03/07/2013",
-    dataFabricacao: "26/01/2017",
-    dataValidade: "04/07/2013",
-    documentoFornecedor: "321321321321",
-    ean13: "9780201485677",
-    localizacaoFornecedor: "localização fornecedor localização fornecedor localização fornecedor",
-    logradouroFornecedor: "logradouro fornecedor logradouro fornecedor logradouro fornecedor",
-    nomeEmpresa: "Abacateiros do Sul Abacateiros do Sul Abacateiros do Sul Abacateiros do Sul",
-    numeroFornecedor: "320",
-    nomeProdutor: "Fazenda Rei do Gado Fazenda Rei do Gado Fazenda Rei do Gado Fazenda Rei do Gado",
-    site: "paripassu.com.br",
-    telefone: "48 99889988",
-    textoProduto: "Pimentão Misto Pimentão Misto Pimentão Misto Pimentão Misto",
-    urlQrCode: "http://pqr.io?c=PNBJ20AIR1IR1ABT&p=152&u=kg&k=1",
-    precoVarejo: "12,96",
-    unidadeEmbalagem: "un",
-    nomeDocumentoMeuCadastro: "cnpj",
-    documentoMeuCadastro: "78.425.986/0036-15",
-    inscricaoRuralMeuCadastro: "1234567812345678",
-    nomeDocumentoProdutor: "cnpj",
-    documentoProdutor: "78.425.986/0036-16",
-    inscricaoRuralProdutor: "8765432187654321",
-    logradouroNumeroBairroMeuCadastro: "Servidão caminho da cruz, 240, Monte Verde Servidão caminho da cruz, 240, Monte Verde",
-    codigoPostalMeuCadastro: "88032-650",
-    cidadeUFMeuCadastro: "Florianópolis-SC",
-    nomeFornecedor: "Abacateiros de Jaragua do sul do estado de Santa Catarina - Brasil",
-    logradouroNumeroBairroFornecedor: "Servidão Sérgio Machado, 240, Vale do Carangola Servidão Sérgio Machado, 240, Vale do Carangola",
-    logradouroNumeroBairroProdutor: "Servidão Sérgio Machado, 240, Vale do Carangola Servidão Sérgio Machado, 240, Vale do Carangola",
-    codigoPostalFornecedor: "25715-416",
-    cidadeUFFornecedor: "Petrópolis-RJ",
-    dataConsolidacao: "13/03/2017",
-    nomeMeuCadastro: "FRUTAS CANTU NORDESTE FRUTAS CANTU NORDESTE FRUTAS CANTU NORDESTE",
-    labelAbreviadaCapacidade: "Peso Líq.",
-    capacidadeEmbalagem: "0,999",
-    capacidadeUnidadeEmbalagem: "0,999g",
-    ingredientes: "Pimentão misto Pimentão misto Pimentão misto Pimentão misto Pimentão misto",
-    valorEnergeticoQtPorcao: "2",
-    valorEnergeticoValDiario: "3",
-    sodioQtPorcao: "4",
-    sodioValDiario: "5",
-    proteinasQtPorcao: "6",
-    proteinasValDiario: "7",
-    gordurasTotaisQtPorcao: "8",
-    gordurasTotaisValDiario: "9",
-    gorduraTransValDiario: "**",
-    fibraAlimentarQtPorcao: "11",
-    fibraAlimentarValDiario: "22",
-    carboidratosQtPorcao: "33",
-    carboidratosValDiario: "44",
-    porcao: "Caixa 3kg",
-    valorProporcaoCalorias: "999 kcal = 4180kj",
-    paisMunicipioMeuCadastro: "São Paulo, SP, Brasil São Paulo, SP, Brasil São Paulo, SP, Brasil",
-    paisMunicipioProdutor: "Florianópolis, SC, Brasil São Paulo, SP, Brasil São Paulo, SP, Brasil",
-    variedade: "caturra caturra caturra caturra caturra",
-    calibre: "528784848748848484884848484846446156846464646484644",
-    categoria: "Não sei Não sei Não sei Não sei Não sei Não sei Não sei",
-    pesoLiquido: "1,99 KG",
-    nomeDestino: "João Machado",
-    nomeDocumentoDestino: "cpf",
-    documentoDestino: "571.331.716-19",
-    logradouroDestino: "logradouro",
-    localizacaoDestino: "localização destino",
-    sacDestino: "(48) 99999-9999"
 };

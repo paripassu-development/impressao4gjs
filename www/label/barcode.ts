@@ -9,8 +9,10 @@ import {
     GS1128,
     GS1_128_DEFAULT,
     GS1_DATE_PATTERN,
-    IDENTIFICADORES_DATAS,
-    ITF14_DEFAULT
+    AIS_DATAS,
+    ITF14_DEFAULT,
+    AIS_GTIN_CONTEUDO,
+    AI_LOTE
 } from "./index";
 import JsBarcode = require("jsbarcode");
 import moment = require("moment");
@@ -23,6 +25,7 @@ const OPTIONS_DEFAULT = {
     textAlign: "center",
     font: "OCR-B"
 };
+const ERROR_PREFIX = "[Código de barras]";
 
 interface IElementoCodigoBarrasModelPosicao {
     xMm: number;
@@ -164,9 +167,45 @@ function normalizeType(tipoCodigoBarras: string): string {
     return tipoCodigoBarras;
 }
 
+function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefined, tipoCodigoBarras: string) {
+    if (!textBindings || _.isEmpty(model.valores)) {
+        return;
+    }
+
+    if(tipoCodigoBarras.toLowerCase() === GS1_128_DEFAULT){
+        const errors: string[] = [];
+        model.valores.forEach((item) => {
+            const ai = item.identificador;
+            const valor = Mustache.render(item.valor, textBindings);
+            if(!ai){
+                errors.push(`${ERROR_PREFIX} É necessário informar um identificador para cada valor do código de barras.`);
+                return;
+            }
+            if(!valor){
+                errors.push(`${ERROR_PREFIX} É necessário informar um valor para cada identificador do código de barras.`);
+                return;
+            }
+
+            if (_.includes(AIS_GTIN_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))){
+                errors.push(`${ERROR_PREFIX} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`);
+            }
+            if(_.includes(AIS_DATAS, ai) && !(new RegExp(/^\d{1,2}\/\d{1,2}\/\d{4}$/).test(valor))){
+                errors.push(`${ERROR_PREFIX} O valor do identificador ${ai} deve ter o formato DD/MM/AAAA.`);
+            }
+            if(ai === AI_LOTE && !(new RegExp(/^.{1,20}$/).test(valor))){
+                errors.push(`${ERROR_PREFIX} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`);
+            }
+        });
+        if(!_.isEmpty(errors)){
+            throw errors;
+        }
+    }
+}
+
 const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any): Promise<any> => {
     const mm = mmPartial(dpi);
     model.tipoCodigoBarras = normalizeType(model.tipoCodigoBarras);
+    validate(model, textBindings, model.tipoCodigoBarras);
     const valor = formatValue(model, textBindings, model.tipoCodigoBarras);
 
     if (!_.isEmpty(valor)) {
@@ -196,14 +235,14 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
 };
 
 let isData = function (identificador: string) {
-    return _.contains(IDENTIFICADORES_DATAS, identificador);
+    return _.contains(AIS_DATAS, identificador);
 };
 
 const buildOptionsBwipJs = function (options: ICreateBarcodeOptions) {
     return {
         bcid: options.format,
         text: options.text,
-        scaleX: 59,
+        scaleX: 140,
         scaleY: 3,
         width: options.barcodeWidth,
         height: options.barCodeHeight,

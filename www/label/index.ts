@@ -15,11 +15,13 @@ export const GS1_128_DEFAULT = "gs1-128";
 export const GS1128 = "gs1128";
 export const EAN128 = "ean128";
 export const EAN_128 = "ean-128";
-export const IDENTIFICADORES_DATAS = [
+export const AI_LOTE = "10";
+export const AIS_DATAS = [
     "11", // data producao
     "12", // data validade
     "13", // data embalagem
 ];
+export const AIS_GTIN_CONTEUDO = ["01", "02"];
 
 export interface IImpressao {
     resolucaoDpi: number;

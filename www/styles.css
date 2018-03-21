@@ -128,3 +128,9 @@ img.rotacao {
     width: 320px;
     display: inline-block;
 }
+
+.error-label {
+    margin: 10px;
+    color: red;
+    font-weight: bold;
+}
