@@ -178,12 +178,10 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
             const ai = item.identificador;
             const valor = Mustache.render(item.valor, textBindings);
             if(!ai){
-                errors.push(`${ERROR_PREFIX} É necessário informar um identificador para cada valor do código de barras.`);
-                return;
+                throw `${ERROR_PREFIX} É necessário informar um identificador para cada valor do código de barras.`;
             }
             if(!valor){
-                errors.push(`${ERROR_PREFIX} É necessário informar um valor para cada identificador do código de barras.`);
-                return;
+                throw `${ERROR_PREFIX} É necessário informar um valor para cada identificador do código de barras.`;
             }
 
             if (_.includes(AIS_GTIN_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))){

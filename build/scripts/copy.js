@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-const klawSync = require('klaw-sync')
+const klawSync = require('klaw-sync');
 
 run();
 

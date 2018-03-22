@@ -1,7 +1,10 @@
 import * as codeEditor from "./editor";
 import "./fonts/index.css";
 import "./index.html";
-import {etiqueta} from "./label/index";
+import {
+    etiqueta,
+    IEtiquetaDocModel
+} from "./label/index";
 import "./styles.css";
 
 declare var require: any;
@@ -53,25 +56,44 @@ let clearErrors = function () {
 };
 
 async function onClickCreateButton() {
-    const modelJson = modelEditor.getValue();
-    const valuesObj = _.isEmpty(valueEditor.getValue()) ? dadosDefault : JSON.parse(valueEditor.getValue());
     clearErrors();
+    const modelJson = modelEditor.getValue();
+    const modelObj: IEtiquetaDocModel = parseModelJson(modelJson);
+    const valuesObj = _.isEmpty(valueEditor.getValue()) ? dadosDefault : parseValuesJson(valueEditor.getValue());
     try {
-        await etiqueta.create("canvas-area", JSON.parse(modelJson), valuesObj);
+        await etiqueta.create("canvas-area", modelObj, valuesObj);
     } catch (err) {
         showErrors(err);
     }
-    await etiqueta.create("canvas-area-template", JSON.parse(modelJson));
+    await etiqueta.create("canvas-area-template", modelObj);
     save(modelJson, JSON.stringify(valuesObj));
 }
 
 function onClickExportButton() {
     const modelJson = modelEditor.getValue();
     const canvas = document.getElementById("canvas-area-etiqueta-canvas") as HTMLCanvasElement;
-    const canvasFinal = etiqueta.exportCanvas(canvas.id, JSON.parse(modelJson).impressao.orientacaoEtiquetaGraus);
+    const canvasFinal = etiqueta.exportCanvas(canvas.id, parseModelJson(modelJson).impressao.orientacaoEtiquetaGraus);
     const el = document.getElementById("canvas-area-final");
     el.appendChild(canvasFinal);
     save(modelJson, valueEditor.getValue());
+}
+
+function parseModelJson(json: string): IEtiquetaDocModel {
+    try {
+        return JSON.parse(json);
+    } catch (err) {
+        showErrors(["O JSON da etiqueta é inválido."]);
+        throw err;
+    }
+}
+
+function parseValuesJson(json: string): any {
+    try {
+        return JSON.parse(json);
+    } catch (err) {
+        showErrors(["O JSON de valores é inválido."]);
+        throw err;
+    }
 }
 
 document.getElementById("create-btn").onclick = async () => {
@@ -88,13 +110,13 @@ document.getElementById("export-btn").onclick = async () => {
 document.getElementById("send-btn").onclick = () => {
     const modelJson = modelEditor.getValue();
     const canvas = document.getElementById("canvas-area-etiqueta-canvas") as HTMLCanvasElement;
-    const canvasFinal = etiqueta.exportCanvas(canvas.id, JSON.parse(modelJson).impressao.orientacaoEtiquetaGraus);
+    const canvasFinal = etiqueta.exportCanvas(canvas.id, parseModelJson(modelJson).impressao.orientacaoEtiquetaGraus);
     const el = document.getElementById("canvas-area-final");
     el.appendChild(canvasFinal);
     const dataURL = canvasFinal.toDataURL("image/png", 1.0);
     const formData = new FormData();
     formData.append("etiquetaPngBase64", dataURL.replace("data:image/png;base64,", ""));
-    const model = JSON.parse(modelEditor.getValue());
+    const model = parseModelJson(modelEditor.getValue());
     formData.append("opcoesImpressao", JSON.stringify({impressao: model.impressao, etiqueta: model.etiqueta}));
     formData.append("nomeImpressora", "\\\\DESKTOP-UCPGNLU\\Argox OS-214 plus PPLA");
     formData.append("modo", "Argox OS-214");
