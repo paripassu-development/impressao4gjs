@@ -242,7 +242,7 @@ const buildOptionsBwipJs = function (options: ICreateBarcodeOptions) {
     return {
         bcid: options.format,
         text: options.text,
-        scaleX: 140,
+        scaleX: 150,
         scaleY: 3,
         width: options.barcodeWidth,
         height: options.barCodeHeight,
