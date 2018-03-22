@@ -34,13 +34,28 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {//fonts
-                test: /\.(eot|otf|svg|ttf|woff2?)($|\?)/,
+                test: /\.(eot|otf|svg|ttf|woff2?)$/,
                 loader: "file-loader",
                 options: {
                     name: "fonts/[name]--[hash].[ext]",
                     outputPath: path.resolve("target/dist/assets")
                 }
             },
+            {
+                test: /\.(otf|js|bin?)($|\?)/,
+                loader: "file-loader",
+                include: [
+                    path.resolve("node_modules/bwip-js/fonts")
+                ]
+            },
+            // {//fonts bwip-js
+            //     test: /node_modules.bwip-js.fonts.*\.(otf|js|bin)$/,
+            //     loader: "file-loader",
+            //     options: {
+            //         name: "fonts/bwipjs-fonts/[name].[ext]",
+            //         outputPath: path.resolve("target/dist/assets")
+            //     }
+            // },
             {
                 test: /\.html$/,
                 loader: "file-loader",
@@ -59,7 +74,11 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js"]
+        extensions: [".tsx", ".ts", ".js"],
+        modules: [
+            "node_modules",
+            "target/build"
+        ]
     },
     plugins: [
         new ExtractTextPlugin({ filename: 'bundle.css', disable: false, allChunks: true })
