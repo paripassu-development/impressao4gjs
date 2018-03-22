@@ -178,10 +178,12 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
             const ai = item.identificador;
             const valor = Mustache.render(item.valor, textBindings);
             if(!ai){
-                throw `${ERROR_PREFIX} É necessário informar um identificador para cada valor do código de barras.`;
+                errors.push(`${ERROR_PREFIX} É necessário informar um identificador para cada valor do código de barras.`);
+                return;
             }
             if(!valor){
-                throw `${ERROR_PREFIX} É necessário informar um valor para cada identificador do código de barras.`;
+                errors.push(`${ERROR_PREFIX} É necessário informar um valor para cada identificador do código de barras.`);
+                return;
             }
 
             if (_.includes(AIS_GTIN_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))){
@@ -203,7 +205,7 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
 const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any): Promise<any> => {
     const mm = mmPartial(dpi);
     model.tipoCodigoBarras = normalizeType(model.tipoCodigoBarras);
-    validate(model, textBindings, model.tipoCodigoBarras);
+        validate(model, textBindings, model.tipoCodigoBarras);
     const valor = formatValue(model, textBindings, model.tipoCodigoBarras);
 
     if (!_.isEmpty(valor)) {
