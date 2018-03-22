@@ -20,6 +20,8 @@ export const AIS_DATAS = [
     "11", // data producao
     "12", // data validade
     "13", // data embalagem
+    "15", // durabilidade minima
+    "17", // durabilidade maxima
 ];
 export const AIS_GTIN_CONTEUDO = ["01", "02"];
 
