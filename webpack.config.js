@@ -34,7 +34,7 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {//fonts
-                test: /\.(eot|otf|svg|ttf|woff2?)$/,
+                test: /\.(eot|otf|svg|ttf|woff2?)($|\?)/,
                 loader: "file-loader",
                 options: {
                     name: "fonts/[name]--[hash].[ext]",
@@ -48,14 +48,6 @@ module.exports = {
                     path.resolve("node_modules/bwip-js/fonts")
                 ]
             },
-            // {//fonts bwip-js
-            //     test: /node_modules.bwip-js.fonts.*\.(otf|js|bin)$/,
-            //     loader: "file-loader",
-            //     options: {
-            //         name: "fonts/bwipjs-fonts/[name].[ext]",
-            //         outputPath: path.resolve("target/dist/assets")
-            //     }
-            // },
             {
                 test: /\.html$/,
                 loader: "file-loader",
