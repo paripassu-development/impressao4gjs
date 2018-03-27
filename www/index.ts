@@ -17,8 +17,6 @@ const STORAGE_NAMESPACE = "impressao4gjs.etiqueta";
 const STORAGE_KEY_MODEL = "lastmodel";
 const STORAGE_KEY_VALUES = "lastvalues";
 
-(window as any).process = { env: { PUBLIC_URL: "/target/dist/fonts" } };
-
 const save = (model: string, values: string) => {
     localStorage.setItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_MODEL, model);
     localStorage.setItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_VALUES, values);
