@@ -68,7 +68,7 @@ async function onClickCreateButton() {
     } catch (err) {
         showErrors(err);
     }
-    //await etiqueta.create("canvas-area-template", modelObj);
+    await etiqueta.create("canvas-area-template", modelObj);
     save(modelJson, JSON.stringify(valuesObj));
 }
 
