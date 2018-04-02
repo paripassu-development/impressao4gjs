@@ -6,6 +6,10 @@ import {qrcode} from "./qrcode";
 import {tabelaNutricional} from "./tabela-nutricional";
 import {text} from "./text";
 import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
+import * as _ from "lodash";
+import {Error} from "../core/common/error";
+import {ErrorUtils} from "../core/util/error-utils";
+import * as Mustache from "mustache";
 
 export const GS1_DATE_PATTERN = "YYMMDD";
 export const BARCODE_IMG_ELEMENT_ID = "barcode-img";
@@ -54,6 +58,7 @@ export interface IEtiquetaDocModel {
     desenho: IDesenho;
     tela: ITela;
     pdf: IPdf;
+    validacoes: Array<IValidacao>;
 }
 
 export interface ITela {
@@ -71,12 +76,19 @@ export interface ICampos {
     rotulo: string;
 }
 
+export interface IValidacao {
+    variavel: string;
+    obrigatorio: boolean;
+}
+
 const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
+    let errors = new Array<Error>();
     const nomeElementoCanvas = id + "-etiqueta-canvas";
     const mm = mmPartial(model.impressao.resolucaoDpi);
     const canvas = canvasUtils.createCanvas(nomeElementoCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
     const ctx = canvasUtils.createContext(canvas);
     const el = document.getElementById(id);
+    const validacoes = _.indexBy(model.validacoes, "variavel") as any;
     el.appendChild(canvas);
     const promises: Promise<any>[] = [];
     canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
@@ -84,7 +96,10 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
     model.desenho.elementos.forEach((elemento: any) => {
         const tipos: any = {
             codigoBarras: async (): Promise<any> => {
-                return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings)
+                    .catch((error) => {
+                        errors = _.union(errors, error);
+                    });
             },
             qrcode: (): Promise<any> => {
                 return new Promise((resolve) => {
@@ -95,7 +110,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             texto: (): Promise<any> => {
                 return new Promise((resolve) => {
                     text.drawText(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
-                    resolve();
+                        resolve();
                 });
             },
             tabelaNutricional: (): Promise<any> => {
@@ -118,12 +133,30 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             },
         };
 
+
         if (tipos[elemento.tipo]) {
             promises.push(tipos[elemento.tipo]());
         }
     });
 
-    await Promise.all(promises);
+
+    await Promise.all(promises)
+        .then()
+        .catch()
+        .then(() => {
+            if (_.isArray(model.validacoes)) {
+                model.validacoes.forEach((validacao: IValidacao) => {
+                    const variavel = "{{{" + validacao.variavel + "}}}";
+                    const textRender = Mustache.render(variavel, textBindings);
+                    ErrorUtils.captureError(validacao.variavel, textRender, validacoes, errors);
+                });
+            }
+
+            if (!_.isEmpty(errors)) {
+                return Promise.reject(errors);
+            }
+
+        });
     redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
     return canvas;
 };

@@ -13,6 +13,7 @@
     "@types/mustache": "0.8.29",
     "@types/node": "7.0.4",
     "babel-core": "^6.22.1",
+    "@types/lodash": "3.10.0",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",
     "css-loader": "^0.26.1",
