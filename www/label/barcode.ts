@@ -17,7 +17,7 @@ import {
 import JsBarcode = require("jsbarcode");
 import moment = require("moment");
 import {Error} from "../core/common/error";
-import {ErrosPrefix} from "../core/constants/constants-impressao";
+import {ErrosPrefix, TipoError} from "../core/constants/constants-impressao";
 
 const bwipjs: any = require("bwip-js");
 const _: any = require('lodash');
@@ -178,22 +178,22 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
             const ai = item.identificador;
             const valor = Mustache.render(item.valor, textBindings);
             if(!ai){
-                errors.push(Error.build("impr.ui.js.identificador_nao_informado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} É necessário informar um identificador para cada valor do código de barras.`));
+                errors.push(Error.build("impr.ui.js.identificador_nao_informado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} É necessário informar um identificador para cada valor do código de barras.`, TipoError.GS1));
                 return;
             }
             if(!valor){
-                errors.push(Error.build("impr.ui.js.valor_identificador_nao_informado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} É necessário informar um valor para cada identificador do código de barras.`));
+                errors.push(Error.build("impr.ui.js.valor_identificador_nao_informado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} É necessário informar um valor para cada identificador do código de barras.`, TipoError.GS1));
                 return;
             }
 
             if (_.includes(AIS_GTIN_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))){
-                errors.push(Error.build("impr.ui.js.identificador_gtin_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`));
+                errors.push(Error.build("impr.ui.js.identificador_gtin_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`, TipoError.GS1));
             }
             if(_.includes(AIS_DATAS, ai) && !(new RegExp(/^\d{1,2}\/\d{1,2}\/\d{4}$/).test(valor))){
-                errors.push(Error.build("impr.ui.js.identificador_data_nao_esta_formatado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter o formato DD/MM/AAAA.`));
+                errors.push(Error.build("impr.ui.js.identificador_data_nao_esta_formatado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter o formato DD/MM/AAAA.`, TipoError.GS1));
             }
             if(ai === AI_LOTE && !(new RegExp(/^.{1,20}$/).test(valor))){
-                errors.push(Error.build("impr.ui.js.identificador_lote_conter_max_20_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`));
+                errors.push(Error.build("impr.ui.js.identificador_lote_conter_max_20_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`, TipoError.GS1));
             }
         });
     }
