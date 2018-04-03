@@ -11,6 +11,10 @@ export class Error {
         return this._name;
     }
 
+    get campo(): string {
+        return this._campo;
+    }
+
     public static build(token: string, name: string, campo?: string): Error {
         const error = new Error();
         error._name = name;
