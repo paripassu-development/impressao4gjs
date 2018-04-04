@@ -16,6 +16,8 @@ import {
 } from "./index";
 import JsBarcode = require("jsbarcode");
 import moment = require("moment");
+import {Error} from "../core/common/error";
+import {ErrosPrefix, TipoError} from "../core/constants/constants-impressao";
 
 const bwipjs: any = require("bwip-js");
 const _: any = require('lodash');
@@ -25,7 +27,6 @@ const OPTIONS_DEFAULT = {
     textAlign: "center",
     font: "OCR-B"
 };
-const ERROR_PREFIX = "[Código de barras]";
 
 interface IElementoCodigoBarrasModelPosicao {
     xMm: number;
@@ -167,45 +168,46 @@ function normalizeType(tipoCodigoBarras: string): string {
     return tipoCodigoBarras;
 }
 
-function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefined, tipoCodigoBarras: string) {
-    if (!textBindings || _.isEmpty(model.valores)) {
+function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefined, tipoCodigoBarras: string, errors: Error[]) {
+    if (!textBindings) {
         return;
     }
 
     if(tipoCodigoBarras.toLowerCase() === GS1_128_DEFAULT){
-        const errors: string[] = [];
         model.valores.forEach((item) => {
             const ai = item.identificador;
             const valor = Mustache.render(item.valor, textBindings);
             if(!ai){
-                errors.push(`${ERROR_PREFIX} É necessário informar um identificador para cada valor do código de barras.`);
+                errors.push(Error.build("impr.ui.js.identificador_nao_informado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} É necessário informar um identificador para cada valor do código de barras.`, TipoError.GS1));
                 return;
             }
             if(!valor){
-                errors.push(`${ERROR_PREFIX} É necessário informar um valor para cada identificador do código de barras.`);
+                errors.push(Error.build("impr.ui.js.valor_identificador_nao_informado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} É necessário informar um valor para cada identificador do código de barras.`, TipoError.GS1));
                 return;
             }
 
             if (_.includes(AIS_GTIN_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))){
-                errors.push(`${ERROR_PREFIX} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`);
+                errors.push(Error.build("impr.ui.js.identificador_gtin_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`, TipoError.GS1, ai));
             }
             if(_.includes(AIS_DATAS, ai) && !(new RegExp(/^\d{1,2}\/\d{1,2}\/\d{4}$/).test(valor))){
-                errors.push(`${ERROR_PREFIX} O valor do identificador ${ai} deve ter o formato DD/MM/AAAA.`);
+                errors.push(Error.build("impr.ui.js.identificador_data_nao_esta_formatado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter o formato DD/MM/AAAA.`, TipoError.GS1, ai));
             }
             if(ai === AI_LOTE && !(new RegExp(/^.{1,20}$/).test(valor))){
-                errors.push(`${ERROR_PREFIX} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`);
+                errors.push(Error.build("impr.ui.js.identificador_lote_conter_max_20_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`, TipoError.GS1, ai));
             }
         });
-        if(!_.isEmpty(errors)){
-            throw errors;
-        }
     }
+
 }
 
-const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any): Promise<any> => {
+const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any,): Promise<any> => {
     const mm = mmPartial(dpi);
     model.tipoCodigoBarras = normalizeType(model.tipoCodigoBarras);
-        validate(model, textBindings, model.tipoCodigoBarras);
+    const errorsCodigoBarras = Array<Error>();
+    validate(model, textBindings, model.tipoCodigoBarras, errorsCodigoBarras);
+    if (!_.isEmpty(errorsCodigoBarras)) {
+        throw errorsCodigoBarras;
+    }
     const valor = formatValue(model, textBindings, model.tipoCodigoBarras);
 
     if (!_.isEmpty(valor)) {

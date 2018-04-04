@@ -6,6 +6,7 @@ import {
     IEtiquetaDocModel
 } from "./label/index";
 import "./styles.css";
+import {Error} from "./core/common/error";
 
 declare var require: any;
 const _: any = require('lodash');
@@ -37,17 +38,21 @@ document.getElementById("autoformat-btn").onclick = () => {
     codeEditor.autoFormat(valueEditor);
 };
 
-let showErrors = function (err: any) {
+let showErrors = function (err: Array<Error>) {
     if (err instanceof Array) {
-        err.forEach((error) => {
-            const label = document.createElement("p") as HTMLParagraphElement;
-            const text = document.createTextNode(error);
-            label.appendChild(text);
-            label.className = "error-label";
-            document.getElementById("code-wrapper").appendChild(label);
+        err.forEach((error: Error) => {
+            appendErrorDOM(error.name)
         });
     }
 };
+
+let appendErrorDOM = function (error: string) {
+    const label = document.createElement("p") as HTMLParagraphElement;
+    const text = document.createTextNode(error);
+    label.appendChild(text);
+    label.className = "error-label";
+    document.getElementById("code-wrapper").appendChild(label);
+}
 
 let clearErrors = function () {
     $(".error-label").remove();
@@ -80,7 +85,7 @@ function parseModelJson(json: string): IEtiquetaDocModel {
     try {
         return JSON.parse(json);
     } catch (err) {
-        showErrors(["O JSON da etiqueta é inválido."]);
+        appendErrorDOM("O JSON da etiqueta é inválido.");
         throw err;
     }
 }
@@ -89,7 +94,7 @@ function parseValuesJson(json: string): any {
     try {
         return JSON.parse(json);
     } catch (err) {
-        showErrors(["O JSON de valores é inválido."]);
+        appendErrorDOM("O JSON de valores é inválido.");
         throw err;
     }
 }
