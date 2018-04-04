@@ -187,13 +187,13 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
             }
 
             if (_.includes(AIS_GTIN_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))){
-                errors.push(Error.build("impr.ui.js.identificador_gtin_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`, TipoError.GS1));
+                errors.push(Error.build("impr.ui.js.identificador_gtin_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`, TipoError.GS1, ai));
             }
             if(_.includes(AIS_DATAS, ai) && !(new RegExp(/^\d{1,2}\/\d{1,2}\/\d{4}$/).test(valor))){
-                errors.push(Error.build("impr.ui.js.identificador_data_nao_esta_formatado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter o formato DD/MM/AAAA.`, TipoError.GS1));
+                errors.push(Error.build("impr.ui.js.identificador_data_nao_esta_formatado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter o formato DD/MM/AAAA.`, TipoError.GS1, ai));
             }
             if(ai === AI_LOTE && !(new RegExp(/^.{1,20}$/).test(valor))){
-                errors.push(Error.build("impr.ui.js.identificador_lote_conter_max_20_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`, TipoError.GS1));
+                errors.push(Error.build("impr.ui.js.identificador_lote_conter_max_20_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`, TipoError.GS1, ai));
             }
         });
     }
