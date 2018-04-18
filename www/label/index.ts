@@ -144,7 +144,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
         .then()
         .catch()
         .then(() => {
-            if (_.isArray(model.validacoes)) {
+            if (_.isArray(model.validacoes) && !!textBindings) {
                 model.validacoes.forEach((validacao: IValidacao) => {
                     const variavel = "{{{" + validacao.variavel + "}}}";
                     const textRender = Mustache.render(variavel, textBindings);
