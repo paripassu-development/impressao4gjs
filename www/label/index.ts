@@ -11,7 +11,7 @@ import {Error} from "../core/common/error";
 import {ErrorUtils} from "../core/util/error-utils";
 import * as Mustache from "mustache";
 
-export const GS1_DATE_PATTERN = "YYMMDD";
+export const GS1_DATE_PATTERN = "YYmmDD";
 export const BARCODE_IMG_ELEMENT_ID = "barcode-img";
 export const EAN13_DEFAULT = "ean13";
 export const ITF14_DEFAULT = "itf14";
