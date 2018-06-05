@@ -271,16 +271,20 @@ const buildOptionsJsBarcode = function (options: ICreateBarcodeOptions, dpi: num
 const createBarcodeWithBwipJs = function (options: ICreateBarcodeOptions, img: HTMLImageElement): Promise<HTMLImageElement> {
     const canvas = canvasUtils.createCanvas("canvas", 0, 0);
     return new Promise((resolve) => {
-        bwipjs(canvas, buildOptionsBwipJs(options), function (err: any) {
-            if (err) {
-                console.log("Erro ao gerar o codigo de barras " + options.format);
-            } else {
-                img.src = canvas.toDataURL("image/png");
-            }
-            resolve(img);
-        });
+        // Timeout para esperar a bwipjs carregar as fontes, quando chamada em paralelo
+        setTimeout(() => {
+            bwipjs(canvas, buildOptionsBwipJs(options), function (err: any) {
+                if (err) {
+                    console.log("Erro ao gerar o codigo de barras " + options.format);
+                } else {
+                    img.src = canvas.toDataURL("image/png");
+                }
+                resolve(img);
+            });
+        }, 1000)
     });
 };
+
 const createBarcodeWithBarcodeJs = function (id: string, img: HTMLImageElement, options: ICreateBarcodeOptions, dpi: number): Promise<HTMLImageElement> {
     const lpaddedText = _.padLeft(options.text, 12, "0");
     return new Promise((resolve) => {
