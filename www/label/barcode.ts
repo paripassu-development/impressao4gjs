@@ -86,8 +86,10 @@ const formatValue = (model: IElementoCodigoBarrasModel, textBindings: any, tipoC
             return formatEan13(Mustache.render(model.valor, textBindings));
         case ITF14_DEFAULT:
             return formatDun14(Mustache.render(model.valor, textBindings));
-        case GS1_128_DEFAULT:
+        case GS1_128_DEFAULT: {
+            model.dimensoes.larguraUnitariaCodigoBarrasMm = Math.floor(model.dimensoes.larguraUnitariaCodigoBarrasMm);
             return formatGs1128(model.valores, textBindings);
+        }
         default:
             return formatIntercalado2De5(Mustache.render(model.valor, textBindings));
     }
