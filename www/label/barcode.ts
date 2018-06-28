@@ -12,7 +12,10 @@ import {
     AIS_DATAS,
     ITF14_DEFAULT,
     AIS_GTIN_CONTEUDO,
-    AI_LOTE
+    AI_LOTE,
+    INTERCALADO2A5_4G,
+    DUN14_4G,
+    ITF_DEFAULT
 } from "./index";
 import JsBarcode = require("jsbarcode");
 import moment = require("moment");
@@ -83,8 +86,10 @@ const formatValue = (model: IElementoCodigoBarrasModel, textBindings: any, tipoC
             return formatEan13(Mustache.render(model.valor, textBindings));
         case ITF14_DEFAULT:
             return formatDun14(Mustache.render(model.valor, textBindings));
-        case GS1_128_DEFAULT:
+        case GS1_128_DEFAULT: {
+            model.dimensoes.larguraUnitariaCodigoBarrasMm = Math.floor(model.dimensoes.larguraUnitariaCodigoBarrasMm);
             return formatGs1128(model.valores, textBindings);
+        }
         default:
             return formatIntercalado2De5(Mustache.render(model.valor, textBindings));
     }
@@ -202,13 +207,14 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
 
 const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any,): Promise<any> => {
     const mm = mmPartial(dpi);
-    model.tipoCodigoBarras = normalizeType(model.tipoCodigoBarras);
+    let tipoCodigoBarras = mapLabelTypes(Mustache.render(model.tipoCodigoBarras, textBindings));
+    tipoCodigoBarras = normalizeType(tipoCodigoBarras);
     const errorsCodigoBarras = Array<Error>();
-    validate(model, textBindings, model.tipoCodigoBarras, errorsCodigoBarras);
+    validate(model, textBindings, tipoCodigoBarras, errorsCodigoBarras);
     if (!_.isEmpty(errorsCodigoBarras)) {
         throw errorsCodigoBarras;
     }
-    const valor = formatValue(model, textBindings, model.tipoCodigoBarras);
+    const valor = formatValue(model, textBindings, tipoCodigoBarras);
 
     if (!_.isEmpty(valor)) {
         let barcodeImg = await barcode.createBarcode(id, dpi, {
@@ -216,7 +222,7 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
             barcodeWidth: model.dimensoes.larguraUnitariaCodigoBarrasMm,
             font: model.fonte.nome,
             fontSize: model.fonte.alturaMm,
-            format: model.tipoCodigoBarras,
+            format: tipoCodigoBarras,
             text: valor,
             textAlign: model.fonte.alinhar,
             displayValue: model.mostraTexto,
@@ -234,6 +240,17 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
         });
     }
     return Promise.resolve();
+};
+
+const mapLabelTypes = function (labelType: string) {
+    switch (labelType.toLowerCase()) {
+        case INTERCALADO2A5_4G:
+            return ITF_DEFAULT;
+        case DUN14_4G:
+            return ITF14_DEFAULT;
+        default:
+            return labelType;
+    }
 };
 
 let isData = function (identificador: string) {
