@@ -107,7 +107,7 @@ const formatEan13 = (ean: string) => {
             ean = ean.substring(0, ean.length - 1);
         }
     }
-    return _.padLeft(ean, 12, "0");
+    return ean === "" ? ean : _.padLeft(ean, 12, "0");
 };
 const formatDun14 = (ean: string) => {
     // deixa com 13 digitos para o digito verificador ser
@@ -122,7 +122,7 @@ const formatDun14 = (ean: string) => {
             ean = ean.substring(0, ean.length - 1);
         }
     }
-    return _.padLeft(ean, 13, "0");
+    return ean === "" ? ean : _.padLeft(ean, 13, "0");
 };
 const formatIntercalado2De5 = (ean: string) => {
     if (!_.isEmpty(ean)) {
