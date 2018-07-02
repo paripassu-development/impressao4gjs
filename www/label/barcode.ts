@@ -131,6 +131,7 @@ const formatIntercalado2De5 = (ean: string) => {
         if (ean.length == 13) {
             ean = "0" + ean;
         }
+        ean = _.padLeft(ean, 12, "0");
     }
     return ean;
 };
