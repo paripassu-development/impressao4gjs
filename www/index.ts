@@ -29,12 +29,13 @@ const save = (model: string, values: string) => {
 
 const getModel = function () {
     const savedModel = localStorage.getItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_MODEL);
-    return _.isEmpty(savedModel) ? null : savedModel;
+    return _.isEmpty(savedModel) ? JSON.stringify(modelDefault) : savedModel;
 };
 
 const getValues = function () {
-    const savedValue = localStorage.getItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_VALUES);
-    return _.isEmpty(savedValue) ? null : savedValue;
+    let savedValue = localStorage.getItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_VALUES);
+    savedValue = !!savedValue ? JSON.parse(savedValue) : {};
+    return JSON.stringify(_.defaults(savedValue, dadosDefault));
 };
 
 document.getElementById("autoformat-btn").onclick = () => {
@@ -148,8 +149,8 @@ document.getElementById("help-btn").onclick = () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    const initialModel = getModel() || JSON.stringify(modelDefault);
-    const initialValue = getValues() || JSON.stringify(dadosDefault);
+    const initialModel = getModel();
+    const initialValue = getValues();
 
     modelEditor.setValue(initialModel);
     valueEditor.setValue(initialValue);
