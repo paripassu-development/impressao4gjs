@@ -11,6 +11,8 @@ import {
     dadosDefault,
     modelDefault
 } from "./default";
+import {canvasUtils} from "./core/util/canvas-utils";
+import {mmPartial} from "./label/mm";
 
 declare var require: any;
 const _: any = require('lodash');
@@ -69,12 +71,62 @@ async function onClickCreateButton() {
     const modelObj: IEtiquetaDocModel = parseModelJson(modelJson);
     const valuesObj = _.isEmpty(valueEditor.getValue()) ? dadosDefault : parseValuesJson(valueEditor.getValue());
     try {
-        await etiqueta.create("canvas-area", modelObj, valuesObj);
+        const canvas = await etiqueta.create("canvas-area", modelObj, valuesObj);
+        const ctx = canvasUtils.createContext(canvas);
+        drawRulers(ctx, modelObj);
     } catch (err) {
         showErrors(err);
     }
     await etiqueta.create("canvas-area-template", modelObj);
     save(modelJson, JSON.stringify(valuesObj));
+}
+
+function drawRulers(ctx: any, model: IEtiquetaDocModel) {
+    const mm = mmPartial(model.impressao.resolucaoDpi);
+    const width = model.etiqueta.dimensoes.larguraMm;
+    const height = model.etiqueta.dimensoes.alturaMm;
+    drawVerticalRuler(ctx, model, mm, width, height);
+    drawHorizontalRuler(ctx, model, mm, width, height);
+}
+
+function drawVerticalRuler(ctx: CanvasRenderingContext2D, model: IEtiquetaDocModel, mm: any, width: number, height: number) {
+    for (let y = 1; y < height; y += 1) {
+        let lineWidth = 0.1;
+        let centimeterMark = false;
+        if (y % 5 == 0) {
+            lineWidth = 0.4;
+        }
+        if (y % 10 == 0) {
+            lineWidth = 0.6;
+            centimeterMark = true;
+        }
+        ctx.strokeRect(0, mm(y), mm(lineWidth), 0.5);
+        ctx.strokeRect(mm(width-lineWidth), mm(y), mm(lineWidth), 0.5);
+
+        if (centimeterMark) {
+            ctx.strokeText(String(y), mm(lineWidth), mm(y)+3);
+        }
+    }
+}
+
+function drawHorizontalRuler(ctx: CanvasRenderingContext2D, model: IEtiquetaDocModel, mm: any, width: number, height: number) {
+    for (let x = 1; x < width; x += 1) {
+        let lineHeight = 0.1;
+        let centimeterMark = false;
+        if (x % 5 == 0) {
+            lineHeight = 0.4;
+        }
+        if (x % 10 == 0) {
+            lineHeight = 0.6;
+            centimeterMark = true;
+        }
+        ctx.strokeRect(mm(x), 0,0.5, mm(lineHeight));
+        ctx.strokeRect(mm(x), mm(height-lineHeight), 0.5, mm(lineHeight));
+
+        if (centimeterMark) {
+            ctx.strokeText(String(x), mm(x)-3, mm(lineHeight)+3);
+        }
+    }
 }
 
 function onClickExportButton() {
