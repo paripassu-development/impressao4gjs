@@ -1,4 +1,7 @@
-import {IElementoTextoModelmultiplasLinhas, text} from "./text";
+import {
+    IElementoTextoModelmultiplasLinhas,
+    text
+} from "./text";
 import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
 import {fillTemplate} from "../core/util/param-utils";
 
@@ -7,6 +10,7 @@ const _ = require("lodash");
 interface IElementoTabelaNutricionalModelPosicao {
     xMm: number;
     yMm: number;
+    rotacao: number;
 }
 
 interface IElementoTabelaNutricionalModelDimensoes {
@@ -36,7 +40,11 @@ interface IElementoTabelaNutricionalInlineModel {
 
 const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTabelaNutricionalInlineModel, textBindings?: any) => {
     const elemento: any = mountTextElement(model.posicao, model, mountTextTabelaNutricional(model, textBindings));
+    let degrees = model.posicao.rotacao || 0;
+    ctx.save();
+    ctx.rotate(degrees * Math.PI / 180);
     text.drawText(ctx, dpi, elemento, textBindings);
+    ctx.restore();
 };
 
 function calculaKJ(valor: any) {

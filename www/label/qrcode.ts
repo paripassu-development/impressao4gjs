@@ -1,22 +1,27 @@
 import * as Mustache from "mustache";
-import { mmPartial } from "./mm";
+import {mmPartial} from "./mm";
+
 declare var require: any;
 const QRCode: any = require("qrcodejs2");
 
 interface IElementoQrcodeModelPosicao {
     xMm: number;
     yMm: number;
+    rotacao: number;
 }
+
 interface IElementoQrcodeModelDimensoes {
     alturaMm: number;
     larguraMm: number;
 }
+
 interface IElementoQrcodeModel {
     tipo: string;
     valor: string;
     posicao: IElementoQrcodeModelPosicao;
     dimensoes: IElementoQrcodeModelDimensoes;
 }
+
 const drawQrcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoQrcodeModel, textBindings?: any) => {
     const mm = mmPartial(dpi);
     const qrcodeImg = createQrCode(id, {
@@ -24,7 +29,11 @@ const drawQrcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, mode
         text: textBindings ? Mustache.render(model.valor, textBindings) : model.valor,
         width: mm(model.dimensoes.larguraMm),
     });
+    ctx.save();
+    let degrees = model.posicao.rotacao || 0;
+    ctx.rotate(degrees * Math.PI / 180);
     ctx.drawImage(qrcodeImg, mm(model.posicao.xMm), mm(model.posicao.yMm));
+    ctx.restore();
 };
 
 interface ICreateQrcodeOptions {
@@ -32,6 +41,7 @@ interface ICreateQrcodeOptions {
     height: number;
     width: number;
 }
+
 const createQrCode = (id: string, options: ICreateQrcodeOptions) => {
     const oldQrcodeDiv = document.getElementById("qrcode-div");
     if (oldQrcodeDiv) {
@@ -42,9 +52,9 @@ const createQrCode = (id: string, options: ICreateQrcodeOptions) => {
     qrcodeDiv.style.display = "none";
     document.getElementById(id).appendChild(qrcodeDiv);
     const qrcode = new QRCode("qrcode-div", {
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.L,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.L,
         height: options.height,
         text: options.text,
         width: options.width,
@@ -52,4 +62,4 @@ const createQrCode = (id: string, options: ICreateQrcodeOptions) => {
     return qrcodeDiv.getElementsByTagName("canvas")[0];
 };
 
-export const qrcode = { drawQrcode };
+export const qrcode = {drawQrcode};

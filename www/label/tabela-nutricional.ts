@@ -1,6 +1,13 @@
-import {splitLines, strokeAlignedText, TextAlign} from "./../core/util/text-utils";
+import {
+    splitLines,
+    strokeAlignedText,
+    TextAlign
+} from "./../core/util/text-utils";
 import {mmPartial} from "./mm";
-import {fillTemplate, getOrDefault} from "../core/util/param-utils";
+import {
+    fillTemplate,
+    getOrDefault
+} from "../core/util/param-utils";
 import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
 
 const BLACK = "#000000";
@@ -8,6 +15,7 @@ const BLACK = "#000000";
 interface IElementoTabelaNutricionalModelPosicao {
     xMm: number;
     yMm: number;
+    rotacao: number;
 }
 
 interface IElementoTabelaNutricionalModelDimensoes {
@@ -74,6 +82,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
     setInformacoesPadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
+    let degrees = model.posicao.rotacao || 0;
+    ctx.rotate(degrees * Math.PI / 180);
     ctx.fillStyle = BLACK;
     ctx.strokeStyle = BLACK;
     ctx.lineWidth = model.fonte.forcaContorno || 0;
