@@ -1,13 +1,14 @@
-import { barraOrigemRastreadaConstants } from "./../core/constants/constants-impressao";
-import { canvasUtils } from "./../core/util/canvas-utils";
-import { DrawUtils } from "./../core/util/draw-utils";
-import { mmPartial } from "./mm";
+import {barraOrigemRastreadaConstants} from "./../core/constants/constants-impressao";
+import {canvasUtils} from "./../core/util/canvas-utils";
+import {DrawUtils} from "./../core/util/draw-utils";
+import {mmPartial} from "./mm";
 
 const corPreta: string = "#000000";
 
 interface IElementoBarraOrigemRastreadaModelPosicao {
     xMm: number;
     yMm: number;
+    rotacao: number;
 }
 
 interface IElementoBarraOrigemRastreadaModelDimensoes {
@@ -32,6 +33,8 @@ interface IElementoBarraOrigemRastreadaModel {
 const drawBarraOrigemRastreada = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoBarraOrigemRastreadaModel) => {
     const mm = mmPartial(dpi);
     ctx.save();
+    let degrees = model.posicao.rotacao || 0;
+    ctx.rotate(degrees * Math.PI / 180);
     const barraOrigemRastreada = createBarraOrigemRastreada(id, {
         corBarra: corPreta,
         alturaMm: mm(model.dimensoes.alturaMm),
@@ -49,13 +52,13 @@ const drawBarraOrigemRastreada = (id: string, ctx: CanvasRenderingContext2D, dpi
 };
 
 interface ICreateBarraOrigemRastreadaOptions {
-  corBarra: string;
-  alturaMm: number;
-  larguraMm: number;
-  valorTexto: string;
-  negrito: boolean;
-  forcaContorno: number;
-  nomeFonte: string;
+    corBarra: string;
+    alturaMm: number;
+    larguraMm: number;
+    valorTexto: string;
+    negrito: boolean;
+    forcaContorno: number;
+    nomeFonte: string;
 }
 
 const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastreadaOptions) => {
@@ -72,44 +75,44 @@ const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastr
 
     // Primeiro    
     const coordenadas = [
-                            {x: 0, y: 0},
-                            {x: 48, y: 0},
-                            {x: barraOrigemRastreadaConstants.ALTURA_BARRA, y: 16},
-                            {x: 48, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
-                            {x: 0, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
-                        ];
+        {x: 0, y: 0},
+        {x: 48, y: 0},
+        {x: barraOrigemRastreadaConstants.ALTURA_BARRA, y: 16},
+        {x: 48, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+        {x: 0, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+    ];
     drawUtils.polygon(coordenadas, options.corBarra);
 
     // Segundo 
     const coordenadas2 = [
-                            {x: 502, y: 0},
-                            {x: 534, y: 0},
-                            {x: 518, y: 16},
-                            {x: 534, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
-                            {x: 502, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
-                            {x: 486, y: 16},
-                        ];
+        {x: 502, y: 0},
+        {x: 534, y: 0},
+        {x: 518, y: 16},
+        {x: 534, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+        {x: 502, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+        {x: 486, y: 16},
+    ];
     drawUtils.polygon(coordenadas2, options.corBarra);
 
     // Terceiro
     const coordenadas3 = [
-                            {x: 550, y: 0},
-                            {x: 582, y: 0},
-                            {x: 566, y: 16},
-                            {x: 582, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
-                            {x: 550, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
-                            {x: 534, y: 16},
-                        ];
+        {x: 550, y: 0},
+        {x: 582, y: 0},
+        {x: 566, y: 16},
+        {x: 582, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+        {x: 550, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+        {x: 534, y: 16},
+    ];
     drawUtils.polygon(coordenadas3, options.corBarra);
 
     // Quarto
     const coordenadas4 = [
-                            {x: 598, y: 0},
-                            {x: barraOrigemRastreadaConstants.LARGURA_BARRA, y: 0},
-                            {x: barraOrigemRastreadaConstants.LARGURA_BARRA, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
-                            {x: 598, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
-                            {x: 582, y: 16},
-                        ];
+        {x: 598, y: 0},
+        {x: barraOrigemRastreadaConstants.LARGURA_BARRA, y: 0},
+        {x: barraOrigemRastreadaConstants.LARGURA_BARRA, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+        {x: 598, y: barraOrigemRastreadaConstants.ALTURA_BARRA},
+        {x: 582, y: 16},
+    ];
     drawUtils.polygon(coordenadas4, options.corBarra);
 
     const textoBarra = options.valorTexto || "PRODUTO COM ORIGEM RASTREADA";
@@ -125,4 +128,4 @@ const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastr
     return document.getElementById(nomeElementoCanvas) as HTMLCanvasElement;
 };
 
-export const barraOrigemRastreada = { createBarraOrigemRastreada, drawBarraOrigemRastreada };
+export const barraOrigemRastreada = {createBarraOrigemRastreada, drawBarraOrigemRastreada};
