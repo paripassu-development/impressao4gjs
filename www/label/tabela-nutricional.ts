@@ -112,24 +112,55 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
 
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
-    nutrientes.forEach((nutriente: any) => {
-        const informacoesNutriente = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
-        if (informacoesNutriente !== undefined) {
+    if (model.informacoesNutricionais.informacoesNutrientesTabelaNutricional) {
+        nutrientes.forEach((nutriente: any) => {
+            const informacoesNutriente = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
+            if (informacoesNutriente !== undefined) {
+                yMm += alturaLinhaMm;
+                ctx.textAlign = TextAlign.LEFT;
+                ctx.strokeText(getOrDefault(informacoesNutriente, "nome"),
+                    mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+
+                if (nutriente === "valorEnergetico") {
+                    strokeAlignedText(ctx, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoProporcaoCalorias, textBindings), model.posicao.xMm - (alturaLinhaMm * 3), yMm, mm, TextAlign.RIGHT);
+                } else {
+                    strokeAlignedText(ctx, larguraMaxima, fillTemplate(informacoesNutriente.qtPorcao, textBindings), model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
+                }
+                strokeAlignedText(ctx, larguraMaxima, fillTemplate(informacoesNutriente.valDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
+                yMm += lineStrokeGap;
+                drawLine(ctx, model, yMm, mm);
+            }
+        });
+    }
+    else {
+        textBindings.parametrosPadroes.forEach((parametro: any) => {
             yMm += alturaLinhaMm;
             ctx.textAlign = TextAlign.LEFT;
-            ctx.strokeText(getOrDefault(informacoesNutriente, "nome"),
+            ctx.strokeText(getOrDefault(parametro, "nome"),
                 mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
 
-            if (nutriente === "valorEnergetico") {
+            if (parametro.nome === "Valor Energético") {
                 strokeAlignedText(ctx, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoProporcaoCalorias, textBindings), model.posicao.xMm - (alturaLinhaMm * 3), yMm, mm, TextAlign.RIGHT);
             } else {
-                strokeAlignedText(ctx, larguraMaxima, fillTemplate(informacoesNutriente.qtPorcao, textBindings), model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
+                strokeAlignedText(ctx, larguraMaxima, fillTemplate(parametro.qtPorcao, textBindings), model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
             }
-            strokeAlignedText(ctx, larguraMaxima, fillTemplate(informacoesNutriente.valDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
+            strokeAlignedText(ctx, larguraMaxima, fillTemplate(parametro.valDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
             yMm += lineStrokeGap;
             drawLine(ctx, model, yMm, mm);
-        }
-    });
+        });
+
+        textBindings.parametrosExtras.forEach((parametro: any) => {
+            yMm += alturaLinhaMm;
+            ctx.textAlign = TextAlign.LEFT;
+            ctx.strokeText(getOrDefault(parametro, "nome"),
+            mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+            strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
+            strokeAlignedText(ctx, larguraMaxima, fillTemplate(parametro.valDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
+            yMm += lineStrokeGap;
+            drawLine(ctx, model, yMm, mm);
+        });
+    }
+
     yMm += alturaLinhaMm;
 
     if (!model.informacoesAdicionais.texto) {
