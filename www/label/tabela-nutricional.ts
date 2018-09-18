@@ -144,7 +144,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
             } else {
                 strokeAlignedText(ctx, larguraMaxima, fillTemplate(parametro.qtPorcao, textBindings), model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
             }
-            strokeAlignedText(ctx, larguraMaxima, fillTemplate(parametro.valDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
+            strokeAlignedText(ctx, larguraMaxima, fillTemplate(parametro.valorDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
             yMm += lineStrokeGap;
             drawLine(ctx, model, yMm, mm);
         });
@@ -155,7 +155,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
             ctx.strokeText(getOrDefault(parametro, "nome"),
             mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
             strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
-            strokeAlignedText(ctx, larguraMaxima, fillTemplate(parametro.valDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
+            strokeAlignedText(ctx, larguraMaxima, fillTemplate(parametro.valorDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
             yMm += lineStrokeGap;
             drawLine(ctx, model, yMm, mm);
         });
