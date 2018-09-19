@@ -136,9 +136,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
         textBindings.parametrosPadroes.forEach((parametro: any) => {
             yMm += alturaLinhaMm;
             ctx.textAlign = TextAlign.LEFT;
-            ctx.strokeText(getOrDefault(parametro, "nome"),
-                mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-
+            ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
             if (parametro.nome === "Valor Energético") {
                 strokeAlignedText(ctx, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoProporcaoCalorias, textBindings), model.posicao.xMm - (alturaLinhaMm * 3), yMm, mm, TextAlign.RIGHT);
             } else {
@@ -152,8 +150,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
         textBindings.parametrosExtras.forEach((parametro: any) => {
             yMm += alturaLinhaMm;
             ctx.textAlign = TextAlign.LEFT;
-            ctx.strokeText(getOrDefault(parametro, "nome"),
-            mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+            ctx.strokeText(parametro.nome, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
             strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
             strokeAlignedText(ctx, larguraMaxima, fillTemplate(parametro.valorDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
             yMm += lineStrokeGap;
