@@ -137,7 +137,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
             yMm += alturaLinhaMm;
             ctx.textAlign = TextAlign.LEFT;
             ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-            if (parametro.nome === "Valor Energético") {
+            if (parametro.rotulo === "Valor Energético") {
                 strokeAlignedText(ctx, larguraMaxima, textBindings.textoProporcaoCalorias, model.posicao.xMm - (alturaLinhaMm * 3), yMm, mm, TextAlign.RIGHT);
             } else {
                 strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
