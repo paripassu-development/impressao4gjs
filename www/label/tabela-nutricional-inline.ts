@@ -4,6 +4,7 @@ import {
 } from "./text";
 import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
 import {fillTemplate} from "../core/util/param-utils";
+import {strokeAlignedText, TextAlign} from "../core/util/text-utils";
 
 const _ = require("lodash");
 
@@ -28,11 +29,31 @@ interface IElementoTabelaNutricionalInformacoesAdicionais {
     texto: string;
 }
 
+interface IInformacoesNutrientesTabelaNutricional {
+    [key: string]: IInformacoesNutriente;
+}
+
+interface IInformacoesNutriente {
+    nome: string;
+    qtPorcao: string;
+    valDiario: string;
+}
+
+interface IElementoTabelaNutricionalModelInformacoesNutricionais {
+    textoInformacaoNutricional: string;
+    textoQuantidadePorPorcao: string;
+    textoAbreviadoValorDiario: string;
+    textoPorcaoCaseira: string;
+    textoProporcaoCalorias: string;
+    informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
+}
+
 interface IElementoTabelaNutricionalInlineModel {
     tipo: string;
     posicao: IElementoTabelaNutricionalModelPosicao;
     dimensoes: IElementoTabelaNutricionalModelDimensoes;
     fonte: IElementoTabelaNutricionalModelFonte;
+    informacoesNutricionais: IElementoTabelaNutricionalModelInformacoesNutricionais;
     informacoesAdicionais: IElementoTabelaNutricionalInformacoesAdicionais;
     multiplasLinhas: IElementoTextoModelmultiplasLinhas;
     larguraMaximaMm: number;
@@ -68,51 +89,66 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
 
     informacoes.push("PORÇÃO {{{porcao}}}");
 
-    const valorEnergeticoQtPorcao = _.get(textBindings, "valorEnergeticoQtPorcao");
-    const valorEnergeticoValDiario = _.get(textBindings, "valorEnergeticoValDiario");
-    if (!textBindings || (valorEnergeticoQtPorcao && valorEnergeticoValDiario)) {
-        informacoes.push("Valor energético {{{valorEnergeticoQtPorcao}}}kcal = {{{valorEnergeticoQtPorcaoKj}}}kj ({{{valorEnergeticoValDiario}}} %VD)");
-    }
+    if (model.informacoesNutricionais.informacoesNutrientesTabelaNutricional) {
+        const valorEnergeticoQtPorcao = _.get(textBindings, "valorEnergeticoQtPorcao");
+        const valorEnergeticoValDiario = _.get(textBindings, "valorEnergeticoValDiario");
+        if (!textBindings || (valorEnergeticoQtPorcao && valorEnergeticoValDiario)) {
+            informacoes.push("Valor energético {{{valorEnergeticoQtPorcao}}}kcal = {{{valorEnergeticoQtPorcaoKj}}}kj ({{{valorEnergeticoValDiario}}} %VD)");
+        }
 
-    const carboidratosQtPorcao = _.get(textBindings, "carboidratosQtPorcao");
-    const carboidratosValDiario = _.get(textBindings, "carboidratosValDiario");
-    if (!textBindings || (carboidratosQtPorcao && carboidratosValDiario)) {
-        informacoes.push("Carboidratos {{{carboidratosQtPorcao}}}g ({{{carboidratosValDiario}}} %VD)");
-    }
+        const carboidratosQtPorcao = _.get(textBindings, "carboidratosQtPorcao");
+        const carboidratosValDiario = _.get(textBindings, "carboidratosValDiario");
+        if (!textBindings || (carboidratosQtPorcao && carboidratosValDiario)) {
+            informacoes.push("Carboidratos {{{carboidratosQtPorcao}}}g ({{{carboidratosValDiario}}} %VD)");
+        }
 
-    const proteinasQtPorcao = _.get(textBindings, "proteinasQtPorcao");
-    const proteinasValDiario = _.get(textBindings, "proteinasValDiario");
-    if (!textBindings || (proteinasQtPorcao && proteinasValDiario)) {
-        informacoes.push(`Proteínas {{{proteinasQtPorcao}}}g ({{{proteinasValDiario}}} %VD)`);
-    }
+        const proteinasQtPorcao = _.get(textBindings, "proteinasQtPorcao");
+        const proteinasValDiario = _.get(textBindings, "proteinasValDiario");
+        if (!textBindings || (proteinasQtPorcao && proteinasValDiario)) {
+            informacoes.push(`Proteínas {{{proteinasQtPorcao}}}g ({{{proteinasValDiario}}} %VD)`);
+        }
 
-    const gordurasTotaisQtPorcao = _.get(textBindings, "gordurasTotaisQtPorcao");
-    const gordurasTotaisValDiario = _.get(textBindings, "gordurasTotaisValDiario");
-    if (!textBindings || (gordurasTotaisQtPorcao && gordurasTotaisValDiario)) {
-        informacoes.push(`Gorduras totais {{{gordurasTotaisQtPorcao}}}g ({{{gordurasTotaisValDiario}}} %VD)`);
-    }
+        const gordurasTotaisQtPorcao = _.get(textBindings, "gordurasTotaisQtPorcao");
+        const gordurasTotaisValDiario = _.get(textBindings, "gordurasTotaisValDiario");
+        if (!textBindings || (gordurasTotaisQtPorcao && gordurasTotaisValDiario)) {
+            informacoes.push(`Gorduras totais {{{gordurasTotaisQtPorcao}}}g ({{{gordurasTotaisValDiario}}} %VD)`);
+        }
 
-    const gorduraSaturadaQtPorcao = _.get(textBindings, "gorduraSaturadaQtPorcao");
-    const gorduraSaturadaValDiario = _.get(textBindings, "gorduraSaturadaValDiario");
-    if (!textBindings || (gorduraSaturadaQtPorcao && gorduraSaturadaValDiario)) {
-        informacoes.push(`Gorduras saturadas {{{gorduraSaturadaQtPorcao}}}g ({{{gorduraSaturadaValDiario}}} %VD)`);
-    }
+        const gorduraSaturadaQtPorcao = _.get(textBindings, "gorduraSaturadaQtPorcao");
+        const gorduraSaturadaValDiario = _.get(textBindings, "gorduraSaturadaValDiario");
+        if (!textBindings || (gorduraSaturadaQtPorcao && gorduraSaturadaValDiario)) {
+            informacoes.push(`Gorduras saturadas {{{gorduraSaturadaQtPorcao}}}g ({{{gorduraSaturadaValDiario}}} %VD)`);
+        }
 
-    const gorduraTransQtPorcao = _.get(textBindings, "gorduraTransQtPorcao");
-    if (!textBindings || gorduraTransQtPorcao) {
-        informacoes.push(`Gorduras trans {{{gorduraTransQtPorcao}}}g (VD não estabelecido)`);
-    }
+        const gorduraTransQtPorcao = _.get(textBindings, "gorduraTransQtPorcao");
+        if (!textBindings || gorduraTransQtPorcao) {
+            informacoes.push(`Gorduras trans {{{gorduraTransQtPorcao}}}g (VD não estabelecido)`);
+        }
 
-    const fibraAlimentarQtPorcao = _.get(textBindings, "fibraAlimentarQtPorcao");
-    const fibraAlimentarValDiario = _.get(textBindings, "fibraAlimentarValDiario");
-    if (!textBindings || (fibraAlimentarQtPorcao && fibraAlimentarValDiario)) {
-        informacoes.push(`Fibra alimentar {{{fibraAlimentarQtPorcao}}}g ({{{fibraAlimentarValDiario}}} %VD)`);
-    }
+        const fibraAlimentarQtPorcao = _.get(textBindings, "fibraAlimentarQtPorcao");
+        const fibraAlimentarValDiario = _.get(textBindings, "fibraAlimentarValDiario");
+        if (!textBindings || (fibraAlimentarQtPorcao && fibraAlimentarValDiario)) {
+            informacoes.push(`Fibra alimentar {{{fibraAlimentarQtPorcao}}}g ({{{fibraAlimentarValDiario}}} %VD)`);
+        }
 
-    const sodioQtPorcao = _.get(textBindings, "sodioQtPorcao");
-    const sodioValDiario = _.get(textBindings, "sodioValDiario");
-    if (!textBindings || (sodioQtPorcao && sodioValDiario)) {
-        informacoes.push(`Sódio {{{sodioQtPorcao}}}mg ({{{sodioValDiario}}} %VD)`);
+        const sodioQtPorcao = _.get(textBindings, "sodioQtPorcao");
+        const sodioValDiario = _.get(textBindings, "sodioValDiario");
+        if (!textBindings || (sodioQtPorcao && sodioValDiario)) {
+            informacoes.push(`Sódio {{{sodioQtPorcao}}}mg ({{{sodioValDiario}}} %VD)`);
+        }
+    } else {
+        textBindings.parametrosPadroes.forEach((parametro: any) => {
+            if (parametro.rotulo === "Valor Energético") {
+                informacoes.push("Valor energético {{{valorEnergeticoQtPorcao}}}kcal = {{{valorEnergeticoQtPorcaoKj}}}kj ({{{valorEnergeticoValDiario}}} %VD)");
+            } else if (parametro.rotulo === "Gorduras trans") {
+                informacoes.push(`Gorduras trans {{{gorduraTransQtPorcao}}}g (VD não estabelecido)`);
+            } else {
+                informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.trim() + ` ` + `(` + parametro.valorDiario + `VD)`);
+            }
+        });
+        textBindings.parametrosExtras.forEach((parametro: any) => {
+            informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.trim() + ` ` + `(` + parametro.valorDiario + `VD)`);
+        });
     }
 
     let informacoesAdicionais = "*% Valores diários com base em uma dieta de 2.000 kcal ou 8.400 kJ. Seus valores diários podem ser maiores ou menores dependendo de suas necessidades energéticas.";

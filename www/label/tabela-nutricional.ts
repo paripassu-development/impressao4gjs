@@ -131,8 +131,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
                 drawLine(ctx, model, yMm, mm);
             }
         });
-    }
-    else {
+    } else {
         textBindings.parametrosPadroes.forEach((parametro: any) => {
             yMm += alturaLinhaMm;
             ctx.textAlign = TextAlign.LEFT;
