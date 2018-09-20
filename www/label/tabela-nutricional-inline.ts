@@ -138,16 +138,14 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
         }
     } else {
         textBindings.parametrosPadroes.forEach((parametro: any) => {
-            if (parametro.rotulo === "Valor Energético") {
-                informacoes.push("Valor energético {{{valorEnergeticoQtPorcao}}}kcal = {{{valorEnergeticoQtPorcaoKj}}}kj ({{{valorEnergeticoValDiario}}} %VD)");
-            } else if (parametro.rotulo === "Gorduras trans") {
-                informacoes.push(`Gorduras trans {{{gorduraTransQtPorcao}}}g (VD não estabelecido)`);
+            if (parametro.rotulo === "Gorduras trans") {
+                informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "")  + ` (VD não estabelecido)`);
             } else {
-                informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.trim() + ` ` + `(` + parametro.valorDiario + `VD)`);
+                informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
             }
         });
         textBindings.parametrosExtras.forEach((parametro: any) => {
-            informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.trim() + ` ` + `(` + parametro.valorDiario + `VD)`);
+            informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
         });
     }
 
