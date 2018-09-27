@@ -112,7 +112,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
 
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
-    if (model.informacoesNutricionais.informacoesNutrientesTabelaNutricional) {
+    if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         nutrientes.forEach((nutriente: any) => {
             const informacoesNutriente = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
             if (informacoesNutriente !== undefined) {

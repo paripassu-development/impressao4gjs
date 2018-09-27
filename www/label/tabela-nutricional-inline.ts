@@ -89,7 +89,7 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
 
     informacoes.push("PORÇÃO {{{porcao}}}");
 
-    if (model.informacoesNutricionais.informacoesNutrientesTabelaNutricional) {
+    if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         const valorEnergeticoQtPorcao = _.get(textBindings, "valorEnergeticoQtPorcao");
         const valorEnergeticoValDiario = _.get(textBindings, "valorEnergeticoValDiario");
         if (!textBindings || (valorEnergeticoQtPorcao && valorEnergeticoValDiario)) {
