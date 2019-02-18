@@ -1,10 +1,9 @@
+import {fillTemplate} from "../core/util/param-utils";
+import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
     IElementoTextoModelmultiplasLinhas,
-    text
+    text,
 } from "./text";
-import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
-import {fillTemplate} from "../core/util/param-utils";
-import {strokeAlignedText, TextAlign} from "../core/util/text-utils";
 
 const _ = require("lodash");
 
@@ -46,6 +45,7 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoPorcaoCaseira: string;
     textoProporcaoCalorias: string;
     informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
+    parametrosPadroes: [object];
 }
 
 interface IElementoTabelaNutricionalInlineModel {
@@ -61,7 +61,7 @@ interface IElementoTabelaNutricionalInlineModel {
 
 const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTabelaNutricionalInlineModel, textBindings?: any) => {
     const elemento: any = mountTextElement(model.posicao, model, mountTextTabelaNutricional(model, textBindings));
-    let degrees = model.posicao.rotacao || 0;
+    const degrees = model.posicao.rotacao || 0;
     ctx.save();
     ctx.rotate(degrees * Math.PI / 180);
     text.drawText(ctx, dpi, elemento, textBindings);
@@ -138,10 +138,14 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
         }
     } else {
         textBindings.parametrosPadroes.forEach((parametro: any) => {
-            if (parametro.rotulo === "Gorduras trans") {
-                informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "")  + ` (VD não estabelecido)`);
-            } else {
-                informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
+            if (!model.informacoesNutricionais.parametrosPadroes || model.informacoesNutricionais.parametrosPadroes.filter((parametroPadrao: any) => {
+                return parametroPadrao.rotulo === parametro.rotulo && parametroPadrao.visivel;
+            }).length > 0) {
+                if (parametro.rotulo === "Gorduras trans") {
+                    informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "")  + ` (VD não estabelecido)`);
+                } else {
+                    informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
+                }
             }
         });
         textBindings.parametrosExtras.forEach((parametro: any) => {
