@@ -1,14 +1,7 @@
-import {
-    splitLines,
-    strokeAlignedText,
-    TextAlign
-} from "./../core/util/text-utils";
-import {mmPartial} from "./mm";
-import {
-    fillTemplate,
-    getOrDefault
-} from "../core/util/param-utils";
+import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
+import {splitLines, strokeAlignedText, TextAlign} from "./../core/util/text-utils";
+import {mmPartial} from "./mm";
 
 const BLACK = "#000000";
 
@@ -51,6 +44,7 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoPorcaoCaseira: string;
     textoProporcaoCalorias: string;
     informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
+    parametrosPadroes: [any];
 }
 
 interface IElementoTabelaNutricionalOpcoes {
@@ -82,7 +76,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
     setInformacoesPadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
-    let degrees = model.posicao.rotacao || 0;
+    const degrees = model.posicao.rotacao || 0;
     ctx.rotate(degrees * Math.PI / 180);
     ctx.fillStyle = BLACK;
     ctx.strokeStyle = BLACK;
@@ -133,17 +127,21 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
         });
     } else {
         textBindings.parametrosPadroes.forEach((parametro: any) => {
-            yMm += alturaLinhaMm;
-            ctx.textAlign = TextAlign.LEFT;
-            ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-            if (parametro.rotulo === "Valor Energético") {
-                strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 3), yMm, mm, TextAlign.RIGHT);
-            } else {
-                strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
+            if (!model.informacoesNutricionais.parametrosPadroes || model.informacoesNutricionais.parametrosPadroes.filter((parametroPadrao: any) => {
+                return parametroPadrao.rotulo === parametro.rotulo && parametroPadrao.visivel;
+            }).length > 0) {
+                yMm += alturaLinhaMm;
+                ctx.textAlign = TextAlign.LEFT;
+                ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+                if (parametro.rotulo === "Valor Energético") {
+                    strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 3), yMm, mm, TextAlign.RIGHT);
+                } else {
+                    strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 6), yMm, mm, TextAlign.RIGHT);
+                }
+                strokeAlignedText(ctx, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
+                yMm += lineStrokeGap;
+                drawLine(ctx, model, yMm, mm);
             }
-            strokeAlignedText(ctx, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
-            yMm += lineStrokeGap;
-            drawLine(ctx, model, yMm, mm);
         });
 
         textBindings.parametrosExtras.forEach((parametro: any) => {
@@ -155,6 +153,18 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
             yMm += lineStrokeGap;
             drawLine(ctx, model, yMm, mm);
         });
+        if (model.informacoesNutricionais.parametrosPadroes) {
+            const naoVisiveis = model.informacoesNutricionais.parametrosPadroes.filter((parametroPadrao: any) => {
+                return !parametroPadrao.visivel;
+            });
+            if (naoVisiveis.length > 0) {
+                let texto = "(*) NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE ";
+                texto = texto.concat(naoVisiveis.map((parametro) => {
+                    return parametro.rotulo.toUpperCase();
+                }).join(", ")).concat(". ");
+                model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
+            }
+        }
     }
 
     yMm += alturaLinhaMm;
