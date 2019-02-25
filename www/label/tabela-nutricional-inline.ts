@@ -1,5 +1,6 @@
 import {fillTemplate} from "../core/util/param-utils";
 import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
+import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {
     IElementoTextoModelmultiplasLinhas,
     text,
@@ -178,4 +179,11 @@ function mountTextElement(posicao: IElementoTabelaNutricionalModelPosicao, model
     };
 }
 
-export const tabelaNutricionalInline = {drawTable};
+export const validateModel = (model: any) : [any] => {
+    const errors: any = [];
+
+    ValidateModelUtils.validate(model, errors, "tabelaNutricionalEmLinha");
+    return errors;
+};
+
+export const tabelaNutricionalInline = {drawTable, validateModel};

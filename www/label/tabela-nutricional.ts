@@ -1,6 +1,7 @@
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
-import {splitLines, strokeAlignedText, TextAlign} from "./../core/util/text-utils";
+import {splitLines, strokeAlignedText, TextAlign} from "../core/util/text-utils";
+import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
 
 const BLACK = "#000000";
@@ -38,13 +39,13 @@ interface IElementoTabelaNutricionalInformacoesAdicionais {
 }
 
 interface IElementoTabelaNutricionalModelInformacoesNutricionais {
-    textoInformacaoNutricional: string;
-    textoQuantidadePorPorcao: string;
-    textoAbreviadoValorDiario: string;
-    textoPorcaoCaseira: string;
-    textoProporcaoCalorias: string;
-    informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
-    parametrosPadroes: [any];
+        textoInformacaoNutricional: string;
+        textoQuantidadePorPorcao: string;
+        textoAbreviadoValorDiario: string;
+        textoPorcaoCaseira: string;
+        textoProporcaoCalorias: string;
+        informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
+        parametrosPadroes: [any];
 }
 
 interface IElementoTabelaNutricionalOpcoes {
@@ -189,4 +190,11 @@ const drawLine = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricion
     ctx.strokeRect(mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm), 1);
 };
 
-export const tabelaNutricional = {drawTable};
+export const validateModel = (model: any) : [any] => {
+    const errors: any = [];
+
+    ValidateModelUtils.validate(model, errors, "tabelaNutricional");
+    return errors;
+};
+
+export const tabelaNutricional = {drawTable, validateModel};

@@ -1,6 +1,7 @@
-import {barraOrigemRastreadaConstants} from "./../core/constants/constants-impressao";
-import {canvasUtils} from "./../core/util/canvas-utils";
-import {DrawUtils} from "./../core/util/draw-utils";
+import {barraOrigemRastreadaConstants} from "../core/constants/constants-impressao";
+import {canvasUtils} from "../core/util/canvas-utils";
+import {DrawUtils} from "../core/util/draw-utils";
+import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
 
 const corPreta: string = "#000000";
@@ -33,7 +34,7 @@ interface IElementoBarraOrigemRastreadaModel {
 const drawBarraOrigemRastreada = (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoBarraOrigemRastreadaModel) => {
     const mm = mmPartial(dpi);
     ctx.save();
-    let degrees = model.posicao.rotacao || 0;
+    const degrees = model.posicao.rotacao || 0;
     ctx.rotate(degrees * Math.PI / 180);
     const barraOrigemRastreada = createBarraOrigemRastreada(id, {
         corBarra: corPreta,
@@ -73,7 +74,7 @@ const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastr
     ctx.scale(taxaEscalaLargura, taxaEscalaAltura);
     const drawUtils = new DrawUtils(ctx);
 
-    // Primeiro    
+    // Primeiro
     const coordenadas = [
         {x: 0, y: 0},
         {x: 48, y: 0},
@@ -83,7 +84,7 @@ const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastr
     ];
     drawUtils.polygon(coordenadas, options.corBarra);
 
-    // Segundo 
+    // Segundo
     const coordenadas2 = [
         {x: 502, y: 0},
         {x: 534, y: 0},
@@ -128,4 +129,11 @@ const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastr
     return document.getElementById(nomeElementoCanvas) as HTMLCanvasElement;
 };
 
-export const barraOrigemRastreada = {createBarraOrigemRastreada, drawBarraOrigemRastreada};
+export const validateModel = (model: any) : [any] => {
+    const errors: any = [];
+
+    ValidateModelUtils.validate(model, errors, "barraOrigemRastreada");
+    return errors;
+};
+
+export const barraOrigemRastreada = {createBarraOrigemRastreada, drawBarraOrigemRastreada, validate: validateModel};

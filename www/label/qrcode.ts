@@ -1,4 +1,5 @@
 import * as Mustache from "mustache";
+import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
 
 declare var require: any;
@@ -30,7 +31,7 @@ const drawQrcode = (id: string, ctx: CanvasRenderingContext2D, dpi: number, mode
         width: mm(model.dimensoes.larguraMm),
     });
     ctx.save();
-    let degrees = model.posicao.rotacao || 0;
+    const degrees = model.posicao.rotacao || 0;
     ctx.rotate(degrees * Math.PI / 180);
     ctx.drawImage(qrcodeImg, mm(model.posicao.xMm), mm(model.posicao.yMm));
     ctx.restore();
@@ -62,4 +63,11 @@ const createQrCode = (id: string, options: ICreateQrcodeOptions) => {
     return qrcodeDiv.getElementsByTagName("canvas")[0];
 };
 
-export const qrcode = {drawQrcode};
+export const validateModel = (model: any) : [any] => {
+    const errors: any = [];
+
+    ValidateModelUtils.validate(model, errors, "qrcode");
+    return errors;
+};
+
+export const qrcode = {drawQrcode, validateModel};
