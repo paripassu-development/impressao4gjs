@@ -8,16 +8,19 @@ export const dadosDefault = {
     categoria: "Não sei",
     cidadeUFFornecedor: "Petrópolis-RJ",
     cidadeUFMeuCadastro: "Florianópolis-SC",
+    cidadeUFOrigemProdutor:"Curitiba-PR",
     cidadeUFProdutor: "Florianópolis-SC",
     cliente: "Varejo 1",
     codigoEOrigem: "0012340089",
     codigoFornecedor: "1234",
     codigoPostalFornecedor: "25715-416",
     codigoPostalMeuCadastro: "88032-650",
+    codigoPostalOrigemProdutor:"25715-416",
     codigoRastreamento: "PN7NWCJ0FERB9DH0",
     codigoRastreamentoNumerico: "N22476123456",
     complemento: "complemento complemento",
     complementoFornecedor: "complemento fornecedorRn",
+    complementoOrigemProdutor: "Estabelecimento verde agua",
     cultivar: "valor cultivar",
     dataEmbalagem: "26/01/2017",
     dataEntrega: "03/07/2013",
@@ -26,6 +29,7 @@ export const dadosDefault = {
     dataValidade: "04/07/2013",
     documentoDestino: "571.331.716-19",
     documentoMeuCadastro: "78.425.986/0036-15",
+    documentoOrigemProdutor: "83044666430",
     documentoProdutor: "78.425.986/0036-16",
     ean13: "9780201485677",
     ean13Nutricional: "129123456",
@@ -42,6 +46,7 @@ export const dadosDefault = {
     infoRefrigeracaoConservacao: "Conservar em local seco",
     ingredientes: "Pimentão misto",
     inscricaoRuralMeuCadastro: "12345678",
+    inscricaoRuralOrigemProdutor: "1234",
     inscricaoRuralProdutor: "87654321",
     labelAbreviadaCapacidade: "Peso Líq.",
     localizacaoDestino: "localização destino",
@@ -50,16 +55,19 @@ export const dadosDefault = {
     logradouroFornecedor: "logradouro fornecedor logradouro fornecedor logradouro fornecedor",
     logradouroNumeroBairroFornecedor: "Servidão Sérgio Machado, 240, Vale do Carangola",
     logradouroNumeroBairroMeuCadastro: "Servidão caminho da cruz, 240, Monte Verde",
+    logradouroNumeroBairroOrigemProdutor:"logradouro OrigemProdutor",
     logradouroNumeroBairroProdutor: "Servidão Sérgio Machado, 240, Vale do Carangola",
     lote: "123",
     nomeDestino: "João Machado",
     nomeDocumentoDestino: "cpf",
     nomeDocumentoMeuCadastro: "cnpj",
+    nomeDocumentoOrigemProdutor: "cpf",
     nomeDocumentoProdutor: "cnpj",
     nomeEmbalagem: "Caixa",
     nomeEmpresa: "Abacateiros do Sul",
     nomeFornecedor: "Abacateiros de Jaragua do sul do estado de Santa Catarina - Brasil",
     nomeMeuCadastro: "FRUTAS CANTU NORDESTE",
+    nomeOrigemProdutor:"Ernesto Vieira",
     nomeProdutor: "Fazenda Rei do Gado",
     numeroFornecedor: "320",
     observacao1: "obs 1",
@@ -92,6 +100,44 @@ export const dadosDefault = {
     valorEnergeticoValDiario: "3",
     variedade: "caturra",
     zonaProducao: "norte",
+    parametrosPadroes: [{
+        rotulo: "Valor Energético",
+        valorDiario: "2 %",
+        qtPorcao: "45 kcal= 189 kJ"
+    }, {
+        rotulo: "Carboidratos",
+        valorDiario: "4 %",
+        qtPorcao: "4 g"
+    }, {
+        rotulo: "Proteínas",
+        valorDiario: "1 %",
+        qtPorcao: "1 g"
+    }, {
+        rotulo: "Gorduras Totais",
+        valorDiario: "0 %",
+        qtPorcao: "0 g"
+    }, {
+        rotulo: "Gorduras Saturadas",
+        valorDiario: "0 %",
+        qtPorcao: "0 g"
+    }, {
+        rotulo: "Gorduras trans",
+        valorDiario: "**",
+        qtPorcao: "0 g"
+    }, {
+        rotulo: "Fibra Alimentar",
+        valorDiario: "7 %",
+        qtPorcao: "7 mg"
+    }, {
+        rotulo: "Sódio",
+        valorDiario: "0 %",
+        qtPorcao: "0 g"
+    }],
+    parametrosExtras: [{
+        rotulo: "Vitamina C",
+        valorDiario: "0 %",
+        qtPorcao: "0 g"
+    }],
 };
 
 export const modelDefault = {

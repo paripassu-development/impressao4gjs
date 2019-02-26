@@ -39,13 +39,14 @@ interface IElementoTabelaNutricionalInformacoesAdicionais {
 }
 
 interface IElementoTabelaNutricionalModelInformacoesNutricionais {
-        textoInformacaoNutricional: string;
-        textoQuantidadePorPorcao: string;
-        textoAbreviadoValorDiario: string;
-        textoPorcaoCaseira: string;
-        textoProporcaoCalorias: string;
-        informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
-        parametrosPadroes: [any];
+    textoInformacaoNutricional: string;
+    textoQuantidadePorPorcao: string;
+    textoAbreviadoValorDiario: string;
+    textoPorcaoCaseira: string;
+    textoProporcaoCalorias: string;
+    informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
+    ocultarZerados: boolean;
+    parametrosPadroes: [any];
 }
 
 interface IElementoTabelaNutricionalOpcoes {
@@ -128,9 +129,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
         });
     } else {
         textBindings.parametrosPadroes.forEach((parametro: any) => {
-            if (!model.informacoesNutricionais.parametrosPadroes || model.informacoesNutricionais.parametrosPadroes.filter((parametroPadrao: any) => {
-                return parametroPadrao.rotulo === parametro.rotulo && parametroPadrao.visivel;
-            }).length > 0) {
+            const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
+            if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
                 yMm += alturaLinhaMm;
                 ctx.textAlign = TextAlign.LEFT;
                 ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
@@ -154,13 +154,13 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
             yMm += lineStrokeGap;
             drawLine(ctx, model, yMm, mm);
         });
-        if (model.informacoesNutricionais.parametrosPadroes) {
-            const naoVisiveis = model.informacoesNutricionais.parametrosPadroes.filter((parametroPadrao: any) => {
-                return !parametroPadrao.visivel;
-            });
+        if (model.informacoesNutricionais.ocultarZerados) {
+            const naoVisiveis = textBindings.parametrosPadroes.filter((parametro: any) =>
+                parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
+            );
             if (naoVisiveis.length > 0) {
                 let texto = "(*) NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE ";
-                texto = texto.concat(naoVisiveis.map((parametro) => {
+                texto = texto.concat(naoVisiveis.map((parametro: any) => {
                     return parametro.rotulo.toUpperCase();
                 }).join(", ")).concat(". ");
                 model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
