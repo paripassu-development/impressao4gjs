@@ -1,34 +1,35 @@
 import * as Mustache from "mustache";
-import {mmPartial} from "./mm";
 import {canvasUtils} from "../core/util/canvas-utils";
 import {
+    AI_LOTE,
+    AIS_DATAS,
+    AIS_GTIN_CONTEUDO,
     BARCODE_IMG_ELEMENT_ID,
+    DUN14_4G,
     EAN128,
     EAN13_DEFAULT,
     EAN_128,
     GS1128,
     GS1_128_DEFAULT,
     GS1_DATE_PATTERN,
-    AIS_DATAS,
-    ITF14_DEFAULT,
-    AIS_GTIN_CONTEUDO,
-    AI_LOTE,
     INTERCALADO2A5_4G,
-    DUN14_4G,
-    ITF_DEFAULT
+    ITF14_DEFAULT,
+    ITF_DEFAULT,
 } from "./index";
+import {mmPartial} from "./mm";
 import JsBarcode = require("jsbarcode");
 import moment = require("moment");
 import {Error} from "../core/common/error";
 import {ErrosPrefix, TipoError} from "../core/constants/constants-impressao";
+import {ValidateModelUtils} from "../core/util/validate-model-utils";
 
 const bwipjs: any = require("bwip-js");
-const _: any = require('lodash');
+const _: any = require("lodash");
 
 const OPTIONS_DEFAULT = {
     displayValue: true,
     textAlign: "center",
-    font: "OCR-B"
+    font: "OCR-B",
 };
 
 interface IElementoCodigoBarrasModelPosicao {
@@ -75,7 +76,6 @@ interface IValorGS1 {
     valor: string;
 }
 
-
 const formatValue = (model: IElementoCodigoBarrasModel, textBindings: any, tipoCodigoBarras: string) => {
     if (!textBindings) {
         return resolveDefaultValue(tipoCodigoBarras);
@@ -101,7 +101,7 @@ const formatEan13 = (ean: string) => {
     if (!_.isEmpty(ean)) {
         if (ean.length > 13) {
             ean = ean.substring(1, 13);
-        } else if (ean.length == 13) {
+        } else if (ean.length === 13) {
             ean = ean.substring(0, 12);
         } else if (ean.length < 12) {
             ean = ean.substring(0, ean.length - 1);
@@ -117,7 +117,7 @@ const formatDun14 = (ean: string) => {
     if (!_.isEmpty(ean)) {
         if (ean.length > 14) {
             ean = ean.substring(1, 14);
-        } else if (ean.length == 14) {
+        } else if (ean.length === 14) {
             ean = ean.substring(0, 13);
         } else if (ean.length < 13) {
             ean = ean.substring(0, ean.length - 1);
@@ -128,7 +128,7 @@ const formatDun14 = (ean: string) => {
 };
 const formatIntercalado2De5 = (ean: string) => {
     if (!_.isEmpty(ean)) {
-        if (ean.length == 13) {
+        if (ean.length === 13) {
             ean = "0" + ean;
         }
         ean = _.padLeft(ean, 12, "0");
@@ -142,7 +142,7 @@ function normalizeGS1Value(valor: string, identificador: string) {
         return moment({
             d: parts[0],
             m: parts[1],
-            y: parts[2]
+            y: parts[2],
         } as any).format(GS1_DATE_PATTERN);
     }
     return valor;
@@ -156,7 +156,7 @@ function formatGs1128(valores: IValorGS1[], textBindings: any) {
     }, "");
 }
 
-let resolveDefaultValue = function (tipoCodigoBarras: string) {
+const resolveDefaultValue = (tipoCodigoBarras: string) => {
     switch (tipoCodigoBarras.toLowerCase()) {
         case EAN13_DEFAULT:
             return "000000000000";
@@ -181,26 +181,26 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
         return;
     }
 
-    if(tipoCodigoBarras.toLowerCase() === GS1_128_DEFAULT){
+    if (tipoCodigoBarras.toLowerCase() === GS1_128_DEFAULT) {
         model.valores.forEach((item) => {
             const ai = item.identificador;
             const valor = Mustache.render(item.valor, textBindings);
-            if(!ai){
+            if (!ai) {
                 errors.push(Error.build("impr.ui.js.identificador_nao_informado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} É necessário informar um identificador para cada valor do código de barras.`, TipoError.GS1));
                 return;
             }
-            if(!valor){
+            if (!valor) {
                 errors.push(Error.build("impr.ui.js.valor_identificador_nao_informado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} É necessário informar um valor para cada identificador do código de barras.`, TipoError.GS1));
                 return;
             }
 
-            if (_.includes(AIS_GTIN_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))){
+            if (_.includes(AIS_GTIN_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))) {
                 errors.push(Error.build("impr.ui.js.identificador_gtin_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`, TipoError.GS1, ai));
             }
-            if(_.includes(AIS_DATAS, ai) && !(new RegExp(/^\d{1,2}\/\d{1,2}\/\d{4}$/).test(valor))){
+            if (_.includes(AIS_DATAS, ai) && !(new RegExp(/^\d{1,2}\/\d{1,2}\/\d{4}$/).test(valor))) {
                 errors.push(Error.build("impr.ui.js.identificador_data_nao_esta_formatado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter o formato DD/MM/AAAA.`, TipoError.GS1, ai));
             }
-            if(ai === AI_LOTE && !(new RegExp(/^.{1,20}$/).test(valor))){
+            if (ai === AI_LOTE && !(new RegExp(/^.{1,20}$/).test(valor))) {
                 errors.push(Error.build("impr.ui.js.identificador_lote_conter_max_20_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`, TipoError.GS1, ai));
             }
         });
@@ -208,7 +208,7 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
 
 }
 
-const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any,): Promise<any> => {
+const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any, ): Promise<any> => {
     const mm = mmPartial(dpi);
     let tipoCodigoBarras = mapLabelTypes(Mustache.render(model.tipoCodigoBarras, textBindings));
     tipoCodigoBarras = normalizeType(tipoCodigoBarras);
@@ -220,7 +220,7 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
     const valor = formatValue(model, textBindings, tipoCodigoBarras);
 
     if (!_.isEmpty(valor)) {
-        let barcodeImg = await barcode.createBarcode(id, dpi, {
+        const barcodeImg = await barcode.createBarcode(id, dpi, {
             barCodeHeight: model.dimensoes.alturaCodigoBarrasMm,
             barcodeWidth: model.dimensoes.larguraUnitariaCodigoBarrasMm,
             font: model.fonte.nome,
@@ -233,7 +233,7 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
 
         return new Promise((resolve) => {
             barcodeImg.onload = () => { // aguarda load da imagem no DOM
-                let degrees = model.posicao.rotacao || 0;
+                const degrees = model.posicao.rotacao || 0;
                 ctx.save();
                 ctx.rotate(degrees * Math.PI / 180);
                 ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
@@ -245,7 +245,7 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
     return Promise.resolve();
 };
 
-const mapLabelTypes = function (labelType: string) {
+const mapLabelTypes = (labelType: string) => {
     switch (labelType.toLowerCase()) {
         case INTERCALADO2A5_4G:
             return ITF_DEFAULT;
@@ -256,25 +256,21 @@ const mapLabelTypes = function (labelType: string) {
     }
 };
 
-let isData = function (identificador: string) {
-    return _.contains(AIS_DATAS, identificador);
-};
+const isData = (identificador: string) => _.contains(AIS_DATAS, identificador);
 
-const buildOptionsBwipJs = function (options: ICreateBarcodeOptions) {
-    return {
-        bcid: options.format,
-        text: options.text,
-        scaleX: 150,
-        scaleY: 3,
-        width: options.barcodeWidth,
-        height: options.barCodeHeight,
-        includetext: options.displayValue,
-        textfont: "OCR-B",
-        textsize: Math.round(options.fontSize),
-        textxalign: options.textAlign,
-    };
-};
-const buildOptionsJsBarcode = function (options: ICreateBarcodeOptions, dpi: number) {
+const buildOptionsBwipJs = (options: ICreateBarcodeOptions) => ({
+    bcid: options.format,
+    text: options.text,
+    scaleX: 150,
+    scaleY: 3,
+    width: options.barcodeWidth,
+    height: options.barCodeHeight,
+    includetext: options.displayValue,
+    textfont: "OCR-B",
+    textsize: Math.round(options.fontSize),
+    textxalign: options.textAlign,
+});
+const buildOptionsJsBarcode = (options: ICreateBarcodeOptions, dpi: number) => {
     const mm = mmPartial(dpi);
     return {
         font: options.font,
@@ -288,10 +284,10 @@ const buildOptionsJsBarcode = function (options: ICreateBarcodeOptions, dpi: num
         width: mm(options.barcodeWidth),
     };
 };
-const createBarcodeWithBwipJs = function (options: ICreateBarcodeOptions, img: HTMLImageElement): Promise<HTMLImageElement> {
+const createBarcodeWithBwipJs = (options: ICreateBarcodeOptions, img: HTMLImageElement): Promise<HTMLImageElement> => {
     const canvas = canvasUtils.createCanvas("canvas", 0, 0);
     return new Promise((resolve) => {
-        bwipjs(canvas, buildOptionsBwipJs(options), function (err: any) {
+        bwipjs(canvas, buildOptionsBwipJs(options), (err: any) => {
             if (err) {
                 console.log("Erro ao gerar o codigo de barras " + options.format);
             } else {
@@ -301,18 +297,16 @@ const createBarcodeWithBwipJs = function (options: ICreateBarcodeOptions, img: H
         });
     });
 };
-const createBarcodeWithBarcodeJs = function (id: string, img: HTMLImageElement, options: ICreateBarcodeOptions, dpi: number): Promise<HTMLImageElement> {
-    return new Promise((resolve) => {
-        JsBarcode("#" + BARCODE_IMG_ELEMENT_ID, options.text, buildOptionsJsBarcode(options, dpi));
-        resolve(img);
-    });
-};
+const createBarcodeWithBarcodeJs = (id: string, img: HTMLImageElement, options: ICreateBarcodeOptions, dpi: number): Promise<HTMLImageElement> => new Promise((resolve) => {
+    JsBarcode("#" + BARCODE_IMG_ELEMENT_ID, options.text, buildOptionsJsBarcode(options, dpi));
+    resolve(img);
+});
 const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions): Promise<HTMLImageElement> => {
     const oldImg = document.getElementById(BARCODE_IMG_ELEMENT_ID);
     if (oldImg) {
         oldImg.remove();
     }
-    let img = document.createElement("img");
+    const img = document.createElement("img");
     img.id = BARCODE_IMG_ELEMENT_ID;
     img.style.display = "none";
     document.getElementById(id).appendChild(img);
@@ -325,4 +319,11 @@ const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions):
     }
 };
 
-export const barcode = {createBarcode, drawBarcode};
+export const validateModel = (model: any) : [any] => {
+    const errors: any = [];
+
+    ValidateModelUtils.validate(model, errors, "codigoBarras");
+    return errors;
+};
+
+export const barcode = {createBarcode, drawBarcode, validateModel};

@@ -1,5 +1,6 @@
 import * as Mustache from "mustache";
-import {splitLines, splitLinesAutoSize, strokeAlignedText, TextAlign} from "../core/util/text-utils";
+import {splitLines, splitLinesAutoSize, strokeAlignedText} from "../core/util/text-utils";
+import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import { mmPartial } from "./mm";
 
 interface IElementoTextoModelPosicao {
@@ -78,15 +79,16 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
         ctx.restore();
     }
 
-    function getMultiplasLinhas(context: CanvasRenderingContext2D, model: IElementoTextoModel, texto: string,
-                                larguraMaxima: number, maximoNumeroDeLinhas: number, alturaMinimaFonteMm: number, dpi: number): string[] {
-        if (maximoNumeroDeLinhas > 0) {
-            return splitLinesAutoSize(context, model, texto, larguraMaxima, maximoNumeroDeLinhas, alturaMinimaFonteMm, dpi);
-        } else {
-            return splitLines(texto, larguraMaxima);
-        }
-    }
 };
+
+function getMultiplasLinhas(context: CanvasRenderingContext2D, model: IElementoTextoModel, texto: string,
+                            larguraMaxima: number, maximoNumeroDeLinhas: number, alturaMinimaFonteMm: number, dpi: number): string[] {
+    if (maximoNumeroDeLinhas > 0) {
+        return splitLinesAutoSize(context, model, texto, larguraMaxima, maximoNumeroDeLinhas, alturaMinimaFonteMm, dpi);
+    } else {
+        return splitLines(texto, larguraMaxima);
+    }
+}
 
 const isVariableBindingEmpty = (model: IElementoTextoModel, textBindings?: any) => {
     const valor = model.valor;
@@ -113,4 +115,11 @@ const textFunctions: any = {
 
 const ALTURA_MINIMA_FONT_MM = 1.2;
 
-export const text = { drawText };
+export const validateModel = (model: any) : [any] => {
+    const errors: any = [];
+
+    ValidateModelUtils.validate(model, errors, "texto");
+    return errors;
+};
+
+export const text = { drawText, validateModel };

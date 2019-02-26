@@ -21,7 +21,7 @@ const splitLines =  (texto: string, caracteresPorLinha: number): string[] => {
         }
     });
     return linhas;
-}
+};
 
 const splitLinesAutoSize =  (context: CanvasRenderingContext2D , model: any, texto: string,
                              larguraMaxima: number, maximoNumeroDeLinhas: number, alturaMinimaFonteMm: number, dpi: number): string[] => {
@@ -67,7 +67,7 @@ const splitLinesAutoSize =  (context: CanvasRenderingContext2D , model: any, tex
         model.fonte.alturaMm = alturaFontMm;
         return splitLinesAutoSize(context, model, texto, larguraMaxima, maximoNumeroDeLinhas, alturaMinimaFonteMm, dpi); // chama a função recursivamente com o tamanho da fonte atualizado
     }
-}
+};
 
 const truncaLinhas = (linhas: string[], maximoNumeroDeLinhas: number, larguraMaxima: number, context: any, dpi: number): string[] => {
     linhas = linhas.slice(0, maximoNumeroDeLinhas);
@@ -79,12 +79,12 @@ const truncaLinhas = (linhas: string[], maximoNumeroDeLinhas: number, larguraMax
         linhas[maximoNumeroDeLinhas - 1] = linhas[maximoNumeroDeLinhas - 1].substring(0, larguraMaxima - reticenciasWidth).concat("...");
     }
     return linhas;
-}
+};
 
 const getTextWidth = (text: string, context: any, dpi: number): number => {
     const textWidthInPixels = context.measureText(text).width;
     return pixelsToMillimeter(textWidthInPixels, dpi);
-}
+};
 
 const pixelsToMillimeter = (textWidthInPixels: number, dpi: number) => {
     const MM_INCH_RATIO = 25.4;
