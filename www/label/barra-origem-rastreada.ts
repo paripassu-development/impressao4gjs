@@ -136,4 +136,4 @@ export const validateModel = (model: any) : [any] => {
     return errors;
 };
 
-export const barraOrigemRastreada = {createBarraOrigemRastreada, drawBarraOrigemRastreada, validate: validateModel};
+export const barraOrigemRastreada = {createBarraOrigemRastreada, drawBarraOrigemRastreada, validateModel};
