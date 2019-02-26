@@ -262,526 +262,487 @@ const METADADOS_ETIQUETA: any[] = [
                         campo: "informacoesNutricionais.textoProporcaoCalorias",
                     },
                     {
-                        nome: "Parâmetros padrões",
-                        descricao: "Lista que determina quais parâmetros devem aparecer na tabela",
-                        tipo: "LIST",
-                        campo: "informacoesNutricionais.parametrosPadroes",
+                        nome: "Ocultar parâmetros zerados",
+                        descricao: "Ocultar parâmetros que tiverem a quantidade por porção zerada. Abaixo da tabela aparecerá um texto indicando que não existe quantidade significativa do parâmetro.",
+                        tipo: "BOOLEAN",
                         obrigatorio: false,
-                        preRequisito: [
-                            {
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
-                                oposto: true,
-                                tipo: "CONFLITO",
-                            },
-                        ],
-                        listaTipo: [
-                            {
-                                campo: "rotulo",
-                                obrigatorio: true,
-                                tipo: "TEXT",
-                            },
-                            {
-                                campo: "valorDiario",
-                                obrigatorio: true,
-                                tipo: "TEXT",
-                            },
-                            {
-                                campo: "qtPorcao",
-                                obrigatorio: true,
-                                tipo: "TEXT",
-                            },
-                            {
-                                campo: "unidade",
-                                obrigatorio: true,
-                                tipo: "TEXT",
-                            },
-                            {
-                                campo: "existe",
-                                obrigatorio: true,
-                                tipo: "TEXT",
-                            },
-                            {
-                                campo: "obrigatorio",
-                                obrigatorio: true,
-                                tipo: "TEXT",
-                            },
-                        ],
+                        campo: "informacoesNutricionais.ocultarZerados",
                     },
-                ],
-            },
-            {
-                nome: "informacoesNutrientesTabelaNutricional",
-                tipo: "OBJECT",
-                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
-                obrigatorio: false,
-                itens: [
                     {
-                        nome: "Sódio",
+                        nome: "informacoesNutrientesTabelaNutricional",
                         tipo: "OBJECT",
-                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
                         obrigatorio: false,
                         itens: [
                             {
-                                nome: "Nome",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.nome",
-                                obrigatorio: true,
-                                preRequisito: [
+                                nome: "Sódio",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                obrigatorio: false,
+                                itens: [
                                     {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                            {
-                                nome: "Quantidade por porção",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.qtPorcao",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                            {
-                                nome: "Valor diário",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.valDiario",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        nome: "Proteínas",
-                        tipo: "OBJECT",
-                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
-                        obrigatorio: false,
-                        itens: [
-                            {
-                                nome: "Nome",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.nome",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
-                                        tipo: "EXISTENCIA",
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                 ],
                             },
                             {
-                                nome: "Quantidade por porção",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.qtPorcao",
-                                obrigatorio: true,
-                                preRequisito: [
+                                nome: "Proteínas",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                obrigatorio: false,
+                                itens: [
                                     {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                            {
-                                nome: "Valor diário",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.valDiario",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        nome: "Carboidratos",
-                        tipo: "OBJECT",
-                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
-                        obrigatorio: false,
-                        itens: [
-                            {
-                                nome: "Nome",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.nome",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                            {
-                                nome: "Quantidade por porção",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.qtPorcao",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
-                                        tipo: "EXISTENCIA",
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                 ],
                             },
                             {
-                                nome: "Valor diário",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.valDiario",
-                                obrigatorio: true,
-                                preRequisito: [
+                                nome: "Carboidratos",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                obrigatorio: false,
+                                itens: [
                                     {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        nome: "Fibra Alimentar",
-                        tipo: "OBJECT",
-                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
-                        obrigatorio: false,
-                        itens: [
-                            {
-                                nome: "Nome",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.nome",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                            {
-                                nome: "Quantidade por porção",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.qtPorcao",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                            {
-                                nome: "Valor diário",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.valDiario",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        nome: "Valor Energético",
-                        tipo: "OBJECT",
-                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
-                        obrigatorio: false,
-                        itens: [
-                            {
-                                nome: "Nome",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.nome",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
-                                        tipo: "EXISTENCIA",
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                 ],
                             },
                             {
-                                nome: "Quantidade por porção",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.qtPorcao",
-                                obrigatorio: true,
-                                preRequisito: [
+                                nome: "Fibra Alimentar",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                obrigatorio: false,
+                                itens: [
                                     {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                            {
-                                nome: "Valor diário",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.valDiario",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        nome: "Gorduras Totais",
-                        tipo: "OBJECT",
-                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
-                        obrigatorio: false,
-                        itens: [
-                            {
-                                nome: "Nome",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.nome",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                            {
-                                nome: "Quantidade por porção",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.qtPorcao",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
-                                        tipo: "EXISTENCIA",
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                 ],
                             },
                             {
-                                nome: "Valor diário",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.valDiario",
-                                obrigatorio: true,
-                                preRequisito: [
+                                nome: "Valor Energético",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                obrigatorio: false,
+                                itens: [
                                     {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        nome: "Gorduras trans",
-                        tipo: "OBJECT",
-                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
-                        obrigatorio: false,
-                        itens: [
-                            {
-                                nome: "Nome",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.nome",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                            {
-                                nome: "Quantidade por porção",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.qtPorcao",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                            {
-                                nome: "Valor diário",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.valDiario",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
-                                        tipo: "EXISTENCIA",
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        nome: "Gorduras Saturadas",
-                        tipo: "OBJECT",
-                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
-                        obrigatorio: false,
-                        itens: [
-                            {
-                                nome: "Nome",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.nome",
-                                obrigatorio: true,
-                                preRequisito: [
-                                    {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
-                                    },
-                                    {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
-                                        tipo: "EXISTENCIA",
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                 ],
                             },
                             {
-                                nome: "Quantidade por porção",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.qtPorcao",
-                                obrigatorio: true,
-                                preRequisito: [
+                                nome: "Gorduras Totais",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                obrigatorio: false,
+                                itens: [
                                     {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
-                                        tipo: "EXISTENCIA",
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                 ],
                             },
                             {
-                                nome: "Valor diário",
-                                tipo: "TEXT",
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.valDiario",
-                                obrigatorio: true,
-                                preRequisito: [
+                                nome: "Gorduras trans",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                obrigatorio: false,
+                                itens: [
                                     {
-                                        campo: "informacoesNutricionais.parametrosPadroes",
-                                        oposto: true,
-                                        tipo: "CONFLITO",
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                     {
-                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
-                                        tipo: "EXISTENCIA",
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "Gorduras Saturadas",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                obrigatorio: false,
+                                itens: [
+                                    {
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
                                     },
                                 ],
                             },
@@ -945,6 +906,536 @@ const METADADOS_ETIQUETA: any[] = [
                     },
                 ],
             },
+            {
+                nome: "Informações nutricionais",
+                tipo: "OBJECT",
+                obrigatorio: false,
+                campo: "informacoesNutricionais",
+                itens: [
+                    {
+                        nome: "Texto superior",
+                        descricao: "Texto que fica localizado acima da tabela nutricional",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoInformacaoNutricional",
+                    },
+                    {
+                        nome: "Texto da quantidade por porção",
+                        descricao: "Texto da primeira linha da tabela nutricional",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoQuantidadePorPorcao",
+                    },
+                    {
+                        nome: "Texto do valor diário",
+                        descricao: "Texto abreviado do valor diário, localizado na primeira linha da tabela nutricional à esquerda",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoAbreviadoValorDiario",
+                    },
+                    {
+                        nome: "Porção caseira",
+                        descricao: "Porção à qual os parâmetros nutricionais da tabela fazem referência",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoPorcaoCaseira",
+                    },
+                    {
+                        nome: "Proporção de calorias",
+                        descricao: "Proporção de calorias em relação aos KJ's",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoProporcaoCalorias",
+                    },
+                    {
+                        nome: "Ocultar parâmetros zerados",
+                        descricao: "Ocultar parâmetros que tiverem a quantidade por porção zerada. Aparecerá um texto indicando que não existe quantidade significativa do parâmetro.",
+                        tipo: "BOOLEAN",
+                        obrigatorio: false,
+                        campo: "informacoesNutricionais.ocultarZerados",
+                    },
+                    {
+                        nome: "informacoesNutrientesTabelaNutricional",
+                        tipo: "OBJECT",
+                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
+                        obrigatorio: false,
+                        itens: [
+                            {
+                                nome: "Sódio",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                obrigatorio: false,
+                                itens: [
+                                    {
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "Proteínas",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                obrigatorio: false,
+                                itens: [
+                                    {
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "Carboidratos",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                obrigatorio: false,
+                                itens: [
+                                    {
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "Fibra Alimentar",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                obrigatorio: false,
+                                itens: [
+                                    {
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "Valor Energético",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                obrigatorio: false,
+                                itens: [
+                                    {
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "Gorduras Totais",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                obrigatorio: false,
+                                itens: [
+                                    {
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "Gorduras trans",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                obrigatorio: false,
+                                itens: [
+                                    {
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "Gorduras Saturadas",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                obrigatorio: false,
+                                itens: [
+                                    {
+                                        nome: "Nome",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Quantidade por porção",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "Valor diário",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
         ],
     },
     {
@@ -1105,6 +1596,13 @@ const METADADOS_ETIQUETA: any[] = [
                         campo: "multiplasLinhas.alinhamento",
                     },
                 ],
+            },
+            {
+                nome: "Máximo de linhas",
+                descricao: "Indica o número máximo de linhas que o texto pode ocupar",
+                tipo: "NUMERIC",
+                obrigatorio: false,
+                campo: "maxLinhas",
             },
             {
                 nome: "Valor",

@@ -40,7 +40,7 @@ describe("#validateModel()", () => {
 
     it("errors.length > 0", () => {
         const errors = validateModel(ERRORS);
-        expect(errors.length).toEqual(2);
+        expect(errors.length).toEqual(3);
     });
 
 });

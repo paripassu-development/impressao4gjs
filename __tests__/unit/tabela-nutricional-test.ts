@@ -80,15 +80,7 @@ describe("#validateModel()", () => {
             "textoQuantidadePorPorcao": "QUANTIDADE POR PORÇÃO",
             "textoAbreviadoValorDiario": "%VD(*)",
             "textoInformacaoNutricional": "INFORMAÇÃO NUTRICIONAL",
-            "parametrosPadroes": [
-                {
-                    "valorDiario": "fibraAlimentarValDiario",
-                    "qtPorcao": "fibraAlimentarQtPorcao",
-                    "unidade": "g",
-                    "existe": "fibrasESodio",
-                    "obrigatorio": true,
-                },
-            ],
+            "ocultarZerados": true,
             "informacoesNutrientesTabelaNutricional": {
                 "valorEnergetico": {
                     "nome": "Valor Energético",
@@ -105,7 +97,7 @@ describe("#validateModel()", () => {
 
     it("errors.length > 0", () => {
         const errors = validateModel(ERRORS);
-        expect(errors.length).toEqual(5);
+        expect(errors.length).toEqual(4);
     });
 
 });
