@@ -46,6 +46,7 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoProporcaoCalorias: string;
     informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
     parametrosPadroes: [object];
+    ocultarZerados: boolean;
 }
 
 interface IElementoTabelaNutricionalInlineModel {
@@ -89,6 +90,7 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
 
     informacoes.push("PORÇÃO {{{porcao}}}");
 
+    let parametros;
     if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         const valorEnergeticoQtPorcao = _.get(textBindings, "valorEnergeticoQtPorcao");
         const valorEnergeticoValDiario = _.get(textBindings, "valorEnergeticoValDiario");
@@ -138,9 +140,8 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
         }
     } else {
         textBindings.parametrosPadroes.forEach((parametro: any) => {
-            if (!model.informacoesNutricionais.parametrosPadroes || model.informacoesNutricionais.parametrosPadroes.filter((parametroPadrao: any) => {
-                return parametroPadrao.rotulo === parametro.rotulo && parametroPadrao.visivel;
-            }).length > 0) {
+            const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
+            if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
                 if (parametro.rotulo === "Gorduras trans") {
                     informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "")  + ` (VD não estabelecido)`);
                 } else {
@@ -151,15 +152,28 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
         textBindings.parametrosExtras.forEach((parametro: any) => {
             informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
         });
+
+        if (model.informacoesNutricionais.ocultarZerados) {
+            const naoVisiveis = textBindings.parametrosPadroes.filter((parametro: any) =>
+                parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
+            );
+            let texto = "";
+            if (naoVisiveis.length > 0) {
+                texto = "Não contém quantidades significativas de ";
+                texto = texto.concat(naoVisiveis.map((parametro: any) => {
+                    return parametro.rotulo;
+                }).join(", "));
+                parametros = informacoes.join("; ") + ". " + texto;
+            }
+        }
     }
 
     let informacoesAdicionais = "*% Valores diários com base em uma dieta de 2.000 kcal ou 8.400 kJ. Seus valores diários podem ser maiores ou menores dependendo de suas necessidades energéticas.";
-
     if (_.get(model, "informacoesAdicionais.texto")) {
         informacoesAdicionais = model.informacoesAdicionais.texto;
     }
 
-    return fillTemplate(tabela + " " + informacoes.join("; ") + ". " + informacoesAdicionais, textBindings);
+    return fillTemplate(tabela + " " + (parametros != null ? parametros : informacoes.join("; ")) + ". " + informacoesAdicionais, textBindings);
 }
 
 function mountTextElement(posicao: IElementoTabelaNutricionalModelPosicao, model: IElementoTabelaNutricionalInlineModel, texto: string) {
