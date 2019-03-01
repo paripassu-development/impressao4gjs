@@ -1,6 +1,128 @@
 import {FONTES} from "../fonts/fonts";
 
+const METADADOS_IMPRESSAO: any[] = [
+    {
+        nome: "Impressão",
+        tipo: "impressao",
+        descricao: "Configurações gerais para impressão da etiqueta",
+        camposConfiguraveis: [
+            {
+                nome: "Largura da página",
+                descricao: "Largura do rolo de etiquetas onde será impressa as etiquetas",
+                tipo: "NUMERIC",
+                obrigatorio: true,
+                campo: "larguraPaginaMm",
+            },
+            {
+                nome: "Etiquetas por página",
+                descricao: "Quantidade de colunas no rolo de etiquetas",
+                tipo: "NUMERIC",
+                obrigatorio: true,
+                campo: "etiquetasPorPagina",
+            },
+            {
+                nome: "Espaçamento vertical",
+                descricao: "Tamanho do espaçamento vertical entre as colunas do rolo de etiquetas, em milímetros",
+                tipo: "NUMERIC",
+                obrigatorio: true,
+                campo: "gapXMm",
+            },
+            {
+                nome: "Margem horizontal esquerda",
+                descricao: "Tamanho da margem horizontal esquerda da etiqueta, em milímetros",
+                tipo: "NUMERIC",
+                obrigatorio: true,
+                campo: "margemXMm",
+            },
+            {
+                nome: "Margem vertical superior",
+                descricao: "Tamanho da margem vertical superior da etiqueta, em milímetros",
+                tipo: "NUMERIC",
+                obrigatorio: true,
+                campo: "margemYMm",
+            },
+            {
+                nome: "Resolução da imagem",
+                descricao: "Resolução da imagem (203 ou 300, dependendo do modelo da impressora), em DPI",
+                tipo: "NUMERIC",
+                obrigatorio: true,
+                campo: "resolucaoDpi",
+            },
+            {
+                nome: "Graus de rotação",
+                descricao: "Graus de rotação da imagem na etiqueta",
+                tipo: "NUMERIC",
+                obrigatorio: true,
+                campo: "orientacaoEtiquetaGraus",
+            },
+        ],
+    },
+];
+
 const METADADOS_ETIQUETA: any[] = [
+    {
+        nome: "Etiqueta",
+        tipo: "etiqueta",
+        descricao: "Configurações gerais da etiqueta",
+        camposConfiguraveis: [
+            {
+                nome: "Dimensões",
+                tipo: "OBJECT",
+                obrigatorio: true,
+                campo: "dimensoes",
+                itens: [
+                    {
+                        nome: "Altura da etiqueta",
+                        descricao: "Altura da etiqueta",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "alturaMm",
+                    },
+                    {
+                        nome: "Largura da etiqueta",
+                        descricao: "Largura da etiqueta",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "larguraMm",
+                    },
+                ],
+            },
+        ],
+    },
+];
+
+const METADADOS_PDF: any[] = [
+    {
+        nome: "PDF",
+        tipo: "pdf",
+        descricao: "Configurações gerais do PDF",
+        camposConfiguraveis: [
+            {
+                nome: "Espaçamento interno da página",
+                tipo: "NUMERIC",
+                obrigatorio: false,
+                campo: "pdfPadding",
+                descricao: "Espaçamento interno da página no PDF",
+            },
+            {
+                nome: "Espaçamento entre as etiquetas",
+                tipo: "NUMERIC",
+                obrigatorio: false,
+                campo: "etiquetaPadding",
+                descricao: "Espaçamento entre as etiquetas no PDF",
+            },
+            {
+                nome: "Borda na etiqueta",
+                tipo: "BOOLEANO",
+                obrigatorio: false,
+                campo: "etiquetaComBorda",
+                descricao: "Define se a etiqueta possuirá uma borda preta no PDF",
+            },
+        ],
+    },
+];
+
+const METADADOS_ELEMENTOS: any[] = [
     {
         nome: "Barra Origem Rastreada",
         tipo: "barraOrigemRastreada",
@@ -1923,8 +2045,20 @@ const METADADOS_ETIQUETA: any[] = [
     },
 ];
 
+const getMetadadosElementos = (): any[] => {
+    return METADADOS_ELEMENTOS;
+};
+
+const getMetadadosImpressao = (): any[] => {
+    return METADADOS_IMPRESSAO;
+};
+
 const getMetadadosEtiqueta = (): any[] => {
     return METADADOS_ETIQUETA;
 };
 
-export const labelConfiguration = {getMetadadosEtiqueta};
+const getMetadadosPDF = (): any[] => {
+    return METADADOS_PDF;
+};
+
+export const labelConfiguration = {getMetadadosElementos, getMetadadosImpressao, getMetadadosEtiqueta, getMetadadosPDF};
