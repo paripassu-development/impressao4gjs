@@ -1,7 +1,6 @@
 import {FONTES} from "../fonts/fonts";
 
-const METADADOS_IMPRESSAO: any[] = [
-    {
+const METADADOS_IMPRESSAO: any = {
         nome: "Impressão",
         tipo: "impressao",
         descricao: "Configurações gerais para impressão da etiqueta",
@@ -56,11 +55,9 @@ const METADADOS_IMPRESSAO: any[] = [
                 campo: "orientacaoEtiquetaGraus",
             },
         ],
-    },
-];
+    };
 
-const METADADOS_ETIQUETA: any[] = [
-    {
+const METADADOS_ETIQUETA: any = {
         nome: "Etiqueta",
         tipo: "etiqueta",
         descricao: "Configurações gerais da etiqueta",
@@ -88,11 +85,9 @@ const METADADOS_ETIQUETA: any[] = [
                 ],
             },
         ],
-    },
-];
+    };
 
-const METADADOS_PDF: any[] = [
-    {
+const METADADOS_PDF: any = {
         nome: "PDF",
         tipo: "pdf",
         descricao: "Configurações gerais do PDF",
@@ -119,8 +114,7 @@ const METADADOS_PDF: any[] = [
                 descricao: "Define se a etiqueta possuirá uma borda preta no PDF",
             },
         ],
-    },
-];
+    };
 
 const METADADOS_ELEMENTOS: any[] = [
     {
@@ -2049,15 +2043,15 @@ const getMetadadosElementos = (): any[] => {
     return METADADOS_ELEMENTOS;
 };
 
-const getMetadadosImpressao = (): any[] => {
+const getMetadadosImpressao = (): any => {
     return METADADOS_IMPRESSAO;
 };
 
-const getMetadadosEtiqueta = (): any[] => {
+const getMetadadosEtiqueta = (): any => {
     return METADADOS_ETIQUETA;
 };
 
-const getMetadadosPDF = (): any[] => {
+const getMetadadosPDF = (): any => {
     return METADADOS_PDF;
 };
 
