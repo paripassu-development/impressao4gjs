@@ -47,7 +47,6 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoProporcaoCalorias: string;
     informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
     parametrosPadroes: [object];
-    ocultarZerados: boolean;
 }
 
 interface IElementoTabelaNutricionalInlineModel {
