@@ -142,31 +142,15 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
     } else {
         textBindings.parametrosPadroes.forEach((parametro: any) => {
             const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
-            if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
-                if (parametro.rotulo === "Gorduras trans") {
-                    informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "")  + ` (VD não estabelecido)`);
-                } else {
-                    informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
-                }
+            if (parametro.rotulo === "Gorduras trans") {
+                informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "")  + ` (VD não estabelecido)`);
+            } else {
+                informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
             }
         });
         textBindings.parametrosExtras.forEach((parametro: any) => {
             informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
         });
-
-        if (model.informacoesNutricionais.ocultarZerados) {
-            const naoVisiveis = textBindings.parametrosPadroes.filter((parametro: any) =>
-                parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
-            );
-            let texto = "";
-            if (naoVisiveis.length > 0) {
-                texto = "Não contém quantidades significativas de ";
-                texto = texto.concat(naoVisiveis.map((parametro: any) => {
-                    return parametro.rotulo;
-                }).join(", "));
-                parametros = informacoes.join("; ") + ". " + texto;
-            }
-        }
     }
 
     let informacoesAdicionais = "*% Valores diários com base em uma dieta de 2.000 kcal ou 8.400 kJ. Seus valores diários podem ser maiores ou menores dependendo de suas necessidades energéticas.";
