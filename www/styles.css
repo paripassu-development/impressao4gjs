@@ -16,6 +16,11 @@ button {
     border: solid 1px;
 }
 
+.fabric-canvas {
+    position: relative !important;
+    /*display: none;*/
+}
+
 .code-editor {
     width: auto;
 }

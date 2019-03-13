@@ -1,4 +1,6 @@
-import { mmPartial } from "../../label/mm";
+import {mmPartial} from "../../label/mm";
+import {fabric} from "fabric";
+import {Canvas} from "fabric/fabric-impl";
 
 const splitLines =  (texto: string, caracteresPorLinha: number): string[] => {
     if (texto == null || texto === "") {
@@ -92,7 +94,29 @@ const pixelsToMillimeter = (textWidthInPixels: number, dpi: number) => {
     return textWidthInPixels / ppm;
 };
 
-const strokeAlignedText = (ctx: CanvasRenderingContext2D, larguraMaxima: number, text: string, xMm: number, yMm: number, mm: any, textAlign: string) => {
+function resolveCharStyles(text: string): IFabricTextStyle {
+    const boldItalicRegExp = new RegExp(/###\w+###/);
+    let match = boldItalicRegExp.exec(text);
+    const boldItalicIndexes: number[][] = [];
+    while (match != null) {
+        boldItalicIndexes.push(_.range(match.index, match[0].length));
+        match = boldItalicRegExp.exec(text);
+    }
+    const uniqIndexes = _.chain(boldItalicIndexes)
+        .flatten()
+        .uniq()
+        .value();
+
+    return {
+        0: uniqIndexes
+            .reduce((styleObj: IFabricTextLineStyle, charIndex: number) => {
+                styleObj[charIndex] = {fontStyle: "italic"};
+                return styleObj;
+            }, {} as IFabricTextLineStyle) as IFabricTextLineStyle,
+    };
+}
+
+const strokeAlignedText = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, larguraMaxima: number, text: string, xMm: number, yMm: number, mm: any, textAlign: string, degrees?: number) => {
     let x = xMm;
     if (textAlign === TextAlign.CENTER) {
         x = xMm + larguraMaxima / 2;
@@ -102,8 +126,55 @@ const strokeAlignedText = (ctx: CanvasRenderingContext2D, larguraMaxima: number,
         text = justifyText(ctx, mm(larguraMaxima), text);
     }
     ctx.textAlign = textAlign;
-    ctx.strokeText(text, mm(x), mm(yMm), mm(larguraMaxima));
-    ctx.fillText(text, mm(x), mm(yMm), mm(larguraMaxima));
+
+    const charStyles = resolveCharStyles(text);
+    if (!!fabricCanvas) {
+        writeFabricText(fabricCanvas, ctx, text, x, yMm, larguraMaxima, mm, {
+            charStyles: charStyles,
+        });
+    } else {
+        // ctx.strokeText(text, mm(x), mm(yMm), mm(larguraMaxima));
+        // ctx.fillText(text, mm(x), mm(yMm), mm(larguraMaxima));
+    }
+};
+
+interface IFabricTextLineStyle {
+    [charIndex: number]: {[property: string]: any}
+}
+
+interface IFabricTextStyle extends IFabricTextLineStyle {
+    [lineIndex: number]: IFabricTextLineStyle
+}
+
+interface IFabricTextOptions {
+    charStyles?: IFabricTextStyle;
+    degrees?: number;
+}
+
+const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, text: string, xMm: number, yMm: number, larguraMaximaMm: number, mm: any, options?: IFabricTextOptions) => {
+    const fontProperties = /(bold)?\s?(\d+px)?\s?(\w+)$/.exec(ctx.font);
+    const font = {
+        weight: fontProperties[1],
+        size: Number((fontProperties[2]||"").replace("px","")),
+        name: fontProperties[3]
+    };
+    const fabricText = new fabric.Text(text, {
+        left: mm(xMm),
+        top: mm(yMm),
+        textAlign: ctx.textAlign,
+        fill: String(ctx.fillStyle),
+        stroke: String(ctx.strokeStyle),
+        angle: options.degrees,
+        fontFamily: font.name,
+        fontSize: font.size,
+        fontWeight: font.weight,
+        strokeWidth: ctx.lineWidth,
+        styles: options.charStyles,
+    });
+    fabricCanvas.add(fabricText);
+    console.log(`${fabricText.text}: (${fabricText.left}, ${fabricText.top})`);
+    // fabricText.width = mm(larguraMaximaMm);
+    fabricCanvas.renderAll();
 };
 
 const justifyText = (context: CanvasRenderingContext2D, maxLen: number, text: string): string => {

@@ -1,21 +1,14 @@
 import * as codeEditor from "./editor";
 import "./fonts/index.css";
 import "./index.html";
-import {
-    etiqueta,
-    IEtiquetaDocModel
-} from "./label/index";
+import {etiqueta, IEtiquetaDocModel} from "./label/index";
 import "./styles.css";
 import {Error} from "./core/common/error";
-import {
-    dadosDefault,
-    modelDefault
-} from "./default";
+import {dadosDefault, modelDefault} from "./default";
 
 declare var require: any;
 const _: any = require('lodash');
 const $: any = require('jquery');
-
 const modelEditor = codeEditor.createEditor("code");
 const valueEditor = codeEditor.createEditor("values");
 const STORAGE_NAMESPACE = "impressao4gjs.etiqueta";

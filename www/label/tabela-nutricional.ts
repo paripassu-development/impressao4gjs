@@ -3,6 +3,7 @@ import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
 import {splitLines, strokeAlignedText, TextAlign} from "../core/util/text-utils";
 import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
+import {fabric} from "fabric";
 
 const BLACK = "#000000";
 
@@ -74,7 +75,7 @@ interface IElementoTabelaNutricionalModel {
     opcoes?: IElementoTabelaNutricionalOpcoes;
 }
 
-const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
+const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
     setInformacoesPadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
@@ -89,18 +90,18 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
     const lineStrokeGap = alturaLinhaMm / 3;
 
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm * 1.5)}px ${model.fonte.nome}`;
-    strokeAlignedText(ctx, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoInformacaoNutricional"), model.posicao.xMm, yMm, mm, TextAlign.CENTER);
+    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoInformacaoNutricional"), model.posicao.xMm, yMm, mm, TextAlign.CENTER);
     yMm += alturaLinhaMm * 1.1;
 
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
 
-    strokeAlignedText(ctx, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings), model.posicao.xMm, yMm, mm, TextAlign.CENTER);
+    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings), model.posicao.xMm, yMm, mm, TextAlign.CENTER);
 
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
     yMm += alturaLinhaMm;
 
-    strokeAlignedText(ctx, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoQuantidadePorPorcao"), model.posicao.xMm, yMm, mm, TextAlign.LEFT);
+    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoQuantidadePorPorcao"), model.posicao.xMm, yMm, mm, TextAlign.LEFT);
 
     ctx.textAlign = TextAlign.RIGHT;
     ctx.strokeText(getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario"),
@@ -118,11 +119,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
                     mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
 
                 if (nutriente === "valorEnergetico") {
-                    strokeAlignedText(ctx, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoProporcaoCalorias, textBindings), model.posicao.xMm - (alturaLinhaMm * 4.5), yMm, mm, TextAlign.RIGHT);
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoProporcaoCalorias, textBindings), model.posicao.xMm - (alturaLinhaMm * 4.5), yMm, mm, TextAlign.RIGHT);
                 } else {
-                    strokeAlignedText(ctx, larguraMaxima, fillTemplate(informacoesNutriente.qtPorcao, textBindings), model.posicao.xMm - (alturaLinhaMm * 7), yMm, mm, TextAlign.RIGHT);
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(informacoesNutriente.qtPorcao, textBindings), model.posicao.xMm - (alturaLinhaMm * 7), yMm, mm, TextAlign.RIGHT);
                 }
-                strokeAlignedText(ctx, larguraMaxima, fillTemplate(informacoesNutriente.valDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(informacoesNutriente.valDiario, textBindings), model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
                 yMm += lineStrokeGap;
                 drawLine(ctx, model, yMm, mm);
             }
@@ -135,11 +136,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
                 ctx.textAlign = TextAlign.LEFT;
                 ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
                 if (parametro.rotulo === "Valor Energético") {
-                    strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 4.5), yMm, mm, TextAlign.RIGHT);
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 4.5), yMm, mm, TextAlign.RIGHT);
                 } else {
-                    strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 7), yMm, mm, TextAlign.RIGHT);
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 7), yMm, mm, TextAlign.RIGHT);
                 }
-                strokeAlignedText(ctx, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
                 yMm += lineStrokeGap;
                 drawLine(ctx, model, yMm, mm);
             }
@@ -149,8 +150,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
             yMm += alturaLinhaMm;
             ctx.textAlign = TextAlign.LEFT;
             ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-            strokeAlignedText(ctx, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 7), yMm, mm, TextAlign.RIGHT);
-            strokeAlignedText(ctx, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
+            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 7), yMm, mm, TextAlign.RIGHT);
+            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT);
             yMm += lineStrokeGap;
             drawLine(ctx, model, yMm, mm);
         });
@@ -171,11 +172,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoT
     yMm += alturaLinhaMm;
 
     if (!model.informacoesAdicionais.texto) {
-        strokeAlignedText(ctx, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.CENTER);
+        strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.CENTER);
     } else {
         const linhasInformacoesAdicionais = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
         linhasInformacoesAdicionais.forEach((linha: string) => {
-            strokeAlignedText(ctx, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.CENTER);
+            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.CENTER);
             yMm += alturaLinhaMm;
         });
     }

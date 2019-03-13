@@ -1,7 +1,12 @@
 import * as Mustache from "mustache";
-import {splitLines, splitLinesAutoSize, strokeAlignedText} from "../core/util/text-utils";
+import {
+    splitLines,
+    splitLinesAutoSize,
+    strokeAlignedText
+} from "../core/util/text-utils";
 import {ValidateModelUtils} from "../core/util/validate-model-utils";
-import { mmPartial } from "./mm";
+import {mmPartial} from "./mm";
+import {Canvas} from "fabric/fabric-impl";
 
 interface IElementoTextoModelPosicao {
     xMm: number;
@@ -37,7 +42,7 @@ interface IElementoTextoModel {
     fn: string;
 }
 
-const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTextoModel, textBindings?: any) => {
+const drawText = (ctx: CanvasRenderingContext2D, fabricCanvas: Canvas, dpi: number, model: IElementoTextoModel, textBindings?: any) => {
     if (!isVariableBindingEmpty(model, textBindings)) {
         const mm = mmPartial(dpi);
         const degrees = model.posicao.rotacao || 0;
@@ -67,7 +72,7 @@ const drawText = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTe
                 if (contaLinha === linhas.length - 1 && alinhamento === "justify") {
                     alinhamento = "left";
                 }
-                strokeAlignedText(ctx, larguraMaxima, linha, model.posicao.xMm, yMm, mm, alinhamento);
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, alinhamento, degrees);
                 yMm += alturaLinhaMm;
                 contaLinha++;
             });
