@@ -5,6 +5,30 @@ import {
     TextOptions
 } from "fabric/fabric-impl";
 
+interface IFabricTextLineStyle {
+    [charIndex: number]: TextOptions
+}
+
+interface IFabricTextStyle {
+    [lineIndex: number]: IFabricTextLineStyle
+}
+
+interface IFabricSubrangeStyles {
+    text: string,
+    styles?: IFabricTextStyle,
+}
+
+interface IFabricTextOptions {
+    degrees?: number;
+}
+
+const TextAlign = {
+    LEFT: "left",
+    RIGHT: "right",
+    CENTER: "center",
+    JUSTIFY: "justify",
+};
+
 const splitLines =  (texto: string, caracteresPorLinha: number): string[] => {
     if (texto == null || texto === "") {
         return [texto];
@@ -97,30 +121,28 @@ const pixelsToMillimeter = (textWidthInPixels: number, dpi: number) => {
     return textWidthInPixels / ppm;
 };
 
-function resolveCharStyles(text: string): IFabricSubrangeStyles {
+function resolveCharStyles(text: string, markersConfig: {markerQuantity: number, textStyle: TextOptions}[]): IFabricSubrangeStyles {
     if (!_.includes(text, "#")) {
         return {text};
     }
 
-    const boldItalicRegExp = new RegExp(/#{3}([\w\s\W]+)#{3}/g);
-    let match = boldItalicRegExp.exec(text);
-    const boldItalicIndexes: number[][] = [];
-    while (match != null) {
-        boldItalicIndexes.push(_.range(match.index, match.index + match[0].length));
-        text = text.replace(boldItalicRegExp, "$1");
-        match = boldItalicRegExp.exec(text);
-    }
-    const uniqIndexes = _.chain(boldItalicIndexes)
-        .flatten()
-        .uniq()
-        .value();
+    const lineStyles = markersConfig.map((config) => {
+        const boldItalicRegExp = new RegExp(`#{${config.markerQuantity}}([\\w\\s\\W]+)#{${config.markerQuantity}}`, "g");
+        let match = boldItalicRegExp.exec(text);
+        let boldItalicIndexes: number[] = [];
+        while (match != null) {
+            const endIndex = match.index + match[0].length - (config.markerQuantity * 2);
+            boldItalicIndexes = boldItalicIndexes.concat(_.range(match.index, endIndex));
+            text = text.replace(boldItalicRegExp, "$1");
+            match = boldItalicRegExp.exec(text);
+        }
+        return {};
+    });
 
-    const lineStyle = uniqIndexes
+    const uniqIndexes = _.uniq(boldItalicIndexes);
+    return uniqIndexes
         .reduce((styleObj: IFabricTextLineStyle, charIndex: number) => {
-            styleObj[charIndex] = {
-                fontStyle: "italic",
-                fontWeight: "bold",
-            };
+            styleObj[charIndex] = config.textStyle;
             return styleObj;
         }, {} as IFabricTextLineStyle) as IFabricTextLineStyle;
 
@@ -160,7 +182,7 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
         name: fontProperties[3]
     };
 
-    const subrangeStyles = resolveCharStyles(text);
+    const subrangeStyles = resolveCharStyles(text, [{markerQuantity: 3, textStyle: {fontStyle: "italic", fontWeight: "bold"}}]);
     text = subrangeStyles.text;
     const fabricText = new fabric.IText(text, {
         top: mm(yMm) - font.size,
@@ -198,23 +220,6 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
     fabricCanvas.renderAll();
 };
 
-interface IFabricTextLineStyle {
-    [charIndex: number]: TextOptions
-}
-
-interface IFabricTextStyle {
-    [lineIndex: number]: IFabricTextLineStyle
-}
-
-interface IFabricSubrangeStyles {
-    text: string,
-    styles?: IFabricTextStyle,
-}
-
-interface IFabricTextOptions {
-    degrees?: number;
-}
-
 const justifyText = (context: CanvasRenderingContext2D, maxLen: number, text: string): string => {
     let numWords;
     let spaceLength;
@@ -242,13 +247,6 @@ const justifyText = (context: CanvasRenderingContext2D, maxLen: number, text: st
     textJustified = textJustified.trim().split(delimiter).join(filler);
 
     return textJustified;
-};
-
-const TextAlign = {
-    LEFT: "left",
-    RIGHT: "right",
-    CENTER: "center",
-    JUSTIFY: "justify",
 };
 
 export {splitLines, splitLinesAutoSize, strokeAlignedText, writeFabricText, TextAlign};
