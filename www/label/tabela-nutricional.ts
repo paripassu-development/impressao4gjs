@@ -1,6 +1,11 @@
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
-import {splitLines, strokeAlignedText, TextAlign} from "../core/util/text-utils";
+import {
+    splitLines,
+    strokeAlignedText,
+    TextAlign,
+    writeFabricText
+} from "../core/util/text-utils";
 import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
 import {fabric} from "fabric";
@@ -104,8 +109,13 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoQuantidadePorPorcao"), model.posicao.xMm, yMm, mm, TextAlign.LEFT);
 
     ctx.textAlign = TextAlign.RIGHT;
-    ctx.strokeText(getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario"),
-        mm(model.posicao.xMm + model.dimensoes.larguraMaximaMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+    const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
+    if(!!fabricCanvas){
+        writeFabricText(fabricCanvas, ctx, textoValorDiario, model.posicao.xMm + model.dimensoes.larguraMaximaMm, yMm, larguraMaxima, mm, {degrees: model.posicao.rotacao});
+    } else {
+        ctx.strokeText(textoValorDiario,
+            mm(model.posicao.xMm + model.dimensoes.larguraMaximaMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+    }
 
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
@@ -115,8 +125,15 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             if (informacoesNutriente !== undefined) {
                 yMm += alturaLinhaMm;
                 ctx.textAlign = TextAlign.LEFT;
-                ctx.strokeText(getOrDefault(informacoesNutriente, "nome"),
-                    mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+
+
+                const nomeNutriente = getOrDefault(informacoesNutriente, "nome");
+                if(!!fabricCanvas){
+                    writeFabricText(fabricCanvas, ctx, nomeNutriente, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees: model.posicao.rotacao});
+                } else {
+                    ctx.strokeText(nomeNutriente,
+                        mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+                }
 
                 if (nutriente === "valorEnergetico") {
                     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoProporcaoCalorias, textBindings), model.posicao.xMm - (alturaLinhaMm * 4.5), yMm, mm, TextAlign.RIGHT);

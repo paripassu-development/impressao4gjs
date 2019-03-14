@@ -167,26 +167,68 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
 
         });
 
-    _.range(0, canvas.width, 50)
-        .forEach((pixel) => {
-            const square = new fabric.Line([100, 100,100,110], {
-                fill: "#000",
-                stroke: "#000",
-                strokeWidth: 1,
-                left: pixel,
-                top: 0,
-                width: 10,
-                height: 10,
-            });
-            fabricCanvas.add(square);
-            fabricCanvas.add(new fabric.Text(String(pixel), {
-               left: pixel,
-               top: 12,
-                fontSize: 10,
-            }));
-        });
+    // _.range(0, canvas.width, 20)
+    //     .forEach((pixel) => {
+    //         let properties = {
+    //             fill: "#000",
+    //             stroke: "#000",
+    //             strokeWidth: 1,
+    //             left: pixel,
+    //             width: 10,
+    //             height: 10,
+    //         };
+    //         const lineTop = new fabric.Line([100, 100,100,110], properties);
+    //         lineTop.top = 0;
+    //         fabricCanvas.add(lineTop);
+    //         const lineBottom = new fabric.Line([100, 100,100,110], properties);
+    //         lineBottom.top = canvas.height - 10;
+    //         fabricCanvas.add(lineBottom);
+    //
+    //         fabricCanvas.add(new fabric.Text(String(pixel), {
+    //             left: pixel,
+    //             top: 12,
+    //             fontSize: 10,
+    //         }));
+    //
+    //         fabricCanvas.add(new fabric.Text(String(pixel), {
+    //             left: pixel,
+    //             top: canvas.height - 22,
+    //             fontSize: 10,
+    //         }));
+    //     });
+    //
+    // _.range(0, canvas.width, 20)
+    //     .forEach((pixel) => {
+    //         let properties = {
+    //             fill: "#000",
+    //             stroke: "#000",
+    //             strokeWidth: 1,
+    //             top: pixel,
+    //             width: 10,
+    //             height: 10,
+    //         };
+    //         const lineTop = new fabric.Line([100, 100,110,100], properties);
+    //         lineTop.left = 0;
+    //         fabricCanvas.add(lineTop);
+    //         const lineBottom = new fabric.Line([100, 100,110,100], properties);
+    //         lineBottom.left = canvas.width - 10;
+    //         fabricCanvas.add(lineBottom);
+    //
+    //         fabricCanvas.add(new fabric.Text(String(pixel), {
+    //             top: pixel,
+    //             left: 12,
+    //             fontSize: 10,
+    //         }));
+    //
+    //         fabricCanvas.add(new fabric.Text(String(pixel), {
+    //             top: pixel,
+    //             left: canvas.width - 22,
+    //             fontSize: 10,
+    //         }));
+    //     });
 
     const img = new Image(canvas.width, canvas.height);
+    fabricCanvas.getContext().imageSmoothingEnabled = false;
     img.src = fabricCanvas.toDataURL({format:"png"});
     img.onload = () => {
         ctx.drawImage(img, 0, 0);
