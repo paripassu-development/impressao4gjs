@@ -1,6 +1,9 @@
 import {mmPartial} from "../../label/mm";
 import {fabric} from "fabric";
-import {Canvas} from "fabric/fabric-impl";
+import {
+    Canvas,
+    TextOptions
+} from "fabric/fabric-impl";
 
 const splitLines =  (texto: string, caracteresPorLinha: number): string[] => {
     if (texto == null || texto === "") {
@@ -94,12 +97,17 @@ const pixelsToMillimeter = (textWidthInPixels: number, dpi: number) => {
     return textWidthInPixels / ppm;
 };
 
-function resolveCharStyles(text: string): IFabricTextStyle {
-    const boldItalicRegExp = new RegExp(/###\w+###/);
+function resolveCharStyles(text: string): IFabricSubrangeStyles {
+    if (!_.includes(text, "#")) {
+        return {text};
+    }
+
+    const boldItalicRegExp = new RegExp(/#{3}([\w\s\W]+)#{3}/g);
     let match = boldItalicRegExp.exec(text);
     const boldItalicIndexes: number[][] = [];
     while (match != null) {
-        boldItalicIndexes.push(_.range(match.index, match[0].length));
+        boldItalicIndexes.push(_.range(match.index, match.index + match[0].length));
+        text = text.replace(boldItalicRegExp, "$1");
         match = boldItalicRegExp.exec(text);
     }
     const uniqIndexes = _.chain(boldItalicIndexes)
@@ -107,12 +115,18 @@ function resolveCharStyles(text: string): IFabricTextStyle {
         .uniq()
         .value();
 
+    const lineStyle = uniqIndexes
+        .reduce((styleObj: IFabricTextLineStyle, charIndex: number) => {
+            styleObj[charIndex] = {
+                fontStyle: "italic",
+                fontWeight: "bold",
+            };
+            return styleObj;
+        }, {} as IFabricTextLineStyle) as IFabricTextLineStyle;
+
     return {
-        0: uniqIndexes
-            .reduce((styleObj: IFabricTextLineStyle, charIndex: number) => {
-                styleObj[charIndex] = {fontStyle: "italic"};
-                return styleObj;
-            }, {} as IFabricTextLineStyle) as IFabricTextLineStyle,
+        text,
+        styles: {0: lineStyle}
     };
 }
 
@@ -127,11 +141,8 @@ const strokeAlignedText = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.C
     }
     ctx.textAlign = textAlign;
 
-    const charStyles = resolveCharStyles(text);
     if (!!fabricCanvas) {
-        writeFabricText(fabricCanvas, ctx, text, x, yMm, larguraMaxima, mm, {
-            charStyles: charStyles,
-        });
+        writeFabricText(fabricCanvas, ctx, text, x, yMm, larguraMaxima, mm);
     } else {
         console.log(`${text}: (${mm(x)}, ${mm(yMm)})`);
         ctx.strokeText(text, mm(x), mm(yMm), mm(larguraMaxima));
@@ -140,6 +151,7 @@ const strokeAlignedText = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.C
 };
 
 const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, text: string, xMm: number, yMm: number, larguraMaximaMm: number, mm: any, options?: IFabricTextOptions) => {
+    options = options||{};
     let larguraMaximaPx = mm(larguraMaximaMm);
     const fontProperties = /(bold)?\s?(\d+px)?\s?(\w+)$/.exec(ctx.font);
     const font = {
@@ -148,6 +160,8 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
         name: fontProperties[3]
     };
 
+    const subrangeStyles = resolveCharStyles(text);
+    text = subrangeStyles.text;
     const fabricText = new fabric.IText(text, {
         top: mm(yMm) - font.size,
         textAlign: ctx.textAlign,
@@ -158,7 +172,7 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
         fontSize: font.size,
         fontWeight: font.weight,
         strokeWidth: ctx.lineWidth,
-        styles: options.charStyles,
+        styles: subrangeStyles.styles,
     });
 
     const textAlign = ctx.textAlign;
@@ -185,15 +199,19 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
 };
 
 interface IFabricTextLineStyle {
-    [charIndex: number]: {[property: string]: any}
+    [charIndex: number]: TextOptions
 }
 
-interface IFabricTextStyle extends IFabricTextLineStyle {
+interface IFabricTextStyle {
     [lineIndex: number]: IFabricTextLineStyle
 }
 
+interface IFabricSubrangeStyles {
+    text: string,
+    styles?: IFabricTextStyle,
+}
+
 interface IFabricTextOptions {
-    charStyles?: IFabricTextStyle;
     degrees?: number;
 }
 
