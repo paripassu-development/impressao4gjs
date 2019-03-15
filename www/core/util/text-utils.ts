@@ -121,34 +121,53 @@ const pixelsToMillimeter = (textWidthInPixels: number, dpi: number) => {
     return textWidthInPixels / ppm;
 };
 
-function resolveCharStyles(text: string, markersConfig: {markerQuantity: number, textStyle: TextOptions}[]): IFabricSubrangeStyles {
-    if (!_.includes(text, "#")) {
-        return {text};
-    }
+interface ITextMarkerConfig {
+    marker: string;
+    textStyle: TextOptions;
+}
 
-    const lineStyles = markersConfig.map((config) => {
-        const boldItalicRegExp = new RegExp(`#{${config.markerQuantity}}([\\w\\s\\W]+)#{${config.markerQuantity}}`, "g");
-        let match = boldItalicRegExp.exec(text);
-        let boldItalicIndexes: number[] = [];
-        while (match != null) {
-            const endIndex = match.index + match[0].length - (config.markerQuantity * 2);
-            boldItalicIndexes = boldItalicIndexes.concat(_.range(match.index, endIndex));
-            text = text.replace(boldItalicRegExp, "$1");
-            match = boldItalicRegExp.exec(text);
+function buildMarkersRegex(config: ITextMarkerConfig) {
+    return `\\${config.marker}([^\\${config.marker}]+)\\${config.marker}`;
+}
+
+function resolveCharStyles(text: string, markersConfig: ITextMarkerConfig[]): IFabricSubrangeStyles {
+    // mapeia o estilo de cada caractere
+    let finalText = text;
+    const lineStyle = markersConfig.reduce((mappedStyles: IFabricTextLineStyle, config) => {
+        if (!_.includes(text, config.marker)) {
+            return mappedStyles;
         }
-        return {};
-    });
 
-    const uniqIndexes = _.uniq(boldItalicIndexes);
-    return uniqIndexes
-        .reduce((styleObj: IFabricTextLineStyle, charIndex: number) => {
-            styleObj[charIndex] = config.textStyle;
-            return styleObj;
-        }, {} as IFabricTextLineStyle) as IFabricTextLineStyle;
+        const boldItalicRegExp = new RegExp(buildMarkersRegex(config));
+        let cleanText = text;
+        _.reject(markersConfig, config)
+            .forEach((otherConfig) => {
+                cleanText = cleanText.replace(new RegExp(buildMarkersRegex(otherConfig), "g"), "$1");
+            });
+        let match = boldItalicRegExp.exec(cleanText);
+
+        // identifica os chars marcados
+        let markedCharIndexes: number[] = [];
+        while (match != null) {
+            const endIndex = match.index + match[0].length - 2; // desconsidera marcadores
+            markedCharIndexes = markedCharIndexes.concat(_.range(match.index, endIndex));
+            cleanText = cleanText.replace(boldItalicRegExp, "$1");
+            match = boldItalicRegExp.exec(cleanText);
+        }
+
+        // seta estilos de cada char
+        _.uniq(markedCharIndexes)
+            .forEach((charIndex: number) => {
+                mappedStyles[charIndex] = mappedStyles[charIndex] || {};
+                _.assign(mappedStyles[charIndex], config.textStyle);
+            });
+        finalText = cleanText;
+        return mappedStyles;
+    }, {});
 
     return {
-        text,
-        styles: {0: lineStyle}
+        text: finalText,
+        styles: {0: lineStyle},
     };
 }
 
@@ -182,7 +201,10 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
         name: fontProperties[3]
     };
 
-    const subrangeStyles = resolveCharStyles(text, [{markerQuantity: 3, textStyle: {fontStyle: "italic", fontWeight: "bold"}}]);
+    const subrangeStyles = resolveCharStyles(text, [
+        {marker: "^", textStyle: {fontWeight: "bold"}},
+        {marker: "~", textStyle: {fontStyle: "italic"}},
+    ]);
     text = subrangeStyles.text;
     const fabricText = new fabric.IText(text, {
         top: mm(yMm) - font.size,

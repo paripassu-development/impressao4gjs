@@ -229,7 +229,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
 
     const img = new Image(canvas.width, canvas.height);
     fabricCanvas.getContext().imageSmoothingEnabled = false;
-    img.src = fabricCanvas.toDataURL({format:"png"});
+    img.src = fabricCanvas.toDataURL({format: "png"});
     img.onload = () => {
         ctx.drawImage(img, 0, 0);
     };
