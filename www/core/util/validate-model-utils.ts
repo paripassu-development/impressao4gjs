@@ -5,7 +5,7 @@ import {TipoErro} from "../../label/tipo-erro-enum";
 export class ValidateModelUtils {
 
     public static validate = (model: any, errors: any[], tipo: string) => {
-        const elemento: any = _.filter(labelConfiguration.getMetadadosEtiqueta(), {tipo})[0];
+        const elemento: any = _.filter(labelConfiguration.getMetadadosElementos(), {tipo})[0];
         _.forEach(elemento.camposConfiguraveis, (campoConfiguravel) => {
             ValidateModelUtils.percorreElementos(campoConfiguravel, model, errors);
         });
