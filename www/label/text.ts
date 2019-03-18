@@ -2,7 +2,8 @@ import * as Mustache from "mustache";
 import {
     splitLines,
     splitLinesAutoSize,
-    strokeAlignedText
+    strokeAlignedText,
+    writeFabricText
 } from "../core/util/text-utils";
 import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
@@ -77,8 +78,12 @@ const drawText = (ctx: CanvasRenderingContext2D, fabricCanvas: Canvas, dpi: numb
                 contaLinha++;
             });
         } else {
-            ctx.strokeText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
-            ctx.fillText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
+            if (!!fabricCanvas) {
+                writeFabricText(fabricCanvas, ctx, renderedText, model.posicao.xMm, model.posicao.yMm, model.dimensoes.larguraMaximaMm, mm, {degrees});
+            } else {
+                ctx.strokeText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
+                ctx.fillText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
+            }
         }
 
         ctx.restore();

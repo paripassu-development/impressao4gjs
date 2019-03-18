@@ -61,12 +61,12 @@ interface IElementoTabelaNutricionalInlineModel {
     larguraMaximaMm: number;
 }
 
-const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: Canvas, dpi: number, model: IElementoTabelaNutricionalInlineModel, textBindings?: any) => {
+const drawTable = (ctx: CanvasRenderingContext2D, dpi: number, model: IElementoTabelaNutricionalInlineModel, textBindings?: any) => {
     const elemento: any = mountTextElement(model.posicao, model, mountTextTabelaNutricional(model, textBindings));
     const degrees = model.posicao.rotacao || 0;
     ctx.save();
     ctx.rotate(degrees * Math.PI / 180);
-    text.drawText(ctx, fabricCanvas, dpi, elemento, textBindings);
+    text.drawText(ctx, null, dpi, elemento, textBindings);
     ctx.restore();
 };
 

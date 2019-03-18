@@ -183,7 +183,7 @@ const strokeAlignedText = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.C
     ctx.textAlign = textAlign;
 
     if (!!fabricCanvas) {
-        writeFabricText(fabricCanvas, ctx, text, x, yMm, larguraMaxima, mm);
+        writeFabricText(fabricCanvas, ctx, text, x, yMm, larguraMaxima, mm, {degrees});
     } else {
         console.log(`${text}: (${mm(x)}, ${mm(yMm)})`);
         ctx.strokeText(text, mm(x), mm(yMm), mm(larguraMaxima));
@@ -201,13 +201,48 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
         name: fontProperties[3]
     };
 
+    const textAlign = ctx.textAlign;
+    let maxTextWidth = larguraMaximaPx;
+    let background = undefined;
+    let xPx = mm(xMm);
+    if(textAlign === TextAlign.CENTER){
+        xPx = xPx - (maxTextWidth / 2);
+    } else if (textAlign === TextAlign.RIGHT) {
+        xPx = xPx - maxTextWidth;
+    }
+
+    let top = mm(yMm) - font.size;
+    let left = xPx;
+    if (options.degrees > 0 && options.degrees <= 90) {
+        const newLeft = Math.abs(top);
+        top = left;
+        left = newLeft;
+    } else if (options.degrees > 90 && options.degrees <= 180){
+        top = Math.abs(top);
+        left = Math.abs(left);
+    } else if (options.degrees > 180 && options.degrees <= 270){
+        const newTop = Math.abs(left);
+        left = top;
+        top = newTop;
+    }
+
+    if (left < 0) {
+        maxTextWidth += left;
+        left = 0;
+    }
+    if (top < 0) {
+        maxTextWidth += top;
+        top = 0;
+    }
+
     const subrangeStyles = resolveCharStyles(text, [
         {marker: "^", textStyle: {fontWeight: "bold"}},
         {marker: "~", textStyle: {fontStyle: "italic"}},
     ]);
     text = subrangeStyles.text;
     const fabricText = new fabric.IText(text, {
-        top: mm(yMm) - font.size,
+        top,
+        left,
         textAlign: ctx.textAlign,
         fill: String(ctx.fillStyle),
         stroke: String(ctx.strokeStyle),
@@ -217,28 +252,19 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
         fontWeight: font.weight,
         strokeWidth: ctx.lineWidth,
         styles: subrangeStyles.styles,
+        backgroundColor: background,
     });
 
-    const textAlign = ctx.textAlign;
-    const maxTextWidth = larguraMaximaPx;
-    let xPx = mm(xMm);
-    if(textAlign === TextAlign.CENTER){
-        xPx = xPx - (maxTextWidth / 2);
-    } else if (textAlign === TextAlign.RIGHT) {
-        xPx = xPx - maxTextWidth;
-    }
-    fabricText.left = xPx;
-
     const textWidth = fabricText.measureLine(0).width;
-    const scaleFactorX = larguraMaximaPx / textWidth;
+    const scaleFactorX = maxTextWidth / textWidth;
     if(scaleFactorX < 1) {
         fabricText.scaleX = scaleFactorX;
-        larguraMaximaPx /= scaleFactorX; // ajusta se foi alterado pelo scaleX
+        maxTextWidth /= scaleFactorX; // ajusta se foi alterado pelo scaleX
     }
 
     fabricCanvas.add(fabricText);
     console.log(`${fabricText.text}: (${fabricText.left}, ${fabricText.top})`);
-    fabricText.width = larguraMaximaPx;
+    fabricText.width = maxTextWidth;
     fabricCanvas.renderAll();
 };
 

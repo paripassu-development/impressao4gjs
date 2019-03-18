@@ -18,7 +18,7 @@ button {
 
 .fabric-canvas {
     position: relative !important;
-    /*display: none;*/
+    display: none;
 }
 
 .code-editor {
