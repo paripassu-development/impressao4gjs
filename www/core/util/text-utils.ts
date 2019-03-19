@@ -185,7 +185,6 @@ const strokeAlignedText = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.C
     if (!!fabricCanvas) {
         writeFabricText(fabricCanvas, ctx, text, x, yMm, larguraMaxima, mm, {degrees});
     } else {
-        console.log(`${text}: (${mm(x)}, ${mm(yMm)})`);
         ctx.strokeText(text, mm(x), mm(yMm), mm(larguraMaxima));
         ctx.fillText(text, mm(x), mm(yMm), mm(larguraMaxima));
     }
@@ -263,7 +262,6 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
     }
 
     fabricCanvas.add(fabricText);
-    console.log(`${fabricText.text}: (${fabricText.left}, ${fabricText.top})`);
     fabricText.width = maxTextWidth;
     fabricCanvas.renderAll();
 };

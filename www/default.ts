@@ -1,5 +1,5 @@
 
-export const dadosDefault = {
+export const DADOS_DEFAULT = {
     bairroFornecedor: "bairro do fornecedor",
     calibre: "52",
     campoPesoLiquidoNutricional: "10 kg",
@@ -140,7 +140,7 @@ export const dadosDefault = {
     }],
 };
 
-export const modelDefault = {
+export const MODEL_DEFAULT = {
     "impressao": {
         "resolucaoDpi": 203,
         "etiquetasPorPagina": 4,
@@ -322,3 +322,46 @@ export const modelDefault = {
         ]
     }
 };
+
+export const PARAMETROS_PADROES_NUTRICIONAL = [
+    {
+        "qtPorcao": "1 kcal= 4 kJ",
+        "rotulo": "Valor Energético",
+        "valorDiario": "2 %"
+    },
+    {
+        "qtPorcao": "1 g",
+        "rotulo": "Carboidratos",
+        "valorDiario": "1 %"
+    },
+    {
+        "qtPorcao": "1 g",
+        "rotulo": "Proteínas",
+        "valorDiario": "1 %"
+    },
+    {
+        "qtPorcao": "1 g",
+        "rotulo": "Gorduras Totais",
+        "valorDiario": "1 %"
+    },
+    {
+        "qtPorcao": "1 g",
+        "rotulo": "Gorduras Saturadas",
+        "valorDiario": "1 %"
+    },
+    {
+        "qtPorcao": "1 g",
+        "rotulo": "Gorduras ###trans###",
+        "valorDiario": "**"
+    },
+    {
+        "qtPorcao": "1 g",
+        "rotulo": "Fibra Alimentar",
+        "valorDiario": "1 %"
+    },
+    {
+        "qtPorcao": "1 mg",
+        "rotulo": "Sódio",
+        "valorDiario": "1 %"
+    }
+];

@@ -5,7 +5,7 @@ import {
     IElementoTextoModelmultiplasLinhas,
     text,
 } from "./text";
-import {Canvas} from "fabric/fabric-impl";
+import {PARAMETROS_PADROES_NUTRICIONAL} from "../default";
 
 const _ = require("lodash");
 
@@ -140,7 +140,8 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
             informacoes.push(`Sódio {{{sodioQtPorcao}}}mg ({{{sodioValDiario}}} %VD)`);
         }
     } else {
-        textBindings.parametrosPadroes.forEach((parametro: any) => {
+        const parametrosPadroes = !!textBindings ? textBindings.parametrosPadroes :  PARAMETROS_PADROES_NUTRICIONAL;
+        parametrosPadroes.forEach((parametro: any) => {
             const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
             if (parametro.rotulo === "Gorduras trans") {
                 informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "")  + ` (VD não estabelecido)`);
@@ -148,9 +149,11 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
                 informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
             }
         });
-        textBindings.parametrosExtras.forEach((parametro: any) => {
-            informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
-        });
+        if (!!textBindings) {
+            textBindings.parametrosExtras.forEach((parametro: any) => {
+                informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "") + ` ` + `(` + parametro.valorDiario + `VD)`);
+            });
+        }
     }
 
     let informacoesAdicionais = "*% Valores diários com base em uma dieta de 2.000 kcal ou 8.400 kJ. Seus valores diários podem ser maiores ou menores dependendo de suas necessidades energéticas.";
