@@ -11,6 +11,7 @@ import {qrcode} from "./qrcode";
 import {tabelaNutricional} from "./tabela-nutricional";
 import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
 import {text} from "./text";
+import {Canvas} from "fabric/fabric-impl";
 
 export const GS1_DATE_PATTERN = "YYmmDD";
 export const BARCODE_IMG_ELEMENT_ID = "barcode-img";
@@ -85,6 +86,10 @@ export interface IValidacao {
     obrigatorio: boolean;
 }
 
+function isFabricRequired(model: IEtiquetaDocModel) {
+    return new RegExp(/\^|\~/).test(JSON.stringify(model));
+}
+
 const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     let errors = new Array<Error>();
     const idElementoCanvas = id + "-etiqueta-canvas";
@@ -99,10 +104,13 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
     canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
 
     // fabricjs
-    const canvas2 = canvasUtils.createCanvas(idElementoFabricCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
-    const fabricCanvas = new fabric.Canvas(canvas2);
-    canvas2.classList.add("fabric-canvas");
-    el.appendChild(canvas2);
+    let fabricCanvas: fabric.Canvas = null;
+    if (isFabricRequired(model)) {
+        const canvas2 = canvasUtils.createCanvas(idElementoFabricCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
+        fabricCanvas = new fabric.Canvas(canvas2);
+        canvas2.classList.add("fabric-canvas");
+        el.appendChild(canvas2);
+    }
 
     model.desenho.elementos.forEach((elemento: any) => {
         const tipos: any = {
@@ -167,12 +175,14 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
 
         });
 
-    const img = new Image(canvas.width, canvas.height);
-    fabricCanvas.getContext().imageSmoothingEnabled = false;
-    img.src = fabricCanvas.toDataURL({format: "png"});
-    img.onload = () => {
-        ctx.drawImage(img, 0, 0);
-    };
+    if (!!fabricCanvas) {
+        const img = new Image(canvas.width, canvas.height);
+        fabricCanvas.getContext().imageSmoothingEnabled = false;
+        img.src = fabricCanvas.toDataURL({format: "png"});
+        img.onload = () => {
+            ctx.drawImage(img, 0, 0);
+        };
+    }
 
     redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
     return canvas;
