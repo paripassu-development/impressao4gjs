@@ -1,3 +1,4 @@
+import {fabric} from "fabric";
 import * as _ from "lodash";
 import * as Mustache from "mustache";
 import {Error} from "../core/common/error";
@@ -10,6 +11,7 @@ import {qrcode} from "./qrcode";
 import {tabelaNutricional} from "./tabela-nutricional";
 import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
 import {text} from "./text";
+import {Canvas} from "fabric/fabric-impl";
 
 export const GS1_DATE_PATTERN = "YYmmDD";
 export const BARCODE_IMG_ELEMENT_ID = "barcode-img";
@@ -84,17 +86,32 @@ export interface IValidacao {
     obrigatorio: boolean;
 }
 
+function isFabricRequired(model: IEtiquetaDocModel, textBindings: any) {
+    const markersRegex = new RegExp(/\^|\~/);
+    return markersRegex.test(JSON.stringify(model)) || markersRegex.test(JSON.stringify(textBindings));
+}
+
 const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
     let errors = new Array<Error>();
-    const nomeElementoCanvas = id + "-etiqueta-canvas";
+    const idElementoCanvas = id + "-etiqueta-canvas";
+    const idElementoFabricCanvas = id + "-etiqueta-fabric-canvas";
     const mm = mmPartial(model.impressao.resolucaoDpi);
-    const canvas = canvasUtils.createCanvas(nomeElementoCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
+    const canvas = canvasUtils.createCanvas(idElementoCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
     const ctx = canvasUtils.createContext(canvas);
     const el = document.getElementById(id);
     const validacoes = _.indexBy(model.validacoes, "variavel") as any;
     el.appendChild(canvas);
     const promises: Array<Promise<any>> = [];
     canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
+
+    // fabricjs
+    let fabricCanvas: fabric.Canvas = null;
+    if (isFabricRequired(model, textBindings)) {
+        const canvas2 = canvasUtils.createCanvas(idElementoFabricCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
+        fabricCanvas = new fabric.Canvas(canvas2);
+        canvas2.classList.add("fabric-canvas");
+        el.appendChild(canvas2);
+    }
 
     model.desenho.elementos.forEach((elemento: any) => {
         const tipos: any = {
@@ -112,13 +129,13 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             },
             texto: (): Promise<any> => {
                 return new Promise((resolve) => {
-                    text.drawText(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                    text.drawText(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
             tabelaNutricional: (): Promise<any> => {
                 return new Promise((resolve) => {
-                    tabelaNutricional.drawTable(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                    tabelaNutricional.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
@@ -158,8 +175,27 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             }
 
         });
-    redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
-    return canvas;
+
+    return new Promise((resolve, reject) => {
+        try {
+            if (!!fabricCanvas) {
+                const img = new Image(canvas.width, canvas.height);
+                fabricCanvas.getContext().imageSmoothingEnabled = false;
+                img.src = fabricCanvas.toDataURL({format: "png"});
+                img.onload = () => {
+                    ctx.drawImage(img, 0, 0);
+                    redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
+                    resolve(canvas);
+                };
+            } else {
+                redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
+                resolve(canvas);
+            }
+        } catch (e) {
+            console.log(`Erro ao gerar imagem da etiqueta: ${JSON.stringify(e)}`);
+            reject(e);
+        }
+    });
 };
 
 const redrawWithoutGrayscale = (ctx: CanvasRenderingContext2D, width: number, height: number) => {

@@ -8,14 +8,13 @@ import {
 import "./styles.css";
 import {Error} from "./core/common/error";
 import {
-    dadosDefault,
-    modelDefault
+    DADOS_DEFAULT,
+    MODEL_DEFAULT
 } from "./default";
 
 declare var require: any;
 const _: any = require('lodash');
 const $: any = require('jquery');
-
 const modelEditor = codeEditor.createEditor("code");
 const valueEditor = codeEditor.createEditor("values");
 const STORAGE_NAMESPACE = "impressao4gjs.etiqueta";
@@ -29,13 +28,13 @@ const save = (model: string, values: string) => {
 
 const getModel = function () {
     const savedModel = localStorage.getItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_MODEL);
-    return _.isEmpty(savedModel) ? JSON.stringify(modelDefault) : savedModel;
+    return _.isEmpty(savedModel) ? JSON.stringify(MODEL_DEFAULT) : savedModel;
 };
 
 const getValues = function () {
     let savedValue = localStorage.getItem(STORAGE_NAMESPACE + "." + STORAGE_KEY_VALUES);
     savedValue = !!savedValue ? JSON.parse(savedValue) : {};
-    return JSON.stringify(_.defaults(savedValue, dadosDefault));
+    return JSON.stringify(_.defaults(savedValue, DADOS_DEFAULT));
 };
 
 document.getElementById("autoformat-btn").onclick = () => {
@@ -67,7 +66,7 @@ async function onClickCreateButton() {
     clearErrors();
     const modelJson = modelEditor.getValue();
     const modelObj: IEtiquetaDocModel = parseModelJson(modelJson);
-    const valuesObj = _.isEmpty(valueEditor.getValue()) ? dadosDefault : parseValuesJson(valueEditor.getValue());
+    const valuesObj = _.isEmpty(valueEditor.getValue()) ? DADOS_DEFAULT : parseValuesJson(valueEditor.getValue());
     try {
         await etiqueta.create("canvas-area", modelObj, valuesObj);
     } catch (err) {

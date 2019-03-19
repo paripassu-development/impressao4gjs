@@ -1,10 +1,10 @@
-const createCanvas = (nomeElementoCanvas: string, larguraMm: number, alturaMm: number) => {
-    const oldCanvas = document.getElementById(nomeElementoCanvas);
+const createCanvas = (idElementoCanvas: string, larguraMm: number, alturaMm: number) => {
+    const oldCanvas = document.getElementById(idElementoCanvas);
     if (oldCanvas) {
         oldCanvas.remove();
     }
     const canvas = document.createElement("canvas");
-    canvas.id = nomeElementoCanvas;
+    canvas.id = idElementoCanvas;
     canvas.width = larguraMm;
     canvas.height = alturaMm;
     canvas.style.width = (canvas.width) + "px";
