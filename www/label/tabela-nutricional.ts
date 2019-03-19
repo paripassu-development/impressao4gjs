@@ -9,6 +9,7 @@ import {
 import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
 import {fabric} from "fabric";
+import {PARAMETROS_PADROES_NUTRICIONAL} from "../default";
 
 const BLACK = "#000000";
 
@@ -153,7 +154,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
         });
     } else {
-        textBindings.parametrosPadroes.forEach((parametro: any) => {
+        const parametrosPadroes = !!textBindings ? textBindings.parametrosPadroes : PARAMETROS_PADROES_NUTRICIONAL;
+        parametrosPadroes.forEach((parametro: any) => {
             const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
             if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
                 yMm += alturaLinhaMm;
@@ -177,32 +179,34 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
         });
 
-        textBindings.parametrosExtras.forEach((parametro: any) => {
-            yMm += alturaLinhaMm;
-            ctx.textAlign = TextAlign.LEFT;
+        if (!!textBindings) {
+            textBindings.parametrosExtras.forEach((parametro: any) => {
+                yMm += alturaLinhaMm;
+                ctx.textAlign = TextAlign.LEFT;
 
-            if(!!fabricCanvas){
-                writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
-            } else {
-                ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-            }
-            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 7),
-                yMm, mm, TextAlign.RIGHT, degrees);
-            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm / 2,
-                yMm, mm, TextAlign.RIGHT, degrees);
-            yMm += lineStrokeGap;
-            drawLine(ctx, model, yMm, mm);
-        });
-        if (model.informacoesNutricionais.ocultarZerados) {
-            const naoVisiveis = textBindings.parametrosPadroes.filter((parametro: any) =>
-                parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
-            );
-            if (naoVisiveis.length > 0) {
-                let texto = "(*) NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE ";
-                texto = texto.concat(naoVisiveis.map((parametro: any) => {
-                    return parametro.rotulo.toUpperCase();
-                }).join(", ")).concat(". ");
-                model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
+                if (!!fabricCanvas) {
+                    writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
+                } else {
+                    ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+                }
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 7),
+                    yMm, mm, TextAlign.RIGHT, degrees);
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm / 2,
+                    yMm, mm, TextAlign.RIGHT, degrees);
+                yMm += lineStrokeGap;
+                drawLine(ctx, model, yMm, mm);
+            });
+            if (model.informacoesNutricionais.ocultarZerados) {
+                const naoVisiveis = textBindings.parametrosPadroes.filter((parametro: any) =>
+                    parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
+                );
+                if (naoVisiveis.length > 0) {
+                    let texto = "(*) NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE ";
+                    texto = texto.concat(naoVisiveis.map((parametro: any) => {
+                        return parametro.rotulo.toUpperCase();
+                    }).join(", ")).concat(". ");
+                    model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
+                }
             }
         }
     }
