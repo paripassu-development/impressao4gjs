@@ -86,8 +86,9 @@ export interface IValidacao {
     obrigatorio: boolean;
 }
 
-function isFabricRequired(model: IEtiquetaDocModel) {
-    return new RegExp(/\^|\~/).test(JSON.stringify(model));
+function isFabricRequired(model: IEtiquetaDocModel, textBindings: any) {
+    const markersRegex = new RegExp(/\^|\~/);
+    return markersRegex.test(JSON.stringify(model)) || markersRegex.test(JSON.stringify(textBindings));
 }
 
 const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
@@ -105,7 +106,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
 
     // fabricjs
     let fabricCanvas: fabric.Canvas = null;
-    if (isFabricRequired(model)) {
+    if (isFabricRequired(model, textBindings)) {
         const canvas2 = canvasUtils.createCanvas(idElementoFabricCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
         fabricCanvas = new fabric.Canvas(canvas2);
         canvas2.classList.add("fabric-canvas");
