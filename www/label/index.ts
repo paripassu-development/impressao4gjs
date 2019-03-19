@@ -176,17 +176,26 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
 
         });
 
-    if (!!fabricCanvas) {
-        const img = new Image(canvas.width, canvas.height);
-        fabricCanvas.getContext().imageSmoothingEnabled = false;
-        img.src = fabricCanvas.toDataURL({format: "png"});
-        img.onload = () => {
-            ctx.drawImage(img, 0, 0);
-        };
-    }
-
-    redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
-    return canvas;
+    return new Promise((resolve, reject) => {
+        try {
+            if (!!fabricCanvas) {
+                const img = new Image(canvas.width, canvas.height);
+                fabricCanvas.getContext().imageSmoothingEnabled = false;
+                img.src = fabricCanvas.toDataURL({format: "png"});
+                img.onload = () => {
+                    ctx.drawImage(img, 0, 0);
+                    redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
+                    resolve(canvas);
+                };
+            } else {
+                redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
+                resolve(canvas);
+            }
+        } catch (e) {
+            console.log(`Erro ao gerar imagem da etiqueta: ${JSON.stringify(e)}`);
+            reject(e);
+        }
+    });
 };
 
 const redrawWithoutGrayscale = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
