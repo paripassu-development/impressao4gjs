@@ -1071,7 +1071,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         campo: "informacoesNutricionais.ocultarZerados",
                     },
                     {
-                        nome: "informacoesNutrientesTabelaNutricional",
+                        nome: "Parâmetros nutricionais",
                         tipo: "OBJECT",
                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
                         obrigatorio: false,
@@ -1742,13 +1742,6 @@ const METADADOS_ELEMENTOS: any[] = [
         descricao: "Elemento de QR Code",
         camposConfiguraveis: [
             {
-                nome: "Valor",
-                descricao: "Texto que será utilizado para criar o QR Code",
-                tipo: "TEXT",
-                obrigatorio: true,
-                campo: "valor",
-            },
-            {
                 nome: "Posição",
                 tipo: "OBJECT",
                 obrigatorio: false,
@@ -1798,6 +1791,13 @@ const METADADOS_ELEMENTOS: any[] = [
                         campo: "dimensoes.larguraMm",
                     },
                 ],
+            },
+            {
+                nome: "Valor",
+                descricao: "Texto que será utilizado para criar o QR Code",
+                tipo: "TEXT",
+                obrigatorio: true,
+                campo: "valor",
             },
         ],
     },
