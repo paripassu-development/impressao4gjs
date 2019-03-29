@@ -190,10 +190,14 @@ const strokeAlignedText = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.C
     }
 };
 
+function isBoldFont(fontName: string) {
+    return _.includes(fontName.toLowerCase(), 'bold');
+}
+
 const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, text: string, xMm: number, yMm: number, larguraMaximaMm: number, mm: any, options?: IFabricTextOptions) => {
     options = options||{};
     let larguraMaximaPx = mm(larguraMaximaMm);
-    const fontProperties = /(bold)?\s?(\d+px)?\s?(\w+)$/.exec(ctx.font);
+    const fontProperties = /(bold)?\s?(\d+px)?\s?(.+)?$/.exec(ctx.font);
     const font = {
         weight: fontProperties[1],
         size: Number((fontProperties[2]||"").replace("px","")),
@@ -246,9 +250,9 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
         fill: String(ctx.fillStyle),
         stroke: String(ctx.strokeStyle),
         angle: options.degrees,
+        fontWeight: isBoldFont(font.name) ? 'bold' : font.weight || "normal",
         fontFamily: font.name,
         fontSize: font.size,
-        fontWeight: font.weight,
         strokeWidth: ctx.lineWidth,
         styles: subrangeStyles.styles,
         backgroundColor: background,
