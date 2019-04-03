@@ -1,55 +1,55 @@
 import {FONTES} from "../fonts/fonts";
 
 const METADADOS_IMPRESSAO: any = {
-        nome: "Impressão",
+        nome: "ras.ui.4g.etiqueta.configuracao.impressao",
         tipo: "impressao",
-        descricao: "Configurações gerais para impressão da etiqueta",
+        descricao: "ras.ui.4g.etiqueta.configuracao.impressao.descricao",
         camposConfiguraveis: [
             {
-                nome: "Largura da página",
-                descricao: "Largura do rolo de etiquetas onde será impressa as etiquetas",
+                nome: "ras.ui.4g.etiqueta.configuracao.impressao.largura",
+                descricao: "ras.ui.4g.etiqueta.configuracao.impressao.largura.descricao",
                 tipo: "NUMERIC",
                 obrigatorio: true,
                 campo: "larguraPaginaMm",
             },
             {
-                nome: "Etiquetas por página",
-                descricao: "Quantidade de colunas no rolo de etiquetas",
+                nome: "ras.ui.4g.etiqueta.configuracao.impressao.etiqueta_pagina",
+                descricao: "ras.ui.4g.etiqueta.configuracao.impressao.etiqueta_pagina.descricao",
                 tipo: "NUMERIC",
                 obrigatorio: true,
                 campo: "etiquetasPorPagina",
             },
             {
-                nome: "Espaçamento vertical",
-                descricao: "Tamanho do espaçamento vertical entre as colunas do rolo de etiquetas, em milímetros",
+                nome: "ras.ui.4g.etiqueta.configuracao.impressao.espaco_vertical",
+                descricao: "ras.ui.4g.etiqueta.configuracao.impressao.espaco_vertical.descricao",
                 tipo: "NUMERIC",
                 obrigatorio: true,
                 campo: "gapXMm",
             },
             {
-                nome: "Margem horizontal esquerda",
-                descricao: "Tamanho da margem horizontal esquerda da etiqueta, em milímetros",
+                nome: "ras.ui.4g.etiqueta.configuracao.impressao.margem_horizontal_esquerda",
+                descricao: "ras.ui.4g.etiqueta.configuracao.impressao.margem_horizontal_esquerda.descricao",
                 tipo: "NUMERIC",
                 obrigatorio: true,
                 campo: "margemXMm",
             },
             {
-                nome: "Margem vertical superior",
-                descricao: "Tamanho da margem vertical superior da etiqueta, em milímetros",
+                nome: "ras.ui.4g.etiqueta.configuracao.impressao.margem_vertical_superior",
+                descricao: "ras.ui.4g.etiqueta.configuracao.impressao.margem_vertical_superior.descricao",
                 tipo: "NUMERIC",
                 obrigatorio: true,
                 campo: "margemYMm",
             },
             {
-                nome: "Resolução da imagem",
-                descricao: "Resolução da imagem (203 ou 300, dependendo do modelo da impressora), em DPI",
+                nome: "ras.ui.4g.etiqueta.configuracao.impressao.resolucao_imagem",
+                descricao: "ras.ui.4g.etiqueta.configuracao.impressao.resolucao_imagem.descricao",
                 tipo: "NUMERIC",
                 obrigatorio: true,
                 campo: "resolucaoDpi",
             },
             {
-                nome: "Graus de rotação",
-                descricao: "Graus de rotação da imagem na etiqueta",
+                nome: "ras.ui.4g.etiqueta.configuracao.impressao.graus_rotacao",
+                descricao: "ras.ui.4g.etiqueta.configuracao.impressao.graus_rotacao.descricao",
                 tipo: "NUMERIC",
                 obrigatorio: true,
                 campo: "orientacaoEtiquetaGraus",
@@ -58,26 +58,26 @@ const METADADOS_IMPRESSAO: any = {
     };
 
 const METADADOS_ETIQUETA: any = {
-        nome: "Etiqueta",
+        nome: "ras.ui.4g.etiqueta.configuracao.etiqueta",
         tipo: "etiqueta",
-        descricao: "Configurações gerais da etiqueta",
+        descricao: "ras.ui.4g.etiqueta.configuracao.etiqueta.descricao",
         camposConfiguraveis: [
             {
-                nome: "Dimensões",
+                nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
                 tipo: "OBJECT",
                 obrigatorio: true,
                 campo: "dimensoes",
                 itens: [
                     {
-                        nome: "Altura da etiqueta",
-                        descricao: "Altura da etiqueta",
+                        nome: "ras.ui.4g.etiqueta.configuracao.etiqueta.altura",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.etiqueta.altura.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.alturaMm",
                     },
                     {
-                        nome: "Largura da etiqueta",
-                        descricao: "Largura da etiqueta",
+                        nome: "ras.ui.4g.etiqueta.configuracao.etiqueta.largura",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.etiqueta.largura",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.larguraMm",
@@ -88,63 +88,63 @@ const METADADOS_ETIQUETA: any = {
     };
 
 const METADADOS_PDF: any = {
-        nome: "PDF",
+        nome: "ras.ui.4g.etiqueta.configuracao.pdf",
         tipo: "pdf",
-        descricao: "Configurações gerais do PDF",
+        descricao: "ras.ui.4g.etiqueta.configuracao.pdf.descricao",
         camposConfiguraveis: [
             {
-                nome: "Espaçamento interno da página",
+                nome: "ras.ui.4g.etiqueta.configuracao.pdf.espaco_interno",
                 tipo: "NUMERIC",
                 obrigatorio: false,
                 campo: "pdfPadding",
-                descricao: "Espaçamento interno da página no PDF",
+                descricao: "ras.ui.4g.etiqueta.configuracao.pdf.espaco_interno.descricao",
             },
             {
-                nome: "Espaçamento entre as etiquetas",
+                nome: "ras.ui.4g.etiqueta.configuracao.pdf.espaco_entre_etiqueta",
                 tipo: "NUMERIC",
                 obrigatorio: false,
                 campo: "etiquetaPadding",
-                descricao: "Espaçamento entre as etiquetas no PDF",
+                descricao: "ras.ui.4g.etiqueta.configuracao.pdf.espaco_entre_etiqueta.descricao",
             },
             {
-                nome: "Borda na etiqueta",
+                nome: "ras.ui.4g.etiqueta.configuracao.pdf.borda_etiqueta",
                 tipo: "BOOLEANO",
                 obrigatorio: false,
                 campo: "etiquetaComBorda",
-                descricao: "Define se a etiqueta possuirá uma borda preta no PDF",
+                descricao: "ras.ui.4g.etiqueta.configuracao.pdf.borda_etiqueta.descricao",
             },
         ],
     };
 
 const METADADOS_ELEMENTOS: any[] = [
     {
-        nome: "Barra Origem Rastreada",
+        nome: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada",
         tipo: "barraOrigemRastreada",
-        descricao: "Apresenta a barra PRODUTO COM ORIGEM RASTREADA",
+        descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.descricao",
         camposConfiguraveis: [
             {
-                nome: "Posição",
+                nome: "ras.ui.4g.etiqueta.configuracao.posicao",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "posicao",
                 itens: [
                     {
-                        nome: "Posicionamento horizontal",
-                        descricao: "posição no eixo x em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.posicao_horizontal.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.xMm",
                     },
                     {
-                        nome: "Posicionamento vertical",
-                        descricao: "posição no eixo y em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.posicao_vertical.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.yMm",
                     },
                     {
-                        nome: "Rotação",
-                        descricao: "Ângulo de rotação do código de barras dentro da etiqueta",
+                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.rotacao.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "posicao.rotacao",
@@ -152,21 +152,21 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Dimensões",
+                nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "dimensoes",
                 itens: [
                     {
-                        nome: "Altura",
-                        descricao: "Altura em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.altura",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.altura.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.alturaMm",
                     },
                     {
-                        nome: "Largura",
-                        descricao: "Largura em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.largura",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.largura.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.larguraMm",
@@ -174,29 +174,29 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Fonte",
+                nome: "ras.ui.4g.etiqueta.configuracao.fonte",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "fonte",
                 itens: [
                     {
-                        nome: "Nome da fonte",
-                        descricao: "Nome da fonte que vai ser usada para o texto do componente, normalmente é usada Consolas. ",
+                        nome: "ras.ui.4g.etiqueta.configuracao.nome_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.nome_fonte.descricao",
                         tipo: "OPTIONS",
                         opcoes: FONTES,
                         obrigatorio: true,
                         campo: "fonte.nome",
                     },
                     {
-                        nome: "Força do contorno da fonte",
-                        descricao: "Reforço do contorno que vai ser aplicado no texto do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.forca_contorno_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.forca_contorno_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "fonte.forcaContorno",
                     },
                     {
-                        nome: "Negrito",
-                        descricao: "Aplicar o negrito no texto do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.negrito_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.negrito_fonte.descricao",
                         tipo: "BOOLEAN",
                         obrigatorio: false,
                         campo: "fonte.negrito",
@@ -204,8 +204,8 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Valor",
-                descricao: "Texto que fica no centro da barra, caso não seja informado será escrito \"Produto com Origem Rastreada\"",
+                nome: "ras.ui.4g.etiqueta.configuracao.texto",
+                descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.texto.descricao",
                 tipo: "TEXT",
                 obrigatorio: false,
                 campo: "valor",
@@ -213,33 +213,33 @@ const METADADOS_ELEMENTOS: any[] = [
         ],
     },
     {
-        nome: "Tabela Nutricional",
+        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional",
         tipo: "tabelaNutricional",
-        descricao: "Apresenta uma tabela nutricional, completa ou com elementos específicos.",
+        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.descricao",
         camposConfiguraveis: [
             {
-                nome: "Posição",
+                nome: "ras.ui.4g.etiqueta.configuracao.posicao",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "posicao",
                 itens: [
                     {
-                        nome: "Posicionamento horizontal",
-                        descricao: "Posição no eixo x em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.posicao_horizontal.descricao",
                         tipo: "NUMERIC",
                         categoria: "posicionamento",
                         obrigatorio: true,
                         campo: "posicao.xMm",
                     },
                     {
-                        nome: "Posicionamento vertical",
-                        descricao: "Posição no eixo y em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.posicao_vertical.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.yMm",
                     },
                     {
-                        nome: "Rotação",
+                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
                         descricao: "Ângulo de rotação da tabela nutricional dentro da etiqueta",
                         tipo: "NUMERIC",
                         obrigatorio: false,
@@ -248,14 +248,14 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Dimensões",
+                nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
                 tipo: "OBJECT",
                 obrigatorio: true,
                 campo: "dimensoes",
                 itens: [
                     {
-                        nome: "Largura máxima",
-                        descricao: "Largura máxima em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.largura_maxima",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.largura_maxima.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.larguraMaximaMm",
@@ -263,36 +263,36 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Fonte",
+                nome: "ras.ui.4g.etiqueta.configuracao.fonte",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "fonte",
                 itens: [
                     {
-                        nome: "Nome da fonte",
-                        descricao: "Nome da fonte que vai ser usada para o texto do componente, normalmente é usada Consolas. ",
+                        nome: "ras.ui.4g.etiqueta.configuracao.nome_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_fonte.descricao",
                         tipo: "OPTIONS",
                         opcoes: FONTES,
                         obrigatorio: true,
                         campo: "fonte.nome",
                     },
                     {
-                        nome: "Altura da fonte",
-                        descricao: "Altura das letras (afeta também o espaçamento entre as linhas da tabela)",
+                        nome: "ras.ui.4g.etiqueta.configuracao.altura_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.altura_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "fonte.alturaMm",
                     },
                     {
-                        nome: "Força do contorno da fonte",
-                        descricao: "Reforço do contorno que vai ser aplicado no texto do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.forca_contorno_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.forca_contorno_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "fonte.forcaContorno",
                     },
                     {
-                        nome: "Negrito",
-                        descricao: "Aplicar o negrito no texto do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.negrito_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.negrito_fonte.descricao",
                         tipo: "BOOLEAN",
                         obrigatorio: false,
                         campo: "fonte.negrito",
@@ -306,8 +306,8 @@ const METADADOS_ELEMENTOS: any[] = [
                 campo: "opcoes",
                 itens: [
                     {
-                        nome: "Ocultar linhas",
-                        descricao: "Indica se as linhas de marcação da tabela devem ser ocultadas",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.opcoes",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.opcoes.descricao",
                         tipo: "BOOLEAN",
                         obrigatorio: false,
                         campo: "opcoes.ocultarLinhas",
@@ -315,21 +315,21 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Informações adicionais",
+                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.informacoes_adicionais",
                 tipo: "OBJECT",
                 obrigatorio: true,
                 campo: "informacoesAdicionais",
                 itens: [
                     {
-                        nome: "Texto",
-                        descricao: "Texto a ser apresentado no rodapé da tabela nutricional, com informações adicionais",
+                        nome: "ras.ui.4g.etiqueta.configuracao.texto",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesAdicionais.texto",
                     },
                     {
-                        nome: "Caracteres por linha",
-                        descricao: "Determina a quantidade de caracteres que o texto pode ter",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.caracter_linha",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.caracter_linha.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "informacoesAdicionais.caracteresPorLinha",
@@ -337,67 +337,67 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Informações nutricionais",
+                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.informacoes_nutricionais",
                 tipo: "OBJECT",
                 obrigatorio: false,
                 campo: "informacoesNutricionais",
                 itens: [
                     {
-                        nome: "Texto superior",
-                        descricao: "Texto que fica localizado acima da tabela nutricional",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_superior",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_superior.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoInformacaoNutricional",
                     },
                     {
-                        nome: "Texto da quantidade por porção",
-                        descricao: "Texto da primeira linha da tabela nutricional",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_quantidade_porcao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_quantidade_porcao.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoQuantidadePorPorcao",
                     },
                     {
-                        nome: "Texto do valor diário",
-                        descricao: "Texto abreviado do valor diário, localizado na primeira linha da tabela nutricional à esquerda",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_valor_diario",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_valor_diario.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoAbreviadoValorDiario",
                     },
                     {
-                        nome: "Porção caseira",
-                        descricao: "Porção à qual os parâmetros nutricionais da tabela fazem referência",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.porcao_caseira",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.porcao_caseira.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoPorcaoCaseira",
                     },
                     {
-                        nome: "Proporção de calorias",
-                        descricao: "Proporção de calorias em relação aos KJ's",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_proporcao_calorias",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_proporcao_calorias.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoProporcaoCalorias",
                     },
                     {
-                        nome: "Ocultar parâmetros zerados",
-                        descricao: "Ocultar parâmetros que tiverem a quantidade por porção zerada. Abaixo da tabela aparecerá um texto indicando que não existe quantidade significativa do parâmetro.",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.ocultar_parametros_zerados",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.ocultar_parametros_zerados.descricao",
                         tipo: "BOOLEAN",
                         obrigatorio: false,
                         campo: "informacoesNutricionais.ocultarZerados",
                     },
                     {
-                        nome: "Parâmetros nutricionais",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.parametros_nutricionais",
                         tipo: "OBJECT",
                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
                         obrigatorio: false,
                         itens: [
                             {
-                                nome: "Sódio",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.sodio",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
                                 obrigatorio: false,
                                 itens: [
                                     {
-                                        nome: "Nome",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.nome",
                                         obrigatorio: true,
@@ -414,7 +414,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.qtPorcao",
                                         obrigatorio: true,
@@ -431,7 +431,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.valDiario",
                                         obrigatorio: true,
@@ -450,13 +450,13 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Proteínas",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.proteinas",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
                                 obrigatorio: false,
                                 itens: [
                                     {
-                                        nome: "Nome",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.nome",
                                         obrigatorio: true,
@@ -473,7 +473,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.qtPorcao",
                                         obrigatorio: true,
@@ -490,7 +490,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.valDiario",
                                         obrigatorio: true,
@@ -509,13 +509,13 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Carboidratos",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.carboidratos",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
                                 obrigatorio: false,
                                 itens: [
                                     {
-                                        nome: "Nome",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.nome",
                                         obrigatorio: true,
@@ -532,7 +532,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.qtPorcao",
                                         obrigatorio: true,
@@ -549,7 +549,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.valDiario",
                                         obrigatorio: true,
@@ -568,13 +568,13 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Fibra Alimentar",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.fibra_alimentar",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
                                 obrigatorio: false,
                                 itens: [
                                     {
-                                        nome: "Nome",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.nome",
                                         obrigatorio: true,
@@ -591,7 +591,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.qtPorcao",
                                         obrigatorio: true,
@@ -608,7 +608,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.valDiario",
                                         obrigatorio: true,
@@ -627,13 +627,13 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Valor Energético",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_energetico",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
                                 obrigatorio: false,
                                 itens: [
                                     {
-                                        nome: "Nome",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.nome",
                                         obrigatorio: true,
@@ -650,7 +650,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.qtPorcao",
                                         obrigatorio: true,
@@ -667,7 +667,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.valDiario",
                                         obrigatorio: true,
@@ -686,13 +686,13 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Gorduras Totais",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.gorduras_totais",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
                                 obrigatorio: false,
                                 itens: [
                                     {
-                                        nome: "Nome",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.nome",
                                         obrigatorio: true,
@@ -709,7 +709,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.qtPorcao",
                                         obrigatorio: true,
@@ -726,7 +726,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.valDiario",
                                         obrigatorio: true,
@@ -745,13 +745,13 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Gorduras trans",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.gorduras_trans",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
                                 obrigatorio: false,
                                 itens: [
                                     {
-                                        nome: "Nome",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.nome",
                                         obrigatorio: true,
@@ -768,7 +768,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.qtPorcao",
                                         obrigatorio: true,
@@ -785,7 +785,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.valDiario",
                                         obrigatorio: true,
@@ -804,13 +804,13 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Gorduras Saturadas",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.gorduras_saturadas",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
                                 obrigatorio: false,
                                 itens: [
                                     {
-                                        nome: "Nome",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.nome",
                                         obrigatorio: true,
@@ -827,7 +827,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.qtPorcao",
                                         obrigatorio: true,
@@ -844,7 +844,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.valDiario",
                                         obrigatorio: true,
@@ -869,34 +869,34 @@ const METADADOS_ELEMENTOS: any[] = [
         ],
     },
     {
-        nome: "Tabela nutricional em linha",
+        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha",
         tipo: "tabelaNutricionalEmLinha",
-        descricao: "Apresenta informações do cadastro nutricional completa.",
+        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.descricao",
         camposConfiguraveis: [
             {
-                nome: "Posição",
+                nome: "ras.ui.4g.etiqueta.configuracao.posicao",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "posicao",
                 itens: [
                     {
-                        nome: "Posicionamento horizontal",
-                        descricao: "Posição no eixo x em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.posicao_horizontal.descricao",
                         tipo: "NUMERIC",
                         categoria: "posicionamento",
                         obrigatorio: true,
                         campo: "posicao.xMm",
                     },
                     {
-                        nome: "Posicionamento vertical",
-                        descricao: "Posição no eixo y em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.posicao_vertical.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.yMm",
                     },
                     {
-                        nome: "Rotação",
-                        descricao: "Ângulo de rotação do texto com informações nutricionais dentro da etiqueta",
+                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.rotacao.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "posicao.rotacao",
@@ -904,14 +904,14 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Dimensões",
+                nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
                 tipo: "OBJECT",
                 obrigatorio: true,
                 campo: "dimensoes",
                 itens: [
                     {
-                        nome: "Largura máxima",
-                        descricao: "Largura em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.largura_maxima",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.largura_maxima.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.larguraMaximaMm",
@@ -919,48 +919,44 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Múltiplas linhas",
+                nome: "ras.ui.4g.etiqueta.configuracao.multiplas_linhas",
                 tipo: "OBJECT",
                 obrigatorio: false,
                 campo: "multiplasLinhas",
                 itens: [
                     {
-                        nome: "Número máximo de linhas",
-                        descricao: "Delimita o número máximo de linhas que as informações nutricionais podem ter. " +
-                            "Caso não seja informado, não existirá limite de linhas para o campo em questão.",
+                        nome: "ras.ui.4g.etiqueta.configuracao.numero_maximo_linhas",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.numero_maximo_linhas.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "multiplasLinhas.numeroMaximoDeLinhas",
                     },
                     {
-                        nome: "Altura minima da fonte",
-                        descricao: "Delimita a altura mínima (em milímetros) que a fonte do campo pode ter. " +
-                            "Caso não seja informado, o tamanho mínimo padrão estabelecido de 1,2 mm será usado",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.altura_minima_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.altura_minima_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "multiplasLinhas.alturaMinimaFonteMm",
                     },
                     {
-                        nome: "Alinhamento",
-                        descricao: "Se informado, define o alinhamento do texto, as possíveis opções são: " +
-                            "'esquerda', 'direita', 'centro' e 'justificado'. " +
-                            "Caso não seja informado, por padrão é usado 'esquerda'",
+                        nome: "ras.ui.4g.etiqueta.configuracao.alinhamento",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.alinhamento.descricao",
                         tipo: "OPTIONS",
                         opcoes: [
                             {
-                                texto: "Esquerda",
+                                texto: "ras.ui.4g.etiqueta.configuracao.esquerda",
                                 valor: "left",
                             },
                             {
-                                texto: "Direita",
+                                texto: "ras.ui.4g.etiqueta.configuracao.direita",
                                 valor: "right",
                             },
                             {
-                                texto: "Centro",
+                                texto: "ras.ui.4g.etiqueta.configuracao.centro",
                                 valor: "center",
                             },
                             {
-                                texto: "Justificado",
+                                texto: "ras.ui.4g.etiqueta.configuracao.justificado",
                                 valor: "justify",
                             },
                         ],
@@ -970,36 +966,36 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Fonte",
+                nome: "ras.ui.4g.etiqueta.configuracao.fonte",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "fonte",
                 itens: [
                     {
-                        nome: "Nome",
-                        descricao: "Nome da fonte que vai ser usada para texto do componente, normalmente é usada Consolas",
+                        nome: "ras.ui.4g.etiqueta.configuracao.nome_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.nome_fonte.descricao",
                         tipo: "OPTIONS",
                         opcoes: FONTES,
                         obrigatorio: true,
                         campo: "fonte.nome",
                     },
                     {
-                        nome: "Altura",
-                        descricao: "Altura das letras (afeta também o espaçamento entre as linhas da tabela)",
+                        nome: "ras.ui.4g.etiqueta.configuracao.altura",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.altura_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "fonte.alturaMm",
                     },
                     {
-                        nome: "Força do contorno da fonte",
-                        descricao: "Reforço do contorno que vai ser aplicado no texto do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.forca_contorno_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.forca_contorno_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "fonte.forcaContorno",
                     },
                     {
-                        nome: "Negrito",
-                        descricao: "Aplicar o negrito no texto do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.negrito_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.negrito_fonte.descricao",
                         tipo: "BOOLEAN",
                         obrigatorio: false,
                         campo: "fonte.negrito",
@@ -1007,15 +1003,14 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Informações adicionais",
+                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.informacoes_adicionais",
                 tipo: "OBJECT",
                 obrigatorio: true,
                 campo: "informacoesAdicionais",
                 itens: [
                     {
-                        nome: "Texto",
-                        descricao: "Texto a ser apresentado no rodapé da tabela nutricional, com informações adicionais. " +
-                            "Caso não seja informado, será exibido o valor padrão",
+                        nome: "ras.ui.4g.etiqueta.configuracao.texto",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.texto.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesAdicionais.texto",
@@ -1023,53 +1018,11 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Informações nutricionais",
+                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.informacoes_nutricionais",
                 tipo: "OBJECT",
                 obrigatorio: false,
                 campo: "informacoesNutricionais",
                 itens: [
-                    {
-                        nome: "Texto superior",
-                        descricao: "Texto que fica localizado acima da tabela nutricional",
-                        tipo: "TEXT",
-                        obrigatorio: true,
-                        campo: "informacoesNutricionais.textoInformacaoNutricional",
-                    },
-                    {
-                        nome: "Texto da quantidade por porção",
-                        descricao: "Texto da primeira linha da tabela nutricional",
-                        tipo: "TEXT",
-                        obrigatorio: true,
-                        campo: "informacoesNutricionais.textoQuantidadePorPorcao",
-                    },
-                    {
-                        nome: "Texto do valor diário",
-                        descricao: "Texto abreviado do valor diário, localizado na primeira linha da tabela nutricional à esquerda",
-                        tipo: "TEXT",
-                        obrigatorio: true,
-                        campo: "informacoesNutricionais.textoAbreviadoValorDiario",
-                    },
-                    {
-                        nome: "Porção caseira",
-                        descricao: "Porção à qual os parâmetros nutricionais da tabela fazem referência",
-                        tipo: "TEXT",
-                        obrigatorio: true,
-                        campo: "informacoesNutricionais.textoPorcaoCaseira",
-                    },
-                    {
-                        nome: "Proporção de calorias",
-                        descricao: "Proporção de calorias em relação aos KJ's",
-                        tipo: "TEXT",
-                        obrigatorio: true,
-                        campo: "informacoesNutricionais.textoProporcaoCalorias",
-                    },
-                    {
-                        nome: "Ocultar parâmetros zerados",
-                        descricao: "Ocultar parâmetros que tiverem a quantidade por porção zerada. Aparecerá um texto indicando que não existe quantidade significativa do parâmetro.",
-                        tipo: "BOOLEAN",
-                        obrigatorio: false,
-                        campo: "informacoesNutricionais.ocultarZerados",
-                    },
                     {
                         nome: "Parâmetros nutricionais",
                         tipo: "OBJECT",
@@ -1077,7 +1030,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         obrigatorio: false,
                         itens: [
                             {
-                                nome: "Sódio",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.sodio",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
                                 obrigatorio: false,
@@ -1100,7 +1053,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.qtPorcao",
                                         obrigatorio: true,
@@ -1117,7 +1070,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.valDiario",
                                         obrigatorio: true,
@@ -1136,7 +1089,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Proteínas",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.proteinas",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
                                 obrigatorio: false,
@@ -1159,7 +1112,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.qtPorcao",
                                         obrigatorio: true,
@@ -1176,7 +1129,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.valDiario",
                                         obrigatorio: true,
@@ -1195,7 +1148,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Carboidratos",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.carboidratos",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
                                 obrigatorio: false,
@@ -1218,7 +1171,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.qtPorcao",
                                         obrigatorio: true,
@@ -1235,7 +1188,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.valDiario",
                                         obrigatorio: true,
@@ -1254,7 +1207,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Fibra Alimentar",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.fibra_alimentar",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
                                 obrigatorio: false,
@@ -1277,7 +1230,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.qtPorcao",
                                         obrigatorio: true,
@@ -1294,7 +1247,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.valDiario",
                                         obrigatorio: true,
@@ -1313,7 +1266,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Valor Energético",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_energetico",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
                                 obrigatorio: false,
@@ -1336,7 +1289,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.qtPorcao",
                                         obrigatorio: true,
@@ -1353,7 +1306,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.valDiario",
                                         obrigatorio: true,
@@ -1372,7 +1325,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Gorduras Totais",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.gorduras_totais",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
                                 obrigatorio: false,
@@ -1395,7 +1348,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.qtPorcao",
                                         obrigatorio: true,
@@ -1412,7 +1365,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.valDiario",
                                         obrigatorio: true,
@@ -1431,7 +1384,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Gorduras trans",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.gorduras_trans",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
                                 obrigatorio: false,
@@ -1454,7 +1407,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.qtPorcao",
                                         obrigatorio: true,
@@ -1471,7 +1424,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.valDiario",
                                         obrigatorio: true,
@@ -1490,7 +1443,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                 ],
                             },
                             {
-                                nome: "Gorduras Saturadas",
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.gorduras_saturadas",
                                 tipo: "OBJECT",
                                 campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
                                 obrigatorio: false,
@@ -1513,7 +1466,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Quantidade por porção",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.qtPorcao",
                                         obrigatorio: true,
@@ -1530,7 +1483,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
-                                        nome: "Valor diário",
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.valDiario",
                                         obrigatorio: true,
@@ -1555,45 +1508,45 @@ const METADADOS_ELEMENTOS: any[] = [
         ],
     },
     {
-        nome: "Texto",
+        nome: "ras.ui.4g.etiqueta.configuracao.texto",
         tipo: "texto",
-        descricao: "Elemento de texto",
+        descricao: "ras.ui.4g.etiqueta.configuracao.texto.descricao",
         camposConfiguraveis: [
             {
-                nome: "Posição",
+                nome: "ras.ui.4g.etiqueta.configuracao.posicao",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "posicao",
                 itens: [
                     {
-                        nome: "Posicionamento horizontal",
-                        descricao: "Posição no eixo x em milímetros do texto",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.posicao_horizontal.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.xMm",
                     },
                     {
-                        nome: "Posicionamento vertical",
-                        descricao: "Posição no eixo y em milímetros do texto",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.posicao_vertical.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.yMm",
                     },
                     {
-                        nome: "Alinhamento",
-                        descricao: "Alinhamento horizontal do texto pode ser esquerda, direita ou centro",
+                        nome: "ras.ui.4g.etiqueta.configuracao.alinhamento",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.alinhamento.descricao",
                         tipo: "OPTIONS",
                         opcoes: [
                             {
-                                texto: "Esquerda",
+                                texto: "ras.ui.4g.etiqueta.configuracao.esquerda",
                                 valor: "left",
                             },
                             {
-                                texto: "Direita",
+                                texto: "ras.ui.4g.etiqueta.configuracao.direita",
                                 valor: "right",
                             },
                             {
-                                texto: "Centro",
+                                texto: "ras.ui.4g.etiqueta.configuracao.centro",
                                 valor: "center",
                             },
                         ],
@@ -1601,8 +1554,8 @@ const METADADOS_ELEMENTOS: any[] = [
                         campo: "posicao.alinhar",
                     },
                     {
-                        nome: "Rotação",
-                        descricao: "Ângulo de rotação do texto",
+                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.rotacao.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "posicao.rotacao",
@@ -1610,14 +1563,14 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Dimensões",
+                nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
                 tipo: "OBJECT",
                 obrigatorio: true,
                 campo: "dimensoes",
                 itens: [
                     {
-                        nome: "Largura máxima",
-                        descricao: "Largura em milímetros do texto",
+                        nome: "ras.ui.4g.etiqueta.configuracao.largura_maxima",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.largura_maxima.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.larguraMaximaMm",
@@ -1625,43 +1578,43 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Fonte",
+                nome: "ras.ui.4g.etiqueta.configuracao.fonte",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "fonte",
                 itens: [
                     {
-                        nome: "Nome da fonte",
-                        descricao: "Nome da fonte que vai ser usada para texto do componente, normalmente é usada Consolas",
+                        nome: "ras.ui.4g.etiqueta.configuracao.nome_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.nome_fonte.descricao",
                         tipo: "OPTIONS",
                         opcoes: FONTES,
                         obrigatorio: true,
                         campo: "fonte.nome",
                     },
                     {
-                        nome: "Altura da fonte",
-                        descricao: "Altura das letras",
+                        nome: "ras.ui.4g.etiqueta.configuracao.altura_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.altura_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "fonte.alturaMm",
                     },
                     {
-                        nome: "Altura mínima",
-                        descricao: "Delimita a altura mínima (em milímetros) que a fonte do campo pode ter. caso não seja informado, o tamanho mínimo padrão estabelecido de 1,2 mm será usado",
+                        nome: "ras.ui.4g.etiqueta.configuracao.texto.altura_minima_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.altura_minima_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "fonte.alturaMinimaMm",
                     },
                     {
-                        nome: "Negrito",
-                        descricao: "Aplica negrito no texto",
+                        nome: "ras.ui.4g.etiqueta.configuracao.negrito_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.negrito_fonte.descricao",
                         tipo: "BOOLEAN",
                         obrigatorio: false,
                         campo: "fonte.negrito",
                     },
                     {
-                        nome: "Força do contorno da fonte",
-                        descricao: "Reforço do contorno que vai ser aplicado no texto",
+                        nome: "ras.ui.4g.etiqueta.configuracao.forca_contorno_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.forca_contorno_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "fonte.forcaContorno",
@@ -1669,42 +1622,40 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Múltiplas linhas",
+                nome: "ras.ui.4g.etiqueta.configuracao.multiplas_linhas",
                 tipo: "OBJECT",
                 obrigatorio: false,
                 campo: "multiplasLinhas",
                 itens: [
                     {
-                        nome: "Número máximo de linhas",
-                        descricao: "Determina o número máximo de linhas que o texto pode ter",
+                        nome: "ras.ui.4g.etiqueta.configuracao.numero_maximo_linhas",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.numero_maximo_linhas.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "multiplasLinhas.numeroMaximoDeLinhas",
                     },
                     {
-                        nome: "Altura minima da fonte",
-                        descricao: "Delimita a altura mínima (em milímetros) que a fonte do campo pode ter. " +
-                            "Caso não seja informado, o tamanho mínimo padrão estabelecido de 1,2 mm será usado",
+                        nome: "ras.ui.4g.etiqueta.configuracao.texto.altura_minima_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.altura_minima_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "multiplasLinhas.alturaMinimaFonteMm",
                     },
                     {
-                        nome: "Alinhamento",
-                        descricao: "Alinhamento horizontal do texto, " +
-                            "pode ser esquerda, direita ou centro",
+                        nome: "ras.ui.4g.etiqueta.configuracao.alinhamento",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.alinhamento.descricao",
                         tipo: "OPTIONS",
                         opcoes: [
                             {
-                                texto: "Esquerda",
+                                texto: "ras.ui.4g.etiqueta.configuracao.esquerda",
                                 valor: "left",
                             },
                             {
-                                texto: "Direita",
+                                texto: "ras.ui.4g.etiqueta.configuracao.direita",
                                 valor: "right",
                             },
                             {
-                                texto: "Centro",
+                                texto: "ras.ui.4g.etiqueta.configuracao.centro",
                                 valor: "center",
                             },
                         ],
@@ -1714,22 +1665,22 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Máximo de linhas",
-                descricao: "Indica o número máximo de linhas que o texto pode ocupar",
+                nome: "ras.ui.4g.etiqueta.configuracao.numero_maximo_linhas",
+                descricao: "ras.ui.4g.etiqueta.configuracao.texto.numero_maximo_linhas.descricao",
                 tipo: "NUMERIC",
                 obrigatorio: false,
                 campo: "maxLinhas",
             },
             {
-                nome: "Valor",
-                descricao: "O valor que deverá ser escrito. Pode ser utilizado variáveis",
+                nome: "ras.ui.4g.etiqueta.configuracao.texto",
+                descricao: "ras.ui.4g.etiqueta.configuracao.texto.texto.descricao",
                 tipo: "TEXT",
                 obrigatorio: true,
                 campo: "valor",
             },
             {
                 nome: "Caixa alta",
-                descricao: "Determina se o texto deverá ser em caixa alta",
+                descricao: "ras.ui.4g.etiqueta.configuracao.texto.caixa_alta.descricao",
                 tipo: "TEXT",
                 obrigatorio: false,
                 campo: "fn",
@@ -1737,33 +1688,33 @@ const METADADOS_ELEMENTOS: any[] = [
         ],
     },
     {
-        nome: "QR Code",
+        nome: "ras.ui.4g.etiqueta.configuracao.qrcode",
         tipo: "qrcode",
-        descricao: "Elemento de QR Code",
+        descricao: "ras.ui.4g.etiqueta.configuracao.qrcode.descricao",
         camposConfiguraveis: [
             {
-                nome: "Posição",
+                nome: "ras.ui.4g.etiqueta.configuracao.posicao",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "posicao",
                 itens: [
                     {
-                        nome: "Posicionamento horizontal",
-                        descricao: "posição no eixo x em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.qrcode.posicao_horizontal.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.xMm",
                     },
                     {
-                        nome: "Posicionamento vertical",
-                        descricao: "posição no eixo y em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.qrcode.posicao_vertical.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.yMm",
                     },
                     {
-                        nome: "Rotação",
-                        descricao: "Ângulo de rotação do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.qrcode.rotacao.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "posicao.rotacao",
@@ -1771,21 +1722,21 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Dimensões",
+                nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
                 tipo: "OBJECT",
                 obrigatorio: true,
                 campo: "dimensoes",
                 itens: [
                     {
-                        nome: "Altura do QR Code",
-                        descricao: "Altura do QR Code",
+                        nome: "ras.ui.4g.etiqueta.configuracao.qrcode.altura",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.qrcode.altura",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.alturaMm",
                     },
                     {
-                        nome: "Largura do QR Code",
-                        descricao: "Largura do QR Code",
+                        nome: "ras.ui.4g.etiqueta.configuracao.qrcode.largura",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.qrcode.largura",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.larguraMm",
@@ -1793,8 +1744,8 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Valor",
-                descricao: "Texto que será utilizado para criar o QR Code",
+                nome: "ras.ui.4g.etiqueta.configuracao.valor",
+                descricao: "ras.ui.4g.etiqueta.configuracao.qrcode.valor.descricao",
                 tipo: "TEXT",
                 obrigatorio: true,
                 campo: "valor",
@@ -1802,33 +1753,33 @@ const METADADOS_ELEMENTOS: any[] = [
         ],
     },
     {
-        nome: "Código de barras",
+        nome: "ras.ui.4g.etiqueta.configuracao.codigo_barras",
         tipo: "codigoBarras",
-        descricao: "Código de barras",
+        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.descricao",
         camposConfiguraveis: [
             {
-                nome: "Posição",
+                nome: "ras.ui.4g.etiqueta.configuracao.posicao",
                 tipo: "OBJECT",
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "posicao",
                 itens: [
                     {
-                        nome: "Posicionamento horizontal",
-                        descricao: "posição no eixo x em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.posicao_horizontal.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.xMm",
                     },
                     {
-                        nome: "Posicionamento vertical",
-                        descricao: "posição no eixo y em milímetros do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.posicao_vertical.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.yMm",
                     },
                     {
-                        nome: "Rotação",
-                        descricao: "Ângulo de rotação do componente",
+                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.rotacao.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "posicao.rotacao",
@@ -1836,9 +1787,8 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Tipo de código de barras",
-                descricao: "Tipo de código de barras a ser impresso. Pode ser utilizada a variável tipoCodigoBarras para obter " +
-                    "o tipo selecionado na tela de impressão. Valores disponíveis: ean13 para EAN-13, itf14 para DUN-14, itf para Intercalado 2 de 5 ou gs1128 para GS1-128",
+                nome: "ras.ui.4g.etiqueta.configuracao.codigo_barras.tipo_codigo_barras",
+                descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.tipo_codigo_barras.descricao",
                 tipo: "OPTIONS",
                 opcoes: [
                     {
@@ -1850,21 +1800,24 @@ const METADADOS_ELEMENTOS: any[] = [
                         valor: "itf14",
                     },
                     {
-                        texto: "Intercalado 2 de 5",
+                        texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.itf",
                         valor: "itf",
                     },
                     {
                         texto: "GS1-128",
                         valor: "gs1128",
                     },
+                    {
+                        texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.selecionar_impressao",
+                        valor: "{{{tipoCodigoBarras}}}",
+                    },
                 ],
                 obrigatorio: true,
                 campo: "tipoCodigoBarras",
             },
             {
-                nome: "Tipo de código de barras padrão",
-                descricao: "O tipo de código de barras que será inicialmente preenchido na tela de impressão (na tela poderá ser alterado pelo usuário)." +
-                    "Valores disponíveis: 'ean13' para EAN-13, 'itf14' para DUN-14, 'itf' para Intercalado 2 de 5 ou 'gs1128' para GS1-128",
+                nome: "ras.ui.4g.etiqueta.configuracao.codigo_barras.tipo_codigo_barras_padrao",
+                descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.tipo_codigo_barras_padrao.descricao",
                 tipo: "OPTIONS",
                 opcoes: [
                     {
@@ -1876,7 +1829,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         valor: "itf14",
                     },
                     {
-                        texto: "Intercalado 2 de 5",
+                        texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.itf",
                         valor: "itf",
                     },
                     {
@@ -1886,19 +1839,21 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
                 obrigatorio: false,
                 campo: "tipoCodigoBarrasPadrao",
+                preRequisito: [
+                    {
+                        campo: "tipoCodigoBarras",
+                        valor: "{{{tipoCodigoBarras}}}",
+                    },
+                ],
             },
             {
-                nome: "Valor",
-                descricao: "Valor contido no código de barras. " +
-                    "EAN-13: 13 dígitos, sendo que o 13º é o dígito verificador calculado; " +
-                    "DUN-14: 14 dígitos, sendo que o 14º é o dígito verificador calculado; " +
-                    "Intercalado 2 de 5: não possui dígito verificador; " +
-                    "GS1-128: não utiliza o parâmetro valor",
+                nome: "ras.ui.4g.etiqueta.configuracao.valor",
+                descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valor.descricao",
                 tipo: "TEXT",
                 obrigatorio: true,
                 preRequisito: [
                     {
-                        campo: "valor",
+                        campo: "tipoCodigoBarras",
                         oposto: true,
                         valor: "gs1128",
                         tipo: "EXISTENCIA",
@@ -1907,22 +1862,20 @@ const METADADOS_ELEMENTOS: any[] = [
                 campo: "valor",
             },
             {
-                nome: "Valores",
-                descricao: "Lista de valores para cada trecho do código de barras, acompanhados do seu respectivo Identificador de Aplicação (AI). " +
-                    "A ordem dos valores no código de barras é a mesma ordem da lista de valores",
+                nome: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores",
+                descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.descricao",
                 tipo: "LIST",
                 listaTipo: [
                     {
-                        nome: "Valor",
-                        descricao: "Valor contido no código de barras, no trecho definido pelo identificador (AI) específico",
+                        nome: "ras.ui.4g.etiqueta.configuracao.valor",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.valor.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "valor",
                     },
                     {
-                        nome: "Identificador",
-                        descricao: "Texto com um número identificando o tipo de informação contida no código de barras, " +
-                            "sendo um dos Identificadores de Aplicação (AI)",
+                        nome: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "identificador",
@@ -1939,23 +1892,21 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Dimensões",
+                nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
                 tipo: "OBJECT",
                 obrigatorio: true,
                 campo: "dimensoes",
                 itens: [
                     {
-                        nome: "Altura do código de barras",
-                        descricao: "Altura do código de barras",
+                        nome: "ras.ui.4g.etiqueta.configuracao.altura",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.altura.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.alturaCodigoBarrasMm",
                     },
                     {
-                        nome: "Largura unitária do código de barras",
-                        descricao: "Largura das barras. " +
-                            "Obs.: para o tipo GS1-128, esse parâmetro é um fator de largura e não tem uma proporção definida. " +
-                            "Usar valores inteiros para evitar que a largura do código de barras varie conforme o conteúdo do mesmo.",
+                        nome: "ras.ui.4g.etiqueta.configuracao.largura",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.largura.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.larguraUnitariaCodigoBarrasMm",
@@ -1963,21 +1914,21 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
             },
             {
-                nome: "Mostrar o texto",
-                descricao: "Define se o valor legível será apresentado abaixo do código de barras",
+                nome: "ras.ui.4g.etiqueta.configuracao.codigo_barras.mostra_texto",
+                descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.mostra_texto.descricao",
                 tipo: "BOOLEAN",
                 obrigatorio: false,
                 campo: "mostraTexto",
             },
             {
-                nome: "Fonte",
+                nome: "ras.ui.4g.etiqueta.configuracao.fonte",
                 tipo: "OBJECT",
                 obrigatorio: false,
                 campo: "fonte",
                 itens: [
                     {
-                        nome: "Nome",
-                        descricao: "Nome da fonte que vai ser usada para o texto",
+                        nome: "ras.ui.4g.etiqueta.configuracao.nome_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.nome_fonte.descricao",
                         tipo: "OPTIONS",
                         opcoes: FONTES,
                         obrigatorio: true,
@@ -1991,8 +1942,8 @@ const METADADOS_ELEMENTOS: any[] = [
                         ],
                     },
                     {
-                        nome: "Altura",
-                        descricao: "Altura das letras da fonte",
+                        nome: "ras.ui.4g.etiqueta.configuracao.altura",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.altura_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "fonte.alturaMm",
@@ -2005,21 +1956,20 @@ const METADADOS_ELEMENTOS: any[] = [
                         ],
                     },
                     {
-                        nome: "Alinhamento",
-                        descricao: "Alinhamento horizontal do texto com relação ao código de barras, " +
-                            "pode ser esquerda, direita ou centro",
+                        nome: "ras.ui.4g.etiqueta.configuracao.alinhamento",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.alinhamento.descricao",
                         tipo: "OPTIONS",
                         opcoes: [
                             {
-                                texto: "Esquerda",
+                                texto: "ras.ui.4g.etiqueta.configuracao.esquerda",
                                 valor: "left",
                             },
                             {
-                                texto: "Direita",
+                                texto: "ras.ui.4g.etiqueta.configuracao.direita",
                                 valor: "right",
                             },
                             {
-                                texto: "Centro",
+                                texto: "ras.ui.4g.etiqueta.configuracao.centro",
                                 valor: "center",
                             },
                         ],
