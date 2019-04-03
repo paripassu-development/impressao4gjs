@@ -1,6 +1,6 @@
 {
   "name": "impressao4gjs",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "scripts": {
     "build": "webpack && npm run copy",
     "build-prod": "webpack -p && npm run copy",
