@@ -1,23 +1,41 @@
 import * as _ from "lodash";
 import {labelConfiguration} from "../../label/label-configuration";
 import {TipoErro} from "../../label/tipo-erro-enum";
+import {isNumber} from "util";
 
 export class ValidateModelUtils {
 
-    public static validate = (model: any, errors: any[], tipo: string) => {
-        const elemento: any = _.filter(labelConfiguration.getMetadadosElementos(), {tipo})[0];
-        _.forEach(elemento.camposConfiguraveis, (campoConfiguravel) => {
+    public static validateElementos = (model: any, errors: any[], tipo: string) => {
+        let metadados = _.find(labelConfiguration.getMetadadosElementos(), {tipo});
+        ValidateModelUtils.validate(model, errors, tipo, metadados);
+    };
+
+    public static validateImpressao = (model: any, errors: any[], tipo: string) => {
+        ValidateModelUtils.validate(model, errors, tipo, labelConfiguration.getMetadadosImpressao());
+    };
+
+    public static validatePDF = (model: any, errors: any[], tipo: string) => {
+        ValidateModelUtils.validate(model, errors, tipo, labelConfiguration.getMetadadosPDF());
+    };
+
+    public static validateEtiqueta = (model: any, errors: any[], tipo: string) => {
+        ValidateModelUtils.validate(model, errors, tipo, labelConfiguration.getMetadadosEtiqueta());
+    };
+
+    public static validate = (model: any, errors: any[], tipo: string, metadados: any) => {
+        //const elemento: any = _.filter(metadados, {tipo})[0];
+        _.forEach(metadados.camposConfiguraveis, (campoConfiguravel: any) => {
             ValidateModelUtils.percorreElementos(campoConfiguravel, model, errors);
         });
-    }
+    };
 
     private static percorreElementos(campoConfiguravel: any, model: any, errors: any[]) {
         if (campoConfiguravel.tipo === "OBJECT") {
-            _.forEach(campoConfiguravel.itens, (item) => {
+            _.forEach(campoConfiguravel.itens, (item: any) => {
                 ValidateModelUtils.percorreElementos(item, model, errors);
             });
         } else if (campoConfiguravel.tipo === "LIST") {
-            _.forEach(campoConfiguravel.listaTipo, (item) => {
+            _.forEach(campoConfiguravel.listaTipo, (item: any) => {
                 ValidateModelUtils.percorreElementosLista(item, model, errors, campoConfiguravel.campo);
             });
         } else {
@@ -27,7 +45,7 @@ export class ValidateModelUtils {
 
     private static percorreElementosLista(campoConfiguravel: any, model: any, errors: any[], caminhoLista: string) {
         if (campoConfiguravel.tipo === "OBJECT") {
-            _.forEach(campoConfiguravel.itens, (item) => {
+            _.forEach(campoConfiguravel.itens, (item: any) => {
                 ValidateModelUtils.percorreElementosLista(item, model, errors, caminhoLista);
             });
         } else {
@@ -42,8 +60,11 @@ export class ValidateModelUtils {
         const requisitoValidado = this.validaRequisito(item, model, ValidacaoEnum.EXISTENCIA);
         if (item.obrigatorio && (requisitoValidado === ValidacaoEnum.EXISTENCIA || requisitoValidado === ValidacaoEnum.SEM_REQUISITO)) {
             const obrigatorio = this.getCampo(item.campo, model, indiceCampo, caminhoLista);
-            if (obrigatorio == null) {
-                errors.push({campo: indiceCampo != null ? caminhoLista + "." +  item.campo + "[" + indiceCampo + "]" : item.campo, tipo: TipoErro.CAMPO_OBRIGATORIO});
+            if (obrigatorio == null || obrigatorio === "") {
+                errors.push({
+                    campo: indiceCampo != null ? caminhoLista + "." + item.campo + "[" + indiceCampo + "]" : item.campo,
+                    tipo: TipoErro.CAMPO_OBRIGATORIO
+                });
                 erroObrigatoriedade = true;
             }
         }
@@ -86,7 +107,7 @@ export class ValidateModelUtils {
     private static getCampo(campo: any, model: any, indiceCampo?: any, caminhoLista?: string) {
         const strings = caminhoLista != null ? caminhoLista.split(".") : campo.split(".");
         let valorCampo = model;
-        _.forEach(strings, (caminho: string) => {
+        _.forEach(strings, (caminho: string): any => {
             if (valorCampo != null) {
                 valorCampo = valorCampo[caminho];
             } else {
