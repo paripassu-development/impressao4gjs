@@ -125,11 +125,4 @@ const textFunctions: any = {
 
 const ALTURA_MINIMA_FONT_MM = 1.2;
 
-export const validateModel = (model: any) : [any] => {
-    const errors: any = [];
-
-    ValidateModelUtils.validate(model, errors, "texto");
-    return errors;
-};
-
-export const text = { drawText, validateModel };
+export const text = { drawText };

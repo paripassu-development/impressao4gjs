@@ -180,11 +180,4 @@ function mountTextElement(posicao: IElementoTabelaNutricionalModelPosicao, model
     };
 }
 
-export const validateModel = (model: any) : [any] => {
-    const errors: any = [];
-
-    ValidateModelUtils.validate(model, errors, "tabelaNutricionalEmLinha");
-    return errors;
-};
-
-export const tabelaNutricionalInline = {drawTable, validateModel};
+export const tabelaNutricionalInline = {drawTable};

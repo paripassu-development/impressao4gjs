@@ -319,11 +319,4 @@ const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions):
     }
 };
 
-export const validateModel = (model: any) : [any] => {
-    const errors: any = [];
-
-    ValidateModelUtils.validate(model, errors, "codigoBarras");
-    return errors;
-};
-
-export const barcode = {createBarcode, drawBarcode, validateModel};
+export const barcode = {createBarcode, drawBarcode};
