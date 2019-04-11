@@ -63,11 +63,4 @@ const createQrCode = (id: string, options: ICreateQrcodeOptions) => {
     return qrcodeDiv.getElementsByTagName("canvas")[0];
 };
 
-export const validateModel = (model: any) : [any] => {
-    const errors: any = [];
-
-    ValidateModelUtils.validate(model, errors, "qrcode");
-    return errors;
-};
-
-export const qrcode = {drawQrcode, validateModel};
+export const qrcode = {drawQrcode};

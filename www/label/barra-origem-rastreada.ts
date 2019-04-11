@@ -129,11 +129,4 @@ const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastr
     return document.getElementById(nomeElementoCanvas) as HTMLCanvasElement;
 };
 
-export const validateModel = (model: any) : [any] => {
-    const errors: any = [];
-
-    ValidateModelUtils.validate(model, errors, "barraOrigemRastreada");
-    return errors;
-};
-
-export const barraOrigemRastreada = {createBarraOrigemRastreada, drawBarraOrigemRastreada, validateModel};
+export const barraOrigemRastreada = {createBarraOrigemRastreada, drawBarraOrigemRastreada};

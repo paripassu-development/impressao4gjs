@@ -233,11 +233,4 @@ const drawLine = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricion
     ctx.strokeRect(mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm), 1);
 };
 
-export const validateModel = (model: any) : [any] => {
-    const errors: any = [];
-
-    ValidateModelUtils.validate(model, errors, "tabelaNutricional");
-    return errors;
-};
-
-export const tabelaNutricional = {drawTable, validateModel};
+export const tabelaNutricional = {drawTable};

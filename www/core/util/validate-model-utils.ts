@@ -1,88 +1,44 @@
 import * as _ from "lodash";
+import {isNumber} from "util";
 import {labelConfiguration} from "../../label/label-configuration";
 import {TipoErro} from "../../label/tipo-erro-enum";
-import {isNumber} from "util";
 
 export class ValidateModelUtils {
 
-    public static validateElementos = (model: any, errors: any[], tipo: string) => {
-        let metadados = _.find(labelConfiguration.getMetadadosElementos(), {tipo});
-        ValidateModelUtils.validate(model, errors, tipo, metadados);
-    };
+    public static validateAll = (model: any) => {
+        const errors: any[] = [];
+        ValidateModelUtils.validatePDF(model, errors);
+        ValidateModelUtils.validateEtiqueta(model, errors);
+        ValidateModelUtils.validateImpressao(model, errors);
+        ValidateModelUtils.validateElementos(model, errors);
+        return errors;
+    }
 
-    public static validateImpressao = (model: any, errors: any[], tipo: string) => {
-        ValidateModelUtils.validate(model, errors, tipo, labelConfiguration.getMetadadosImpressao());
-    };
-
-    public static validatePDF = (model: any, errors: any[], tipo: string) => {
-        ValidateModelUtils.validate(model, errors, tipo, labelConfiguration.getMetadadosPDF());
-    };
-
-    public static validateEtiqueta = (model: any, errors: any[], tipo: string) => {
-        ValidateModelUtils.validate(model, errors, tipo, labelConfiguration.getMetadadosEtiqueta());
-    };
-
-    public static validate = (model: any, errors: any[], tipo: string, metadados: any) => {
-        //const elemento: any = _.filter(metadados, {tipo})[0];
-        _.forEach(metadados.camposConfiguraveis, (campoConfiguravel: any) => {
-            ValidateModelUtils.percorreElementos(campoConfiguravel, model, errors);
+    public static validateElementos = (model: any, errors: any[]) => {
+        _.forEach(ValidateModelUtils.getCampo("desenho.elementos", model), (elementoModel: any, index: number) => {
+            ValidateModelUtils.validate(model, errors, _.find(labelConfiguration.getMetadadosElementos(), (metadadosElemento: any) => metadadosElemento.tipo === elementoModel.tipo), ["desenho", "elementos", index]);
         });
-    };
-
-    private static percorreElementos(campoConfiguravel: any, model: any, errors: any[]) {
-        if (campoConfiguravel.tipo === "OBJECT") {
-            _.forEach(campoConfiguravel.itens, (item: any) => {
-                ValidateModelUtils.percorreElementos(item, model, errors);
-            });
-        } else if (campoConfiguravel.tipo === "LIST") {
-            _.forEach(campoConfiguravel.listaTipo, (item: any) => {
-                ValidateModelUtils.percorreElementosLista(item, model, errors, campoConfiguravel.campo);
-            });
-        } else {
-            ValidateModelUtils.adicionaErro(campoConfiguravel, model, errors);
-        }
     }
 
-    private static percorreElementosLista(campoConfiguravel: any, model: any, errors: any[], caminhoLista: string) {
-        if (campoConfiguravel.tipo === "OBJECT") {
-            _.forEach(campoConfiguravel.itens, (item: any) => {
-                ValidateModelUtils.percorreElementosLista(item, model, errors, caminhoLista);
-            });
-        } else {
-            _.forEach(this.getCampo(caminhoLista, model), (item: any, indice: number) => {
-                ValidateModelUtils.adicionaErro(campoConfiguravel, model, errors, indice, caminhoLista);
-            });
-        }
+    public static validateImpressao = (model: any, errors: any[]) => {
+        ValidateModelUtils.validate(model, errors, labelConfiguration.getMetadadosImpressao(), ["impressao"]);
     }
 
-    private static adicionaErro(item: any, model: any, errors: any[], indiceCampo?: number, caminhoLista?: string) {
-        let erroObrigatoriedade = false;
-        const requisitoValidado = this.validaRequisito(item, model, ValidacaoEnum.EXISTENCIA);
-        if (item.obrigatorio && (requisitoValidado === ValidacaoEnum.EXISTENCIA || requisitoValidado === ValidacaoEnum.SEM_REQUISITO)) {
-            const obrigatorio = this.getCampo(item.campo, model, indiceCampo, caminhoLista);
-            if (obrigatorio == null || obrigatorio === "") {
-                errors.push({
-                    campo: indiceCampo != null ? caminhoLista + "." + item.campo + "[" + indiceCampo + "]" : item.campo,
-                    tipo: TipoErro.CAMPO_OBRIGATORIO
-                });
-                erroObrigatoriedade = true;
-            }
-        }
-        const preRequisito: any = _.filter(item.preRequisito, {tipo: ValidacaoEnum.CONFLITO})[0];
-        if (this.validaRequisito(item, model, ValidacaoEnum.CONFLITO) === ValidacaoEnum.NAO_CUMPRIDO && this.getCampo(item.campo, model) != null) {
-            errors.push({campo: item.campo, tipo: TipoErro.CAMPO_CONFLITANTE, conflito: preRequisito.campo});
-        }
-        if (item.tipo === "NUMERIC" && !erroObrigatoriedade) {
-            const numeric = this.getCampo(item.campo, model, indiceCampo, caminhoLista);
-            if (numeric != null && isNaN(numeric)) {
-                errors.push({campo: item.campo, tipo: TipoErro.NAO_NUMERO});
-            } else if (numeric <= 0 && item.subtipo === "POSITIVE") {
-                errors.push({campo: item.campo, tipo: TipoErro.NAO_NUMERO_POSITIVO});
-            }
-        }
+    public static validatePDF = (model: any, errors: any[]) => {
+        ValidateModelUtils.validate(model, errors, labelConfiguration.getMetadadosPDF(), ["pdf"]);
     }
 
-    private static validaRequisito(item: any, model: any, tipo: any) {
+    public static validateEtiqueta = (model: any, errors: any[]) => {
+        ValidateModelUtils.validate(model, errors, labelConfiguration.getMetadadosEtiqueta(), ["etiqueta"]);
+    }
+
+    public static validate = (model: any, errors: any[], metadados: any, path: any[]) => {
+        _.forEach(metadados.camposConfiguraveis, (campoConfiguravel: any) => {
+            ValidateModelUtils.percorreElementos(campoConfiguravel, model, errors, path);
+        });
+    }
+
+    public static validaRequisito(item: any, model: any, tipo: any) {
         const preRequisito: any = _.filter(item.preRequisito, {tipo})[0];
         if (preRequisito != null) {
             if (preRequisito.tipo === ValidacaoEnum.EXISTENCIA) {
@@ -104,18 +60,61 @@ export class ValidateModelUtils {
         return ValidacaoEnum.SEM_REQUISITO;
     }
 
-    private static getCampo(campo: any, model: any, indiceCampo?: any, caminhoLista?: string) {
-        const strings = caminhoLista != null ? caminhoLista.split(".") : campo.split(".");
-        let valorCampo = model;
-        _.forEach(strings, (caminho: string): any => {
-            if (valorCampo != null) {
-                valorCampo = valorCampo[caminho];
-            } else {
-                return null;
-            }
-        });
-        return indiceCampo != null ? valorCampo[indiceCampo][campo] : valorCampo;
+    private static percorreElementos(campoConfiguravel: any, model: any, errors: any[], path: any[]) {
+        if (campoConfiguravel.tipo === "OBJECT") {
+            _.forEach(campoConfiguravel.itens, (item: any) => {
+                ValidateModelUtils.percorreElementos(item, model, errors, path);
+            });
+        } else if (campoConfiguravel.tipo === "LIST") {
+            _.forEach(campoConfiguravel.listaTipo, (item: any) => {
+                ValidateModelUtils.percorreElementosLista(item, model, errors, [...path, ...campoConfiguravel.campo.split(".")]);
+            });
+        } else {
+            ValidateModelUtils.adicionaErro(campoConfiguravel, model, errors, path);
+        }
     }
+
+    private static percorreElementosLista(campoConfiguravel: any, model: any, errors: any[], path: any[]) {
+        if (campoConfiguravel.tipo === "OBJECT") {
+            _.forEach(campoConfiguravel.itens, (item: any) => {
+                ValidateModelUtils.percorreElementosLista(item, model, errors, path);
+            });
+        } else {
+            _.forEach(this.getCampo(path, model), (item: any, indice: number) => {
+                ValidateModelUtils.adicionaErro(campoConfiguravel, model, errors, [...path, indice]);
+            });
+        }
+    }
+
+    private static adicionaErro(item: any, model: any, errors: any[], path: any) {
+        let erroObrigatoriedade = false;
+        const requisitoValidado = this.validaRequisito(item, this.getCampo(path, model), ValidacaoEnum.EXISTENCIA);
+        if (item.obrigatorio && (requisitoValidado === ValidacaoEnum.EXISTENCIA || requisitoValidado === ValidacaoEnum.SEM_REQUISITO)) {
+            const obrigatorio = this.getCampo([...path, ...item.campo.split(".")], model);
+            if (obrigatorio == null || obrigatorio === "") {
+                errors.push({
+                    campo: path.join(".") + "." + item.campo,
+                    tipo: TipoErro.CAMPO_OBRIGATORIO,
+                    message: "ras.ui.4g.campo_obrigatorio",
+                });
+                erroObrigatoriedade = true;
+            }
+        }
+        if (item.tipo === "NUMERIC" && !erroObrigatoriedade) {
+            const numeric = this.getCampo([...path, ...item.campo.split(".")], model);
+            if (numeric != null && isNaN(numeric)) {
+                errors.push({
+                    campo: path.join(".") + "." + item.campo,
+                    tipo: TipoErro.NAO_NUMERO,
+                    message: "ras.ui.4g.campo_obrigatorio",
+                });
+            } else if (numeric <= 0 && item.subtipo === "POSITIVE") {
+                errors.push({campo: path.join(".") + "." + item.campo, tipo: TipoErro.NAO_NUMERO_POSITIVO});
+            }
+        }
+    }
+
+    private static getCampo = (p: any, o: any) => (Array.isArray(p) ? p : p.split(".")).reduce((xs: any, x: any) => (xs != null && xs[x] != null) ? xs[x] : null, o);
 
 }
 
