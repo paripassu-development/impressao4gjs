@@ -141,7 +141,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             },
             tabelaNutricionalEmLinha: (): Promise<any> => {
                 return new Promise((resolve) => {
-                    tabelaNutricionalInline.drawTable(ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                    tabelaNutricionalInline.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
