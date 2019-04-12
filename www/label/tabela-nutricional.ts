@@ -131,7 +131,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 yMm += alturaLinhaMm;
                 ctx.textAlign = TextAlign.LEFT;
 
-
                 const nomeNutriente = getOrDefault(informacoesNutriente, "nome");
                 if(!!fabricCanvas){
                     writeFabricText(fabricCanvas, ctx, nomeNutriente, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
