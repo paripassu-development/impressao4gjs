@@ -2018,6 +2018,10 @@ const METADADOS_ELEMENTOS: any[] = [
                         valor: "ean13",
                     },
                     {
+                        texto: "DataBar Expanded Stacked",
+                        valor: "databarexpandedstacked",
+                    },
+                    {
                         texto: "DUN-14",
                         valor: "itf14",
                     },
