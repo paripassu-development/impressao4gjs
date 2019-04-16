@@ -21,6 +21,7 @@ export const ITF_DEFAULT = "itf";
 export const DUN14_4G = "dun14";
 export const INTERCALADO2A5_4G = "intercalado2a5";
 export const GS1_128_DEFAULT = "gs1-128";
+export const GS1_DATABAR_EXPANDED_STACKED = "databarexpandedstacked";
 export const GS1128 = "gs1128";
 export const EAN128 = "ean128";
 export const EAN_128 = "ean-128";
@@ -33,6 +34,8 @@ export const AIS_DATAS = [
     "17", // durabilidade maxima
 ];
 export const AIS_GTIN_CONTEUDO = ["01", "02"];
+export const AIS_PESO_LIQUIDO = "310";
+export const AIS_PRECO_UNIDADE_MEDIDA = "8005";
 
 export interface IImpressao {
     resolucaoDpi: number;
