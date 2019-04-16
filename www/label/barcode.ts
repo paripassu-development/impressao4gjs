@@ -3,14 +3,14 @@ import {canvasUtils} from "../core/util/canvas-utils";
 import {
     AI_LOTE,
     AIS_DATAS,
-    AIS_GTIN_CONTEUDO,
+    AIS_GTIN_CONTEUDO, AIS_PESO_LIQUIDO, AIS_PRECO_UNIDADE_MEDIDA,
     BARCODE_IMG_ELEMENT_ID,
     DUN14_4G,
     EAN128,
     EAN13_DEFAULT,
     EAN_128,
     GS1128,
-    GS1_128_DEFAULT,
+    GS1_128_DEFAULT, GS1_DATABAR_EXPANDED_STACKED,
     GS1_DATE_PATTERN,
     INTERCALADO2A5_4G,
     ITF14_DEFAULT,
@@ -21,7 +21,6 @@ import JsBarcode = require("jsbarcode");
 import moment = require("moment");
 import {Error} from "../core/common/error";
 import {ErrosPrefix, TipoError} from "../core/constants/constants-impressao";
-import {ValidateModelUtils} from "../core/util/validate-model-utils";
 
 const bwipjs: any = require("bwip-js");
 const _: any = require("lodash");
@@ -88,6 +87,9 @@ const formatValue = (model: IElementoCodigoBarrasModel, textBindings: any, tipoC
             return formatDun14(Mustache.render(model.valor, textBindings));
         case GS1_128_DEFAULT: {
             model.dimensoes.larguraUnitariaCodigoBarrasMm = Math.floor(model.dimensoes.larguraUnitariaCodigoBarrasMm);
+            return formatGs1128(model.valores, textBindings);
+        }
+        case GS1_DATABAR_EXPANDED_STACKED: {
             return formatGs1128(model.valores, textBindings);
         }
         default:
@@ -164,6 +166,8 @@ const resolveDefaultValue = (tipoCodigoBarras: string) => {
             return "0000000000000";
         case GS1_128_DEFAULT:
             return "(10)00000000000";
+        case GS1_DATABAR_EXPANDED_STACKED:
+            return "(10)00000000000";
         default:
             return "000000000000";
     }
@@ -181,7 +185,7 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
         return;
     }
 
-    if (tipoCodigoBarras.toLowerCase() === GS1_128_DEFAULT) {
+    if (tipoCodigoBarras.toLowerCase() === GS1_128_DEFAULT || tipoCodigoBarras.toLowerCase() === GS1_DATABAR_EXPANDED_STACKED) {
         model.valores.forEach((item) => {
             const ai = item.identificador;
             const valor = Mustache.render(item.valor, textBindings);
@@ -202,6 +206,12 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
             }
             if (ai === AI_LOTE && !(new RegExp(/^.{1,20}$/).test(valor))) {
                 errors.push(Error.build("impr.ui.js.identificador_lote_conter_max_20_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`, TipoError.GS1, ai));
+            }
+            if (ai.substring(0, ai.length - 1) === AIS_PESO_LIQUIDO && !(new RegExp(/^\d{1}$/)).test(ai.substring(ai.length - 1, ai.length)) && !(new RegExp(/^\d{6}$/).test(valor))) {
+                errors.push(Error.build("impr.ui.js.identificador_peso_liquido_conter_6_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 6 caracteres numéricos.`, TipoError.GS1, ai));
+            }
+            if (ai === AIS_PRECO_UNIDADE_MEDIDA && !(new RegExp(/^\d{6}$/).test(valor))) {
+                errors.push(Error.build("impr.ui.js.identificador_preco_unidade_medida_conter_6_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 6 caracteres numéricos.`, TipoError.GS1, ai));
             }
         });
     }
@@ -312,7 +322,7 @@ const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions):
     document.getElementById(id).appendChild(img);
 
     _.defaults(options, OPTIONS_DEFAULT);
-    if (options.format === GS1_128_DEFAULT) {
+    if (options.format === GS1_128_DEFAULT || options.format === GS1_DATABAR_EXPANDED_STACKED) {
         return createBarcodeWithBwipJs(options, img);
     } else {
         return createBarcodeWithBarcodeJs(id, img, options, dpi);
