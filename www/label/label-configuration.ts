@@ -423,6 +423,13 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "BOOLEAN",
                         obrigatorio: false,
                         campo: "informacoesNutricionais.ocultarZerados",
+                        preRequisito: [
+                            {
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
+                                tipo: "EXISTENCIA",
+                                oposto: true,
+                            },
+                        ],
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.parametros_nutricionais",
