@@ -207,7 +207,7 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
             if (ai === AI_LOTE && !(new RegExp(/^.{1,20}$/).test(valor))) {
                 errors.push(Error.build("impr.ui.js.identificador_lote_conter_max_20_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`, TipoError.GS1, ai));
             }
-            if (ai.substring(0, ai.length - 1) === AIS_PESO_LIQUIDO && !(new RegExp(/^\d{1}$/)).test(ai.substring(ai.length - 1, ai.length)) && !(new RegExp(/^\d{6}$/).test(valor))) {
+            if (ai.substring(0, ai.length - 1) === AIS_PESO_LIQUIDO && (new RegExp(/^\d{1}$/)).test(ai.substring(ai.length - 1, ai.length)) && !(new RegExp(/^\d{6}$/).test(valor))) {
                 errors.push(Error.build("impr.ui.js.identificador_peso_liquido_conter_6_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 6 caracteres numéricos.`, TipoError.GS1, ai));
             }
             if (ai === AIS_PRECO_UNIDADE_MEDIDA && !(new RegExp(/^\d{6}$/).test(valor))) {
