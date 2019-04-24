@@ -39,25 +39,41 @@ export class ValidateModelUtils {
     }
 
     public static validaRequisito(item: any, model: any, tipo: any) {
-        const preRequisito: any = _.filter(item.preRequisito, {tipo})[0];
-        if (preRequisito != null) {
-            if (preRequisito.tipo === ValidacaoEnum.EXISTENCIA) {
-                const valor = this.getCampo(preRequisito.campo, model);
-                let preRequisitoCumprido;
-                if (preRequisito.valor == null) {
-                    preRequisitoCumprido = preRequisito.oposto ? valor == null : valor != null;
-                } else {
-                    preRequisitoCumprido = preRequisito.oposto ? preRequisito.valor !== valor : preRequisito.valor === valor;
+        const preRequisitos: any = _.filter(item.preRequisito, {tipo});
+        const validacoes = _.map(preRequisitos, (preRequisito: any) => {
+            if (preRequisito != null) {
+                if (preRequisito.tipo === ValidacaoEnum.EXISTENCIA) {
+                    return ValidateModelUtils.validaRequisitoExistencia(preRequisito, model);
                 }
-                return preRequisitoCumprido ? ValidacaoEnum.EXISTENCIA : ValidacaoEnum.NAO_CUMPRIDO;
+                if (preRequisito.tipo === ValidacaoEnum.CONFLITO) {
+                    return ValidateModelUtils.validaRequisitoConflito(preRequisito, model);
+                }
             }
-            if (preRequisito.tipo === ValidacaoEnum.CONFLITO) {
-                const valor = this.getCampo(preRequisito.campo, model);
-                const preRequisitoCumprido = preRequisito.oposto ? valor == null : valor != null;
-                return preRequisitoCumprido ? ValidacaoEnum.CONFLITO : ValidacaoEnum.NAO_CUMPRIDO;
-            }
+            return ValidacaoEnum.SEM_REQUISITO;
+        });
+        return _.every(validacoes, (validacao: ValidacaoEnum) => validacao === tipo || validacao === ValidacaoEnum.SEM_REQUISITO)
+            ? tipo
+            : ValidacaoEnum.NAO_CUMPRIDO;
+    }
+
+    private static validaRequisitoConflito(preRequisito: any, model: any) {
+        const valor = this.getCampo(preRequisito.campo, model);
+        const preRequisitoCumprido = preRequisito.oposto ? valor == null : valor != null;
+        return preRequisitoCumprido ? ValidacaoEnum.CONFLITO : ValidacaoEnum.NAO_CUMPRIDO;
+    }
+
+    private static validaRequisitoExistencia(preRequisito: any, model: any) {
+        const valor = this.getCampo(preRequisito.campo, model);
+        let preRequisitoCumprido;
+        if (preRequisito.valor == null && preRequisito.valores == null) {
+            preRequisitoCumprido = preRequisito.oposto ? valor == null : valor != null;
+        } else if (preRequisito.valor != null) {
+            preRequisitoCumprido = preRequisito.oposto ? preRequisito.valor !== valor : preRequisito.valor === valor;
         }
-        return ValidacaoEnum.SEM_REQUISITO;
+        else if (preRequisito.valores != null) {
+            preRequisitoCumprido = preRequisito.oposto ? !_.any(preRequisito.valores, (valorRequisito: any) => valorRequisito === valor) : _.any(preRequisito.valores, (valorRequisito: any) => valorRequisito === valor);
+        }
+        return preRequisitoCumprido ? ValidacaoEnum.EXISTENCIA : ValidacaoEnum.NAO_CUMPRIDO;
     }
 
     private static percorreElementos(campoConfiguravel: any, model: any, errors: any[], path: any[]) {

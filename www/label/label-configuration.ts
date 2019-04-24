@@ -2087,7 +2087,7 @@ const METADADOS_ELEMENTOS: any[] = [
                     {
                         campo: "tipoCodigoBarras",
                         oposto: true,
-                        valor: "gs1128",
+                        valores: ["gs1128", "databarexpandedstacked"],
                         tipo: "EXISTENCIA",
                     },
                 ],
@@ -2103,38 +2103,39 @@ const METADADOS_ELEMENTOS: any[] = [
                         nome: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador",
                         descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.descricao",
                         tipo: "OPTIONS",
-                        opcoes: [{
-                          valor: "01",
-                          texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.gtin",
-                        },
-                        {
-                          valor: "02",
-                          texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.conteudo",
-                        },
-                        {
-                          valor: "10",
-                          texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.codigo_lote",
-                        },
-                        {
-                          valor: "11",
-                          texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.data_producao",
-                        },
-                        {
-                          valor: "12",
-                          texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.data_vencimento_fatura",
-                        },
-                        {
-                          valor: "13",
-                          texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.data_embalamento",
-                        },
-                        {
-                          valor: "15",
-                          texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.data_minima_validade",
-                        },
-                        {
-                          valor: "17",
-                          texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.data_maxima_validade",
-                        },
+                        opcoes: [
+                            {
+                                valor: "01",
+                                texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.gtin",
+                            },
+                            {
+                                valor: "02",
+                                texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.conteudo",
+                            },
+                            {
+                                valor: "10",
+                                texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.codigo_lote",
+                            },
+                            {
+                                valor: "11",
+                                texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.data_producao",
+                            },
+                            {
+                                valor: "12",
+                                texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.data_vencimento_fatura",
+                            },
+                            {
+                                valor: "13",
+                                texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.data_embalamento",
+                            },
+                            {
+                                valor: "15",
+                                texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.data_minima_validade",
+                            },
+                            {
+                                valor: "17",
+                                texto: "ras.ui.4g.etiqueta.configuracao.codigo_barras.valores.identificador.data_maxima_validade",
+                            },
                         ],
                         obrigatorio: true,
                         campo: "identificador",
@@ -2152,7 +2153,7 @@ const METADADOS_ELEMENTOS: any[] = [
                 preRequisito: [
                     {
                         campo: "tipoCodigoBarras",
-                        valor: "gs1128",
+                        valores: ["gs1128", "databarexpandedstacked"],
                         tipo: "EXISTENCIA",
                     },
                 ],
