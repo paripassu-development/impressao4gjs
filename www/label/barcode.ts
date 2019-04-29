@@ -309,9 +309,10 @@ const buildOptionsJsBarcode = (options: ICreateBarcodeOptions, dpi: number) => {
 };
 const createBarcodeWithBwipJs = (options: ICreateBarcodeOptions, img: HTMLImageElement): Promise<HTMLImageElement> => {
     const canvas = canvasUtils.createCanvas("canvas", 0, 0);
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         bwipjs(canvas, buildOptionsBwipJs(options), (err: any) => {
             if (err) {
+                reject("Erro ao gerar o codigo de barras " + options.format);
                 console.log("Erro ao gerar o codigo de barras " + options.format);
             } else {
                 img.src = canvas.toDataURL("image/png");
