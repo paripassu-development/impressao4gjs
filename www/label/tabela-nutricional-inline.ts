@@ -125,13 +125,13 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
         const gorduraSaturadaQtPorcao = _.get(textBindings, "gorduraSaturadaQtPorcao");
         const gorduraSaturadaValDiario = _.get(textBindings, "gorduraSaturadaValDiario");
         if (!textBindings || (gorduraSaturadaQtPorcao && gorduraSaturadaValDiario)) {
-            const gordurasSaturadasNome = _.get(model.informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasSaturadas, "nome", "Gorduras saturadas");
+            const gordurasSaturadasNome = _.get(model.informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada, "nome", "Gorduras saturadas");
             informacoes.push(gordurasSaturadasNome + ` {{{gorduraSaturadaQtPorcao}}}g ({{{gorduraSaturadaValDiario}}} %VD)`);
         }
 
         const gorduraTransQtPorcao = _.get(textBindings, "gorduraTransQtPorcao");
         if (!textBindings || gorduraTransQtPorcao) {
-            const gordurasTransNome = _.get(model.informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTrans, "nome", "Gorduras trans");
+            const gordurasTransNome = _.get(model.informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans, "nome", "Gorduras trans");
             informacoes.push(gordurasTransNome + ` {{{gorduraTransQtPorcao}}}g (VD não estabelecido)`);
         }
 
