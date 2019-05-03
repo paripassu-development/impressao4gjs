@@ -147,6 +147,16 @@ function normalizeGS1Value(valor: string, identificador: string) {
             y: parts[2],
         } as any).format(GS1_DATE_PATTERN);
     }
+    if (identificador.substring(0, identificador.length - 1) === AIS_PESO_LIQUIDO) {
+        const casasDecimais = identificador.substring(identificador.length - 1);
+        valor = _.padLeft(_.round(valor, casasDecimais).toFixed(casasDecimais).replace(/[.,]+/, ""), 6, "0");
+        if (valor.length > 6) {
+            valor = valor.substring(valor.length - 6);
+        }
+    }
+    if (identificador === AIS_PRECO_UNIDADE_MEDIDA) {
+        valor = _.padLeft(valor.replace(/\D+/, ""), 6, "0");
+    }
     return valor;
 }
 
@@ -207,18 +217,21 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
             if (ai === AI_LOTE && !(new RegExp(/^.{1,20}$/).test(valor))) {
                 errors.push(Error.build("impr.ui.js.identificador_lote_conter_max_20_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 20 caracteres alfanuméricos.`, TipoError.GS1, ai));
             }
-            if (ai.substring(0, ai.length - 1) === AIS_PESO_LIQUIDO && (new RegExp(/^\d{1}$/)).test(ai.substring(ai.length - 1, ai.length)) && !(new RegExp(/^\d{6}$/).test(valor))) {
+            if (ai.substring(0, ai.length - 1) === AIS_PESO_LIQUIDO && (new RegExp(/^\d{1}$/)).test(ai.substring(ai.length - 1, ai.length)) && !(new RegExp(/^[+]?\d+(\.\d+)?$/).test(valor))) {
                 errors.push(Error.build("impr.ui.js.identificador_peso_liquido_conter_6_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 6 caracteres numéricos.`, TipoError.GS1, ai));
             }
-            if (ai === AIS_PRECO_UNIDADE_MEDIDA && !(new RegExp(/^\d{6}$/).test(valor))) {
+            if (ai === AIS_PRECO_UNIDADE_MEDIDA && valor.replace(/[.,]+/, "").length > 6) {
                 errors.push(Error.build("impr.ui.js.identificador_preco_unidade_medida_conter_6_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter no máximo 6 caracteres numéricos.`, TipoError.GS1, ai));
+            }
+            if (ai === AIS_PRECO_UNIDADE_MEDIDA && !(new RegExp(/^[+]?\d+((\.|,)\d+)?$/)).test(valor)) {
+                errors.push(Error.build("impr.ui.js.identificador_preco_unidade_medida_deve_ser_numerico", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve existir e ser um número positivo.`, TipoError.GS1, ai));
             }
         });
     }
 
 }
 
-const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any, ): Promise<any> => {
+const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any): Promise<any> => {
     const mm = mmPartial(dpi);
     let tipoCodigoBarras = mapLabelTypes(Mustache.render(model.tipoCodigoBarras, textBindings));
     tipoCodigoBarras = normalizeType(tipoCodigoBarras);
@@ -296,9 +309,10 @@ const buildOptionsJsBarcode = (options: ICreateBarcodeOptions, dpi: number) => {
 };
 const createBarcodeWithBwipJs = (options: ICreateBarcodeOptions, img: HTMLImageElement): Promise<HTMLImageElement> => {
     const canvas = canvasUtils.createCanvas("canvas", 0, 0);
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         bwipjs(canvas, buildOptionsBwipJs(options), (err: any) => {
             if (err) {
+                reject("Erro ao gerar o codigo de barras " + options.format);
                 console.log("Erro ao gerar o codigo de barras " + options.format);
             } else {
                 img.src = canvas.toDataURL("image/png");
