@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "babel-jest": "^22.4.4",
-
     "bwip-js": "1.6.3",
     "codemirror": "5.23.0",
     "fabric": "2.7.0",

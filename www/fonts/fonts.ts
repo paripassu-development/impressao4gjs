@@ -1,5 +1,9 @@
 export const FONTES = [
     {
+        texto: "Arial",
+        valor: "Arial",
+    },
+    {
         texto: "BPmono-Bold",
         valor: "BPmono-Bold",
     },
