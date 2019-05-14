@@ -1,34 +1,34 @@
 export const FONTES = [
     {
         texto: "Arial",
-        valor: "Arial",
+        valor: "arial",
     },
     {
         texto: "BPmono-Bold",
-        valor: "BPmono-Bold",
+        valor: "bpmono-bold",
     },
     {
         texto: "CodeNewRoman-Bold",
-        valor: "CodeNewRoman-Bold",
+        valor: "codenewroman-bold",
     },
     {
         texto: "Consolas",
-        valor: "Consolas",
+        valor: "consolas",
     },
     {
         texto: "DejaVuSansMono",
-        valor: "DejaVuSansMono",
+        valor: "dejavusansmono",
     },
     {
         texto: "DejaVuSansMono-Bold",
-        valor: "DejaVuSansMono-Bold",
+        valor: "dejavusansmono-bold",
     },
     {
         texto: "Telegrama",
-        valor: "Telegrama",
+        valor: "telegrama",
     },
     {
         texto: "Unispace-Bold",
-        valor: "Unispace-Bold",
+        valor: "unispace-bold",
     },
 ];
