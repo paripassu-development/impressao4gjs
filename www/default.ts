@@ -1,4 +1,3 @@
-
 export const DADOS_DEFAULT = {
     bairroFornecedor: "bairro do fornecedor",
     calibre: "52",
@@ -8,14 +7,14 @@ export const DADOS_DEFAULT = {
     categoria: "Não sei",
     cidadeUFFornecedor: "Petrópolis-RJ",
     cidadeUFMeuCadastro: "Florianópolis-SC",
-    cidadeUFOrigemProdutor:"Curitiba-PR",
+    cidadeUFOrigemProdutor: "Curitiba-PR",
     cidadeUFProdutor: "Florianópolis-SC",
     cliente: "Varejo 1",
     codigoEOrigem: "0012340089",
     codigoFornecedor: "1234",
     codigoPostalFornecedor: "25715-416",
     codigoPostalMeuCadastro: "88032-650",
-    codigoPostalOrigemProdutor:"25715-416",
+    codigoPostalOrigemProdutor: "25715-416",
     codigoRastreamento: "PN7NWCJ0FERB9DH0",
     codigoRastreamentoNumerico: "N22476123456",
     complemento: "complemento complemento",
@@ -55,7 +54,7 @@ export const DADOS_DEFAULT = {
     logradouroFornecedor: "logradouro fornecedor logradouro fornecedor logradouro fornecedor",
     logradouroNumeroBairroFornecedor: "Servidão Sérgio Machado, 240, Vale do Carangola",
     logradouroNumeroBairroMeuCadastro: "Servidão caminho da cruz, 240, Monte Verde",
-    logradouroNumeroBairroOrigemProdutor:"logradouro OrigemProdutor",
+    logradouroNumeroBairroOrigemProdutor: "logradouro OrigemProdutor",
     logradouroNumeroBairroProdutor: "Servidão Sérgio Machado, 240, Vale do Carangola",
     lote: "123",
     nomeDestino: "João Machado",
@@ -67,7 +66,7 @@ export const DADOS_DEFAULT = {
     nomeEmpresa: "Abacateiros do Sul",
     nomeFornecedor: "Abacateiros de Jaragua do sul do estado de Santa Catarina - Brasil",
     nomeMeuCadastro: "FRUTAS CANTU NORDESTE",
-    nomeOrigemProdutor:"Ernesto Vieira",
+    nomeOrigemProdutor: "Ernesto Vieira",
     nomeProdutor: "Fazenda Rei do Gado",
     numeroFornecedor: "320",
     observacao1: "obs 1",
@@ -97,6 +96,7 @@ export const DADOS_DEFAULT = {
     unidadeEmbalagem: "un",
     urlQrCode: "http://pqr.io?c=PNBJ20AIR1IR1ABT&f=152&u=kg&k=1",
     urlQrCodeGs1: "http://pqr.io/gtin/7898940855056/lot/PPCIBUNS5NJ10Q80?91=26717&92=kg&93=1&94=100",
+    nomeProdutoPedido: "Batata",
     valorEnergeticoQtPorcao: "2",
     valorEnergeticoValDiario: "3",
     variedade: "caturra",
@@ -108,36 +108,36 @@ export const DADOS_DEFAULT = {
     }, {
         rotulo: "Carboidratos",
         valorDiario: "4 %",
-        qtPorcao: "4 g"
+        qtPorcao: "4 g",
     }, {
         rotulo: "Proteínas",
         valorDiario: "1 %",
-        qtPorcao: "1 g"
+        qtPorcao: "1 g",
     }, {
         rotulo: "Gorduras Totais",
         valorDiario: "0 %",
-        qtPorcao: "0 g"
+        qtPorcao: "0 g",
     }, {
         rotulo: "Gorduras Saturadas",
         valorDiario: "0 %",
-        qtPorcao: "0 g"
+        qtPorcao: "0 g",
     }, {
         rotulo: "Gorduras trans",
         valorDiario: "**",
-        qtPorcao: "0 g"
+        qtPorcao: "0 g",
     }, {
         rotulo: "Fibra Alimentar",
         valorDiario: "7 %",
-        qtPorcao: "7 mg"
+        qtPorcao: "7 mg",
     }, {
         rotulo: "Sódio",
         valorDiario: "0 %",
-        qtPorcao: "0 g"
+        qtPorcao: "0 g",
     }],
     parametrosExtras: [{
         rotulo: "Vitamina C",
         valorDiario: "0 %",
-        qtPorcao: "0 g"
+        qtPorcao: "0 g",
     }],
 };
 
@@ -149,179 +149,188 @@ export const MODEL_DEFAULT = {
         "larguraPaginaMm": 106,
         "margemXMm": 0,
         "margemYMm": 0,
-        "orientacaoEtiquetaGraus": 90
+        "orientacaoEtiquetaGraus": 90,
     },
     "etiqueta": {
         "dimensoes": {
             "alturaMm": 25,
-            "larguraMm": 40
-        }
+            "larguraMm": 40,
+        },
     },
     "desenho": {
-        "elementos": [{
-            "tipo": "qrcode",
-            "posicao": {
-                "xMm": 25,
-                "yMm": 7
+        "elementos": [
+            {
+                "tipo": "qrcode",
+                "posicao": {
+                    "xMm": 25,
+                    "yMm": 7,
+                },
+                "dimensoes": {
+                    "larguraMm": 13,
+                    "alturaMm": 13,
+                },
+                "valor": "{{{urlQrCode}}}",
             },
-            "dimensoes": {
-                "larguraMm": 13,
-                "alturaMm": 13
+            {
+                "tipo": "texto",
+                "posicao": {
+                    "xMm": 25,
+                    "yMm": 6.5,
+                },
+                "dimensoes": {
+                    "larguraMaximaMm": 13,
+                },
+                "fonte": {
+                    "nome": "Consolas",
+                    "alturaMm": 1.9,
+                    "negrito": true,
+                },
+                "valor": "BY PARIPASSU",
             },
-            "valor": "{{{urlQrCode}}}"
-        }, {
-            "tipo": "texto",
-            "posicao": {
-                "xMm": 25,
-                "yMm": 6.5
+            {
+                "tipo": "texto",
+                "posicao": {
+                    "xMm": 2,
+                    "yMm": 4.5,
+                },
+                "dimensoes": {
+                    "larguraMaximaMm": 35,
+                },
+                "fonte": {
+                    "nome": "Consolas",
+                    "alturaMm": 3,
+                    "negrito": true,
+                    "forcaContorno": 1.5,
+                },
+                "valor": "{{{textoProduto}}}",
+                "fn": "caixaAlta",
             },
-            "dimensoes": {
-                "larguraMaximaMm": 13
+            {
+                "tipo": "texto",
+                "posicao": {
+                    "xMm": 2,
+                    "yMm": 6.5,
+                },
+                "dimensoes": {
+                    "larguraMaximaMm": 22.5,
+                },
+                "fonte": {
+                    "nome": "Consolas",
+                    "alturaMm": 2.2,
+                    "negrito": true,
+                    "forcaContorno": 1.5,
+                },
+                "valor": "RASTREAMENTO/LOTE",
+                "fn": "caixaAlta",
             },
-            "fonte": {
-                "nome": "Consolas",
-                "alturaMm": 1.9,
-                "negrito": true
+            {
+                "tipo": "texto",
+                "posicao": {
+                    "xMm": 2,
+                    "yMm": 9,
+                },
+                "dimensoes": {
+                    "larguraMaximaMm": 22.5,
+                },
+                "fonte": {
+                    "nome": "Consolas",
+                    "alturaMm": 2.8,
+                    "negrito": true,
+                    "forcaContorno": 1.5,
+                },
+                "valor": "{{{codigoRastreamento}}}",
+                "fn": "caixaAlta",
             },
-            "valor": "BY PARIPASSU"
-        }, {
-            "tipo": "texto",
-            "posicao": {
-                "xMm": 2,
-                "yMm": 4.5
+            {
+                "tipo": "texto",
+                "posicao": {
+                    "xMm": 2,
+                    "yMm": 12,
+                },
+                "dimensoes": {
+                    "larguraMaximaMm": 22.5,
+                },
+                "fonte": {
+                    "nome": "Consolas",
+                    "alturaMm": 2.0,
+                    "negrito": true,
+                },
+                "valor": "DATA DE ENTREGA",
+                "fn": "caixaAlta",
             },
-            "dimensoes": {
-                "larguraMaximaMm": 35
+            {
+                "tipo": "texto",
+                "posicao": {
+                    "xMm": 2,
+                    "yMm": 15,
+                },
+                "dimensoes": {
+                    "larguraMaximaMm": 22.5,
+                },
+                "fonte": {
+                    "nome": "Consolas",
+                    "alturaMm": 3.2,
+                    "negrito": true,
+                    "forcaContorno": 1.5,
+                },
+                "valor": "{{{dataEntrega}}}",
+                "fn": "caixaAlta",
             },
-            "fonte": {
-                "nome": "Consolas",
-                "alturaMm": 3,
-                "negrito": true,
-                "forcaContorno": 1.5
+            {
+                "tipo": "texto",
+                "posicao": {
+                    "xMm": 2,
+                    "yMm": 17.5,
+                },
+                "dimensoes": {
+                    "larguraMaximaMm": 22.5,
+                },
+                "fonte": {
+                    "nome": "Consolas",
+                    "alturaMm": 2.0,
+                    "negrito": true,
+                },
+                "valor": "DATA DE VALIDADE",
+                "fn": "caixaAlta",
             },
-            "valor": "{{{textoProduto}}}",
-            "fn": "caixaAlta"
-        }, {
-            "tipo": "texto",
-            "posicao": {
-                "xMm": 2,
-                "yMm": 6.5
+            {
+                "tipo": "texto",
+                "posicao": {
+                    "xMm": 2,
+                    "yMm": 20,
+                },
+                "dimensoes": {
+                    "larguraMaximaMm": 22.5,
+                },
+                "fonte": {
+                    "nome": "Consolas",
+                    "alturaMm": 3.2,
+                    "negrito": true,
+                    "forcaContorno": 1.5,
+                },
+                "valor": "{{{dataValidade}}}",
+                "fn": "caixaAlta",
             },
-            "dimensoes": {
-                "larguraMaximaMm": 22.5
+            {
+                "tipo": "texto",
+                "posicao": {
+                    "xMm": 2,
+                    "yMm": 23,
+                },
+                "dimensoes": {
+                    "larguraMaximaMm": 35,
+                },
+                "fonte": {
+                    "nome": "Consolas",
+                    "alturaMm": 2.2,
+                    "negrito": true,
+                    "forcaContorno": 1.5,
+                },
+                "valor": "RASTREIE EM {{{site}}}",
+                "fn": "caixaAlta",
             },
-            "fonte": {
-                "nome": "Consolas",
-                "alturaMm": 2.2,
-                "negrito": true,
-                "forcaContorno": 1.5
-            },
-            "valor": "RASTREAMENTO/LOTE",
-            "fn": "caixaAlta"
-        }, {
-            "tipo": "texto",
-            "posicao": {
-                "xMm": 2,
-                "yMm": 9
-            },
-            "dimensoes": {
-                "larguraMaximaMm": 22.5
-            },
-            "fonte": {
-                "nome": "Consolas",
-                "alturaMm": 2.8,
-                "negrito": true,
-                "forcaContorno": 1.5
-            },
-            "valor": "{{{codigoRastreamento}}}",
-            "fn": "caixaAlta"
-        }, {
-            "tipo": "texto",
-            "posicao": {
-                "xMm": 2,
-                "yMm": 12
-            },
-            "dimensoes": {
-                "larguraMaximaMm": 22.5
-            },
-            "fonte": {
-                "nome": "Consolas",
-                "alturaMm": 2.0,
-                "negrito": true
-            },
-            "valor": "DATA DE ENTREGA",
-            "fn": "caixaAlta"
-        }, {
-            "tipo": "texto",
-            "posicao": {
-                "xMm": 2,
-                "yMm": 15
-            },
-            "dimensoes": {
-                "larguraMaximaMm": 22.5
-            },
-            "fonte": {
-                "nome": "Consolas",
-                "alturaMm": 3.2,
-                "negrito": true,
-                "forcaContorno": 1.5
-            },
-            "valor": "{{{dataEntrega}}}",
-            "fn": "caixaAlta"
-        }, {
-            "tipo": "texto",
-            "posicao": {
-                "xMm": 2,
-                "yMm": 17.5
-            },
-            "dimensoes": {
-                "larguraMaximaMm": 22.5
-            },
-            "fonte": {
-                "nome": "Consolas",
-                "alturaMm": 2.0,
-                "negrito": true
-            },
-            "valor": "DATA DE VALIDADE",
-            "fn": "caixaAlta"
-        }, {
-            "tipo": "texto",
-            "posicao": {
-                "xMm": 2,
-                "yMm": 20
-            },
-            "dimensoes": {
-                "larguraMaximaMm": 22.5
-            },
-            "fonte": {
-                "nome": "Consolas",
-                "alturaMm": 3.2,
-                "negrito": true,
-                "forcaContorno": 1.5
-            },
-            "valor": "{{{dataValidade}}}",
-            "fn": "caixaAlta"
-        }, {
-            "tipo": "texto",
-            "posicao": {
-                "xMm": 2,
-                "yMm": 23
-            },
-            "dimensoes": {
-                "larguraMaximaMm": 35
-            },
-            "fonte": {
-                "nome": "Consolas",
-                "alturaMm": 2.2,
-                "negrito": true,
-                "forcaContorno": 1.5
-            },
-            "valor": "RASTREIE EM {{{site}}}",
-            "fn": "caixaAlta"
-        }
-
-        ]
-    }
+        ],
+    },
 };
 
 export const PARAMETROS_PADROES_NUTRICIONAL = [
