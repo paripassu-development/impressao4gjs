@@ -69,8 +69,7 @@ export class ValidateModelUtils {
             preRequisitoCumprido = preRequisito.oposto ? valor == null : valor != null;
         } else if (preRequisito.valor != null) {
             preRequisitoCumprido = preRequisito.oposto ? preRequisito.valor !== valor : preRequisito.valor === valor;
-        }
-        else if (preRequisito.valores != null) {
+        } else if (preRequisito.valores != null) {
             preRequisitoCumprido = preRequisito.oposto ? !_.any(preRequisito.valores, (valorRequisito: any) => valorRequisito === valor) : _.any(preRequisito.valores, (valorRequisito: any) => valorRequisito === valor);
         }
         return preRequisitoCumprido ? ValidacaoEnum.EXISTENCIA : ValidacaoEnum.NAO_CUMPRIDO;
@@ -82,6 +81,7 @@ export class ValidateModelUtils {
                 ValidateModelUtils.percorreElementos(item, model, errors, path);
             });
         } else if (campoConfiguravel.tipo === "LIST") {
+            ValidateModelUtils.adicionaErro(campoConfiguravel, model, errors, path);
             _.forEach(campoConfiguravel.listaTipo, (item: any) => {
                 ValidateModelUtils.percorreElementosLista(item, model, errors, [...path, ...campoConfiguravel.campo.split(".")]);
             });
@@ -107,7 +107,7 @@ export class ValidateModelUtils {
         const requisitoValidado = this.validaRequisito(item, this.getCampo(path, model), ValidacaoEnum.EXISTENCIA);
         if (item.obrigatorio && (requisitoValidado === ValidacaoEnum.EXISTENCIA || requisitoValidado === ValidacaoEnum.SEM_REQUISITO)) {
             const obrigatorio = this.getCampo([...path, ...item.campo.split(".")], model);
-            if (obrigatorio == null || obrigatorio === "") {
+            if (obrigatorio == null || obrigatorio === "" || (Array.isArray(obrigatorio) && obrigatorio.length === 0)) {
                 errors.push({
                     campo: path.join(".") + "." + item.campo,
                     tipo: TipoErro.CAMPO_OBRIGATORIO,
