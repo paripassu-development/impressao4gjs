@@ -2148,7 +2148,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         campo: "valor",
                     },
                 ],
-                obrigatorio: false,
+                obrigatorio: true,
                 campo: "valores",
                 preRequisito: [
                     {
