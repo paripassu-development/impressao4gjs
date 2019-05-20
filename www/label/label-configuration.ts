@@ -212,7 +212,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         opcoes: FONTES,
                         obrigatorio: true,
                         campo: "fonte.nome",
-                        padrao: "Consolas",
+                        padrao: "consolas",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.forca_contorno_fonte",
@@ -305,7 +305,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         opcoes: FONTES,
                         obrigatorio: true,
                         campo: "fonte.nome",
-                        padrao: "Consolas",
+                        padrao: "consolas",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.altura_fonte",
@@ -1059,7 +1059,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         opcoes: FONTES,
                         obrigatorio: true,
                         campo: "fonte.nome",
-                        padrao: "Consolas",
+                        padrao: "consolas",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.altura",
@@ -1817,7 +1817,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         opcoes: FONTES,
                         obrigatorio: true,
                         campo: "fonte.nome",
-                        padrao: "Consolas",
+                        padrao: "consolas",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.altura_fonte",
@@ -2202,7 +2202,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         opcoes: FONTES,
                         obrigatorio: true,
                         campo: "fonte.nome",
-                        padrao: "Consolas",
+                        padrao: "consolas",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.altura",
