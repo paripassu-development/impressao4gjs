@@ -195,7 +195,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 yMm += lineStrokeGap;
                 drawLine(ctx, model, yMm, mm);
             });
-            if (model.informacoesNutricionais.ocultarZerados) {
+            if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto)) {
                 const naoVisiveis = textBindings.parametrosPadroes.filter((parametro: any) =>
                     parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
                 );
@@ -223,6 +223,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     }
     ctx.restore();
 };
+
+const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string) => {
+    return _.includes(textoInformacoesAdicionais, "(*) NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE");
+}
 
 const drawLine = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
     if (model.opcoes != null && model.opcoes.ocultarLinhas) {
