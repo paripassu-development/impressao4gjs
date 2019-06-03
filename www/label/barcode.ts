@@ -65,6 +65,7 @@ interface ICreateBarcodeOptions {
     barCodeHeight: number;
     barcodeWidth: number;
     font?: string;
+    segments?: number;
     fontSize: number;
     format: string;
     text: string;
@@ -286,7 +287,7 @@ const buildOptionsBwipJs = (options: ICreateBarcodeOptions) => ({
     text: options.text,
     scaleX: 150,
     scaleY: 3,
-    segments: 10,
+    segments: options.segments || 10,
     width: options.barcodeWidth,
     height: options.barCodeHeight,
     includetext: options.displayValue,
