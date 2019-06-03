@@ -284,8 +284,9 @@ const isData = (identificador: string) => _.contains(AIS_DATAS, identificador);
 const buildOptionsBwipJs = (options: ICreateBarcodeOptions) => ({
     bcid: options.format,
     text: options.text,
-    scaleX: 250,
+    scaleX: 150,
     scaleY: 3,
+    segments: 10,
     width: options.barcodeWidth,
     height: options.barCodeHeight,
     includetext: options.displayValue,
