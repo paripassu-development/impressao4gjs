@@ -1,15 +1,14 @@
+import {fabric} from "fabric";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
     splitLines,
     strokeAlignedText,
     TextAlign,
-    writeFabricText
+    writeFabricText,
 } from "../core/util/text-utils";
-import {ValidateModelUtils} from "../core/util/validate-model-utils";
-import {mmPartial} from "./mm";
-import {fabric} from "fabric";
 import {PARAMETROS_PADROES_NUTRICIONAL} from "../default";
+import {mmPartial} from "./mm";
 
 const BLACK = "#000000";
 
@@ -114,7 +113,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
-    if(!!fabricCanvas){
+    if (!!fabricCanvas) {
         writeFabricText(fabricCanvas, ctx, textoValorDiario, model.posicao.xMm + model.dimensoes.larguraMaximaMm,
             yMm, larguraMaxima, mm, {degrees});
     } else {
@@ -132,7 +131,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 ctx.textAlign = TextAlign.LEFT;
 
                 const nomeNutriente = getOrDefault(informacoesNutriente, "nome");
-                if(!!fabricCanvas){
+                if (!!fabricCanvas) {
                     writeFabricText(fabricCanvas, ctx, nomeNutriente, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
                 } else {
                     ctx.strokeText(nomeNutriente,
@@ -159,7 +158,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
                 yMm += alturaLinhaMm;
                 ctx.textAlign = TextAlign.LEFT;
-                if(!!fabricCanvas){
+                if (!!fabricCanvas) {
                     writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
                 } else {
                     ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
@@ -195,12 +194,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 yMm += lineStrokeGap;
                 drawLine(ctx, model, yMm, mm);
             });
-            if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto)) {
+            let texto = "(*) NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE ";
+            if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
                 const naoVisiveis = textBindings.parametrosPadroes.filter((parametro: any) =>
                     parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
                 );
                 if (naoVisiveis.length > 0) {
-                    let texto = "(*) NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE ";
                     texto = texto.concat(naoVisiveis.map((parametro: any) => {
                         return parametro.rotulo.toUpperCase();
                     }).join(", ")).concat(". ");
@@ -224,9 +223,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.restore();
 };
 
-const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string) => {
-    return _.includes(textoInformacoesAdicionais, "(*) NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE");
-}
+const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
+    return _.includes(textoInformacoesAdicionais, texto);
+};
 
 const drawLine = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
     if (model.opcoes != null && model.opcoes.ocultarLinhas) {
