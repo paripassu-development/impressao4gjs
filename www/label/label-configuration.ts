@@ -2180,6 +2180,21 @@ const METADADOS_ELEMENTOS: any[] = [
                         campo: "dimensoes.larguraUnitariaCodigoBarrasMm",
                         padrao: 0.35,
                     },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.codigo_barras.numero_segmentos_por_linha",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.numero_segmentos_por_linha.descricao",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "dimensoes.numeroSegmentosPorLinha",
+                        padrao: 10,
+                        preRequisito: [
+                            {
+                                campo: "tipoCodigoBarras",
+                                valores: ["databarexpandedstacked"],
+                                tipo: "EXISTENCIA",
+                            },
+                        ],
+                    },
                 ],
             },
             {

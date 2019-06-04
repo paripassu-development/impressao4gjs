@@ -40,6 +40,7 @@ interface IElementoCodigoBarrasModelPosicao {
 interface IElementoCodigoBarrasModelDimensoes {
     larguraUnitariaCodigoBarrasMm: number;
     alturaCodigoBarrasMm: number;
+    numeroSegmentosPorLinha: number;
 }
 
 interface IElementoCodigoBarrasModelFonte {
@@ -247,6 +248,7 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
         const barcodeImg = await barcode.createBarcode(id, dpi, {
             barCodeHeight: model.dimensoes.alturaCodigoBarrasMm,
             barcodeWidth: model.dimensoes.larguraUnitariaCodigoBarrasMm,
+            segments: model.dimensoes.numeroSegmentosPorLinha,
             font: model.fonte.nome,
             fontSize: model.fonte.alturaMm,
             format: tipoCodigoBarras,
