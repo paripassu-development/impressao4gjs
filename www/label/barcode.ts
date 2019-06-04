@@ -40,6 +40,7 @@ interface IElementoCodigoBarrasModelPosicao {
 interface IElementoCodigoBarrasModelDimensoes {
     larguraUnitariaCodigoBarrasMm: number;
     alturaCodigoBarrasMm: number;
+    numeroSegmentosPorLinha: number;
 }
 
 interface IElementoCodigoBarrasModelFonte {
@@ -65,6 +66,7 @@ interface ICreateBarcodeOptions {
     barCodeHeight: number;
     barcodeWidth: number;
     font?: string;
+    segments?: number;
     fontSize: number;
     format: string;
     text: string;
@@ -246,6 +248,7 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
         const barcodeImg = await barcode.createBarcode(id, dpi, {
             barCodeHeight: model.dimensoes.alturaCodigoBarrasMm,
             barcodeWidth: model.dimensoes.larguraUnitariaCodigoBarrasMm,
+            segments: model.dimensoes.numeroSegmentosPorLinha,
             font: model.fonte.nome,
             fontSize: model.fonte.alturaMm,
             format: tipoCodigoBarras,
@@ -286,6 +289,7 @@ const buildOptionsBwipJs = (options: ICreateBarcodeOptions) => ({
     text: options.text,
     scaleX: 150,
     scaleY: 3,
+    segments: options.segments || 10,
     width: options.barcodeWidth,
     height: options.barCodeHeight,
     includetext: options.displayValue,
