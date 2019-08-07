@@ -77,6 +77,7 @@ interface IValorGS1 {
     valor: string;
 }
 
+//TODO refatorar para colocar o tipoCodigoBarras como um enum
 const formatValue = (model: IElementoCodigoBarrasModel, textBindings: any, tipoCodigoBarras: string) => {
     if (!textBindings) {
         return resolveDefaultValue(tipoCodigoBarras);
@@ -347,4 +348,50 @@ const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions):
     }
 };
 
-export const barcode = {createBarcode, drawBarcode};
+
+// extraido da biblioteca jsBarcode (src/barcodes/EAN_PC/EAN13)
+// https://en.wikipedia.org/wiki/International_Article_Number_(EAN)#Calculation_of_checksum_digit
+const checksumEan13 = (ean13: string) => {
+    var result = 0;
+
+    var i;
+    for(i = 0; i < 12; i += 2){
+        result += parseInt(ean13[i]);
+    }
+    for(i = 1; i < 12; i += 2){
+        result += parseInt(ean13[i]) * 3;
+    }
+
+    return (10 - (result % 10)) % 10;
+};
+
+
+// extraido da biblioteca jsBarcode (src/barcodes/ITF14)
+const checksumDun14 = (dun14: string) => {
+    var result = 0;
+
+    for (var i = 0; i < 13; i++) {
+        result += parseInt(dun14[i]) * (3 - (i % 2) * 2);
+    }
+
+    return Math.ceil(result / 10) * 10 - result;
+};
+
+//TODO trocar tipoCodigoBarras para ser um enum contendo os tipos de barra suportados afim de evitar erros
+const generateCodigoValue = (tipoCodigoBarras: string, value: string) => {
+    switch (tipoCodigoBarras) {
+        case EAN13_DEFAULT: {
+            let formatedEan13 = formatEan13(value);
+            return formatedEan13 + checksumEan13(formatedEan13);
+        }
+        case DUN14_4G:
+        case ITF14_DEFAULT: {
+            let formatedDun14 = formatDun14(value);
+            return formatedDun14 + checksumDun14(formatedDun14);
+        }
+        default:
+            return value;
+    }
+};
+
+export const barcode = {createBarcode, drawBarcode, generateCodigoValue};
