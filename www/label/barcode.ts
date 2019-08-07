@@ -394,4 +394,28 @@ const generateCodigoValue = (tipoCodigoBarras: string, value: string) => {
     }
 };
 
-export const barcode = {createBarcode, drawBarcode, generateCodigoValue};
+const getPaddingLength = (tipoCodigoBarras: string) => {
+    switch (tipoCodigoBarras) {
+        case EAN13_DEFAULT:
+            return 13;
+        case DUN14_4G:
+        case ITF14_DEFAULT:
+            return 14;
+        default:
+            return 0;
+    }
+};
+
+//TODO trocar tipoCodigoBarras para ser um enum contendo os tipos de barra suportados afim de evitar erros
+const includePadding = (tipoCodigoBarras: string, plu: string) => {
+    let paddingLength = getPaddingLength(tipoCodigoBarras);
+    return !_.isEmpty(plu) && paddingLength ? _.padLeft(plu, paddingLength, "0") : plu;
+};
+
+//TODO trocar tipoCodigoBarras para ser um enum contendo os tipos de barra suportados afim de evitar erros
+const isValid = (tipoCodigoBarras: string, value: string) => {
+    let valueWithPadding = includePadding(tipoCodigoBarras, value);
+    return valueWithPadding === generateCodigoValue(tipoCodigoBarras, value);
+};
+
+export const barcode = {createBarcode, drawBarcode, generateCodigoValue, isValid};
