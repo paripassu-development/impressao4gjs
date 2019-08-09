@@ -403,4 +403,4 @@ const isValid = (tipoCodigoBarras: string, value: string) => {
     return removeZerosEsquerda(value) === removeZerosEsquerda(generateCodigoValue(tipoCodigoBarras, value));
 };
 
-export const barcode = {createBarcode, drawBarcode, generateCodigoValue};
+export const barcode = {createBarcode, drawBarcode, generateCodigoValue, isValid};
