@@ -351,7 +351,7 @@ const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions):
 
 // extraido da biblioteca jsBarcode (src/barcodes/EAN_PC/EAN13)
 // https://en.wikipedia.org/wiki/International_Article_Number_(EAN)#Calculation_of_checksum_digit
-const checksumEan13 = (ean13: string) => {
+const checksumEan13 = (ean13: string) : number => {
     var result = 0;
 
     var i;
@@ -394,28 +394,13 @@ const generateCodigoValue = (tipoCodigoBarras: string, value: string) => {
     }
 };
 
-const getPaddingLength = (tipoCodigoBarras: string) => {
-    switch (tipoCodigoBarras) {
-        case EAN13_DEFAULT:
-            return 13;
-        case DUN14_4G:
-        case ITF14_DEFAULT:
-            return 14;
-        default:
-            return 0;
-    }
-};
-
-//TODO trocar tipoCodigoBarras para ser um enum contendo os tipos de barra suportados afim de evitar erros
-const includePadding = (tipoCodigoBarras: string, plu: string) => {
-    let paddingLength = getPaddingLength(tipoCodigoBarras);
-    return !_.isEmpty(plu) && paddingLength ? _.padLeft(plu, paddingLength, "0") : plu;
+const removeZerosEsquerda = (value: string) => {
+    return value.replace(/^0*/, "");
 };
 
 //TODO trocar tipoCodigoBarras para ser um enum contendo os tipos de barra suportados afim de evitar erros
 const isValid = (tipoCodigoBarras: string, value: string) => {
-    let valueWithPadding = includePadding(tipoCodigoBarras, value);
-    return valueWithPadding === generateCodigoValue(tipoCodigoBarras, value);
+    return removeZerosEsquerda(value) === removeZerosEsquerda(generateCodigoValue(tipoCodigoBarras, value));
 };
 
-export const barcode = {createBarcode, drawBarcode, generateCodigoValue, isValid};
+export const barcode = {createBarcode, drawBarcode, generateCodigoValue};
