@@ -351,14 +351,14 @@ const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions):
 
 // extraido da biblioteca jsBarcode (src/barcodes/EAN_PC/EAN13)
 // https://en.wikipedia.org/wiki/International_Article_Number_(EAN)#Calculation_of_checksum_digit
-const checksumEan13 = (ean13: string) : number => {
+const checksumEan13 = (ean13: string): number => {
     var result = 0;
 
     var i;
-    for(i = 0; i < 12; i += 2){
+    for (i = 0; i < 12; i += 2) {
         result += parseInt(ean13[i]);
     }
-    for(i = 1; i < 12; i += 2){
+    for (i = 1; i < 12; i += 2) {
         result += parseInt(ean13[i]) * 3;
     }
 
@@ -367,7 +367,7 @@ const checksumEan13 = (ean13: string) : number => {
 
 
 // extraido da biblioteca jsBarcode (src/barcodes/ITF14)
-const checksumDun14 = (dun14: string) => {
+const checksumDun14 = (dun14: string): number => {
     var result = 0;
 
     for (var i = 0; i < 13; i++) {
@@ -378,7 +378,7 @@ const checksumDun14 = (dun14: string) => {
 };
 
 //TODO trocar tipoCodigoBarras para ser um enum contendo os tipos de barra suportados afim de evitar erros
-const generateCodigoValue = (tipoCodigoBarras: string, value: string) => {
+const generateCodigoValue = (tipoCodigoBarras: string, value: string): string => {
     switch (tipoCodigoBarras) {
         case EAN13_DEFAULT: {
             let formatedEan13 = formatEan13(value);
@@ -394,7 +394,7 @@ const generateCodigoValue = (tipoCodigoBarras: string, value: string) => {
     }
 };
 
-const removeZerosEsquerda = (value: string) => {
+const removeZerosEsquerda = (value: string): string => {
     return value.replace(/^0*/, "");
 };
 
@@ -403,4 +403,13 @@ const isValid = (tipoCodigoBarras: string, value: string) => {
     return removeZerosEsquerda(value) === removeZerosEsquerda(generateCodigoValue(tipoCodigoBarras, value));
 };
 
-export const barcode = {createBarcode, drawBarcode, generateCodigoValue, isValid};
+const visibleForTesting = {
+    removeZerosEsquerda,
+    checksumEan13,
+    checksumDun14,
+    formatEan13,
+    formatDun14,
+    formatIntercalado2De5
+};
+
+export const barcode = {createBarcode, drawBarcode, generateCodigoValue, isValid, visibleForTesting};
