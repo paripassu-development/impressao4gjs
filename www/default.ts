@@ -97,6 +97,7 @@ export const DADOS_DEFAULT = {
     unidadeEmbalagem: "un",
     urlQrCode: "http://pqr.io?c=PNBJ20AIR1IR1ABT&f=152&u=kg&k=1",
     urlQrCodeGs1: "http://pqr.io/gtin/7898940855056/lot/PPCIBUNS5NJ10Q80?91=26717&92=kg&93=1&94=100",
+    urlQrCodeLegadoDasAguas: "http://pqr.io/gtin/7898940855056/ser/PPCIBUNS5NJ10Q80",
     valorEnergeticoQtPorcao: "2",
     valorEnergeticoValDiario: "3",
     variedade: "caturra",
