@@ -2203,6 +2203,7 @@ const METADADOS_ELEMENTOS: any[] = [
                 tipo: "BOOLEAN",
                 obrigatorio: false,
                 campo: "mostraTexto",
+                padrao: true
             },
             {
                 nome: "ras.ui.4g.etiqueta.configuracao.fonte",
