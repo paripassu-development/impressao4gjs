@@ -58,6 +58,7 @@ export const DADOS_DEFAULT = {
     logradouroNumeroBairroOrigemProdutor: "logradouro OrigemProdutor",
     logradouroNumeroBairroProdutor: "Servidão Sérgio Machado, 240, Vale do Carangola",
     lote: "123",
+    notaFiscal: "104650",
     nomeDestino: "João Machado",
     nomeDocumentoDestino: "cpf",
     nomeDocumentoMeuCadastro: "cnpj",
