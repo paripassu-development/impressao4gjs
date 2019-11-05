@@ -1,9 +1,11 @@
 import * as _ from "lodash";
-import {isNumber} from "util";
 import {labelConfiguration} from "../../label/label-configuration";
 import {TipoErro} from "../../label/tipo-erro-enum";
 
 export class ValidateModelUtils {
+
+    // @ts-ignore
+    private static REGEX_SOMENTE_LETRAS = /[^\d]/;
 
     public static validateAll = (model: any) => {
         const errors: any[] = [];
@@ -30,6 +32,34 @@ export class ValidateModelUtils {
 
     public static validateEtiqueta = (model: any, errors: any[]) => {
         ValidateModelUtils.validate(model, errors, labelConfiguration.getMetadadosEtiqueta(), ["etiqueta"]);
+    }
+
+    public static validateTesteImpressao = (testeImpressao: any) => {
+        let errors: any[] = [];
+        if (testeImpressao.quantidadeImpressao == null || testeImpressao.quantidadeImpressao <= 0 || ValidateModelUtils.REGEX_SOMENTE_LETRAS.exec(testeImpressao.quantidadeImpressao)) {
+            errors.push({
+                campo: "testeImpressao.quantidadeImpressao",
+                tipo: TipoErro.CAMPO_OBRIGATORIO,
+                message: "ras.ui.4g.campo_obrigatorio",
+            });
+        }
+
+        if (testeImpressao.modoImpressao == null || testeImpressao.modoImpressao == "") {
+            errors.push({
+                campo: "testeImpressao.modoImpressao",
+                tipo: TipoErro.CAMPO_OBRIGATORIO,
+                message: "ras.ui.4g.campo_obrigatorio",
+            });
+        }
+
+        if (testeImpressao.impressoraLocal == null || testeImpressao.impressoraLocal == "") {
+            errors.push({
+                campo: "testeImpressao.improssoraLocal",
+                tipo: TipoErro.CAMPO_OBRIGATORIO,
+                message: "ras.ui.4g.campo_obrigatorio",
+            });
+        }
+        return errors;
     }
 
     public static validate = (model: any, errors: any[], metadados: any, path: any[]) => {
