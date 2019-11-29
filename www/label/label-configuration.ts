@@ -1905,7 +1905,7 @@ const METADADOS_ELEMENTOS: any[] = [
                 ],
                 obrigatorio: false,
                 campo: "fn",
-                padrao: "caixaAlta",
+                padrao: "",
             },
         ],
     },
