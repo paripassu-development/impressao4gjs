@@ -1,9 +1,10 @@
 import * as Mustache from "mustache";
 import {canvasUtils} from "../core/util/canvas-utils";
 import {
+    AI_CONTEUDO, AI_GTIN,
     AI_LOTE,
     AIS_DATAS,
-    AIS_GTIN_CONTEUDO, AIS_PESO_LIQUIDO, AIS_PRECO_UNIDADE_MEDIDA,
+    AIS_PESO_LIQUIDO, AIS_PRECO_UNIDADE_MEDIDA,
     BARCODE_IMG_ELEMENT_ID,
     DUN14_4G,
     EAN128,
@@ -160,6 +161,9 @@ function normalizeGS1Value(valor: string, identificador: string) {
     if (identificador === AIS_PRECO_UNIDADE_MEDIDA) {
         valor = _.padLeft(valor.replace(/\D+/, ""), 6, "0");
     }
+    if (identificador === AI_GTIN) {
+        valor = _.padLeft(valor, 14, "0");
+    }
     return valor;
 }
 
@@ -193,11 +197,11 @@ function normalizeType(tipoCodigoBarras: string): string {
     return tipoCodigoBarras;
 }
 
-function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefined, tipoCodigoBarras: string, errors: Error[]) {
+function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefined, tipoCodigoBarras: string): Error[] {
     if (!textBindings) {
         return;
     }
-
+    let errors = Array<Error>();
     if (tipoCodigoBarras.toLowerCase() === GS1_128_DEFAULT || tipoCodigoBarras.toLowerCase() === GS1_DATABAR_EXPANDED_STACKED) {
         model.valores.forEach((item) => {
             const ai = item.identificador;
@@ -210,9 +214,11 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
                 errors.push(Error.build("impr.ui.js.valor_identificador_nao_informado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} É necessário informar um valor para cada identificador do código de barras.`, TipoError.GS1));
                 return;
             }
-
-            if (_.includes(AIS_GTIN_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))) {
-                errors.push(Error.build("impr.ui.js.identificador_gtin_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`, TipoError.GS1, ai));
+            if (_.includes(AI_GTIN, ai) && !(new RegExp(/^\d{1,14}$/).test(valor))) {
+                errors.push(Error.build("impr.ui.js.identificador_gtin_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter até 14 caracteres. Somente números.`, TipoError.GS1, ai));
+            }
+            if (_.includes(AI_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))) {
+                errors.push(Error.build("impr.ui.js.identificador_conteudo_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`, TipoError.GS1, ai));
             }
             if (_.includes(AIS_DATAS, ai) && !(new RegExp(/^\d{1,2}\/\d{1,2}\/\d{4}$/).test(valor))) {
                 errors.push(Error.build("impr.ui.js.identificador_data_nao_esta_formatado", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter o formato DD/MM/AAAA.`, TipoError.GS1, ai));
@@ -230,6 +236,7 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
                 errors.push(Error.build("impr.ui.js.identificador_preco_unidade_medida_deve_ser_numerico", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve existir e ser um número positivo.`, TipoError.GS1, ai));
             }
         });
+        return errors;
     }
 
 }
@@ -238,8 +245,7 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
     const mm = mmPartial(dpi);
     let tipoCodigoBarras = mapLabelTypes(Mustache.render(model.tipoCodigoBarras, textBindings));
     tipoCodigoBarras = normalizeType(tipoCodigoBarras);
-    const errorsCodigoBarras = Array<Error>();
-    validate(model, textBindings, tipoCodigoBarras, errorsCodigoBarras);
+    const errorsCodigoBarras = validate(model, textBindings, tipoCodigoBarras);
     if (!_.isEmpty(errorsCodigoBarras)) {
         throw errorsCodigoBarras;
     }
