@@ -33,7 +33,8 @@ export const AIS_DATAS = [
     "15", // durabilidade minima
     "17", // durabilidade maxima
 ];
-export const AIS_GTIN_CONTEUDO = ["01", "02"];
+export const AI_GTIN = "01"
+export const AI_CONTEUDO = "02";
 export const AIS_PESO_LIQUIDO = "310";
 export const AIS_PRECO_UNIDADE_MEDIDA = "8005";
 
