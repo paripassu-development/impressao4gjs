@@ -215,7 +215,7 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
                 return;
             }
             if (_.includes(AI_GTIN, ai) && !(new RegExp(/^\d{1,14}$/).test(valor))) {
-                errors.push(Error.build("impr.ui.js.identificador_gtin_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} não deve ter até 14 caracteres. Somente números.`, TipoError.GS1, ai));
+                errors.push(Error.build("impr.ui.js.identificador_gtin_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter até 14 caracteres. Somente números.`, TipoError.GS1, ai));
             }
             if (_.includes(AI_CONTEUDO, ai) && !(new RegExp(/^\d{14}$/).test(valor))) {
                 errors.push(Error.build("impr.ui.js.identificador_conteudo_conter_14_caracteres", `${ErrosPrefix.ERROR_CODIGO_BARRAS} O valor do identificador ${ai} deve ter 14 caracteres numéricos.`, TipoError.GS1, ai));
