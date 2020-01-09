@@ -1,5 +1,9 @@
 import {FONTES} from "../fonts/fonts";
 
+export interface IValoresRotacao {
+    [index: number]: {texto: string, valor: string};
+}
+
 const RESOLUCAO_DPI: any = [
     {
         texto: "203",
@@ -10,6 +14,25 @@ const RESOLUCAO_DPI: any = [
         valor: 300,
     },
 ];
+
+const VALORES_ROTACAO: IValoresRotacao = [
+    {
+        texto: "0°",
+        valor: "0",
+    },
+    {
+        texto: "90°",
+        valor: "90",
+    },
+    {
+        texto: "180°",
+        valor: "180",
+    },
+    {
+        texto: "270°",
+        valor: "270",
+    },
+]
 
 const METADADOS_IMPRESSAO: any = {
     nome: "ras.ui.4g.etiqueta.configuracao.impressao",
@@ -168,9 +191,9 @@ const METADADOS_ELEMENTOS: any[] = [
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
                         descricao: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada.rotacao.descricao",
-                        tipo: "NUMERIC",
-                        obrigatorio: false,
                         campo: "posicao.rotacao",
+                        tipo: "OPTIONS",
+                        opcoes: VALORES_ROTACAO,
                         padrao: 0,
                     },
                 ],
@@ -270,9 +293,10 @@ const METADADOS_ELEMENTOS: any[] = [
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
                         descricao: "Ângulo de rotação da tabela nutricional dentro da etiqueta",
-                        tipo: "NUMERIC",
-                        obrigatorio: false,
                         campo: "posicao.rotacao",
+                        tipo: "OPTIONS",
+                        opcoes: VALORES_ROTACAO,
+                        obrigatorio: false,
                     },
                 ],
             },
@@ -1024,9 +1048,10 @@ const METADADOS_ELEMENTOS: any[] = [
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.rotacao.descricao",
-                        tipo: "NUMERIC",
-                        obrigatorio: false,
                         campo: "posicao.rotacao",
+                        tipo: "OPTIONS",
+                        opcoes: VALORES_ROTACAO,
+                        obrigatorio: false,
                     },
                 ],
             },
@@ -1751,6 +1776,14 @@ const METADADOS_ELEMENTOS: any[] = [
                         padrao: 5,
                     },
                     {
+                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.rotacao.descricao",
+                        campo: "posicao.rotacao",
+                        tipo: "OPTIONS",
+                        opcoes: VALORES_ROTACAO,
+                        obrigatorio: false,
+                    },
+                    {
                         nome: "ras.ui.4g.etiqueta.configuracao.alinhamento",
                         descricao: "ras.ui.4g.etiqueta.configuracao.texto.alinhamento.descricao",
                         tipo: "OPTIONS",
@@ -1770,13 +1803,6 @@ const METADADOS_ELEMENTOS: any[] = [
                         ],
                         obrigatorio: false,
                         campo: "posicao.alinhar",
-                    },
-                    {
-                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.rotacao.descricao",
-                        tipo: "NUMERIC",
-                        obrigatorio: false,
-                        campo: "posicao.rotacao",
                     },
                 ],
             },
@@ -1939,9 +1965,10 @@ const METADADOS_ELEMENTOS: any[] = [
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
                         descricao: "ras.ui.4g.etiqueta.configuracao.qrcode.rotacao.descricao",
-                        tipo: "NUMERIC",
-                        obrigatorio: false,
                         campo: "posicao.rotacao",
+                        tipo: "OPTIONS",
+                        opcoes: VALORES_ROTACAO,
+                        obrigatorio: false,
                     },
                 ],
             },
@@ -2009,9 +2036,10 @@ const METADADOS_ELEMENTOS: any[] = [
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
                         descricao: "ras.ui.4g.etiqueta.configuracao.codigo_barras.rotacao.descricao",
-                        tipo: "NUMERIC",
-                        obrigatorio: false,
                         campo: "posicao.rotacao",
+                        tipo: "OPTIONS",
+                        opcoes: VALORES_ROTACAO,
+                        obrigatorio: false,
                     },
                 ],
             },
