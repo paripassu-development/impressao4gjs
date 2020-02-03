@@ -6,6 +6,17 @@ export class ValidateModelUtils {
 
     // @ts-ignore
     private static REGEX_SOMENTE_LETRAS = /[^\d]/;
+    // @ts-ignore
+    private static REGEX_BUSCA_VARIAVEL = /{{{[a-z]*}}}/;
+
+    private static VARIAVEIS_PESO: string[] = [
+                                        "campoPesoLiquidoNutricional",
+                                        "pesoLiquidoNutricional",
+                                        "pesoLiquidoAgranelNutricional",
+                                        "pesoLiquido",
+                                        "pesoLiquidoAgranel",
+                                        "pesoLiquidoNumerico"
+                                    ];
 
     public static validateAll = (model: any) => {
         const errors: any[] = [];
@@ -63,9 +74,29 @@ export class ValidateModelUtils {
     }
 
     public static validate = (model: any, errors: any[], metadados: any, path: any[]) => {
+    //tem que ser do tipo texto
+    //nos itens têm que pegar a fonte e ali têm a configuração de altura
+    //nos itens têm que pegar o campo valor e ali da pra verificar se é ou não de peso {{{Alguma variavel de peso aqui dentro}}}
         _.forEach(metadados.camposConfiguraveis, (campoConfiguravel: any) => {
+            ValidateModelUtils.validaAlturaSeForCampoPeso(campoConfiguravel, metadados.camposConfiguraveis);
             ValidateModelUtils.percorreElementos(campoConfiguravel, model, errors, path);
         });
+    }
+
+    private static validaAlturaSeForCampoPeso(campoConfiguravel: any, camposConfiguraveis: any) {
+        if (campoConfiguravel.tipo === 'TEXT' && campoConfiguravel.campo === 'valor') {
+            if (ValidateModelUtils.isCampoPeso(campoConfiguravel.padrao)) {
+                ValidateModelUtils.validaAlturaCampoPeso(camposConfiguraveis);
+            }
+        }
+    }
+
+    private static validaAlturaCampoPeso(camposConfiguraveis: any) {
+        const campoFonte = camposConfiguraveis.find((campoConfiguravel: any) => {
+            return campoConfiguravel.campo === 'fonte';
+        });
+        console.log(campoFonte);
+        //busca campo configuravel fonte e validar altura
     }
 
     public static validaRequisito(item: any, model: any, tipo: any) {
@@ -162,6 +193,14 @@ export class ValidateModelUtils {
 
     private static getCampo = (p: any, o: any) => (Array.isArray(p) ? p : p.split(".")).reduce((xs: any, x: any) => (xs != null && xs[x] != null) ? xs[x] : null, o);
 
+    private static isCampoPeso(padrao: string) {
+        const variaveis = padrao.match(this.REGEX_BUSCA_VARIAVEL);
+        return variaveis.some((variavelNoTexto: string) => {
+            this.VARIAVEIS_PESO.some((variavelPeso: string) => {
+                return variavelNoTexto === variavelPeso;
+            })
+        });
+    }
 }
 
 export enum ValidacaoEnum {
