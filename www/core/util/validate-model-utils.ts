@@ -7,16 +7,18 @@ export class ValidateModelUtils {
     // @ts-ignore
     private static REGEX_SOMENTE_LETRAS = /[^\d]/;
     // @ts-ignore
-    private static REGEX_BUSCA_VARIAVEL = /{{{[a-z]*}}}/;
+    private static REGEX_BUSCA_VARIAVEL = /{{{[a-z]*}}}/i;
+
+    private static REGEX_IGNORA_CARACTERES_ESPECIAIS = /[^\w\s]/gi;
 
     private static VARIAVEIS_PESO: string[] = [
-                                        "campoPesoLiquidoNutricional",
-                                        "pesoLiquidoNutricional",
-                                        "pesoLiquidoAgranelNutricional",
-                                        "pesoLiquido",
-                                        "pesoLiquidoAgranel",
-                                        "pesoLiquidoNumerico"
-                                    ];
+        "campoPesoLiquidoNutricional",
+        "pesoLiquidoNutricional",
+        "pesoLiquidoAgranelNutricional",
+        "pesoLiquido",
+        "pesoLiquidoAgranel",
+        "pesoLiquidoNumerico"
+    ];
 
     public static validateAll = (model: any) => {
         const errors: any[] = [];
@@ -24,8 +26,17 @@ export class ValidateModelUtils {
         ValidateModelUtils.validateEtiqueta(model, errors);
         ValidateModelUtils.validateImpressao(model, errors);
         ValidateModelUtils.validateElementos(model, errors);
+        ValidateModelUtils.validateCampoPeso(model, errors);
         return errors;
     }
+
+    public static validateCampoPeso = (model: any, errors: any[]) => {
+        model.desenho.elementos.forEach((elemento: any, index: number) => {
+            ValidateModelUtils.validaAlturaSeForCampoPeso(elemento, errors, index);
+        })
+    }
+
+
 
     public static validateElementos = (model: any, errors: any[]) => {
         _.forEach(ValidateModelUtils.getCampo("desenho.elementos", model), (elementoModel: any, index: number) => {
@@ -74,29 +85,27 @@ export class ValidateModelUtils {
     }
 
     public static validate = (model: any, errors: any[], metadados: any, path: any[]) => {
-    //tem que ser do tipo texto
-    //nos itens têm que pegar a fonte e ali têm a configuração de altura
-    //nos itens têm que pegar o campo valor e ali da pra verificar se é ou não de peso {{{Alguma variavel de peso aqui dentro}}}
         _.forEach(metadados.camposConfiguraveis, (campoConfiguravel: any) => {
-            ValidateModelUtils.validaAlturaSeForCampoPeso(campoConfiguravel, metadados.camposConfiguraveis);
             ValidateModelUtils.percorreElementos(campoConfiguravel, model, errors, path);
         });
     }
 
-    private static validaAlturaSeForCampoPeso(campoConfiguravel: any, camposConfiguraveis: any) {
-        if (campoConfiguravel.tipo === 'TEXT' && campoConfiguravel.campo === 'valor') {
-            if (ValidateModelUtils.isCampoPeso(campoConfiguravel.padrao)) {
-                ValidateModelUtils.validaAlturaCampoPeso(camposConfiguraveis);
+    private static validaAlturaSeForCampoPeso(elemento: any, errors: any[], index: number) {
+        if (elemento.tipo === 'texto' && !!elemento.valor) {
+            if (!!elemento.valor && ValidateModelUtils.isCampoPeso(elemento.valor)) {
+                ValidateModelUtils.validaAlturaCampoPeso(elemento.fonte, errors, index);
             }
         }
     }
 
-    private static validaAlturaCampoPeso(camposConfiguraveis: any) {
-        const campoFonte = camposConfiguraveis.find((campoConfiguravel: any) => {
-            return campoConfiguravel.campo === 'fonte';
-        });
-        console.log(campoFonte);
-        //busca campo configuravel fonte e validar altura
+    private static validaAlturaCampoPeso(fonte: any, errors: any[], index: number) {
+        if (!!!fonte.alturaMm || fonte.alturaMm < 10) {
+            errors.push({
+                campo: 'desenho.elementos.' + index + '.fonte.alturaMm',
+                tipo: TipoErro.ABAIXO_LIMITE_PESO,
+                message: "ras.ui.impressao.altura_minima_peso",
+            });
+        }
     }
 
     public static validaRequisito(item: any, model: any, tipo: any) {
@@ -193,11 +202,12 @@ export class ValidateModelUtils {
 
     private static getCampo = (p: any, o: any) => (Array.isArray(p) ? p : p.split(".")).reduce((xs: any, x: any) => (xs != null && xs[x] != null) ? xs[x] : null, o);
 
-    private static isCampoPeso(padrao: string) {
-        const variaveis = padrao.match(this.REGEX_BUSCA_VARIAVEL);
-        return variaveis.some((variavelNoTexto: string) => {
-            this.VARIAVEIS_PESO.some((variavelPeso: string) => {
-                return variavelNoTexto === variavelPeso;
+    private static isCampoPeso(valor: string) {
+        const variaveis = valor.match(this.REGEX_BUSCA_VARIAVEL);
+        // @ts-ignore
+        return !!variaveis && variaveis.some((variavelNoTexto: string) => {
+            return this.VARIAVEIS_PESO.some((variavelPeso: string) => {
+                return variavelNoTexto.replace(ValidateModelUtils.REGEX_IGNORA_CARACTERES_ESPECIAIS, '') === variavelPeso;
             })
         });
     }
