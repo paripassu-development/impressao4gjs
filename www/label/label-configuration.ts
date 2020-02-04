@@ -383,7 +383,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesAdicionais.texto",
-                        padrao: "(*) NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE GORDURA TOTAIS, GORDURA SATURADAS E GORDURAS TRANS. VALORES DIÁRIOS COM BASE EM UMA DIETA DE 2000KCAL OU 8400KJ. SEUS VALORES PODEM SER MAIORES OU MENORES DEPENDENDO DE SUAS NECESSIDADES ENERGÉTICAS. (**) VD NÃO ESTABELECIDO.",
+                        padrao: "% NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE GORDURA TOTAIS, GORDURA SATURADAS E GORDURAS TRANS. VALORES DIÁRIOS COM BASE EM UMA DIETA DE 2000KCAL OU 8400KJ. SEUS VALORES PODEM SER MAIORES OU MENORES DEPENDENDO DE SUAS NECESSIDADES ENERGÉTICAS. ** VD NÃO ESTABELECIDO.",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.caracter_linha",
