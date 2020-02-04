@@ -4,12 +4,20 @@ import {TipoErro} from "../../label/tipo-erro-enum";
 
 export class ValidateModelUtils {
 
-    // @ts-ignore
     private static REGEX_SOMENTE_LETRAS = /[^\d]/;
-    // @ts-ignore
     private static REGEX_BUSCA_VARIAVEL = /{{{[a-z]*}}}/i;
-
     private static REGEX_IGNORA_CARACTERES_ESPECIAIS = /[^\w\s]/gi;
+
+    private static mapTamanhosMinimosFontes: object = {
+        "unispace-bold": 8,
+        "telegrama": 8,
+        "dejavusansmono-bold": 9,
+        "dejavusansmono": 9,
+        "bpmono-bold": 10,
+        "codenewroman-bold": 10,
+        "arial": 9,
+        "consolas": 10
+    }
 
     private static VARIAVEIS_PESO: string[] = [
         "campoPesoLiquidoNutricional",
@@ -35,8 +43,6 @@ export class ValidateModelUtils {
             ValidateModelUtils.validaAlturaSeForCampoPeso(elemento, errors, index);
         })
     }
-
-
 
     public static validateElementos = (model: any, errors: any[]) => {
         _.forEach(ValidateModelUtils.getCampo("desenho.elementos", model), (elementoModel: any, index: number) => {
@@ -99,11 +105,12 @@ export class ValidateModelUtils {
     }
 
     private static validaAlturaCampoPeso(fonte: any, errors: any[], index: number) {
-        if (!!!fonte.alturaMm || fonte.alturaMm < 10) {
+        // @ts-ignore
+        if (!!!fonte.alturaMm || fonte.alturaMm < this.mapTamanhosMinimosFontes[fonte.nome]) {
             errors.push({
                 campo: 'desenho.elementos.' + index + '.fonte.alturaMm',
                 tipo: TipoErro.ABAIXO_LIMITE_PESO,
-                message: "ras.ui.impressao.altura_minima_peso",
+                message: "ras.ui.4g.txt.erro.impressao.altura_minima_peso",
             });
         }
     }
