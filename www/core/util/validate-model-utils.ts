@@ -4,8 +4,29 @@ import {TipoErro} from "../../label/tipo-erro-enum";
 
 export class ValidateModelUtils {
 
-    // @ts-ignore
     private static REGEX_SOMENTE_LETRAS = /[^\d]/;
+    private static REGEX_BUSCA_VARIAVEL = /{{{[a-z]*}}}/i;
+    private static REGEX_IGNORA_CARACTERES_ESPECIAIS = /[^\w\s]/gi;
+
+    private static mapTamanhosMinimosFontes: object = {
+        "unispace-bold": 8,
+        "telegrama": 8,
+        "dejavusansmono-bold": 9,
+        "dejavusansmono": 9,
+        "bpmono-bold": 10,
+        "codenewroman-bold": 10,
+        "arial": 9,
+        "consolas": 10
+    }
+
+    private static VARIAVEIS_PESO: string[] = [
+        "campoPesoLiquidoNutricional",
+        "pesoLiquidoNutricional",
+        "pesoLiquidoAgranelNutricional",
+        "pesoLiquido",
+        "pesoLiquidoAgranel",
+        "pesoLiquidoNumerico"
+    ];
 
     public static validateAll = (model: any) => {
         const errors: any[] = [];
@@ -13,7 +34,14 @@ export class ValidateModelUtils {
         ValidateModelUtils.validateEtiqueta(model, errors);
         ValidateModelUtils.validateImpressao(model, errors);
         ValidateModelUtils.validateElementos(model, errors);
+        ValidateModelUtils.validateCampoPeso(model, errors);
         return errors;
+    }
+
+    public static validateCampoPeso = (model: any, errors: any[]) => {
+        model.desenho.elementos.forEach((elemento: any, index: number) => {
+            ValidateModelUtils.validaAlturaSeForCampoPeso(elemento, errors, index);
+        })
     }
 
     public static validateElementos = (model: any, errors: any[]) => {
@@ -66,6 +94,25 @@ export class ValidateModelUtils {
         _.forEach(metadados.camposConfiguraveis, (campoConfiguravel: any) => {
             ValidateModelUtils.percorreElementos(campoConfiguravel, model, errors, path);
         });
+    }
+
+    private static validaAlturaSeForCampoPeso(elemento: any, errors: any[], index: number) {
+        if (elemento.tipo === 'texto' && !!elemento.valor) {
+            if (!!elemento.valor && ValidateModelUtils.isCampoPeso(elemento.valor)) {
+                ValidateModelUtils.validaAlturaCampoPeso(elemento.fonte, errors, index);
+            }
+        }
+    }
+
+    private static validaAlturaCampoPeso(fonte: any, errors: any[], index: number) {
+        // @ts-ignore
+        if (!!!fonte.alturaMm || fonte.alturaMm < this.mapTamanhosMinimosFontes[fonte.nome]) {
+            errors.push({
+                campo: 'desenho.elementos.' + index + '.fonte.alturaMm',
+                tipo: TipoErro.ABAIXO_LIMITE_PESO,
+                message: "ras.ui.4g.txt.erro.impressao.altura_minima_peso",
+            });
+        }
     }
 
     public static validaRequisito(item: any, model: any, tipo: any) {
@@ -162,6 +209,15 @@ export class ValidateModelUtils {
 
     private static getCampo = (p: any, o: any) => (Array.isArray(p) ? p : p.split(".")).reduce((xs: any, x: any) => (xs != null && xs[x] != null) ? xs[x] : null, o);
 
+    private static isCampoPeso(valor: string) {
+        const variaveis = valor.match(this.REGEX_BUSCA_VARIAVEL);
+        // @ts-ignore
+        return !!variaveis && variaveis.some((variavelNoTexto: string) => {
+            return this.VARIAVEIS_PESO.some((variavelPeso: string) => {
+                return variavelNoTexto.replace(ValidateModelUtils.REGEX_IGNORA_CARACTERES_ESPECIAIS, '') === variavelPeso;
+            })
+        });
+    }
 }
 
 export enum ValidacaoEnum {

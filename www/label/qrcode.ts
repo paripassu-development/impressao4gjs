@@ -1,5 +1,4 @@
 import * as Mustache from "mustache";
-import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
 
 declare var require: any;
