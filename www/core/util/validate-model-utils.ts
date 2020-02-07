@@ -1,12 +1,11 @@
 import * as _ from "lodash";
 import {labelConfiguration} from "../../label/label-configuration";
 import {TipoErro} from "../../label/tipo-erro-enum";
+import {EtiquetaUtils} from "./etiqueta-utils";
 
 export class ValidateModelUtils {
 
     private static REGEX_SOMENTE_LETRAS = /[^\d]/;
-    private static REGEX_BUSCA_VARIAVEL = /{{{[a-z]*}}}/i;
-    private static REGEX_IGNORA_CARACTERES_ESPECIAIS = /[^\w\s]/gi;
 
     private static mapTamanhosMinimosFontes: object = {
         "unispace-bold": 8,
@@ -18,15 +17,6 @@ export class ValidateModelUtils {
         "arial": 9,
         "consolas": 10
     }
-
-    private static VARIAVEIS_PESO: string[] = [
-        "campoPesoLiquidoNutricional",
-        "pesoLiquidoNutricional",
-        "pesoLiquidoAgranelNutricional",
-        "pesoLiquido",
-        "pesoLiquidoAgranel",
-        "pesoLiquidoNumerico"
-    ];
 
     public static validateAll = (model: any) => {
         const errors: any[] = [];
@@ -98,7 +88,7 @@ export class ValidateModelUtils {
 
     private static validaAlturaSeForCampoPeso(elemento: any, errors: any[], index: number) {
         if (elemento.tipo === 'texto' && !!elemento.valor) {
-            if (!!elemento.valor && ValidateModelUtils.isCampoPeso(elemento.valor)) {
+            if (!!elemento.valor && EtiquetaUtils.isCampoPeso(elemento.valor)) {
                 ValidateModelUtils.validaAlturaCampoPeso(elemento.fonte, errors, index);
             }
         }
@@ -209,15 +199,6 @@ export class ValidateModelUtils {
 
     private static getCampo = (p: any, o: any) => (Array.isArray(p) ? p : p.split(".")).reduce((xs: any, x: any) => (xs != null && xs[x] != null) ? xs[x] : null, o);
 
-    private static isCampoPeso(valor: string) {
-        const variaveis = valor.match(this.REGEX_BUSCA_VARIAVEL);
-        // @ts-ignore
-        return !!variaveis && variaveis.some((variavelNoTexto: string) => {
-            return this.VARIAVEIS_PESO.some((variavelPeso: string) => {
-                return variavelNoTexto.replace(ValidateModelUtils.REGEX_IGNORA_CARACTERES_ESPECIAIS, '') === variavelPeso;
-            })
-        });
-    }
 }
 
 export enum ValidacaoEnum {
