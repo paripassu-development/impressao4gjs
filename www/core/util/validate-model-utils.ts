@@ -88,15 +88,15 @@ export class ValidateModelUtils {
         const intervaloFonte = intervaloTamanhoFonte[fonte.nome];
         let message;
         let parametros;
-        if (fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte2)  {
+        if (fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte2.max)  {
            message = "ras4.ui.txt.etiqueta.atende_peso_maximo_50_gramas_ou_litros";
-        } else if (fonte.alturaMm == intervaloFonte.proporcaoTamanhoFonte3) {
+        } else if (fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte3.min && fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte3.max) {
             message = "ras4.ui.txt.etiqueta.atende_peso_minimo_X_gramas_ou_litros_e_peso_maximo_Y_gramas_ou_litros";
             parametros = {min: 50, max: 200}
-        } else if (fonte.alturaMm == intervaloFonte.proporcaoTamanhoFonte4) {
+        } else if (fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte4.min && fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte4.max) {
             message = "ras4.ui.txt.etiqueta.atende_peso_minimo_X_gramas_ou_litros_e_peso_maximo_Y_gramas_ou_litros";
             parametros = {min: 200, max: 1000}
-        } else if(fonte.alturaMm > intervaloFonte.proporcaoTamanhoFonte6){
+        } else if(fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte6.min){
             message = "ras4.ui.txt.etiqueta.atende_peso_minimo_1000_gramas_ou_litros";
         }
 
