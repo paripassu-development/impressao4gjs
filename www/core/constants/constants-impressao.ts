@@ -18,3 +18,14 @@ export const TipoError = Enum({
 
 export type TipoError = Enum<typeof TipoError>;
 
+export const intervaloTamanhoFonte: any = {
+    "unispace-bold": { proporcaoTamanhoFonte2: 3 , proporcaoTamanhoFonte3: 4, proporcaoTamanhoFonte4: 6, proporcaoTamanhoFonte6: 8 },  // proporção 1.3333333333
+    "telegrama": { proporcaoTamanhoFonte2: 3 , proporcaoTamanhoFonte3: 4, proporcaoTamanhoFonte4: 6, proporcaoTamanhoFonte6: 8 }, // proporção 1.3333333333
+    "dejavusansmono-bold": { proporcaoTamanhoFonte2: 3 , proporcaoTamanhoFonte3: 5, proporcaoTamanhoFonte4: 6, proporcaoTamanhoFonte6: 9 }, // proporção 1.5
+    "dejavusansmono": { proporcaoTamanhoFonte2: 3 , proporcaoTamanhoFonte3: 5, proporcaoTamanhoFonte4: 6, proporcaoTamanhoFonte6: 9 }, // proporção 1.5
+    "bpmono-bold": { proporcaoTamanhoFonte2: 4 , proporcaoTamanhoFonte3: 5, proporcaoTamanhoFonte4: 7, proporcaoTamanhoFonte6: 10 }, // proporção 1.666666666666667
+    "codenewroman-bold": { proporcaoTamanhoFonte2: 4 , proporcaoTamanhoFonte3: 5, proporcaoTamanhoFonte4: 7, proporcaoTamanhoFonte6: 10 }, // proporção 1.666666666666667
+    "arial": { proporcaoTamanhoFonte2: 3 , proporcaoTamanhoFonte3: 5, proporcaoTamanhoFonte4: 6, proporcaoTamanhoFonte6: 9 }, // proporção 1.5
+    "consolas": { proporcaoTamanhoFonte2: 4 , proporcaoTamanhoFonte3: 5, proporcaoTamanhoFonte4: 7, proporcaoTamanhoFonte6: 10 } // proporção 1.666666666666667
+};
+

@@ -2,21 +2,11 @@ import * as _ from "lodash";
 import {labelConfiguration} from "../../label/label-configuration";
 import {TipoErro} from "../../label/tipo-erro-enum";
 import {EtiquetaUtils} from "./etiqueta-utils";
+import {intervaloTamanhoFonte} from "../constants/constants-impressao";
 
 export class ValidateModelUtils {
 
     private static REGEX_SOMENTE_LETRAS = /[^\d]/;
-
-    private static mapTamanhosMinimosFontes: object = {
-        "unispace-bold": 8,
-        "telegrama": 8,
-        "dejavusansmono-bold": 9,
-        "dejavusansmono": 9,
-        "bpmono-bold": 10,
-        "codenewroman-bold": 10,
-        "arial": 9,
-        "consolas": 10
-    }
 
     public static validateAll = (model: any) => {
         const errors: any[] = [];
@@ -95,14 +85,28 @@ export class ValidateModelUtils {
     }
 
     private static validaAlturaCampoPeso(fonte: any, errors: any[], index: number) {
-        // @ts-ignore
-        if (!!!fonte.alturaMm || fonte.alturaMm < this.mapTamanhosMinimosFontes[fonte.nome]) {
-            errors.push({
-                campo: 'desenho.elementos.' + index + '.fonte.alturaMm',
-                tipo: TipoErro.ABAIXO_LIMITE_PESO,
-                message: "ras.ui.4g.txt.erro.impressao.altura_minima_peso",
-            });
+        const intervaloFonte = intervaloTamanhoFonte[fonte.nome];
+        let message;
+        let parametros;
+        if (fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte2)  {
+           message = "ras4.ui.txt.etiqueta.atende_peso_maximo_50_gramas_ou_litros";
+        } else if (fonte.alturaMm == intervaloFonte.proporcaoTamanhoFonte3) {
+            message = "ras4.ui.txt.etiqueta.atende_peso_minimo_X_gramas_ou_litros_e_peso_maximo_Y_gramas_ou_litros";
+            parametros = {min: 50, max: 200}
+        } else if (fonte.alturaMm == intervaloFonte.proporcaoTamanhoFonte4) {
+            message = "ras4.ui.txt.etiqueta.atende_peso_minimo_X_gramas_ou_litros_e_peso_maximo_Y_gramas_ou_litros";
+            parametros = {min: 200, max: 1000}
+        } else if(fonte.alturaMm > intervaloFonte.proporcaoTamanhoFonte6){
+            message = "ras4.ui.txt.etiqueta.atende_peso_minimo_1000_gramas_ou_litros";
         }
+
+        errors.push({
+            campo: 'desenho.elementos.' + index + '.fonte.alturaMm',
+            tipo: TipoErro.ABAIXO_LIMITE_PESO,
+            message,
+            parametros
+        });
+
     }
 
     public static validaRequisito(item: any, model: any, tipo: any) {
