@@ -1,26 +1,27 @@
 import * as _ from "lodash";
 import {labelConfiguration} from "../../label/label-configuration";
-import {TipoErro} from "../../label/tipo-erro-enum";
+import {TipoErro} from "../enum/tipo-erro-enum";
 import {EtiquetaUtils} from "./etiqueta-utils";
 import {intervaloTamanhoFonte} from "../constants/constants-impressao";
+import {TipoAlerta} from "../enum/tipo-alerta";
 
 export class ValidateModelUtils {
 
     private static REGEX_SOMENTE_LETRAS = /[^\d]/;
 
     public static validateAll = (model: any) => {
-        const errors: any[] = [];
-        ValidateModelUtils.validatePDF(model, errors);
-        ValidateModelUtils.validateEtiqueta(model, errors);
-        ValidateModelUtils.validateImpressao(model, errors);
-        ValidateModelUtils.validateElementos(model, errors);
-        ValidateModelUtils.validateCampoPeso(model, errors);
-        return errors;
+        const alerts: any[] = [];
+        ValidateModelUtils.validatePDF(model, alerts);
+        ValidateModelUtils.validateEtiqueta(model, alerts);
+        ValidateModelUtils.validateImpressao(model, alerts);
+        ValidateModelUtils.validateElementos(model, alerts);
+        ValidateModelUtils.validateCampoPeso(model, alerts);
+        return alerts;
     }
 
-    public static validateCampoPeso = (model: any, errors: any[]) => {
+    public static validateCampoPeso = (model: any, alerts: any[]) => {
         model.desenho.elementos.forEach((elemento: any, index: number) => {
-            ValidateModelUtils.validaAlturaSeForCampoPeso(elemento, errors, index);
+            ValidateModelUtils.validaAlturaSeForCampoPeso(elemento, alerts, index);
         })
     }
 
@@ -76,20 +77,20 @@ export class ValidateModelUtils {
         });
     }
 
-    private static validaAlturaSeForCampoPeso(elemento: any, errors: any[], index: number) {
+    private static validaAlturaSeForCampoPeso(elemento: any, alerts: any[], index: number) {
         if (elemento.tipo === 'texto' && !!elemento.valor) {
             if (!!elemento.valor && EtiquetaUtils.isCampoPeso(elemento.valor)) {
-                ValidateModelUtils.validaAlturaCampoPeso(elemento.fonte, errors, index);
+                ValidateModelUtils.validaAlturaCampoPeso(elemento.fonte, alerts, index);
             }
         }
     }
 
-    private static validaAlturaCampoPeso(fonte: any, errors: any[], index: number) {
+    private static validaAlturaCampoPeso(fonte: any, alerts: any[], index: number) {
         const intervaloFonte = intervaloTamanhoFonte[fonte.nome];
         let message;
         let parametros;
         if (fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte2.max)  {
-           message = "ras4.ui.txt.etiqueta.atende_peso_maximo_50_gramas_ou_litros";
+            message = "ras4.ui.txt.etiqueta.atende_peso_maximo_50_gramas_ou_litros";
         } else if (fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte3.min && fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte3.max) {
             message = "ras4.ui.txt.etiqueta.atende_peso_minimo_X_gramas_ou_litros_e_peso_maximo_Y_gramas_ou_litros";
             parametros = {min: 50, max: 200}
@@ -100,11 +101,11 @@ export class ValidateModelUtils {
             message = "ras4.ui.txt.etiqueta.atende_peso_minimo_1000_gramas_ou_litros";
         }
 
-        errors.push({
+        alerts.push({
             campo: 'desenho.elementos.' + index + '.fonte.alturaMm',
-            tipo: TipoErro.ABAIXO_LIMITE_PESO,
             message,
-            parametros
+            parametros,
+            tipoAlerta: TipoAlerta.INFORMACAO
         });
 
     }
