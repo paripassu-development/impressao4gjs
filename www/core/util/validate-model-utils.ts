@@ -50,6 +50,7 @@ export class ValidateModelUtils {
                 campo: "testeImpressao.quantidadeImpressao",
                 tipo: TipoErro.CAMPO_OBRIGATORIO,
                 message: "ras.ui.4g.campo_obrigatorio",
+                tipoAlerta: TipoAlerta.ERRO
             });
         }
 
@@ -58,6 +59,7 @@ export class ValidateModelUtils {
                 campo: "testeImpressao.modoImpressao",
                 tipo: TipoErro.CAMPO_OBRIGATORIO,
                 message: "ras.ui.4g.campo_obrigatorio",
+                tipoAlerta: TipoAlerta.ERRO,
             });
         }
 
@@ -66,6 +68,7 @@ export class ValidateModelUtils {
                 campo: "testeImpressao.improssoraLocal",
                 tipo: TipoErro.CAMPO_OBRIGATORIO,
                 message: "ras.ui.4g.campo_obrigatorio",
+                tipoAlerta: TipoAlerta.ERRO,
             });
         }
         return errors;
@@ -184,6 +187,7 @@ export class ValidateModelUtils {
                     campo: path.join(".") + "." + item.campo,
                     tipo: TipoErro.CAMPO_OBRIGATORIO,
                     message: "ras.ui.4g.campo_obrigatorio",
+                    tipoAlerta: TipoAlerta.ERRO
                 });
                 erroObrigatoriedade = true;
             }
@@ -195,6 +199,7 @@ export class ValidateModelUtils {
                     campo: path.join(".") + "." + item.campo,
                     tipo: TipoErro.NAO_NUMERO,
                     message: "ras.ui.4g.campo_obrigatorio",
+                    tipoAlerta: TipoAlerta.ERRO
                 });
             } else if (numeric <= 0 && item.subtipo === "POSITIVE") {
                 errors.push({campo: path.join(".") + "." + item.campo, tipo: TipoErro.NAO_NUMERO_POSITIVO});
