@@ -90,26 +90,18 @@ export class ValidateModelUtils {
 
     private static validaAlturaCampoPeso(fonte: any, alerts: any[], index: number) {
         const intervaloFonte = intervaloTamanhoFonte[fonte.nome];
-        let message;
-        let parametros;
-        if (fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte2.max)  {
-            message = "ras4.ui.txt.etiqueta.atende_peso_maximo_50_gramas_ou_litros";
+        const campo = 'desenho.elementos.' + index + '.fonte.alturaMm';
+        if (fonte.alturaMm === intervaloFonte.proporcaoTamanhoFonte2.min)  {
+            alerts.push({campo: campo, message: "ras4.ui.txt.etiqueta.atende_peso_maximo_50_gramas_ou_litros", parametros: "", tipoAlerta: TipoAlerta.INFORMACAO});
         } else if (fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte3.min && fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte3.max) {
-            message = "ras4.ui.txt.etiqueta.atende_peso_minimo_X_gramas_ou_litros_e_peso_maximo_Y_gramas_ou_litros";
-            parametros = {min: 50, max: 200}
+            alerts.push({campo: campo, message: "ras4.ui.txt.etiqueta.atende_peso_maximo_X_gramas_ou_litros", parametros: {max: 200}, tipoAlerta: TipoAlerta.INFORMACAO});
         } else if (fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte4.min && fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte4.max) {
-            message = "ras4.ui.txt.etiqueta.atende_peso_minimo_X_gramas_ou_litros_e_peso_maximo_Y_gramas_ou_litros";
-            parametros = {min: 200, max: 1000}
+            alerts.push({campo: campo, message: "ras4.ui.txt.etiqueta.atende_peso_maximo_X_gramas_ou_litros", parametros: {max: 1000}, tipoAlerta: TipoAlerta.INFORMACAO});
         } else if(fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte6.min){
-            message = "ras4.ui.txt.etiqueta.atende_peso_minimo_1000_gramas_ou_litros";
+            alerts.push({campo: campo, message: "ras4.ui.txt.etiqueta.atende_todos_peso_gramas_ou_litros", parametros: "", tipoAlerta: TipoAlerta.INFORMACAO});
+        } else {
+            alerts.push({campo: campo, message: "ras4.ui.txt.erro.etiqueta.nao_atende_ao_peso_minimo_50_gramas_ou_litros", parametros: "", tipoAlerta: TipoAlerta.ERRO});
         }
-
-        alerts.push({
-            campo: 'desenho.elementos.' + index + '.fonte.alturaMm',
-            message,
-            parametros,
-            tipoAlerta: TipoAlerta.INFORMACAO
-        });
 
     }
 

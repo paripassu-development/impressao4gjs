@@ -20,7 +20,7 @@ export type TipoError = Enum<typeof TipoError>;
 
 export const intervaloTamanhoFonte: any = {
     "unispace-bold": {
-        proporcaoTamanhoFonte2: {max: 3},
+        proporcaoTamanhoFonte2: {min: 3},
         proporcaoTamanhoFonte3: {min: 4, max: 5},
         proporcaoTamanhoFonte4: {min: 6, max: 7},
         proporcaoTamanhoFonte6: {min: 8}
