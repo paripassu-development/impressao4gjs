@@ -16,6 +16,7 @@ export class EtiquetaUtils {
     public static isCampoPeso(valor: string) {
         let isCampoPeso = false;
         let match;
+        this.REGEX_BUSCA_VARIAVEL.lastIndex = 0;
 
         while ((match = this.REGEX_BUSCA_VARIAVEL.exec(valor)) !== null) {
             if (match.index === this.REGEX_BUSCA_VARIAVEL.lastIndex) {
