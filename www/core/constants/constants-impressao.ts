@@ -32,7 +32,7 @@ export const intervaloTamanhoFonte: any = {
         proporcaoTamanhoFonte6: {min: 8}
     }, // proporção 1.3333333333
     "dejavusansmono-bold": {
-        proporcaoTamanhoFonte2: {max: 3},
+        proporcaoTamanhoFonte2: {min: 3},
         proporcaoTamanhoFonte3: {min: 4, max: 5},
         proporcaoTamanhoFonte4: {min: 6, max: 8},
         proporcaoTamanhoFonte6: {min: 9},
