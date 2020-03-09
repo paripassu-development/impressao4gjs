@@ -92,11 +92,11 @@ export class ValidateModelUtils {
         const intervaloFonte = intervaloTamanhoFonte[fonte.nome];
         const campo = 'desenho.elementos.' + index + '.fonte.alturaMm';
         if (fonte.alturaMm === intervaloFonte.proporcaoTamanhoFonte2.min)  {
-            alerts.push({campo: campo, message: "ras4.ui.txt.etiqueta.atende_peso_maximo_50_gramas_ou_litros", parametros: "", tipoAlerta: TipoAlerta.INFORMACAO});
+            alerts.push({campo: campo, message: "ras4.ui.template.etiqueta.atende_peso_maximo_X_gramas_ou_litros", parametros: {max: 50}, tipoAlerta: TipoAlerta.INFORMACAO});
         } else if (fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte3.min && fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte3.max) {
-            alerts.push({campo: campo, message: "ras4.ui.txt.etiqueta.atende_peso_maximo_X_gramas_ou_litros", parametros: {max: 200}, tipoAlerta: TipoAlerta.INFORMACAO});
+            alerts.push({campo: campo, message: "ras4.ui.template.etiqueta.atende_peso_maximo_X_gramas_ou_litros", parametros: {max: 200}, tipoAlerta: TipoAlerta.INFORMACAO});
         } else if (fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte4.min && fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte4.max) {
-            alerts.push({campo: campo, message: "ras4.ui.txt.etiqueta.atende_peso_maximo_X_gramas_ou_litros", parametros: {max: 1000}, tipoAlerta: TipoAlerta.INFORMACAO});
+            alerts.push({campo: campo, message: "ras4.ui.template.etiqueta.atende_peso_maximo_X_gramas_ou_litros", parametros: {max: 1000}, tipoAlerta: TipoAlerta.INFORMACAO});
         } else if(fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte6.min){
             alerts.push({campo: campo, message: "ras4.ui.txt.etiqueta.atende_todos_peso_gramas_ou_litros", parametros: "", tipoAlerta: TipoAlerta.INFORMACAO});
         } else {
