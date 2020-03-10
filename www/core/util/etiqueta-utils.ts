@@ -1,8 +1,3 @@
-import {Error} from "../common/error";
-import * as _ from "lodash";
-import {ErrosPrefix, TipoError} from "../constants/constants-impressao";
-
-
 export class EtiquetaUtils {
 
 
@@ -19,9 +14,9 @@ export class EtiquetaUtils {
     ];
 
     public static isCampoPeso(valor: string) {
-        const variaveis = valor.match(this.REGEX_BUSCA_VARIAVEL);
         let isCampoPeso = false;
         let match;
+        this.REGEX_BUSCA_VARIAVEL.lastIndex = 0;
 
         while ((match = this.REGEX_BUSCA_VARIAVEL.exec(valor)) !== null) {
             if (match.index === this.REGEX_BUSCA_VARIAVEL.lastIndex) {

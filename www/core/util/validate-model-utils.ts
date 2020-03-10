@@ -1,36 +1,27 @@
 import * as _ from "lodash";
 import {labelConfiguration} from "../../label/label-configuration";
-import {TipoErro} from "../../label/tipo-erro-enum";
+import {TipoErro} from "../enum/tipo-erro-enum";
 import {EtiquetaUtils} from "./etiqueta-utils";
+import {intervaloTamanhoFonte} from "../constants/constants-impressao";
+import {TipoAlerta} from "../enum/tipo-alerta";
 
 export class ValidateModelUtils {
 
     private static REGEX_SOMENTE_LETRAS = /[^\d]/;
 
-    private static mapTamanhosMinimosFontes: object = {
-        "unispace-bold": 8,
-        "telegrama": 8,
-        "dejavusansmono-bold": 9,
-        "dejavusansmono": 9,
-        "bpmono-bold": 10,
-        "codenewroman-bold": 10,
-        "arial": 9,
-        "consolas": 10
-    }
-
     public static validateAll = (model: any) => {
-        const errors: any[] = [];
-        ValidateModelUtils.validatePDF(model, errors);
-        ValidateModelUtils.validateEtiqueta(model, errors);
-        ValidateModelUtils.validateImpressao(model, errors);
-        ValidateModelUtils.validateElementos(model, errors);
-        ValidateModelUtils.validateCampoPeso(model, errors);
-        return errors;
+        const alerts: any[] = [];
+        ValidateModelUtils.validatePDF(model, alerts);
+        ValidateModelUtils.validateEtiqueta(model, alerts);
+        ValidateModelUtils.validateImpressao(model, alerts);
+        ValidateModelUtils.validateElementos(model, alerts);
+        ValidateModelUtils.validateCampoPeso(model, alerts);
+        return alerts;
     }
 
-    public static validateCampoPeso = (model: any, errors: any[]) => {
+    public static validateCampoPeso = (model: any, alerts: any[]) => {
         model.desenho.elementos.forEach((elemento: any, index: number) => {
-            ValidateModelUtils.validaAlturaSeForCampoPeso(elemento, errors, index);
+            ValidateModelUtils.validaAlturaSeForCampoPeso(elemento, alerts, index);
         })
     }
 
@@ -59,6 +50,7 @@ export class ValidateModelUtils {
                 campo: "testeImpressao.quantidadeImpressao",
                 tipo: TipoErro.CAMPO_OBRIGATORIO,
                 message: "ras.ui.4g.campo_obrigatorio",
+                tipoAlerta: TipoAlerta.ERRO
             });
         }
 
@@ -67,6 +59,7 @@ export class ValidateModelUtils {
                 campo: "testeImpressao.modoImpressao",
                 tipo: TipoErro.CAMPO_OBRIGATORIO,
                 message: "ras.ui.4g.campo_obrigatorio",
+                tipoAlerta: TipoAlerta.ERRO,
             });
         }
 
@@ -75,6 +68,7 @@ export class ValidateModelUtils {
                 campo: "testeImpressao.improssoraLocal",
                 tipo: TipoErro.CAMPO_OBRIGATORIO,
                 message: "ras.ui.4g.campo_obrigatorio",
+                tipoAlerta: TipoAlerta.ERRO,
             });
         }
         return errors;
@@ -86,23 +80,29 @@ export class ValidateModelUtils {
         });
     }
 
-    private static validaAlturaSeForCampoPeso(elemento: any, errors: any[], index: number) {
+    private static validaAlturaSeForCampoPeso(elemento: any, alerts: any[], index: number) {
         if (elemento.tipo === 'texto' && !!elemento.valor) {
             if (!!elemento.valor && EtiquetaUtils.isCampoPeso(elemento.valor)) {
-                ValidateModelUtils.validaAlturaCampoPeso(elemento.fonte, errors, index);
+                ValidateModelUtils.validaAlturaCampoPeso(elemento.fonte, alerts, index);
             }
         }
     }
 
-    private static validaAlturaCampoPeso(fonte: any, errors: any[], index: number) {
-        // @ts-ignore
-        if (!!!fonte.alturaMm || fonte.alturaMm < this.mapTamanhosMinimosFontes[fonte.nome]) {
-            errors.push({
-                campo: 'desenho.elementos.' + index + '.fonte.alturaMm',
-                tipo: TipoErro.ABAIXO_LIMITE_PESO,
-                message: "ras.ui.4g.txt.erro.impressao.altura_minima_peso",
-            });
+    private static validaAlturaCampoPeso(fonte: any, alerts: any[], index: number) {
+        const intervaloFonte = intervaloTamanhoFonte[fonte.nome];
+        const campo = 'desenho.elementos.' + index + '.fonte.alturaMm';
+        if (fonte.alturaMm === intervaloFonte.proporcaoTamanhoFonte2.min)  {
+            alerts.push({campo: campo, message: "ras4.ui.template.etiqueta.atende_peso_maximo_X_gramas_ou_litros", parametros: {max: 50}, tipoAlerta: TipoAlerta.INFORMACAO});
+        } else if (fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte3.min && fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte3.max) {
+            alerts.push({campo: campo, message: "ras4.ui.template.etiqueta.atende_peso_maximo_X_gramas_ou_litros", parametros: {max: 200}, tipoAlerta: TipoAlerta.INFORMACAO});
+        } else if (fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte4.min && fonte.alturaMm <= intervaloFonte.proporcaoTamanhoFonte4.max) {
+            alerts.push({campo: campo, message: "ras4.ui.template.etiqueta.atende_peso_maximo_X_gramas_ou_litros", parametros: {max: 1000}, tipoAlerta: TipoAlerta.INFORMACAO});
+        } else if(fonte.alturaMm >= intervaloFonte.proporcaoTamanhoFonte6.min){
+            alerts.push({campo: campo, message: "ras4.ui.txt.etiqueta.atende_todos_peso_gramas_ou_litros", parametros: "", tipoAlerta: TipoAlerta.INFORMACAO});
+        } else {
+            alerts.push({campo: campo, message: "ras4.ui.txt.erro.etiqueta.nao_atende_ao_peso_minimo_50_gramas_ou_litros", parametros: "", tipoAlerta: TipoAlerta.ERRO});
         }
+
     }
 
     public static validaRequisito(item: any, model: any, tipo: any) {
@@ -179,6 +179,7 @@ export class ValidateModelUtils {
                     campo: path.join(".") + "." + item.campo,
                     tipo: TipoErro.CAMPO_OBRIGATORIO,
                     message: "ras.ui.4g.campo_obrigatorio",
+                    tipoAlerta: TipoAlerta.ERRO
                 });
                 erroObrigatoriedade = true;
             }
@@ -190,6 +191,7 @@ export class ValidateModelUtils {
                     campo: path.join(".") + "." + item.campo,
                     tipo: TipoErro.NAO_NUMERO,
                     message: "ras.ui.4g.campo_obrigatorio",
+                    tipoAlerta: TipoAlerta.ERRO
                 });
             } else if (numeric <= 0 && item.subtipo === "POSITIVE") {
                 errors.push({campo: path.join(".") + "." + item.campo, tipo: TipoErro.NAO_NUMERO_POSITIVO});

@@ -1,4 +1,4 @@
-import { Enum } from "typescript-string-enums";
+import {Enum} from "typescript-string-enums";
 
 export const barraOrigemRastreadaConstants = {
     LARGURA_BARRA: 776,
@@ -6,8 +6,8 @@ export const barraOrigemRastreadaConstants = {
 };
 
 export const ErrosPrefix = {
-    ERROR_CODIGO_BARRAS:  "[Código de barras]",
-    ERROR_OBRIGATORIEDADE:  "[Campo obrigatório]",
+    ERROR_CODIGO_BARRAS: "[Código de barras]",
+    ERROR_OBRIGATORIEDADE: "[Campo obrigatório]",
 };
 
 
@@ -17,4 +17,55 @@ export const TipoError = Enum({
 });
 
 export type TipoError = Enum<typeof TipoError>;
+
+export const intervaloTamanhoFonte: any = {
+    "unispace-bold": {
+        proporcaoTamanhoFonte2: {min: 3},
+        proporcaoTamanhoFonte3: {min: 4, max: 5},
+        proporcaoTamanhoFonte4: {min: 6, max: 7},
+        proporcaoTamanhoFonte6: {min: 8}
+    },  // proporção 1.3333333333
+    "telegrama": {
+        proporcaoTamanhoFonte2: {min: 3},
+        proporcaoTamanhoFonte3: {min: 4, max: 5},
+        proporcaoTamanhoFonte4: {min: 6, max: 7},
+        proporcaoTamanhoFonte6: {min: 8}
+    }, // proporção 1.3333333333
+    "dejavusansmono-bold": {
+        proporcaoTamanhoFonte2: {min: 3},
+        proporcaoTamanhoFonte3: {min: 4, max: 5},
+        proporcaoTamanhoFonte4: {min: 6, max: 8},
+        proporcaoTamanhoFonte6: {min: 9},
+    }, // proporção 1.5
+    "dejavusansmono": {
+        proporcaoTamanhoFonte2: {min: 3},
+        proporcaoTamanhoFonte3: {min: 4, max: 5},
+        proporcaoTamanhoFonte4: {min: 6, max: 8},
+        proporcaoTamanhoFonte6: {min: 9},
+    }, // proporção 1.5
+    "bpmono-bold": {
+        proporcaoTamanhoFonte2: {min: 4},
+        proporcaoTamanhoFonte3: {min: 5, max: 6},
+        proporcaoTamanhoFonte4: {min: 7, max: 9},
+        proporcaoTamanhoFonte6: {min: 10},
+    }, // proporção 1.666666666666667
+    "codenewroman-bold": {
+        proporcaoTamanhoFonte2: {min: 4},
+        proporcaoTamanhoFonte3: {min: 5, max: 6},
+        proporcaoTamanhoFonte4: {min: 7, max: 9},
+        proporcaoTamanhoFonte6: {min: 10},
+    }, // proporção 1.666666666666667
+    "arial": {
+        proporcaoTamanhoFonte2: {min: 3},
+        proporcaoTamanhoFonte3: {min: 4, max: 5},
+        proporcaoTamanhoFonte4: {min: 6, max: 8},
+        proporcaoTamanhoFonte6: {min: 9},
+    }, // proporção 1.5
+    "consolas": {
+        proporcaoTamanhoFonte2: {min: 4},
+        proporcaoTamanhoFonte3: {min: 5, max: 6},
+        proporcaoTamanhoFonte4: {min: 7, max: 9},
+        proporcaoTamanhoFonte6: {min: 10},
+    } // proporção 1.666666666666667
+};
 
