@@ -8,6 +8,14 @@ import {TipoAlerta} from "../enum/tipo-alerta";
 export class ValidateModelUtils {
 
     private static REGEX_SOMENTE_LETRAS = /[^\d]/;
+    private static VARIAVEIS_PESO: string[] = [
+        "campoPesoLiquidoNutricional",
+        "pesoLiquidoNutricional",
+        "pesoLiquidoAgranelNutricional",
+        "pesoLiquido",
+        "pesoLiquidoAgranel",
+        "pesoLiquidoNumerico"
+    ];
 
     public static validateAll = (model: any) => {
         const alerts: any[] = [];
@@ -82,7 +90,7 @@ export class ValidateModelUtils {
 
     private static validaAlturaSeForCampoPeso(elemento: any, alerts: any[], index: number) {
         if (elemento.tipo === 'texto' && !!elemento.valor) {
-            if (!!elemento.valor && EtiquetaUtils.isCampoPeso(elemento.valor)) {
+            if (!!elemento.valor && EtiquetaUtils.isCampo(elemento.valor, this.VARIAVEIS_PESO)) {
                 ValidateModelUtils.validaAlturaCampoPeso(elemento.fonte, alerts, index);
             }
         }

@@ -4,16 +4,7 @@ export class EtiquetaUtils {
     private static REGEX_BUSCA_VARIAVEL = /{{{[a-z]*}}}/ig;
     private static REGEX_IGNORA_CARACTERES_ESPECIAIS = /[^\w\s]/gi;
 
-    private static VARIAVEIS_PESO: string[] = [
-        "campoPesoLiquidoNutricional",
-        "pesoLiquidoNutricional",
-        "pesoLiquidoAgranelNutricional",
-        "pesoLiquido",
-        "pesoLiquidoAgranel",
-        "pesoLiquidoNumerico"
-    ];
-
-    public static isCampoPeso(valor: string) {
+    public static isCampo(valor: string, variaveis: string[]) {
         let isCampoPeso = false;
         let match;
         this.REGEX_BUSCA_VARIAVEL.lastIndex = 0;
@@ -24,7 +15,7 @@ export class EtiquetaUtils {
             }
 
             match.forEach((matchResult, groupIndex) => {
-                if (this.VARIAVEIS_PESO.some((variavelPeso: string) => {
+                if (variaveis.some((variavelPeso: string) => {
                     return matchResult.replace(this.REGEX_IGNORA_CARACTERES_ESPECIAIS, '') === variavelPeso;
                 })) {
                     isCampoPeso = true;
