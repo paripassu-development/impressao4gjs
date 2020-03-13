@@ -20,52 +20,52 @@ export type TipoError = Enum<typeof TipoError>;
 
 export const intervaloTamanhoFonte: any = {
     "unispace-bold": {
-        proporcaoTamanhoFonte2: {min: 3},
-        proporcaoTamanhoFonte3: {min: 4, max: 5},
-        proporcaoTamanhoFonte4: {min: 6, max: 7},
-        proporcaoTamanhoFonte6: {min: 8}
+        proporcaoTamanhoFonte2: {min: 3, tamanhoFonte: 2},
+        proporcaoTamanhoFonte3: {min: 4, max: 5, tamanhoFonte: 3},
+        proporcaoTamanhoFonte4: {min: 6, max: 7, tamanhoFonte: 4},
+        proporcaoTamanhoFonte6: {min: 8, tamanhoFonte: 6}
     },  // proporção 1.3333333333
     "telegrama": {
-        proporcaoTamanhoFonte2: {min: 3},
-        proporcaoTamanhoFonte3: {min: 4, max: 5},
-        proporcaoTamanhoFonte4: {min: 6, max: 7},
-        proporcaoTamanhoFonte6: {min: 8}
+        proporcaoTamanhoFonte2: {min: 3, tamanhoFonte: 2},
+        proporcaoTamanhoFonte3: {min: 4, max: 5, tamanhoFonte: 3},
+        proporcaoTamanhoFonte4: {min: 6, max: 7, tamanhoFonte: 4},
+        proporcaoTamanhoFonte6: {min: 8, tamanhoFonte: 6}
     }, // proporção 1.3333333333
     "dejavusansmono-bold": {
-        proporcaoTamanhoFonte2: {min: 3},
-        proporcaoTamanhoFonte3: {min: 4, max: 5},
-        proporcaoTamanhoFonte4: {min: 6, max: 8},
-        proporcaoTamanhoFonte6: {min: 9},
+        proporcaoTamanhoFonte2: {min: 3, tamanhoFonte: 2},
+        proporcaoTamanhoFonte3: {min: 4, max: 5, tamanhoFonte: 3},
+        proporcaoTamanhoFonte4: {min: 6, max: 8, tamanhoFonte: 4},
+        proporcaoTamanhoFonte6: {min: 9, tamanhoFonte: 6},
     }, // proporção 1.5
     "dejavusansmono": {
-        proporcaoTamanhoFonte2: {min: 3},
-        proporcaoTamanhoFonte3: {min: 4, max: 5},
-        proporcaoTamanhoFonte4: {min: 6, max: 8},
-        proporcaoTamanhoFonte6: {min: 9},
+        proporcaoTamanhoFonte2: {min: 3, tamanhoFonte: 2},
+        proporcaoTamanhoFonte3: {min: 4, max: 5, tamanhoFonte: 3},
+        proporcaoTamanhoFonte4: {min: 6, max: 8, tamanhoFonte: 4},
+        proporcaoTamanhoFonte6: {min: 9, tamanhoFonte: 6},
     }, // proporção 1.5
     "bpmono-bold": {
-        proporcaoTamanhoFonte2: {min: 4},
-        proporcaoTamanhoFonte3: {min: 5, max: 6},
-        proporcaoTamanhoFonte4: {min: 7, max: 9},
-        proporcaoTamanhoFonte6: {min: 10},
+        proporcaoTamanhoFonte2: {min: 4, tamanhoFonte: 2},
+        proporcaoTamanhoFonte3: {min: 5, max: 6, tamanhoFonte: 3},
+        proporcaoTamanhoFonte4: {min: 7, max: 9, tamanhoFonte: 4},
+        proporcaoTamanhoFonte6: {min: 10, tamanhoFonte: 6},
     }, // proporção 1.666666666666667
     "codenewroman-bold": {
-        proporcaoTamanhoFonte2: {min: 4},
-        proporcaoTamanhoFonte3: {min: 5, max: 6},
-        proporcaoTamanhoFonte4: {min: 7, max: 9},
-        proporcaoTamanhoFonte6: {min: 10},
+        proporcaoTamanhoFonte2: {min: 4, tamanhoFonte: 2},
+        proporcaoTamanhoFonte3: {min: 5, max: 6, tamanhoFonte: 3},
+        proporcaoTamanhoFonte4: {min: 7, max: 9, tamanhoFonte: 4},
+        proporcaoTamanhoFonte6: {min: 10, tamanhoFonte: 6},
     }, // proporção 1.666666666666667
     "arial": {
-        proporcaoTamanhoFonte2: {min: 3},
-        proporcaoTamanhoFonte3: {min: 4, max: 5},
-        proporcaoTamanhoFonte4: {min: 6, max: 8},
-        proporcaoTamanhoFonte6: {min: 9},
+        proporcaoTamanhoFonte2: {min: 3, tamanhoFonte: 2},
+        proporcaoTamanhoFonte3: {min: 4, max: 5, tamanhoFonte: 3},
+        proporcaoTamanhoFonte4: {min: 6, max: 8, tamanhoFonte: 4},
+        proporcaoTamanhoFonte6: {min: 9, tamanhoFonte: 6},
     }, // proporção 1.5
     "consolas": {
-        proporcaoTamanhoFonte2: {min: 4},
-        proporcaoTamanhoFonte3: {min: 5, max: 6},
-        proporcaoTamanhoFonte4: {min: 7, max: 9},
-        proporcaoTamanhoFonte6: {min: 10},
+        proporcaoTamanhoFonte2: {min: 4, tamanhoFonte: 2},
+        proporcaoTamanhoFonte3: {min: 5, max: 6, tamanhoFonte: 3},
+        proporcaoTamanhoFonte4: {min: 7, max: 9, tamanhoFonte: 4},
+        proporcaoTamanhoFonte6: {min: 10, tamanhoFonte: 6},
     } // proporção 1.666666666666667
 };
 
