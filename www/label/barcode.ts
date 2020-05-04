@@ -406,6 +406,9 @@ const removeZerosEsquerda = (value: string): string => {
 
 //TODO trocar tipoCodigoBarras para ser um enum contendo os tipos de barra suportados afim de evitar erros
 const isValid = (tipoCodigoBarras: string, value: string) => {
+     if (!value || _.isEmpty(value) || !tipoCodigoBarras || _.isEmpty(tipoCodigoBarras)) {
+        return false;
+    }
     return removeZerosEsquerda(value) === removeZerosEsquerda(generateCodigoValue(tipoCodigoBarras, value));
 };
 
