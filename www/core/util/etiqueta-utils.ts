@@ -1,0 +1,33 @@
+export class EtiquetaUtils {
+
+
+    private static REGEX_BUSCA_VARIAVEL = /{{{[a-z]*}}}/ig;
+    private static REGEX_IGNORA_CARACTERES_ESPECIAIS = /[^\w\s]/gi;
+
+    public static isCampo(valor: string, variaveis: string[]) {
+        let isCampoPeso = false;
+        let match;
+        this.REGEX_BUSCA_VARIAVEL.lastIndex = 0;
+
+        while ((match = this.REGEX_BUSCA_VARIAVEL.exec(valor)) !== null) {
+            if (match.index === this.REGEX_BUSCA_VARIAVEL.lastIndex) {
+                this.REGEX_BUSCA_VARIAVEL.lastIndex++;
+            }
+
+            match.forEach((matchResult, groupIndex) => {
+                if (variaveis.some((variavelPeso: string) => {
+                    return matchResult.replace(this.REGEX_IGNORA_CARACTERES_ESPECIAIS, '') === variavelPeso;
+                })) {
+                    isCampoPeso = true;
+                }
+            });
+            if(isCampoPeso) {
+                break;
+            }
+        }
+
+        return isCampoPeso;
+    }
+
+}
+

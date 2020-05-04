@@ -165,7 +165,7 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
         }
     }
 
-    let informacoesAdicionais = "*% Valores diários com base em uma dieta de 2.000 kcal ou 8.400 kJ. Seus valores diários podem ser maiores ou menores dependendo de suas necessidades energéticas.";
+    let informacoesAdicionais = "* % Valores diários com base em uma dieta de 2.000 kcal ou 8.400 kJ. Seus valores diários podem ser maiores ou menores dependendo de suas necessidades energéticas.";
     if (_.get(model, "informacoesAdicionais.texto")) {
         informacoesAdicionais = model.informacoesAdicionais.texto;
     }

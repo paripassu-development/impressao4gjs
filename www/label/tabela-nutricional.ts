@@ -194,7 +194,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 yMm += lineStrokeGap;
                 drawLine(ctx, model, yMm, mm);
             });
-            let texto = "(*) NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE ";
+            let texto = "NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE ";
             if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
                 const naoVisiveis = textBindings.parametrosPadroes.filter((parametro: any) =>
                     parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
