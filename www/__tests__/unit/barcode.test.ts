@@ -14,6 +14,9 @@ describe("barcode util", () => {
     });
 
     it("invalid ean", () => {
+        expect(barcode.isValid(EAN13_DEFAULT, null)).toBeFalsy();
+        expect(barcode.isValid(EAN13_DEFAULT, undefined)).toBeFalsy();
+        expect(barcode.isValid(EAN13_DEFAULT, "")).toBeFalsy();
         expect(barcode.isValid(EAN13_DEFAULT, "1234")).toBeFalsy();
         expect(barcode.isValid(EAN13_DEFAULT, "17895000441607")).toBeFalsy();
     });
@@ -36,10 +39,19 @@ describe("barcode util", () => {
     });
 
     it("invalid dun", () => {
+        expect(barcode.isValid(DUN14_4G, null)).toBeFalsy();
+        expect(barcode.isValid(DUN14_4G, undefined)).toBeFalsy();
+        expect(barcode.isValid(DUN14_4G, "")).toBeFalsy();
         expect(barcode.isValid(DUN14_4G, "1234")).toBeFalsy();
         expect(barcode.isValid(ITF14_DEFAULT, "1234")).toBeFalsy();
         expect(barcode.isValid(DUN14_4G, "17898507968724")).toBeFalsy();
         expect(barcode.isValid(ITF14_DEFAULT, "17898507968724")).toBeFalsy();
+    });
+
+    it("invalid sem tipo", () => {
+        expect(barcode.isValid(null, "123")).toBeFalsy();
+        expect(barcode.isValid(undefined, "123")).toBeFalsy();
+        expect(barcode.isValid("", "123")).toBeFalsy();
     });
 
     it("generate codigo value ean", () => {
