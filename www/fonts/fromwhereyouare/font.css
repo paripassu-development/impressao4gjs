@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'FromWhereYouAre';
-  src: url('FromWhereYouAre.eot');
-  src: url('FromWhereYouAre.woff2') format('woff2'),
-        url('FromWhereYouAre.woff') format('woff'),
-        url('FromWhereYouAre.ttf') format('truetype'),
-        url('FromWhereYouAre.svg#FromWhereYouAre') format('svg');
+  src: url('./FromWhereYouAre.eot');
+  src: url('./FromWhereYouAre.woff2') format('woff2'),
+        url('./FromWhereYouAre.woff') format('woff'),
+        url('./FromWhereYouAre.ttf') format('truetype'),
+        url('./FromWhereYouAre.svg#FromWhereYouAre') format('svg');
   font-weight: normal;
   font-style: normal;
 }
