@@ -28,6 +28,10 @@ export const FONTES = [
         valor: "telegrama",
     },
     {
+        texto: "FromWhereYouAre",
+        valor: "fromwhereyouare",
+    },
+    {
         texto: "Unispace-Bold",
         valor: "unispace-bold",
     },
