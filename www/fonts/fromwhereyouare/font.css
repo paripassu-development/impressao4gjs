@@ -4,7 +4,8 @@
   src: url('./FromWhereYouAre.woff2') format('woff2'),
         url('./FromWhereYouAre.woff') format('woff'),
         url('./FromWhereYouAre.ttf') format('truetype'),
-        url('./FromWhereYouAre.svg#FromWhereYouAre') format('svg');
+        url('./FromWhereYouAre.svg#FromWhereYouAre') format('svg'),
+        url('./FromWhereYouAre.eot?#iefix') format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }
