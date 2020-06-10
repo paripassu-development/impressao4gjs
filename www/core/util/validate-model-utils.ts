@@ -12,7 +12,6 @@ export class ValidateModelUtils {
         "campoPesoLiquidoNutricional",
         "pesoLiquidoNutricional",
         "pesoLiquidoAgranelNutricional",
-        "pesoLiquido",
         "pesoLiquidoAgranel",
         "pesoLiquidoNumerico"
     ];
