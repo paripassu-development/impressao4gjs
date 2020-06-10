@@ -31,12 +31,12 @@ export const intervaloTamanhoFonte: any = {
         proporcaoTamanhoFonte4: {min: 6, max: 7, tamanhoFonte: 4},
         proporcaoTamanhoFonte6: {min: 8, max: Number.MAX_VALUE, tamanhoFonte: 6}
     }, // proporção 1.3333333333
-    "fromwhereyouare": {//fixme COPIADO DO TELEGRAMA, É NECESSÁRIO TESTAR E DEIXAR OS VALORES CORRETOS
+    "fromwhereyouare": {
         proporcaoTamanhoFonte2: {min: 3, max: 3, tamanhoFonte: 2},
-        proporcaoTamanhoFonte3: {min: 4, max: 5, tamanhoFonte: 3},
-        proporcaoTamanhoFonte4: {min: 6, max: 7, tamanhoFonte: 4},
+        proporcaoTamanhoFonte3: {min: 4, max: 4, tamanhoFonte: 3},
+        proporcaoTamanhoFonte4: {min: 5, max: 7, tamanhoFonte: 4},
         proporcaoTamanhoFonte6: {min: 8, max: Number.MAX_VALUE, tamanhoFonte: 6}
-    }, // proporção 1.3333333333
+    }, // proporção 1.25
     "dejavusansmono-bold": {
         proporcaoTamanhoFonte2: {min: 3, max: 3, tamanhoFonte: 2},
         proporcaoTamanhoFonte3: {min: 4, max: 5, tamanhoFonte: 3},
