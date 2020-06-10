@@ -11,9 +11,7 @@ export class ValidateModelUtils {
     private static VARIAVEIS_PESO: string[] = [
         "campoPesoLiquidoNutricional",
         "pesoLiquidoNutricional",
-        "pesoLiquidoAgranelNutricional",
-        "pesoLiquidoAgranel",
-        "pesoLiquidoNumerico"
+        "pesoLiquidoAgranelNutricional"
     ];
 
     public static validateAll = (model: any) => {
