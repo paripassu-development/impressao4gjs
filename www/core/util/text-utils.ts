@@ -197,11 +197,11 @@ function isBoldFont(fontName: string) {
 const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, text: string, xMm: number, yMm: number, larguraMaximaMm: number, mm: any, options?: IFabricTextOptions) => {
     options = options||{};
     let larguraMaximaPx = mm(larguraMaximaMm);
-    const fontProperties = /(bold)?\s?(\d+px)?\s?(.+)?$/.exec(ctx.font);
+    const fontProperties = /(bold)?\s?((\d|\.)+px)?\s?(.+)?$/.exec(ctx.font);
     const font = {
         weight: fontProperties[1],
-        size: Number((fontProperties[2]||"").replace("px","")),
-        name: fontProperties[3]
+        size: Math.round(Number((fontProperties[2]||"").replace("px",""))),
+        name: fontProperties[4]
     };
 
     const textAlign = ctx.textAlign;
