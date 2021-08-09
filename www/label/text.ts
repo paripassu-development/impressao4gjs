@@ -52,7 +52,7 @@ const drawText = (ctx: CanvasRenderingContext2D, fabricCanvas: Canvas, dpi: numb
         ctx.fillStyle = "#000000";
         ctx.strokeStyle = "#000000";
         ctx.rotate(degrees * Math.PI / 180);
-        ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm))}px ${model.fonte.nome}`;
+        ctx.font = `${model.fonte.negrito ? "bold" : ""} ${mm(model.fonte.alturaMm)}px ${model.fonte.nome}`;
         let renderedText = textBindings ? Mustache.render(model.valor, textBindings) : model.valor.replace("{{{", "<").replace("}}}", ">");
         if (textFunctions[model.fn] && textBindings) {
             renderedText = textFunctions[model.fn](renderedText);
