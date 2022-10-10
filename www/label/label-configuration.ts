@@ -1138,7 +1138,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesAdicionais.texto",
-                        padrao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto.descricao.padrao",
+                        padrao: "* Percentual de valores diários fornecidos pela porção.",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.caracter_linha",
@@ -1162,7 +1162,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoInformacaoNutricional",
-                        padrao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.informacao_nutricional.padrao",
+                        padrao: "INFORMAÇÃO NUTRICIONAL",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_quantidade_porcao",
@@ -1178,7 +1178,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoAbreviadoValorDiario",
-                        padrao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_valor_diario.descricao.padrao",
+                        padrao: "%VD*",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.porcao_caseira",
@@ -1271,6 +1271,24 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
@@ -1325,6 +1343,24 @@ const METADADOS_ELEMENTOS: any[] = [
                                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.qt100",
                                         obrigatorio: true,
                                         preRequisito: [
                                             {
@@ -1407,6 +1443,24 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
@@ -1461,6 +1515,24 @@ const METADADOS_ELEMENTOS: any[] = [
                                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados.qt100",
                                         obrigatorio: true,
                                         preRequisito: [
                                             {
@@ -1543,6 +1615,24 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
@@ -1597,6 +1687,24 @@ const METADADOS_ELEMENTOS: any[] = [
                                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.qt100",
                                         obrigatorio: true,
                                         preRequisito: [
                                             {
@@ -1679,6 +1787,24 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
@@ -1733,6 +1859,24 @@ const METADADOS_ELEMENTOS: any[] = [
                                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.qt100",
                                         obrigatorio: true,
                                         preRequisito: [
                                             {
@@ -1815,6 +1959,24 @@ const METADADOS_ELEMENTOS: any[] = [
                                         ],
                                     },
                                     {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
                                         tipo: "TEXT",
@@ -1869,6 +2031,24 @@ const METADADOS_ELEMENTOS: any[] = [
                                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.qt100",
                                         obrigatorio: true,
                                         preRequisito: [
                                             {

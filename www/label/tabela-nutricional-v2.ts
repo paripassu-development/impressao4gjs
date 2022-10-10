@@ -1,6 +1,6 @@
 import {fabric} from "fabric";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
-import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
+import {setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
     splitLines,
     strokeAlignedText,
@@ -85,7 +85,7 @@ interface IElementoTabelaNutricionalModel {
 }
 
 const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
-    setInformacoesPadraoZero(textBindings);
+    setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
     const degrees = model.posicao.rotacao || 0;

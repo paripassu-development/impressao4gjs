@@ -128,7 +128,12 @@ export const DADOS_DEFAULT = {
         qtPorcao: "4 g",
         qt100: "40",
     }, {
-        rotulo: "Açucares totais (g)",
+        rotulo: "Açúcares totais (g)",
+        valorDiario: "1 %",
+        qtPorcao: "1",
+        qt100: "10",
+    }, {
+        rotulo: "Açúcares adicionados (g)",
         valorDiario: "1 %",
         qtPorcao: "1",
         qt100: "10",
@@ -421,6 +426,18 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
     {
         "qtPorcao": "1",
         "rotulo": "Proteínas",
+        "valorDiario": "1 %",
+        "qt100": "10",
+    },
+    {
+        "qtPorcao": "1",
+        "rotulo": "Açúcares Totais",
+        "valorDiario": "1 %",
+        "qt100": "10",
+    },
+    {
+        "qtPorcao": "1",
+        "rotulo": "Açúcares Adicionados",
         "valorDiario": "1 %",
         "qt100": "10",
     },
