@@ -142,13 +142,13 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
                 }
 
-                if (nutriente === "valorEnergetico") {
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoProporcaoCalorias, textBindings),
-                        model.posicao.xMm - (alturaLinhaMm * 4.5), yMm, mm, TextAlign.RIGHT, degrees);
-                } else {
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(informacoesNutriente.qtPorcao, textBindings),
+                // if (nutriente === "valorEnergetico") {
+                //     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoProporcaoCalorias, textBindings),
+                //         model.posicao.xMm - (alturaLinhaMm * 4.5), yMm, mm, TextAlign.RIGHT, degrees);
+                // } else {
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(informacoesNutriente.qtPorcao, textBindings),
                         model.posicao.xMm - (alturaLinhaMm * 7), yMm, mm, TextAlign.RIGHT, degrees);
-                }
+                // }
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(informacoesNutriente.qt100, textBindings),
                     model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.CENTER, degrees);
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(informacoesNutriente.valDiario, textBindings),
