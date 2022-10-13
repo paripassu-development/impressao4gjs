@@ -115,6 +115,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoQuantidadePorPorcao"),
         model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
 
+    // TODO: adicionar os valores de porção e de 100g também
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
     if (!!fabricCanvas) {
@@ -147,10 +148,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 //         model.posicao.xMm - (alturaLinhaMm * 4.5), yMm, mm, TextAlign.RIGHT, degrees);
                 // } else {
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(informacoesNutriente.qtPorcao, textBindings),
-                        model.posicao.xMm - (alturaLinhaMm * 7), yMm, mm, TextAlign.RIGHT, degrees);
+                    model.posicao.xMm - (alturaLinhaMm * 7), yMm, mm, TextAlign.RIGHT, degrees);
                 // }
+                // TODO: testar com o center
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(informacoesNutriente.qt100, textBindings),
-                    model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.CENTER, degrees);
+                    model.posicao.xMm - alturaLinhaMm / 4, yMm, mm, TextAlign.RIGHT, degrees);
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(informacoesNutriente.valDiario, textBindings),
                     model.posicao.xMm - alturaLinhaMm / 2, yMm, mm, TextAlign.RIGHT, degrees);
                 yMm += lineStrokeGap;
@@ -169,15 +171,17 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 } else {
                     ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
                 }
-                if (parametro.rotulo === "Valor Energético (kcal)") {
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 4.5),
-                        yMm, mm, TextAlign.RIGHT, degrees);
-                } else {
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 7),
-                        yMm, mm, TextAlign.RIGHT, degrees);
-                }
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, model.posicao.xMm - alturaLinhaMm / 2,
-                    yMm, mm, TextAlign.CENTER, degrees);
+                // if (parametro.rotulo === "Valor Energético (kcal)") {
+                //     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 4.5),
+                //         yMm, mm, TextAlign.RIGHT, degrees);
+                // } else {
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 7),
+                    yMm, mm, TextAlign.RIGHT, degrees);
+                // }
+                // TODO: testar com o center
+                // strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, model.posicao.xMm - alturaLinhaMm / 2,
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, model.posicao.xMm - alturaLinhaMm / 4,
+                    yMm, mm, TextAlign.RIGHT, degrees);
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm / 2,
                     yMm, mm, TextAlign.RIGHT, degrees);
                 yMm += lineStrokeGap;
@@ -197,8 +201,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 }
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 7),
                     yMm, mm, TextAlign.RIGHT, degrees);
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, model.posicao.xMm - alturaLinhaMm / 2,
-                    yMm, mm, TextAlign.CENTER, degrees);
+                // TODO: testar com o center
+                // strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, model.posicao.xMm - alturaLinhaMm / 2,
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, model.posicao.xMm - alturaLinhaMm / 4,
+                    yMm, mm, TextAlign.RIGHT, degrees);
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm / 2,
                     yMm, mm, TextAlign.RIGHT, degrees);
                 yMm += lineStrokeGap;
