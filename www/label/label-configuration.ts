@@ -1170,7 +1170,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoQuantidadePorPorcao",
-                        padrao: "TODO: ALTERAR AQUI: QUANTIDADE POR PORÇÃO",
+                        padrao: "TODO:",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_valor_diario",

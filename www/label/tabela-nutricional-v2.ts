@@ -112,10 +112,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     drawLine(ctx, model, yMm, mm);
     yMm += alturaLinhaMm;
 
-    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoQuantidadePorPorcao"),
-        model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
-
-    // TODO: adicionar os valores de porção e de 100g também
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
     if (!!fabricCanvas) {
@@ -124,6 +120,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     } else {
         ctx.strokeText(textoValorDiario,
             mm(model.posicao.xMm + model.dimensoes.larguraMaximaMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+
+        // TODO: revert aqui se der ruim
+        strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings),
+            model.posicao.xMm - (alturaLinhaMm * 7), yMm, mm, TextAlign.RIGHT, degrees);
+
+        strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoQt100, textBindings),
+            model.posicao.xMm - (alturaLinhaMm * 3.5), yMm, mm, TextAlign.RIGHT, degrees);
+        // TODO: revert até aqui
     }
 
     yMm += lineStrokeGap;
