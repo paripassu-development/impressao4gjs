@@ -124,10 +124,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             model.posicao.xMm - (alturaLinhaMm * 3.5), yMm, mm, TextAlign.RIGHT, degrees);
         // TODO: remover até aqui se der ruim
 
-        writeFabricText(fabricCanvas, ctx, textoValorDiario, model.posicao.xMm + model.dimensoes.larguraMaximaMm,
+        // writeFabricText(fabricCanvas, ctx, textoValorDiario, model.posicao.xMm + model.dimensoes.larguraMaximaMm,
+        writeFabricText(fabricCanvas, ctx, "opcao1", model.posicao.xMm + model.dimensoes.larguraMaximaMm,
             yMm, larguraMaxima, mm, {degrees});
     } else {
-        ctx.strokeText(textoValorDiario,
+        // ctx.strokeText(textoValorDiario,
+        ctx.strokeText("opcao2",
             mm(model.posicao.xMm + model.dimensoes.larguraMaximaMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
     }
 
