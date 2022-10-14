@@ -112,26 +112,31 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     drawLine(ctx, model, yMm, mm);
     yMm += alturaLinhaMm;
 
+    // TODO: alterar aqui para left se der erro
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
     const porcao = getOrDefault(model.informacoesNutricionais, "textoQuantidadePorPorcao");
     const porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
 
     if (!!fabricCanvas) {
-        writeFabricText(fabricCanvas, ctx, porcao100g, model.posicao.xMm  - (alturaLinhaMm / 4),
+        writeFabricText(fabricCanvas, ctx, porcao100g, model.posicao.xMm  - (alturaLinhaMm * 7),
             yMm, larguraMaxima, mm, {degrees});
 
-        writeFabricText(fabricCanvas, ctx, porcao, model.posicao.xMm - (alturaLinhaMm / 2),
+        ctx.textAlign = TextAlign.LEFT;
+
+        writeFabricText(fabricCanvas, ctx, porcao, model.posicao.xMm - (alturaLinhaMm * 3.5),
             yMm, larguraMaxima, mm, {degrees});
 
         writeFabricText(fabricCanvas, ctx, textoValorDiario, model.posicao.xMm + model.dimensoes.larguraMaximaMm,
             yMm, larguraMaxima, mm, {degrees});
     } else {
         ctx.strokeText(porcao100g,
-            mm(model.posicao.xMm - (alturaLinhaMm / 4)), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+            mm(model.posicao.xMm - (alturaLinhaMm * 7)), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
 
         ctx.strokeText(porcao,
-            mm(model.posicao.xMm - (alturaLinhaMm / 2)), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+            mm(model.posicao.xMm - (alturaLinhaMm * 3.5)), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+
+        ctx.textAlign = TextAlign.LEFT;
 
         ctx.strokeText(textoValorDiario,
             mm(model.posicao.xMm + model.dimensoes.larguraMaximaMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
