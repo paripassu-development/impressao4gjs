@@ -431,13 +431,13 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
     },
     {
         "qtPorcao": "2",
-        "rotulo": " Açúcares Totais (g)",
+        "rotulo": "  Açúcares Totais (g)",
         "valorDiario": "",
         "qt100": "5",
     },
     {
         "qtPorcao": "1",
-        "rotulo": "     Açúcares Adicionados (g)",
+        "rotulo": "    Açúcares Adicionados (g)",
         "valorDiario": "2",
         "qt100": "4",
     },
@@ -449,19 +449,19 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
     },
     {
         "qtPorcao": "7",
-        "rotulo": " Gorduras Totais (g)",
+        "rotulo": "  Gorduras Totais (g)",
         "valorDiario": "12",
         "qt100": "12",
     },
     {
         "qtPorcao": "3",
-        "rotulo": "     Gorduras Saturadas (g)",
+        "rotulo": "    Gorduras Saturadas (g)",
         "valorDiario": "18",
         "qt100": "14",
     },
     {
         "qtPorcao": "0",
-        "rotulo": "Gorduras trans (g)",
+        "rotulo": "    Gorduras trans (g)",
         "valorDiario": "0",
         "qt100": "0",
     },
