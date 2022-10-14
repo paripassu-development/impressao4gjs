@@ -1173,6 +1173,14 @@ const METADADOS_ELEMENTOS: any[] = [
                         padrao: "TODO:",
                     },
                     {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoQt100",
+                        padrao: "100g",
+                    },
+                    {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_valor_diario",
                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_valor_diario.descricao",
                         tipo: "TEXT",

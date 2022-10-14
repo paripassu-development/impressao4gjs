@@ -112,7 +112,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     drawLine(ctx, model, yMm, mm);
     yMm += alturaLinhaMm;
 
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
     const porcao = getOrDefault(model.informacoesNutricionais, "textoQuantidadePorPorcao");
     const porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
