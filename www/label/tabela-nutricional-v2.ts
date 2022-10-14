@@ -104,7 +104,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
-    yMm += alturaLinhaMm * 1.1;
+    yMm += (2 * alturaLinhaMm);
+    // yMm += alturaLinhaMm * 1.1;
 
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm))}px ${model.fonte.nome}`;
 
@@ -113,7 +114,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
-    yMm += (2 * alturaLinhaMm); // TODO: voltar ao normal se for o caso
+    yMm += alturaLinhaMm;
 
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
