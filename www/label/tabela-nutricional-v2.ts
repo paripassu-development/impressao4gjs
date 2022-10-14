@@ -102,9 +102,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoInformacaoNutricional"),
         model.posicao.xMm, yMm, mm, TextAlign.CENTER, degrees);
 
-    // yMm += lineStrokeGap;
+    yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
-    yMm += alturaLinhaMm * 1.1;
+    // yMm += alturaLinhaMm * 1.1;
 
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm))}px ${model.fonte.nome}`;
 
