@@ -113,7 +113,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
-    yMm += alturaLinhaMm;
+    yMm += (2 * alturaLinhaMm); // TODO: voltar ao normal se for o caso
 
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
