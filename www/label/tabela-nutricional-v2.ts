@@ -54,7 +54,7 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoProporcaoCalorias: string;
     informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
     ocultarZerados: boolean;
-    parametrosPadroes: [any];
+    parametrosPadroesNutricionalV2: [any];
 }
 
 interface IElementoTabelaNutricionalOpcoes {
@@ -104,6 +104,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += alturaLinhaMm * 1.1;
 
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm))}px ${model.fonte.nome}`;
+
+    yMm += lineStrokeGap;
+    drawLine(ctx, model, yMm, mm);
 
     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings),
         model.posicao.xMm, yMm, mm, TextAlign.CENTER, degrees);
@@ -163,8 +166,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
         });
     } else {
-        const parametrosPadroes = !!textBindings ? textBindings.parametrosPadroes : PARAMETROS_PADROES_NUTRICIONAL_V2;
-        parametrosPadroes.forEach((parametro: any) => {
+        const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
+        parametrosPadroesNutricionalV2.forEach((parametro: any) => {
             const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
             if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
                 yMm += alturaLinhaMm;
@@ -206,7 +209,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             });
             let texto = "NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE ";
             if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
-                const naoVisiveis = textBindings.parametrosPadroes.filter((parametro: any) =>
+                const naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter((parametro: any) =>
                     parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
                 );
                 if (naoVisiveis.length > 0) {
