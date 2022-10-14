@@ -101,12 +101,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm * 1.5))}px ${model.fonte.nome}`;
     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, getOrDefault(model.informacoesNutricionais, "textoInformacaoNutricional"),
         model.posicao.xMm, yMm, mm, TextAlign.CENTER, degrees);
+
+    // yMm += lineStrokeGap;
+    drawLine(ctx, model, yMm, mm);
     yMm += alturaLinhaMm * 1.1;
 
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm))}px ${model.fonte.nome}`;
-
-    yMm += lineStrokeGap;
-    drawLine(ctx, model, yMm, mm);
 
     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings),
         model.posicao.xMm, yMm, mm, TextAlign.CENTER, degrees);
@@ -189,7 +189,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         });
 
         if (!!textBindings) {
-            textBindings.parametrosExtras.forEach((parametro: any) => {
+            // TODO: alterar o arquivo json depois para o novo v2
+            textBindings.parametrosExtrasNutricionalV2.forEach((parametro: any) => {
                 yMm += alturaLinhaMm;
                 ctx.textAlign = TextAlign.LEFT;
 

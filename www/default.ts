@@ -174,6 +174,12 @@ export const DADOS_DEFAULT = {
         qtPorcao: "0 g",
         qt100: "0",
     }],
+    parametrosExtrasNutricionalV2: [{
+        qtPorcao: "0",
+        rotulo: "Vitamina C (g)",
+        valorDiario: "0",
+        qt100: "0",
+    }],
 };
 
 export const MODEL_DEFAULT = {
