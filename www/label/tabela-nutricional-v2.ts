@@ -112,8 +112,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     drawLine(ctx, model, yMm, mm);
     yMm += alturaLinhaMm;
 
-    // TODO: alterar aqui para left se der erro
-    ctx.textAlign = TextAlign.RIGHT;
+    ctx.textAlign = TextAlign.LEFT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
     const porcao = getOrDefault(model.informacoesNutricionais, "textoQuantidadePorPorcao");
     const porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
@@ -122,12 +121,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         writeFabricText(fabricCanvas, ctx, porcao100g, model.posicao.xMm  - (alturaLinhaMm * 7),
             yMm, larguraMaxima, mm, {degrees});
 
-        ctx.textAlign = TextAlign.LEFT;
-
         writeFabricText(fabricCanvas, ctx, porcao, model.posicao.xMm - (alturaLinhaMm * 3.5),
             yMm, larguraMaxima, mm, {degrees});
 
-        writeFabricText(fabricCanvas, ctx, textoValorDiario, model.posicao.xMm + model.dimensoes.larguraMaximaMm,
+        writeFabricText(fabricCanvas, ctx, textoValorDiario, model.posicao.xMm - (alturaLinhaMm / 2),
             yMm, larguraMaxima, mm, {degrees});
     } else {
         ctx.strokeText(porcao100g,
@@ -136,10 +133,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         ctx.strokeText(porcao,
             mm(model.posicao.xMm - (alturaLinhaMm * 3.5)), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
 
-        ctx.textAlign = TextAlign.LEFT;
-
         ctx.strokeText(textoValorDiario,
-            mm(model.posicao.xMm + model.dimensoes.larguraMaximaMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+            mm(model.posicao.xMm - (alturaLinhaMm / 2)), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
     }
 
     yMm += lineStrokeGap;
