@@ -1170,7 +1170,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoQuantidadePorPorcao",
-                        padrao: "Qtd. Porção",
+                        padrao: "25g",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_quantidade_porcoes_embalagem",
