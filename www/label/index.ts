@@ -142,15 +142,13 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
                 return new Promise((resolve) => {
                     tabelaNutricional.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
-                    // tslint:disable-next-line:no-console
-                }).catch((error) => console.log(error));
+                });
             },
             tabelaNutricionalV2: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalV2.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
-                    // tslint:disable-next-line:no-console
-                }).catch((error) => console.log(error));
+                });
             },
             tabelaNutricionalEmLinha: (): Promise<any> => {
                 return new Promise((resolve) => {
