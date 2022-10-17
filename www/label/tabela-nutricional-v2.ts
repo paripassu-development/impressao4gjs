@@ -105,12 +105,19 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
     yMm += (2 * alturaLinhaMm);
-    // yMm += alturaLinhaMm * 1.1;
 
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm))}px ${model.fonte.nome}`;
 
-    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings),
-        model.posicao.xMm, yMm, mm, TextAlign.CENTER, degrees);
+    strokeAlignedText(ctx, fabricCanvas, larguraMaxima,
+        ("Porções por embalagem: " + fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings)),
+        model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
+
+    yMm += lineStrokeGap;
+
+    strokeAlignedText(ctx, fabricCanvas, larguraMaxima,
+        ("Porção: " + fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings)
+            + "(" + fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings)) + ")",
+        model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
 
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
