@@ -113,6 +113,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
 
     yMm += lineStrokeGap;
+    yMm += alturaLinhaMm;
 
     strokeAlignedText(ctx, fabricCanvas, larguraMaxima,
         ("Porção: " + fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings)
