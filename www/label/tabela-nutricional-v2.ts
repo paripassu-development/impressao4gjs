@@ -105,7 +105,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     yMm += lineStrokeGap;
     drawLine(ctx, model, yMm, mm);
-    yMm += (2 * alturaLinhaMm);
+    yMm += alturaLinhaMm;
 
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm))}px ${model.fonte.nome}`;
 
@@ -199,7 +199,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         });
 
         if (!!textBindings) {
-            // TODO: alterar o arquivo json depois para o novo v2
             textBindings.parametrosExtrasNutricionalV2.forEach((parametro: any) => {
                 yMm += alturaLinhaMm;
                 ctx.textAlign = TextAlign.LEFT;
