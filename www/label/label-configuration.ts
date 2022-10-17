@@ -1177,7 +1177,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_quantidade_porcoes_embalagem.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
-                        campo: "informacoesNutricionais.textoQuantidadeEmabalagem",
+                        campo: "informacoesNutricionais.textoQuantidadeEmbalagem",
                         padrao: "10",
                     },
                     {

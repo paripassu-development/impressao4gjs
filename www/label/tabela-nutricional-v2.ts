@@ -48,7 +48,7 @@ interface IElementoTabelaNutricionalInformacoesAdicionais {
 interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoInformacaoNutricional: string;
     textoQuantidadePorPorcao: string;
-    textoQuantidadeEmabalagem: string;
+    textoQuantidadeEmbalagem: string;
     textoPorcaoCaseira: string;
     textoQt100: string;
     textoAbreviadoValorDiario: string;
@@ -110,7 +110,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm))}px ${model.fonte.nome}`;
 
     strokeAlignedText(ctx, fabricCanvas, larguraMaxima,
-        ("Porções por embalagem: " + fillTemplate(model.informacoesNutricionais.textoQuantidadeEmabalagem, textBindings)),
+        ("Porções por embalagem: " + fillTemplate(model.informacoesNutricionais.textoQuantidadeEmbalagem, textBindings)),
         model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
 
     yMm += lineStrokeGap;
