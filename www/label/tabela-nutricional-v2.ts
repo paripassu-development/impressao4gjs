@@ -48,9 +48,10 @@ interface IElementoTabelaNutricionalInformacoesAdicionais {
 interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoInformacaoNutricional: string;
     textoQuantidadePorPorcao: string;
+    textoQuantidadeEmabalagem: string;
+    textoPorcaoCaseira: string;
     textoQt100: string;
     textoAbreviadoValorDiario: string;
-    textoPorcaoCaseira: string;
     textoProporcaoCalorias: string;
     informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
     ocultarZerados: boolean;
@@ -109,14 +110,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm))}px ${model.fonte.nome}`;
 
     strokeAlignedText(ctx, fabricCanvas, larguraMaxima,
-        ("Porções por embalagem: " + fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings)),
+        ("Porções por embalagem: " + fillTemplate(model.informacoesNutricionais.textoQuantidadeEmabalagem, textBindings)),
         model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
 
     yMm += lineStrokeGap;
     yMm += alturaLinhaMm;
 
     strokeAlignedText(ctx, fabricCanvas, larguraMaxima,
-        ("Porção: " + fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings)
+        ("Porção: " + fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings)
             + "(" + fillTemplate(model.informacoesNutricionais.textoPorcaoCaseira, textBindings)) + ")",
         model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
 
