@@ -124,52 +124,34 @@ export const DADOS_DEFAULT = {
         rotulo: "Valor Energético",
         valorDiario: "2 %",
         qtPorcao: "45 kcal= 189 kJ",
-        qt100: "500",
     }, {
         rotulo: "Carboidratos",
         valorDiario: "4 %",
         qtPorcao: "4 g",
-        qt100: "40",
-    }, {
-        rotulo: "Açúcares totais (g)",
-        valorDiario: "1 %",
-        qtPorcao: "1",
-        qt100: "10",
-    }, {
-        rotulo: "Açúcares adicionados (g)",
-        valorDiario: "1 %",
-        qtPorcao: "1",
-        qt100: "10",
     }, {
         rotulo: "Proteínas",
         valorDiario: "1 %",
         qtPorcao: "1 g",
-        qt100: "10",
     }, {
         rotulo: "Gorduras Totais",
         valorDiario: "0 %",
         qtPorcao: "0 g",
-        qt100: "0",
     }, {
         rotulo: "Gorduras Saturadas",
         valorDiario: "0 %",
         qtPorcao: "0 g",
-        qt100: "0",
     }, {
         rotulo: "Gorduras trans",
         valorDiario: "**",
         qtPorcao: "0 g",
-        qt100: "0",
     }, {
         rotulo: "Fibra Alimentar",
         valorDiario: "7 %",
         qtPorcao: "7 mg",
-        qt100: "70",
     }, {
         rotulo: "Sódio",
         valorDiario: "0 %",
         qtPorcao: "0 g",
-        qt100: "0",
     }],
     parametrosExtras: [{
         rotulo: "Vitamina C",
