@@ -1182,7 +1182,7 @@ const METADADOS_ELEMENTOS: any[] = [
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoQt100",
@@ -1288,7 +1288,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                     },
                                     {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.qt100",
                                         obrigatorio: true,
@@ -1374,7 +1374,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                     },
                                     {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.qt100",
                                         obrigatorio: true,
@@ -1460,7 +1460,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                     },
                                     {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais.qt100",
                                         obrigatorio: true,
@@ -1546,7 +1546,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                     },
                                     {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados.qt100",
                                         obrigatorio: true,
@@ -1632,7 +1632,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                     },
                                     {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.qt100",
                                         obrigatorio: true,
@@ -1718,7 +1718,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                     },
                                     {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.qt100",
                                         obrigatorio: true,
@@ -1804,7 +1804,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                     },
                                     {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.qt100",
                                         obrigatorio: true,
@@ -1890,7 +1890,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                     },
                                     {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.qt100",
                                         obrigatorio: true,
@@ -1976,7 +1976,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                     },
                                     {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.qt100",
                                         obrigatorio: true,
@@ -2062,7 +2062,7 @@ const METADADOS_ELEMENTOS: any[] = [
                                     },
                                     {
                                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
-                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
                                         tipo: "TEXT",
                                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.qt100",
                                         obrigatorio: true,
