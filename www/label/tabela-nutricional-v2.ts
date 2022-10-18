@@ -48,6 +48,7 @@ interface IElementoTabelaNutricionalInformacoesAdicionais {
 interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoInformacaoNutricional: string;
     textoQuantidadePorPorcao: string;
+    porcaoNutricionalV2: string;
     textoQuantidadeEmbalagem: string;
     textoPorcaoCaseira: string;
     textoQt100: string;
