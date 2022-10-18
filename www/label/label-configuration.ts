@@ -1178,7 +1178,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoQuantidadeEmbalagem",
-                        padrao: "10",
+                        padrao: "{{{porcoesPorEmbalagem}}}",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
@@ -1202,7 +1202,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoPorcaoCaseira",
-                        padrao: "{{{porcao}}}",
+                        padrao: "{{{medidaCaseiraNutricionalV2}}}",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_proporcao_calorias",
