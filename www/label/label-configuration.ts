@@ -1189,8 +1189,8 @@ const METADADOS_ELEMENTOS: any[] = [
                         padrao: "100g",
                     },
                     {
-                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_valor_diario",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_valor_diario.descricao",
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_valor_diario",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_valor_diario.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoAbreviadoValorDiario",
