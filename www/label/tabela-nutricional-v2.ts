@@ -128,7 +128,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
-    const porcao = getOrDefault(model.informacoesNutricionais, "textoQuantidadePorPorcao");
+    const porcao = getOrDefault(model.informacoesNutricionais, "porcaoNutricionalV2");
     const porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
 
     if (!!fabricCanvas) {
