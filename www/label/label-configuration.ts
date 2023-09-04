@@ -32,7 +32,7 @@ const VALORES_ROTACAO: IValoresRotacao = [
         texto: "270°",
         valor: "270",
     },
-]
+];
 
 const METADADOS_IMPRESSAO: any = {
     nome: "ras.ui.4g.etiqueta.configuracao.impressao",
@@ -4406,7 +4406,7 @@ const METADADOS_ELEMENTOS: any[] = [
                 tipo: "BOOLEAN",
                 obrigatorio: false,
                 campo: "mostraTexto",
-                padrao: true
+                padrao: true,
             },
             {
                 nome: "ras.ui.4g.etiqueta.configuracao.fonte",
