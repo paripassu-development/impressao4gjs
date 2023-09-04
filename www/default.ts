@@ -363,43 +363,43 @@ export const PARAMETROS_PADROES_NUTRICIONAL = [
     {
         "qtPorcao": "1 kcal= 4 kJ",
         "rotulo": "Valor Energético",
-        "valorDiario": "2 %"
+        "valorDiario": "2 %",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Carboidratos",
-        "valorDiario": "1 %"
+        "valorDiario": "1 %",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Proteínas",
-        "valorDiario": "1 %"
+        "valorDiario": "1 %",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Gorduras Totais",
-        "valorDiario": "1 %"
+        "valorDiario": "1 %",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Gorduras Saturadas",
-        "valorDiario": "1 %"
+        "valorDiario": "1 %",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Gorduras ###trans###",
-        "valorDiario": "**"
+        "valorDiario": "**",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Fibra Alimentar",
-        "valorDiario": "1 %"
+        "valorDiario": "1 %",
     },
     {
         "qtPorcao": "1 mg",
         "rotulo": "Sódio",
-        "valorDiario": "1 %"
-    }
+        "valorDiario": "1 %",
+    },
 ];
 export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
     {
@@ -463,3 +463,9 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
         "qt100": "600",
     },
 ];
+
+export const TAMANHO_FONTE_PADRAO_TITULO_EM_PT = 10;
+export const TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT = 8;
+export const TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT = 8;
+export const TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT = 6;
+export const EXPESSURA_LINHA_GROSSA_EM_PT = 3;

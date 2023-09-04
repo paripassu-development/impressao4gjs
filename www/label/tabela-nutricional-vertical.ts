@@ -1,4 +1,5 @@
 import {fabric} from "fabric";
+import {converterPtParaPX} from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
@@ -7,7 +8,12 @@ import {
     TextAlign,
     writeFabricText,
 } from "../core/util/text-utils";
-import {PARAMETROS_PADROES_NUTRICIONAL_V2} from "../default";
+import {
+    EXPESSURA_LINHA_GROSSA_EM_PT,
+    PARAMETROS_PADROES_NUTRICIONAL_V2,
+    TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT,
+    TAMANHO_FONTE_PADRAO_TITULO_EM_PT,
+} from "../default";
 import {mmPartial} from "./mm";
 
 const BLACK = "#000000";
@@ -91,8 +97,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
-    const TAMANHO_FONTE_PADRAO_TITULO = 10;
-    const TAMANHO_FONTE_PADRAO_INFORMACOES = 8;
     const degrees = model.posicao.rotacao || 0;
     ctx.rotate(degrees * Math.PI / 180);
     ctx.fillStyle = BLACK;
@@ -100,11 +104,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.lineWidth = model.fonte.forcaContorno || 0;
     const larguraMaxima = model.dimensoes.larguraMaximaMm;
     let yMm = model.posicao.yMm;
+    // TODO: deixar com altura de 3,8 mm base
     const alturaLinhaMm = model.fonte.alturaMm * 1.2;
     const lineStrokeGap = alturaLinhaMm / 3;
 
     // Configurando fonte do Titulo
-    ctx.font = `bold ${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_TITULO)}pt ${model.fonte.nome}`;
+    ctx.font = `bold ${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_TITULO_EM_PT)}pt ${model.fonte.nome}`;
 
     // Titulo INFORMAÇÕES NUTRICIONAIS ---------------------------------------------------------------------------------
     strokeAlignedText(
@@ -121,11 +126,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // Linha grossa ----------------------------------------------------------------------------------------------------
     yMm += lineStrokeGap;
-    desenharLinha(ctx, model, yMm, mm);
+    desenharLinhaGrossa(ctx, model, yMm, mm);
     yMm += alturaLinhaMm;
 
     // Configurando fonte de Informações e labels nutricionais
-    ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_INFORMACOES)}pt ${model.fonte.nome}`;
+    ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT)}pt ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Porções por embalagem:
@@ -309,6 +314,19 @@ const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutr
         mm(model.dimensoes.larguraMaximaMm),
         1,
     );
+};
+
+const desenharLinhaGrossa = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
+    ctx.textAlign = TextAlign.LEFT;
+    ctx.lineWidth = converterPtParaPX(EXPESSURA_LINHA_GROSSA_EM_PT);
+    // x, y, largura e altura
+    ctx.strokeRect(
+        mm(model.posicao.xMm),
+        mm(yMm),
+        mm(model.dimensoes.larguraMaximaMm),
+        1,
+    );
+    ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
 
 export const tabelaNutricionalVertical = {drawTable};
