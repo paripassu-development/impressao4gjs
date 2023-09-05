@@ -390,14 +390,14 @@ const desenharLinhaContornoVertical = (ctx: CanvasRenderingContext2D, model: IEl
     // x, y, largura e altura
     ctx.strokeRect(
         mm(model.posicao.xMm),
-        mm(yMm),
+        mm(model.posicao.yMm),
         mm(0),
         altura,
     );
 
     ctx.strokeRect(
         mm(tamanhoLinhaContornoMM),
-        mm(yMm),
+        mm(model.posicao.yMm),
         mm(0),
         altura,
     );
