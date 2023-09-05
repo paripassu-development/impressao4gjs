@@ -107,7 +107,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.lineWidth = model.fonte.forcaContorno || 0;
     const larguraMaxima = model.dimensoes.larguraMaximaMm;
     let yMm = model.posicao.yMm;
-    const alturaLinhaMm = model.fonte.alturaMm * TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT;
+    const alturaLinhaMm = converterPtParaPX(model.fonte.alturaMm * TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT);
     const lineStrokeGap = alturaLinhaMm / 3;
 
     // Configurando fonte do Titulo
@@ -170,7 +170,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     desenharLinhaGrossa(ctx, model, yMm, mm);
 
     // Espaçamento da linha dos labels de 100 g 000 g e %VD*
-    yMm += (model.fonte.alturaMm * TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT) / 3;
+    yMm += converterPtParaPX(model.fonte.alturaMm * TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT);
 
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
