@@ -2188,7 +2188,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "fonte.forcaContorno",
-                        padrao: 1,
+                        padrao: 1.5,
                     },
                     // {
                     //     nome: "ras.ui.4g.etiqueta.configuracao.negrito_fonte",

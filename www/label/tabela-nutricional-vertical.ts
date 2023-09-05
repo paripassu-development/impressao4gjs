@@ -10,9 +10,12 @@ import {
 } from "../core/util/text-utils";
 import {
     EXPESSURA_LINHA_GROSSA_EM_PT,
-    PARAMETROS_PADROES_NUTRICIONAL_V2, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
+    PARAMETROS_PADROES_NUTRICIONAL_V2,
+    TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT,
     TAMANHO_FONTE_PADRAO_TITULO_EM_PT,
+    TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT,
+    TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT,
 } from "../default";
 import {mmPartial} from "./mm";
 
@@ -104,8 +107,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.lineWidth = model.fonte.forcaContorno || 0;
     const larguraMaxima = model.dimensoes.larguraMaximaMm;
     let yMm = model.posicao.yMm;
-    // TODO: deixar com altura de 3,8 mm base
-    const alturaLinhaMm = model.fonte.alturaMm * 1.2;
+    const alturaLinhaMm = model.fonte.alturaMm * TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT;
     const lineStrokeGap = alturaLinhaMm / 3;
 
     // Configurando fonte do Titulo
@@ -166,7 +168,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Linha grossa ----------------------------------------------------------------------------------------------------
     yMm += lineStrokeGap;
     desenharLinhaGrossa(ctx, model, yMm, mm);
-    yMm += alturaLinhaMm;
+
+    // Espaçamento da linha dos labels de 100 g 000 g e %VD*
+    yMm += model.fonte.alturaMm * TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT;
 
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
