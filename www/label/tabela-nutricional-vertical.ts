@@ -124,9 +124,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         degrees,
     );
 
-    // Linha grossa ----------------------------------------------------------------------------------------------------
+    // Linha normal ----------------------------------------------------------------------------------------------------
     yMm += lineStrokeGap;
-    desenharLinhaGrossa(ctx, model, yMm, mm);
+    desenharLinha(ctx, model, yMm, mm);
     yMm += alturaLinhaMm;
 
     // Configurando fonte de Informações e labels nutricionais
@@ -163,11 +163,13 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         degrees,
     );
 
+    // Linha grossa ----------------------------------------------------------------------------------------------------
+    yMm += lineStrokeGap;
+    desenharLinhaGrossa(ctx, model, yMm, mm);
+    yMm += alturaLinhaMm;
+
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
-    yMm += lineStrokeGap;
-    desenharLinha(ctx, model, yMm, mm);
-    yMm += alturaLinhaMm;
 
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
@@ -289,11 +291,13 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Rodapé (informações adicionais)
     // TODO: mudar aqui quando for alterar o **
     if (!model.informacoesAdicionais.texto) {
-        strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.CENTER, degrees);
+        // TODO: testar center -> left
+        strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
     } else {
         const linhasInformacoesAdicionais = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
         linhasInformacoesAdicionais.forEach((linha: string) => {
-            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.CENTER, degrees);
+            // TODO: testar center -> left
+            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
             yMm += alturaLinhaMm;
         });
     }
