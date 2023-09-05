@@ -104,7 +104,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.lineWidth = model.fonte.forcaContorno || 0;
     const larguraMaxima = model.dimensoes.larguraMaximaMm;
     let yMm = model.posicao.yMm;
-    const alturaLinhaMm = model.fonte.alturaMm * converterPTparaMM(TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT);
+    // Por que 1.2?
+    const alturaLinhaMm = model.fonte.alturaMm * 1.2;
     const lineStrokeGap = alturaLinhaMm / 3;
 
     // TODO: remover os console depois
@@ -305,6 +306,16 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             yMm += alturaLinhaMm;
         });
     }
+
+    // TODO: desenhar o contorno aqui
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+    ctx.moveTo(model.posicao.xMm, model.posicao.yMm);
+    ctx.lineTo(larguraMaxima, model.posicao.yMm);
+    ctx.strokeStyle = "blue";
+    ctx.lineTo(model.posicao.xMm, yMm);
+    // --------------------------------
+
     ctx.restore();
 };
 
