@@ -171,6 +171,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += lineStrokeGap;
     desenharLinhaGrossa(ctx, model, yMm, mm);
     yMm += alturaLinhaMm;
+    yMm += alturaLinhaMm;
+    console.log(yMm);
 
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
@@ -208,6 +210,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             const informacoesNutriente = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
             if (informacoesNutriente !== undefined) {
                 yMm += alturaLinhaMm;
+                console.log(yMm);
                 ctx.textAlign = TextAlign.LEFT;
 
                 const nomeNutriente = getOrDefault(informacoesNutriente, "nome");
@@ -233,6 +236,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
             if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
                 yMm += alturaLinhaMm;
+                console.log(yMm);
                 ctx.textAlign = TextAlign.LEFT;
                 if (!!fabricCanvas) {
                     writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
@@ -257,6 +261,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         if (!!textBindings) {
             textBindings.parametrosExtrasNutricionalV2.forEach((parametro: any) => {
                 yMm += alturaLinhaMm;
+                console.log(yMm);
                 ctx.textAlign = TextAlign.LEFT;
 
                 if (!!fabricCanvas) {
@@ -290,6 +295,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     }
 
     yMm += alturaLinhaMm;
+    console.log(yMm);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Rodapé (informações adicionais)
@@ -304,11 +310,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         linhasInformacoesAdicionais.forEach((linha: string) => {
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
             yMm += alturaLinhaMm;
+            console.log(yMm);
         });
     }
 
     // TODO: desenhar o contorno aqui
-    ctx.beginPath();
     ctx.strokeStyle = "red";
     ctx.moveTo(model.posicao.xMm, model.posicao.yMm);
     ctx.lineTo(larguraMaxima, model.posicao.yMm);
