@@ -10,7 +10,7 @@ import {
 } from "../core/util/text-utils";
 import {
     EXPESSURA_LINHA_GROSSA_EM_PT,
-    PARAMETROS_PADROES_NUTRICIONAL_V2,
+    PARAMETROS_PADROES_NUTRICIONAL_V2, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT,
     TAMANHO_FONTE_PADRAO_TITULO_EM_PT,
 } from "../default";
@@ -290,13 +290,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // -----------------------------------------------------------------------------------------------------------------
     // Rodapé (informações adicionais)
     // TODO: mudar aqui quando for alterar o **
+
+    ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}pt ${model.fonte.nome}`;
+
     if (!model.informacoesAdicionais.texto) {
-        // TODO: testar center -> left
         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
     } else {
         const linhasInformacoesAdicionais = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
         linhasInformacoesAdicionais.forEach((linha: string) => {
-            // TODO: testar center -> left
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
             yMm += alturaLinhaMm;
         });

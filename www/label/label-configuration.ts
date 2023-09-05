@@ -1,4 +1,4 @@
-import {FONTES} from "../fonts/fonts";
+import {FONTES, FONTES_NUTRICIONAL_VERTICAL} from "../fonts/fonts";
 
 export interface IValoresRotacao {
     [index: number]: {texto: string, valor: string};
@@ -2168,10 +2168,10 @@ const METADADOS_ELEMENTOS: any[] = [
                         nome: "ras.ui.4g.etiqueta.configuracao.nome_fonte",
                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_fonte.descricao",
                         tipo: "OPTIONS",
-                        opcoes: FONTES,
+                        opcoes: FONTES_NUTRICIONAL_VERTICAL,
                         obrigatorio: true,
                         campo: "fonte.nome",
-                        padrao: "consolas",
+                        padrao: "arial",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.altura_fonte",
@@ -2181,6 +2181,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         campo: "fonte.alturaMm",
                         padrao: 1,
                     },
+                    // TODO: ver se vai remover
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.forca_contorno_fonte",
                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.forca_contorno_fonte.descricao",
@@ -2189,13 +2190,13 @@ const METADADOS_ELEMENTOS: any[] = [
                         campo: "fonte.forcaContorno",
                         padrao: 1,
                     },
-                    {
-                        nome: "ras.ui.4g.etiqueta.configuracao.negrito_fonte",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.negrito_fonte.descricao",
-                        tipo: "BOOLEAN",
-                        obrigatorio: false,
-                        campo: "fonte.negrito",
-                    },
+                    // {
+                    //     nome: "ras.ui.4g.etiqueta.configuracao.negrito_fonte",
+                    //     descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.negrito_fonte.descricao",
+                    //     tipo: "BOOLEAN",
+                    //     obrigatorio: false,
+                    //     campo: "fonte.negrito",
+                    // },
                 ],
             },
             // {
