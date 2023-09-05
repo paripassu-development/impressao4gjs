@@ -12,7 +12,7 @@ import {
     EXPESSURA_LINHA_GROSSA_EM_PT,
     PARAMETROS_PADROES_NUTRICIONAL_V2, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT,
-    TAMANHO_FONTE_PADRAO_TITULO_EM_PT,
+    TAMANHO_FONTE_PADRAO_TITULO_EM_PT, TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT,
 } from "../default";
 import {mmPartial} from "./mm";
 
@@ -104,7 +104,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.lineWidth = model.fonte.forcaContorno || 0;
     const larguraMaxima = model.dimensoes.larguraMaximaMm;
     let yMm = model.posicao.yMm;
-    const alturaLinhaMm = model.fonte.alturaMm * 1.2;
+    const alturaLinhaMm = model.fonte.alturaMm * converterPtParaPX(TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT);
     const lineStrokeGap = alturaLinhaMm / 3;
 
     // TODO: remover os console depois
