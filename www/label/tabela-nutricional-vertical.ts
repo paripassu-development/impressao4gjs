@@ -330,7 +330,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Contorno de baixo
     desenharLinhaContornoHorizontal(ctx, copiaModel, yMm, mm);
     yMm += lineStrokeGap;
-    desenharLinhaContornoVertical(ctx, copiaModel, yMm, mm, 800);
+    desenharLinhaContornoVertical(ctx, copiaModel, yMm, mm, 300);
 
     ctx.restore();
 };
@@ -394,9 +394,9 @@ const desenharLinhaContornoVertical = (ctx: CanvasRenderingContext2D, model: IEl
     // TODO: deixar singular depois os traços
     // x, y, largura e altura
     ctx.strokeRect(
-        model.posicao.xMm,
-        model.posicao.yMm,
-        0,
+        mm(model.posicao.xMm),
+        mm(model.posicao.yMm),
+        mm(0),
         altura,
     );
 
