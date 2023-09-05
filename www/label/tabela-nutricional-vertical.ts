@@ -330,7 +330,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Contorno de baixo
     desenharLinhaContornoHorizontal(ctx, copiaModel, yMm, mm);
     yMm += lineStrokeGap;
-    desenharLinhaContornoVertical(ctx, copiaModel, yMm, mm, alturaLinhaMm * yMm);
+    desenharLinhaContornoVertical(ctx, copiaModel, yMm, mm, 800);
 
     ctx.restore();
 };
@@ -385,10 +385,9 @@ const desenharLinhaContornoVertical = (ctx: CanvasRenderingContext2D, model: IEl
     const tamanhoLinhaContornoMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT));
 
     console.log("Dentro do desenhar Linha Contorno vertical");
-    console.log(model.posicao);
-    console.log(altura);
-    console.log(model.dimensoes);
-    console.log(tamanhoLinhaContornoMM);
+    console.log({altura});
+    console.log({model});
+    console.log({tamanhoLinhaContornoMM});
 
     ctx.textAlign = TextAlign.LEFT;
 
