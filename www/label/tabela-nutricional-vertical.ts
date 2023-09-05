@@ -112,10 +112,15 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // TODO: remover os console depois
     console.clear();
     console.log(model);
+    console.log(":", yMm, mm);
 
     // Contorno de cima
     desenharLinhaContorno(ctx, model, yMm, mm);
-    yMm += lineStrokeGap;
+    yMm += alturaLinhaMm;
+
+    // TODO: remover esse teste:
+    // Colocando o conteudo inteiro da tabela com espaçamento para contorno
+    model.posicao.xMm += converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT);
 
     // Configurando fonte do Titulo
     ctx.font = `bold ${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_TITULO_EM_PT)}pt ${model.fonte.nome}`;
@@ -360,9 +365,6 @@ const desenharLinhaContorno = (ctx: CanvasRenderingContext2D, model: IElementoTa
     const espacoDireitaEEsquerda = 2;
     const tamanhoLinhaContornoMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT));
 
-    ctx.fillStyle = "red";
-    ctx.strokeStyle = "red";
-
     ctx.textAlign = TextAlign.LEFT;
 
     // x, y, largura e altura
@@ -373,10 +375,6 @@ const desenharLinhaContorno = (ctx: CanvasRenderingContext2D, model: IElementoTa
         1,
     );
     ctx.lineWidth = model.fonte.forcaContorno || 0;
-
-    // TODO: remover depois isso, pq o vermelho é só para teste
-    ctx.fillStyle = BLACK;
-    ctx.strokeStyle = BLACK;
 };
 
 export const tabelaNutricionalVertical = {drawTable};
