@@ -109,13 +109,15 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const alturaLinhaMm = model.fonte.alturaMm * 1.2;
     const lineStrokeGap = alturaLinhaMm / 3;
 
+    const copiaModel = model;
+
     // TODO: remover os console depois
     console.clear();
     console.log(model);
     console.log(":", yMm, mm);
 
     // Contorno de cima
-    desenharLinhaContorno(ctx, model, yMm, mm);
+    desenharLinhaContornoHorizontal(ctx, copiaModel, yMm, mm);
     yMm += alturaLinhaMm;
 
     // TODO: remover esse teste:
@@ -326,8 +328,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // TODO: desenhar o contorno aqui
     // Contorno de baixo
-    desenharLinhaContorno(ctx, model, yMm, mm);
+    desenharLinhaContornoHorizontal(ctx, copiaModel, yMm, mm);
     yMm += lineStrokeGap;
+    desenharLinhaContornoVertical(ctx, copiaModel, yMm, mm, yMm);
 
     ctx.restore();
 };
@@ -361,7 +364,7 @@ const desenharLinhaGrossa = (ctx: CanvasRenderingContext2D, model: IElementoTabe
     ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
 
-const desenharLinhaContorno = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
+const desenharLinhaContornoHorizontal = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
     const espacoDireitaEEsquerda = 2;
     const tamanhoLinhaContornoMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT));
 
@@ -373,6 +376,30 @@ const desenharLinhaContorno = (ctx: CanvasRenderingContext2D, model: IElementoTa
         mm(yMm),
         mm(tamanhoLinhaContornoMM),
         1,
+    );
+    ctx.lineWidth = model.fonte.forcaContorno || 0;
+};
+
+const desenharLinhaContornoVertical = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any, altura: number) => {
+    const espacoDireitaEEsquerda = 2;
+    const tamanhoLinhaContornoMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT));
+
+    ctx.textAlign = TextAlign.LEFT;
+
+    // TODO: deixar singular depois os traços
+    // x, y, largura e altura
+    ctx.strokeRect(
+        mm(model.posicao.xMm),
+        mm(yMm),
+        mm(0),
+        altura,
+    );
+
+    ctx.strokeRect(
+        mm(tamanhoLinhaContornoMM),
+        mm(yMm),
+        mm(0),
+        altura,
     );
     ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
