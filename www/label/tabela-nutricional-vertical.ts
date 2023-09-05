@@ -9,6 +9,7 @@ import {
     writeFabricText,
 } from "../core/util/text-utils";
 import {
+    ESPACAMENTO_CONTORNO_TABELA_EM_PT,
     EXPESSURA_LINHA_GROSSA_EM_PT,
     PARAMETROS_PADROES_NUTRICIONAL_V2, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT,
@@ -111,6 +112,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // TODO: remover os console depois
     console.clear();
     console.log(model);
+
+    // Contorno de cima
+    desenharLinhaContorno(ctx, model, yMm, mm);
+    yMm += lineStrokeGap;
 
     // Configurando fonte do Titulo
     ctx.font = `bold ${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_TITULO_EM_PT)}pt ${model.fonte.nome}`;
@@ -315,12 +320,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     }
 
     // TODO: desenhar o contorno aqui
-    ctx.strokeStyle = "red";
-    ctx.moveTo(model.posicao.xMm, model.posicao.yMm);
-    ctx.lineTo(larguraMaxima, model.posicao.yMm);
-    ctx.strokeStyle = "blue";
-    ctx.lineTo(model.posicao.xMm, yMm);
-    // --------------------------------
+    // Contorno de baixo
+    desenharLinhaContorno(ctx, model, yMm, mm);
+    yMm += lineStrokeGap;
 
     ctx.restore();
 };
@@ -352,6 +354,29 @@ const desenharLinhaGrossa = (ctx: CanvasRenderingContext2D, model: IElementoTabe
         1,
     );
     ctx.lineWidth = model.fonte.forcaContorno || 0;
+};
+
+const desenharLinhaContorno = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
+    const espacoDireitaEEsquerda = 2;
+    const tamanhoLinhaContornoMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT));
+
+    ctx.fillStyle = "red";
+    ctx.strokeStyle = "red";
+
+    ctx.textAlign = TextAlign.LEFT;
+
+    // x, y, largura e altura
+    ctx.strokeRect(
+        mm(model.posicao.xMm),
+        mm(yMm),
+        mm(tamanhoLinhaContornoMM),
+        1,
+    );
+    ctx.lineWidth = model.fonte.forcaContorno || 0;
+
+    // TODO: remover depois isso, pq o vermelho é só para teste
+    ctx.fillStyle = BLACK;
+    ctx.strokeStyle = BLACK;
 };
 
 export const tabelaNutricionalVertical = {drawTable};
