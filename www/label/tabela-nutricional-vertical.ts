@@ -384,6 +384,12 @@ const desenharLinhaContornoVertical = (ctx: CanvasRenderingContext2D, model: IEl
     const espacoDireitaEEsquerda = 2;
     const tamanhoLinhaContornoMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT));
 
+    console.log("Dentro do desenhar Linha Contorno vertical");
+    console.log(model.posicao);
+    console.log(altura);
+    console.log(model.dimensoes);
+    console.log(tamanhoLinhaContornoMM);
+
     ctx.textAlign = TextAlign.LEFT;
 
     // TODO: deixar singular depois os traços
