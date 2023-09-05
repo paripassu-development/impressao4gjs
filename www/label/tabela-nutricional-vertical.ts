@@ -1,5 +1,5 @@
 import {fabric} from "fabric";
-import {converterPtParaPX} from "../core/util/conversor-utils";
+import {converterPTparaMM, converterPtParaPX} from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
@@ -104,7 +104,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.lineWidth = model.fonte.forcaContorno || 0;
     const larguraMaxima = model.dimensoes.larguraMaximaMm;
     let yMm = model.posicao.yMm;
-    const alturaLinhaMm = model.fonte.alturaMm * converterPtParaPX(TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT);
+    const alturaLinhaMm = model.fonte.alturaMm * converterPTparaMM(TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT);
     const lineStrokeGap = alturaLinhaMm / 3;
 
     // TODO: remover os console depois
