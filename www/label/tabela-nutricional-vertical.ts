@@ -107,22 +107,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     let yMm = model.posicao.yMm;
     // Por que 1.2?
     const alturaLinhaMm = model.fonte.alturaMm * 1.2;
+    // 3?
     const lineStrokeGap = alturaLinhaMm / 3;
 
-    const copiaModel = model;
-
-    // TODO: remover os console depois
-    console.clear();
-    console.log(model);
-    console.log(":", yMm, mm);
-
     // Contorno de cima
-    desenharLinhaContornoHorizontal(ctx, copiaModel, yMm, mm);
+    desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
     yMm += alturaLinhaMm;
-
-    // TODO: remover esse teste:
-    // Colocando o conteudo inteiro da tabela com espaçamento para contorno
-    model.posicao.xMm += converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT);
 
     // Configurando fonte do Titulo
     ctx.font = `bold ${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_TITULO_EM_PT)}pt ${model.fonte.nome}`;
@@ -182,13 +172,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Linha grossa ----------------------------------------------------------------------------------------------------
     yMm += lineStrokeGap;
     desenharLinhaGrossa(ctx, model, yMm, mm);
-    yMm += alturaLinhaMm;
-    yMm += alturaLinhaMm;
-    console.log(yMm);
+    // Espaço maior pós linha grossa
+    yMm += (2 * alturaLinhaMm);
+    // yMm += alturaLinhaMm;
 
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
 
+    // TODO: deixar na formatação correta, fazer calculo para dar certo
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
     const porcao = fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings);
@@ -222,7 +213,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             const informacoesNutriente = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
             if (informacoesNutriente !== undefined) {
                 yMm += alturaLinhaMm;
-                console.log(yMm);
                 ctx.textAlign = TextAlign.LEFT;
 
                 const nomeNutriente = getOrDefault(informacoesNutriente, "nome");
@@ -248,7 +238,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
             if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
                 yMm += alturaLinhaMm;
-                console.log(yMm);
                 ctx.textAlign = TextAlign.LEFT;
                 if (!!fabricCanvas) {
                     writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
@@ -273,7 +262,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         if (!!textBindings) {
             textBindings.parametrosExtrasNutricionalV2.forEach((parametro: any) => {
                 yMm += alturaLinhaMm;
-                console.log(yMm);
                 ctx.textAlign = TextAlign.LEFT;
 
                 if (!!fabricCanvas) {
@@ -307,7 +295,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     }
 
     yMm += alturaLinhaMm;
-    console.log(yMm);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Rodapé (informações adicionais)
@@ -322,15 +309,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         linhasInformacoesAdicionais.forEach((linha: string) => {
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
             yMm += alturaLinhaMm;
-            console.log(yMm);
         });
     }
 
-    // TODO: desenhar o contorno aqui
     // Contorno de baixo
-    desenharLinhaContornoHorizontal(ctx, copiaModel, yMm, mm);
+    desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
     yMm += lineStrokeGap;
-    desenharLinhaContornoVertical(ctx, copiaModel, yMm, mm, 300);
 
     ctx.restore();
 };
@@ -366,45 +350,17 @@ const desenharLinhaGrossa = (ctx: CanvasRenderingContext2D, model: IElementoTabe
 
 const desenharLinhaContornoHorizontal = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
     const espacoDireitaEEsquerda = 2;
-    const tamanhoLinhaContornoMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT));
+    const espacoMargemInterna = converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT);
+    const tamanhoLinhaContornoTotalMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * espacoMargemInterna);
 
     ctx.textAlign = TextAlign.LEFT;
 
     // x, y, largura e altura
     ctx.strokeRect(
-        mm(model.posicao.xMm),
+        mm(model.posicao.xMm - espacoMargemInterna), // Começa antes da linha da tabela
         mm(yMm),
-        mm(tamanhoLinhaContornoMM),
+        mm(tamanhoLinhaContornoTotalMM),
         1,
-    );
-    ctx.lineWidth = model.fonte.forcaContorno || 0;
-};
-
-const desenharLinhaContornoVertical = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any, altura: number) => {
-    const espacoDireitaEEsquerda = 2;
-    const tamanhoLinhaContornoMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT));
-
-    console.log("Dentro do desenhar Linha Contorno vertical");
-    console.log({altura});
-    console.log({model});
-    console.log({tamanhoLinhaContornoMM});
-
-    ctx.textAlign = TextAlign.LEFT;
-
-    // TODO: deixar singular depois os traços
-    // x, y, largura e altura
-    ctx.strokeRect(
-        mm(model.posicao.xMm),
-        mm(model.posicao.yMm),
-        mm(0),
-        altura,
-    );
-
-    ctx.strokeRect(
-        mm(tamanhoLinhaContornoMM),
-        mm(model.posicao.yMm),
-        mm(0),
-        altura,
     );
     ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
