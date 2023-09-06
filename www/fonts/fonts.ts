@@ -36,3 +36,10 @@ export const FONTES = [
         valor: "unispace-bold",
     },
 ];
+
+export const FONTES_NUTRICIONAL_VERTICAL = [
+    {
+        texto: "Arial",
+        valor: "arial",
+    },
+];
