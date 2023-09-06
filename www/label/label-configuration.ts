@@ -2190,30 +2190,8 @@ const METADADOS_ELEMENTOS: any[] = [
                         campo: "fonte.forcaContorno",
                         padrao: 1,
                     },
-                    // {
-                    //     nome: "ras.ui.4g.etiqueta.configuracao.negrito_fonte",
-                    //     descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.negrito_fonte.descricao",
-                    //     tipo: "BOOLEAN",
-                    //     obrigatorio: false,
-                    //     campo: "fonte.negrito",
-                    // },
                 ],
             },
-            // {
-            //     nome: "ras.ui.4g.etiqueta.configuracao.opcoes",
-            //     tipo: "OBJECT",
-            //     obrigatorio: false,
-            //     campo: "opcoes",
-            //     itens: [
-            //         {
-            //             nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.ocultar_linhas",
-            //             descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.ocultar_linhas.descricao",
-            //             tipo: "BOOLEAN",
-            //             obrigatorio: false,
-            //             campo: "opcoes.ocultarLinhas",
-            //         },
-            //     ],
-            // },
             {
                 nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.informacoes_adicionais",
                 tipo: "OBJECT",

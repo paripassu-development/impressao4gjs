@@ -112,6 +112,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // Contorno de cima
     desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
+    yMm += lineStrokeGap;
     yMm += alturaLinhaMm;
 
     // Configurando fonte do Titulo
