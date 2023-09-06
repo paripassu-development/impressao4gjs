@@ -1,4 +1,4 @@
-import {FONTES} from "../fonts/fonts";
+import {FONTES, FONTES_NUTRICIONAL_VERTICAL} from "../fonts/fonts";
 
 export interface IValoresRotacao {
     [index: number]: {texto: string, valor: string};
@@ -32,7 +32,7 @@ const VALORES_ROTACAO: IValoresRotacao = [
         texto: "270°",
         valor: "270",
     },
-]
+];
 
 const METADADOS_IMPRESSAO: any = {
     nome: "ras.ui.4g.etiqueta.configuracao.impressao",
@@ -1137,6 +1137,1073 @@ const METADADOS_ELEMENTOS: any[] = [
                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
+                        campo: "informacoesAdicionais.texto",
+                        padrao: "* Percentual de valores diários fornecidos pela porção.",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.caracter_linha",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.caracter_linha.descricao",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "informacoesAdicionais.caracteresPorLinha",
+                        padrao: 70,
+                    },
+                ],
+            },
+            {
+                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.informacoes_nutricionais",
+                tipo: "OBJECT",
+                obrigatorio: false,
+                campo: "informacoesNutricionais",
+                itens: [
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_superior",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_superior.descricao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoInformacaoNutricional",
+                        padrao: "INFORMAÇÃO NUTRICIONAL",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_quantidade_porcao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_quantidade_porcao.descricao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoQuantidadePorPorcao",
+                        padrao: "{{{porcaoNutricionalV2}}}",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_quantidade_porcoes_embalagem",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_quantidade_porcoes_embalagem.descricao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoQuantidadeEmbalagem",
+                        padrao: "{{{porcoesPorEmbalagem}}}",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoQt100",
+                        padrao: "100g",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_valor_diario",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_valor_diario.descricao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoAbreviadoValorDiario",
+                        padrao: "%VD*",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.porcao_caseira",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.porcao_caseira.descricao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoPorcaoCaseira",
+                        padrao: "{{{medidaCaseiraNutricionalV2}}}",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_proporcao_calorias",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.texto_proporcao_calorias.descricao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesNutricionais.textoProporcaoCalorias",
+                        padrao: "{{{textoProporcaoCalorias}}}",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.ocultar_parametros_zerados",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.ocultar_parametros_zerados.descricao",
+                        tipo: "BOOLEAN",
+                        obrigatorio: false,
+                        campo: "informacoesNutricionais.ocultarZerados",
+                        preRequisito: [
+                            {
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
+                                tipo: "EXISTENCIA",
+                                oposto: true,
+                            },
+                        ],
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.parametros_nutricionais",
+                        tipo: "OBJECT",
+                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
+                        obrigatorio: false,
+                        preRequisito: [
+                            {
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
+                                tipo: "EXISTENCIA",
+                            },
+                        ],
+                        itens: [
+                            {
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.sodio",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                obrigatorio: false,
+                                preRequisito: [
+                                    {
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                        tipo: "EXISTENCIA",
+                                    },
+                                ],
+                                itens: [
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.sodio",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.proteinas",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                obrigatorio: false,
+                                preRequisito: [
+                                    {
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                        tipo: "EXISTENCIA",
+                                    },
+                                ],
+                                itens: [
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.proteinas",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.acucares_totais",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais",
+                                obrigatorio: false,
+                                preRequisito: [
+                                    {
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais",
+                                        tipo: "EXISTENCIA",
+                                    },
+                                ],
+                                itens: [
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.acucares_adicionados",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados",
+                                obrigatorio: false,
+                                preRequisito: [
+                                    {
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados",
+                                        tipo: "EXISTENCIA",
+                                    },
+                                ],
+                                itens: [
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.acucaresAdicionados",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.carboidratos",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                obrigatorio: false,
+                                preRequisito: [
+                                    {
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                        tipo: "EXISTENCIA",
+                                    },
+                                ],
+                                itens: [
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.carboidratos",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.fibra_alimentar",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                obrigatorio: false,
+                                preRequisito: [
+                                    {
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                        tipo: "EXISTENCIA",
+                                    },
+                                ],
+                                itens: [
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.fibraAlimentar",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.valor_energetico",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                obrigatorio: false,
+                                preRequisito: [
+                                    {
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                        tipo: "EXISTENCIA",
+                                    },
+                                ],
+                                itens: [
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.valorEnergetico",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.gorduras_totais",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                obrigatorio: false,
+                                preRequisito: [
+                                    {
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                        tipo: "EXISTENCIA",
+                                    },
+                                ],
+                                itens: [
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gordurasTotais",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.gorduras_trans",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                obrigatorio: false,
+                                preRequisito: [
+                                    {
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                        tipo: "EXISTENCIA",
+                                    },
+                                ],
+                                itens: [
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraTrans",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.gorduras_saturadas",
+                                tipo: "OBJECT",
+                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                obrigatorio: false,
+                                preRequisito: [
+                                    {
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                        tipo: "EXISTENCIA",
+                                    },
+                                ],
+                                itens: [
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.nome",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.quantidade_porcao_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.qtPorcao",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_v2.texto_superior.100_g.padrao.descricao",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.qt100",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.valor_diario_parametro_nutricional",
+                                        tipo: "TEXT",
+                                        campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada.valDiario",
+                                        obrigatorio: true,
+                                        preRequisito: [
+                                            {
+                                                campo: "informacoesNutricionais.ocultarZerados",
+                                                oposto: true,
+                                                tipo: "CONFLITO",
+                                            },
+                                            {
+                                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional.gorduraSaturada",
+                                                tipo: "EXISTENCIA",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_vertical",
+        tipo: "tabelaNutricionalVertical",
+        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.descricao",
+        camposConfiguraveis: [
+            {
+                nome: "ras.ui.4g.etiqueta.configuracao.posicao",
+                tipo: "OBJECT",
+                obrigatorio: true,
+                campo: "posicao",
+                itens: [
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.posicao_horizontal.descricao",
+                        tipo: "NUMERIC",
+                        categoria: "posicionamento",
+                        obrigatorio: true,
+                        campo: "posicao.xMm",
+                        padrao: 0,
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.posicao_vertical.descricao",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "posicao.yMm",
+                        padrao: 2,
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
+                        descricao: "Ângulo de rotação da tabela nutricional dentro da etiqueta",
+                        campo: "posicao.rotacao",
+                        tipo: "OPTIONS",
+                        opcoes: VALORES_ROTACAO,
+                        obrigatorio: false,
+                    },
+                ],
+            },
+            {
+                nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
+                tipo: "OBJECT",
+                obrigatorio: true,
+                campo: "dimensoes",
+                itens: [
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.largura_maxima",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.largura_maxima.descricao",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "dimensoes.larguraMaximaMm",
+                        padrao: 64.69,
+                    },
+                ],
+            },
+            {
+                nome: "ras.ui.4g.etiqueta.configuracao.fonte",
+                tipo: "OBJECT",
+                obrigatorio: true,
+                campo: "fonte",
+                itens: [
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.nome_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_fonte.descricao",
+                        tipo: "OPTIONS",
+                        opcoes: FONTES_NUTRICIONAL_VERTICAL,
+                        obrigatorio: true,
+                        campo: "fonte.nome",
+                        padrao: "arial",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.altura_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.altura_fonte.descricao",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "fonte.alturaMm",
+                        padrao: 1,
+                    },
+                    // TODO: ver se vai remover
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.forca_contorno_fonte",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.forca_contorno_fonte.descricao",
+                        tipo: "NUMERIC",
+                        obrigatorio: false,
+                        campo: "fonte.forcaContorno",
+                        padrao: 1,
+                    },
+                ],
+            },
+            {
+                nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.informacoes_adicionais",
+                tipo: "OBJECT",
+                obrigatorio: true,
+                campo: "informacoesAdicionais",
+                itens: [
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.texto.rodape.percentual",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_vertical.texto.rodape.percentual.descricao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        // TODO: alterar aqui depois quando for fazer a outra informação com **
                         campo: "informacoesAdicionais.texto",
                         padrao: "* Percentual de valores diários fornecidos pela porção.",
                     },
@@ -3318,7 +4385,7 @@ const METADADOS_ELEMENTOS: any[] = [
                 tipo: "BOOLEAN",
                 obrigatorio: false,
                 campo: "mostraTexto",
-                padrao: true
+                padrao: true,
             },
             {
                 nome: "ras.ui.4g.etiqueta.configuracao.fonte",

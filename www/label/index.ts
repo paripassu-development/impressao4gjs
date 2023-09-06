@@ -10,6 +10,7 @@ import {mmPartial} from "./mm";
 import {qrcode} from "./qrcode";
 import {tabelaNutricional} from "./tabela-nutricional";
 import {tabelaNutricionalV2} from "./tabela-nutricional-v2";
+import {tabelaNutricionalVertical} from "./tabela-nutricional-vertical";
 import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
 import {text} from "./text";
 import {Canvas} from "fabric/fabric-impl";
@@ -147,6 +148,12 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             tabelaNutricionalV2: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalV2.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    resolve();
+                });
+            },
+            tabelaNutricionalVertical: (): Promise<any> => {
+                return new Promise((resolve) => {
+                    tabelaNutricionalVertical.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
