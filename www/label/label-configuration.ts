@@ -3221,7 +3221,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.larguraMaximaMm",
-                        padrao: 64.69,
+                        padrao: 63,
                     },
                 ],
             },
@@ -3246,7 +3246,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "fonte.alturaMm",
-                        padrao: 1,
+                        padrao: 2.6,
                     },
                     // TODO: ver se vai remover
                     {
@@ -3255,7 +3255,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "fonte.forcaContorno",
-                        padrao: 1,
+                        padrao: 0.8,
                     },
                 ],
             },
