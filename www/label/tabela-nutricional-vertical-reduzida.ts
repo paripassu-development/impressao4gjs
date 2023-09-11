@@ -178,7 +178,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     desenharLinhaContornoVerticalDireita(ctx, model, yMm - (alturaLinhaMm + 0.7), alturaLinhaMm + 2.2, mm, 6);
     desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm * 3.5, 0, mm, 6);
     desenharLinhaGrossa(ctx, model, yMm, mm);
-    yMm += alturaLinhaMm / 2;
+    yMm += alturaLinhaMm / 1.7;
 
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
@@ -215,8 +215,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, medida.value, medida.xMm, yMm, mm, TextAlign.RIGHT, degrees);
         }
         desenharLinhaVertical(ctx, model, yMm, medida.xMm, mm, (ESPACAMENTO_100g_000g_VD / 2));
-        desenharLinhaContornoVerticalDireita(ctx, model, yMm, alturaLinhaMm + 2.2, mm, ESPACAMENTO_100g_000g_VD / 2);
-        desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm * 6.7, 0, mm, ESPACAMENTO_100g_000g_VD / 2);
+        desenharLinhaContornoVerticalDireita(ctx, model, yMm, alturaLinhaMm + 2.2, mm, ESPACAMENTO_100g_000g_VD / 1.8);
+        desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm * 6.7, 0, mm, ESPACAMENTO_100g_000g_VD / 1.8);
     })
     ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}pt ${model.fonte.nome}`;
     yMm += lineStrokeGap;
@@ -229,7 +229,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             textoCabecalhoMedidas.map((obj: any) => {
                 obj.id = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
                 if (obj.id !== undefined) {
-                        yMm += alturaLinhaMm / 2;
+                        yMm += alturaLinhaMm / 1.7;
                         ctx.textAlign = TextAlign.LEFT;
 
                         const nomeNutriente = getOrDefault(obj.id, "nome");
@@ -241,8 +241,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textBindings),
                             obj.xMm, yMm, mm, TextAlign.RIGHT, degrees);
                         yMm += lineStrokeGap;
-                        desenharLinhaContornoVerticalDireita(ctx, model, yMm, alturaLinhaMm + 2.2, mm, ESPACAMENTO_100g_000g_VD / 2);
-                        desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm * 6.7, 0, mm, ESPACAMENTO_100g_000g_VD / 2);
+                        desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100g_000g_VD / 4), alturaLinhaMm + 2.2, mm, ESPACAMENTO_100g_000g_VD / 1.8);
                         desenharLinhaVertical(ctx, model, yMm, obj.xMm, mm, (ESPACAMENTO_100g_000g_VD / 2));
                         desenharLinha(ctx, model, yMm, mm);
                         // -----------------------------------------------------------------------------------------------------
@@ -254,7 +253,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         parametrosPadroesNutricionalV2.forEach((parametro: any) => {
                 const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
                 if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
-                    yMm += alturaLinhaMm / 2;
+                    yMm += alturaLinhaMm / 1.7;
                     ctx.textAlign = TextAlign.LEFT;
                     if (!!fabricCanvas) {
                         writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
@@ -282,7 +281,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // Parametros extras
         if (!!textBindings) {
             textBindings.parametrosExtrasNutricionalV2.forEach((parametro: any) => {
-                yMm += alturaLinhaMm / 2;
+                yMm += alturaLinhaMm / 1.7;
                 ctx.textAlign = TextAlign.LEFT;
 
                 if (!!fabricCanvas) {

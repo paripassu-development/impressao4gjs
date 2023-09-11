@@ -239,7 +239,7 @@ export const MODEL_DEFAULT = {
     },
     "etiqueta": {
         "dimensoes": {
-            "alturaMm": 50,
+            "alturaMm": 80,
             "larguraMm": 120
         }
     },
