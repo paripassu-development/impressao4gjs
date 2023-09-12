@@ -15,8 +15,7 @@ import {
     PARAMETROS_PADROES_NUTRICIONAL_V2,
     TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT,
-    TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT, TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT,
-    TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT,
+    TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT
 } from "../default";
 import {mmPartial} from "./mm";
 
@@ -118,7 +117,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += alturaLinhaMm;
 
     // Configurando fonte do Titulo
-    ctx.font = `bold ${(model.fonte.alturaMm *  TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT)}pt ${model.fonte.nome}`;
+    ctx.font = `bold ${(model.fonte.alturaMm *  converterPTparaMM(TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT))}mm ${model.fonte.nome}`;
 
     // Titulo INFORMAÇÕES NUTRICIONAIS ---------------------------------------------------------------------------------
     strokeAlignedText(
@@ -136,12 +135,13 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Linha normal ----------------------------------------------------------------------------------------------------
     yMm += lineStrokeGap;
     desenharLinha(ctx, model, yMm, mm);
+    // TODO Verificar como deixar responsivas as linhas verticais
     desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_CONTORNO_TABELA_EM_PT * 4.5), ESPACAMENTO_100g_000g_VD + 8.1, mm, 4.8);
     desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm, 7.8, mm, 4.8);
     yMm += alturaLinhaMm / 1.5;
 
     // Configurando fonte de Informações e labels nutricionais
-    ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}pt ${model.fonte.nome}`;
+    ctx.font = `${(model.fonte.alturaMm * converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))}mm ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
     const informacoesNutricionaisTextoPorcao = [
@@ -171,6 +171,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             degrees,
         );
         yMm += alturaLinhaMm / 1.5;
+        // TODO Verificar como deixar responsivas as linhas verticais
         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - ESPACAMENTO_100g_000g_VD, 7.8, mm, ESPACAMENTO_100g_000g_VD);
     })
 
@@ -182,7 +183,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
-    ctx.font = `bold ${(model.fonte.alturaMm * TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}pt ${model.fonte.nome}`;
+    ctx.font = `bold ${(model.fonte.alturaMm * converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))}mm ${model.fonte.nome}`;
 
     // TODO: deixar na formatação correta, fazer calculo para dar certo
     ctx.textAlign = TextAlign.RIGHT;
@@ -209,16 +210,20 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ]
 
     textoCabecalhoMedidas.map(medida => {
+        // TODO Verificar como deixar responsivas as linhas verticais
+        const inicioLinhaVertical = converterPTparaMM((TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT * 2) + TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT) + (alturaLinhaMm / 1.5);
+        const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
+        const distanciaEixoXLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT);
         if (!!fabricCanvas) {
-            writeFabricText(fabricCanvas, ctx, medida.value, medida.xMm + 1, yMm, larguraMaxima, mm, {degrees});
+            writeFabricText(fabricCanvas, ctx, medida.value, medida.xMm, yMm, larguraMaxima, mm, {degrees});
         } else {
-            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, medida.value, medida.xMm + 1, yMm, mm, TextAlign.RIGHT, degrees);
+            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, medida.value, medida.xMm, yMm, mm, TextAlign.RIGHT, degrees);
         }
-        desenharLinhaVertical(ctx, model, yMm - 1, medida.xMm, mm, (ESPACAMENTO_100g_000g_VD / 1.2));
-        desenharLinhaContornoVerticalDireita(ctx, model, yMm - 0.7, ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD / 1.5);
-        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100g_000g_VD / 2), 7.8, mm, ESPACAMENTO_100g_000g_VD / 1.2);
+        desenharLinhaVertical(ctx, model, model.posicao.yMm + inicioLinhaVertical, medida.xMm + distanciaEixoXLinhaVertical, mm, alturaLinhaVertical);
+        desenharLinhaContornoVerticalDireita(ctx, model, model.posicao.yMm + inicioLinhaVertical, ESPACAMENTO_100g_000g_VD + 8.1, mm, alturaLinhaVertical);
+        desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm + inicioLinhaVertical, 7.8, mm, alturaLinhaVertical);
     })
-    ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}pt ${model.fonte.nome}`;
+    ctx.font = `${(model.fonte.alturaMm * converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))}mm ${model.fonte.nome}`;
     yMm += lineStrokeGap;
     desenharLinha(ctx, model, yMm, mm);
     // -----------------------------------------------------------------------------------------------------------------
@@ -227,6 +232,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         nutrientes.forEach((nutriente: any) => {
             textoCabecalhoMedidas.map((obj: any) => {
+                // TODO Verificar como deixar responsivas as linhas verticais
+                const inicioLinhaVertical = converterPTparaMM((TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT * 3) + TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT) + (alturaLinhaMm / 1.5) + lineStrokeGap;
+                const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
+                const distanciaEixoXLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT);
                 obj.id = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
                 if (obj.id !== undefined) {
                         yMm += alturaLinhaMm / 1.7;
@@ -241,8 +250,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textBindings),
                             obj.xMm, yMm, mm, TextAlign.RIGHT, degrees);
                         yMm += lineStrokeGap;
-                        desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100g_000g_VD / 4), ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD / 1.8);
-                        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100g_000g_VD / 2), 7.8, mm, ESPACAMENTO_100g_000g_VD / 1.8);
+                        desenharLinhaContornoVerticalDireita(ctx, model, yMm + inicioLinhaVertical, ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD / 1.8);
+                        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm + inicioLinhaVertical, 7.8, mm, ESPACAMENTO_100g_000g_VD / 1.8);
                         desenharLinhaVertical(ctx, model, yMm, obj.xMm, mm, (ESPACAMENTO_100g_000g_VD / 2));
                         desenharLinha(ctx, model, yMm, mm);
                         // -----------------------------------------------------------------------------------------------------
@@ -252,6 +261,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     } else {
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
         parametrosPadroesNutricionalV2.forEach((parametro: any) => {
+                // TODO Verificar como deixar responsivas as linhas verticais
+                const inicioLinhaVertical = converterPTparaMM((TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT * 3) + TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT);
+                const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
+                const distanciaEixoXLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT);
                 const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
                 if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
                     yMm += alturaLinhaMm / 1.7;
@@ -265,11 +278,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         yMm, mm, TextAlign.RIGHT, degrees);
                     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 3.5),
                         yMm, mm, TextAlign.RIGHT, degrees);
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm,
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - (alturaLinhaMm * 1.2),
                         yMm, mm, TextAlign.RIGHT, degrees);
                     yMm += lineStrokeGap;
                     textoCabecalhoMedidas.map((obj: any) => {
-                        desenharLinhaVertical(ctx, model, yMm - (ESPACAMENTO_100g_000g_VD / 4), obj.xMm, mm, (ESPACAMENTO_100g_000g_VD / 1.8));
+                        desenharLinhaVertical(ctx, model, yMm + (inicioLinhaVertical - (converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) * parametrosPadroesNutricionalV2.length)), obj.xMm, mm, alturaLinhaVertical);
                     })
                     desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100g_000g_VD / 4), ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD / 1.8);
                     desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100g_000g_VD / 2), 7.8, mm, ESPACAMENTO_100g_000g_VD / 1.8);
@@ -283,6 +296,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // Parametros extras
         if (!!textBindings) {
             textBindings.parametrosExtrasNutricionalV2.forEach((parametro: any) => {
+                // TODO Verificar como deixar responsivas as linhas verticais
                 yMm += alturaLinhaMm / 1.7;
                 ctx.textAlign = TextAlign.LEFT;
 
@@ -295,7 +309,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     yMm, mm, TextAlign.RIGHT, degrees);
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 3.5),
                     yMm, mm, TextAlign.RIGHT, degrees);
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm,
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - (alturaLinhaMm * 1.2),
                     yMm, mm, TextAlign.RIGHT, degrees);
                 yMm += lineStrokeGap;
                 textoCabecalhoMedidas.map((obj: any) => {
@@ -327,11 +341,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Rodapé (informações adicionais)
     // TODO: mudar aqui quando for alterar o **
 
-    ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}pt ${model.fonte.nome}`;
+    ctx.font = `${(model.fonte.alturaMm * converterPTparaMM(TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT))}mm ${model.fonte.nome}`;
 
     if (!model.informacoesAdicionais.texto) {
         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
         } else {
+        // TODO Verificar como deixar responsivas as linhas verticais
         const linhasInformacoesAdicionais = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
         linhasInformacoesAdicionais.forEach((linha: string) => {
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);

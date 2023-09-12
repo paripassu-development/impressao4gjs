@@ -3246,7 +3246,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "fonte.alturaMm",
-                        padrao: 2.6,
+                        padrao: 1,
                     },
                     // TODO: ver se vai remover
                     {
