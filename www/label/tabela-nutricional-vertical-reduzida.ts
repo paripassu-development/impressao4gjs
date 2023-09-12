@@ -171,13 +171,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             degrees,
         );
         yMm += alturaLinhaMm / 1.5;
-        desenharLinhaContornoVerticalDireita(ctx, model, yMm - (alturaLinhaMm / 1.5), ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD);
         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - ESPACAMENTO_100g_000g_VD, 7.8, mm, ESPACAMENTO_100g_000g_VD);
     })
 
+    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (alturaLinhaMm * 1.3), ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD);
+
     // Linha grossa ----------------------------------------------------------------------------------------------------
     desenharLinhaGrossa(ctx, model, yMm, mm);
-    yMm += alturaLinhaMm / 1.7;
+    yMm += alturaLinhaMm / 1.2;
 
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
@@ -209,9 +210,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     textoCabecalhoMedidas.map(medida => {
         if (!!fabricCanvas) {
-            writeFabricText(fabricCanvas, ctx, medida.value, medida.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT, yMm, larguraMaxima, mm, {degrees});
+            writeFabricText(fabricCanvas, ctx, medida.value, medida.xMm + 1, yMm, larguraMaxima, mm, {degrees});
         } else {
-            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, medida.value, medida.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT, yMm, mm, TextAlign.RIGHT, degrees);
+            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, medida.value, medida.xMm + 1, yMm, mm, TextAlign.RIGHT, degrees);
         }
         desenharLinhaVertical(ctx, model, yMm, medida.xMm, mm, (ESPACAMENTO_100g_000g_VD / 2));
         desenharLinhaContornoVerticalDireita(ctx, model, yMm - ESPACAMENTO_CONTORNO_TABELA_EM_PT, ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD / 1.8);
