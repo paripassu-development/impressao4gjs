@@ -9,17 +9,16 @@ import {
     writeFabricText,
 } from "../core/util/text-utils";
 import {
+    BLACK,
     ESPACAMENTO_100g_000g_VD,
     ESPACAMENTO_CONTORNO_TABELA_EM_PT,
     EXPESSURA_LINHA_GROSSA_EM_PT,
     PARAMETROS_PADROES_NUTRICIONAL_V2,
     TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT,
-    TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT
+    TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT,
 } from "../default";
 import {mmPartial} from "./mm";
-
-const BLACK = "#000000";
 
 interface IElementoTabelaNutricionalModelPosicao {
     xMm: number;
