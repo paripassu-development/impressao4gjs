@@ -3189,7 +3189,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         categoria: "posicionamento",
                         obrigatorio: true,
                         campo: "posicao.xMm",
-                        padrao: 0,
+                        padrao: 8,
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
@@ -3197,7 +3197,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.yMm",
-                        padrao: 2,
+                        padrao: 9,
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
@@ -5513,6 +5513,11 @@ const getMetadadosImpressao = (): any => {
 };
 
 const getMetadadosEtiqueta = (): any => {
+    getMetadadosElementos().forEach(nome => {
+      if (nome.nome === "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_vertical_reduzida") {
+          METADADOS_ETIQUETA.camposConfiguraveis.alturaMm = 70;
+      }
+    })
     return METADADOS_ETIQUETA;
 };
 
