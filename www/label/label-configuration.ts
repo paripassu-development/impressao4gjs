@@ -5513,11 +5513,6 @@ const getMetadadosImpressao = (): any => {
 };
 
 const getMetadadosEtiqueta = (): any => {
-    getMetadadosElementos().forEach(nome => {
-      if (nome.nome === "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_vertical_reduzida") {
-          METADADOS_ETIQUETA.camposConfiguraveis.alturaMm = 70;
-      }
-    })
     return METADADOS_ETIQUETA;
 };
 
