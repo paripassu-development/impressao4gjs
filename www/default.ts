@@ -235,16 +235,16 @@ export const MODEL_DEFAULT = {
         "margemXMm": 0,
         "margemYMm": 0,
         "resolucaoDpi": 300,
-        "orientacaoEtiquetaGraus": 90
+        "orientacaoEtiquetaGraus": 90,
     },
     "etiqueta": {
         "dimensoes": {
             "alturaMm": 80,
-            "larguraMm": 120
-        }
+            "larguraMm": 120,
+        },
     },
     "pdf": {
-        "etiquetaComBorda": false
+        "etiquetaComBorda": false,
     },
     "desenho": {
         "elementos": [
@@ -259,27 +259,27 @@ export const MODEL_DEFAULT = {
                     "textoAbreviadoValorDiario": "%VD*",
                     "textoPorcaoCaseira": "{{{medidaCaseiraNutricionalV2}}}",
                     "textoProporcaoCalorias": "{{{textoProporcaoCalorias}}}",
-                    "ocultarZerados": false
+                    "ocultarZerados": false,
                 },
                 "posicao": {
                     "xMm": 0,
-                    "yMm": 2
+                    "yMm": 2,
                 },
                 "dimensoes": {
-                    "larguraMaximaMm": 64.69
+                    "larguraMaximaMm": 64.69,
                 },
                 "fonte": {
                     "nome": "arial",
                     "alturaMm": 1,
-                    "forcaContorno": 1
+                    "forcaContorno": 1,
                 },
                 "informacoesAdicionais": {
                     "texto": "* Percentual de valores diários fornecidos pela porção.",
-                    "caracteresPorLinha": 70
-                }
-            }
-        ]
-    }
+                    "caracteresPorLinha": 70,
+                },
+            },
+        ],
+    },
 };
 
 export const PARAMETROS_PADROES_NUTRICIONAL = [
@@ -398,6 +398,6 @@ export const TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT = 10.77;
 export const TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT = 18.08;
 
 export const ESPACAMENTO_CONTORNO_TABELA_EM_PT = 0.5;
-export const ESPACAMENTO_100g_000g_VD = 6;
+export const ESPACAMENTO_100G_000G_VD = 6;
 
 export const BLACK = "#000000";
