@@ -174,7 +174,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - ESPACAMENTO_100g_000g_VD, 7.8, mm, ESPACAMENTO_100g_000g_VD);
     })
 
-    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (alturaLinhaMm * 1.2), ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD);
+    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (alturaLinhaMm * 1.4), ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD + 1.5);
 
     // Linha grossa ----------------------------------------------------------------------------------------------------
     desenharLinhaGrossa(ctx, model, yMm, mm);
@@ -215,8 +215,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, medida.value, medida.xMm + 1, yMm, mm, TextAlign.RIGHT, degrees);
         }
         desenharLinhaVertical(ctx, model, yMm - 1, medida.xMm, mm, (ESPACAMENTO_100g_000g_VD / 1.2));
-        desenharLinhaContornoVerticalDireita(ctx, model, yMm - 1, ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD / 1.5);
-        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100g_000g_VD / 2.4), 7.8, mm, ESPACAMENTO_100g_000g_VD / 1.2);
+        desenharLinhaContornoVerticalDireita(ctx, model, yMm - 0.7, ESPACAMENTO_100g_000g_VD + 8.1, mm, ESPACAMENTO_100g_000g_VD / 1.5);
+        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100g_000g_VD / 2), 7.8, mm, ESPACAMENTO_100g_000g_VD / 1.2);
     })
     ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}pt ${model.fonte.nome}`;
     yMm += lineStrokeGap;
