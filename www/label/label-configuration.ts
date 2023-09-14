@@ -2204,9 +2204,16 @@ const METADADOS_ELEMENTOS: any[] = [
                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_vertical.texto.rodape.percentual.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
-                        // TODO: alterar aqui depois quando for fazer a outra informação com **
                         campo: "informacoesAdicionais.texto",
-                        padrao: "* Percentual de valores diários fornecidos pela porção.",
+                        padrao: "*Percentual de valores diários fornecidos pela porção.",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.texto.rodape.alimento_pronto_para_consumo",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.rodape.alimento_pronto_para_consumo.descricao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesAdicionais.textoAlimentoProntoParaConsumo",
+                        padrao: "**No alimento pronto para consumo.",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.caracter_linha",
@@ -3271,9 +3278,16 @@ const METADADOS_ELEMENTOS: any[] = [
                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_vertical.texto.rodape.percentual.descricao",
                         tipo: "TEXT",
                         obrigatorio: true,
-                        // TODO: alterar aqui depois quando for fazer a outra informação com **
                         campo: "informacoesAdicionais.texto",
-                        padrao: "* Percentual de valores diários fornecidos pela porção.",
+                        padrao: "*Percentual de valores diários fornecidos pela porção.",
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.texto.rodape.alimento_pronto_para_consumo",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.texto.rodape.alimento_pronto_para_consumo.descricao",
+                        tipo: "TEXT",
+                        obrigatorio: true,
+                        campo: "informacoesAdicionais.textoAlimentoProntoParaConsumo",
+                        padrao: "**No alimento pronto para consumo.",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.caracter_linha",

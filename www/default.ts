@@ -274,7 +274,8 @@ export const MODEL_DEFAULT = {
                     "forcaContorno": 1,
                 },
                 "informacoesAdicionais": {
-                    "texto": "* Percentual de valores diários fornecidos pela porção.",
+                    "texto": "*Percentual de valores diários fornecidos pela porção.",
+                    "textoAlimentoProntoParaConsumo": "**No alimento pronto para consumo.",
                     "caracteresPorLinha": 70,
                 },
             },

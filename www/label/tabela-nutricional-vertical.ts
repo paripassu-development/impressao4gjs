@@ -50,7 +50,7 @@ interface IInformacoesNutrientesTabelaNutricional {
     [key: string]: IInformacoesNutriente;
 }
 
-// TODO: alterar interface para suportar o ** além de *
+// TODO: alterar interface para suportar o ** além de * na tabela Reduzida também
 interface IElementoTabelaNutricionalInformacoesAdicionais {
     texto: string;
     caracteresPorLinha: number;
@@ -187,10 +187,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // 100 g 000 g e %VD*
     ctx.font = `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
-    // TODO: deixar na formatação correta, fazer calculo para dar certo
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
     const porcao = fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings);
+    // TODO: Concatenar com * quando for alimento pronto para consumo
     const porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
 
     if (!!fabricCanvas) {
@@ -307,10 +307,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // -----------------------------------------------------------------------------------------------------------------
     // Rodapé (informações adicionais)
-    // TODO: mudar aqui quando for alterar o **
 
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}mm ${model.fonte.nome}`;
 
+    // TODO: colocar o ** também, nessa e na tabela reduzida
     if (!model.informacoesAdicionais.texto) {
         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
     } else {
