@@ -50,9 +50,9 @@ interface IInformacoesNutrientesTabelaNutricional {
     [key: string]: IInformacoesNutriente;
 }
 
-// TODO: alterar interface para suportar o ** além de * na tabela Reduzida também
 interface IElementoTabelaNutricionalInformacoesAdicionais {
     texto: string;
+    textoAlimentoProntoParaConsumo: string;
     caracteresPorLinha: number;
 }
 
@@ -310,14 +310,19 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}mm ${model.fonte.nome}`;
 
-    // TODO: colocar o ** também, nessa e na tabela reduzida
     if (!model.informacoesAdicionais.texto) {
         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
     } else {
-        const linhasInformacoesAdicionais = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
-        linhasInformacoesAdicionais.forEach((linha: string) => {
+        const linhasInformacoesPercentual = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
+        linhasInformacoesPercentual.forEach((linha: string) => {
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
-            yMm += alturaLinhaMm;
+            yMm += alturaLinhaMm / 2;
+        });
+        // TODO: Adicionar Validação para quando mostrar ou não
+        const linhasInformacaoAlimentoProntoParaConsumo = splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha);
+        linhasInformacaoAlimentoProntoParaConsumo.forEach((linha: string) => {
+            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
+            yMm += alturaLinhaMm / 2;
         });
     }
 

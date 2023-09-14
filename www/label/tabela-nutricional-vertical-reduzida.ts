@@ -51,10 +51,9 @@ interface IInformacoesNutriente {
 interface IInformacoesNutrientesTabelaNutricional {
     [key: string]: IInformacoesNutriente;
 }
-
-// TODO: alterar interface para suportar o ** além de *
 interface IElementoTabelaNutricionalInformacoesAdicionais {
     texto: string;
+    textoAlimentoProntoParaConsumo: string;
     caracteresPorLinha: number;
 }
 
@@ -342,20 +341,22 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // -----------------------------------------------------------------------------------------------------------------
     // Rodapé (informações adicionais)
-    // TODO: mudar aqui quando for alterar o **
 
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}mm ${model.fonte.nome}`;
 
     if (!model.informacoesAdicionais.texto) {
         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
-        } else {
-        // TODO Verificar como deixar responsivas as linhas verticais
-        const linhasInformacoesAdicionais = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
-        linhasInformacoesAdicionais.forEach((linha: string) => {
+    } else {
+        const linhasInformacoesPercentual = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
+        linhasInformacoesPercentual.forEach((linha: string) => {
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
-            desenharLinhaContornoVerticalDireita(ctx, model, yMm + 0.2, ESPACAMENTO_100G_000G_VD + 8.1, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-            desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3), 7.8, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-            yMm += lineStrokeGap;
+            yMm += alturaLinhaMm / 2;
+        });
+        // TODO: Adicionar Validação para quando mostrar ou não
+        const linhasInformacaoAlimentoProntoParaConsumo = splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha);
+        linhasInformacaoAlimentoProntoParaConsumo.forEach((linha: string) => {
+            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
+            yMm += alturaLinhaMm / 2;
         });
     }
 
