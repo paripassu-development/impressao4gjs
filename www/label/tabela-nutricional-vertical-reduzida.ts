@@ -1,5 +1,9 @@
 import {fabric} from "fabric";
-import {converterPTparaMM, converterPtParaPX} from "../core/util/conversor-utils";
+import {
+    calculaTamanhoFonteByAlturaMMEFontePadraoPT,
+    converterPTparaMM,
+    converterPtParaPX
+} from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
@@ -116,7 +120,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += alturaLinhaMm;
 
     // Configurando fonte do Titulo
-    ctx.font = `bold ${(model.fonte.alturaMm *  converterPTparaMM(TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT))}mm ${model.fonte.nome}`;
+    ctx.font = `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT)}mm ${model.fonte.nome}`;
 
     // Titulo INFORMAÇÕES NUTRICIONAIS ---------------------------------------------------------------------------------
     strokeAlignedText(
@@ -140,7 +144,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += alturaLinhaMm / 1.5;
 
     // Configurando fonte de Informações e labels nutricionais
-    ctx.font = `${(model.fonte.alturaMm * converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))}mm ${model.fonte.nome}`;
+    ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
     const informacoesNutricionaisTextoPorcao = [
@@ -182,7 +186,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
-    ctx.font = `bold ${(model.fonte.alturaMm * converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))}mm ${model.fonte.nome}`;
+    ctx.font = `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
     // TODO: deixar na formatação correta, fazer calculo para dar certo
     ctx.textAlign = TextAlign.RIGHT;
@@ -222,7 +226,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         desenharLinhaContornoVerticalDireita(ctx, model, model.posicao.yMm + inicioLinhaVertical, ESPACAMENTO_100G_000G_VD + 8.1, mm, alturaLinhaVertical);
         desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm + inicioLinhaVertical, 7.8, mm, alturaLinhaVertical);
     });
-    ctx.font = `${(model.fonte.alturaMm * converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))}mm ${model.fonte.nome}`;
+    ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
     yMm += lineStrokeGap;
     desenharLinha(ctx, model, yMm, mm);
     // -----------------------------------------------------------------------------------------------------------------
@@ -340,7 +344,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Rodapé (informações adicionais)
     // TODO: mudar aqui quando for alterar o **
 
-    ctx.font = `${(model.fonte.alturaMm * converterPTparaMM(TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT))}mm ${model.fonte.nome}`;
+    ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}mm ${model.fonte.nome}`;
 
     if (!model.informacoesAdicionais.texto) {
         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
