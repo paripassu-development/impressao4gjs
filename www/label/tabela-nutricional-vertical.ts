@@ -109,13 +109,16 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // 3?
     const lineStrokeGap = alturaLinhaMm / 3;
 
+    console.log(model);
+
     // Contorno de cima
     desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
     yMm += lineStrokeGap;
     yMm += alturaLinhaMm;
 
     // Configurando fonte do Titulo
-    ctx.font = `bold ${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_TITULO_EM_PT)}pt ${model.fonte.nome}`;
+    // TODO: refatorar em função
+    ctx.font = `bold ${(model.fonte.alturaMm + (converterPTparaMM(TAMANHO_FONTE_PADRAO_TITULO_EM_PT) - model.fonte.alturaMm))}mm ${model.fonte.nome}`;
 
     // Titulo INFORMAÇÕES NUTRICIONAIS ---------------------------------------------------------------------------------
     strokeAlignedText(
@@ -136,7 +139,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += alturaLinhaMm;
 
     // Configurando fonte de Informações e labels nutricionais
-    ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT)}pt ${model.fonte.nome}`;
+    ctx.font = `${(model.fonte.alturaMm + (converterPTparaMM(TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT) - model.fonte.alturaMm))}mm ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Porções por embalagem:
@@ -178,7 +181,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
-    ctx.font = `bold ${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT)}pt ${model.fonte.nome}`;
+    ctx.font = `bold ${(model.fonte.alturaMm + (converterPTparaMM(TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT) - model.fonte.alturaMm))}mm ${model.fonte.nome}`;
 
     // TODO: deixar na formatação correta, fazer calculo para dar certo
     ctx.textAlign = TextAlign.RIGHT;
@@ -204,7 +207,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             yMm, mm, TextAlign.RIGHT, degrees);
     }
 
-    ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT)}pt ${model.fonte.nome}`;
+    ctx.font = `${(model.fonte.alturaMm + (converterPTparaMM(TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT) - model.fonte.alturaMm))}mm ${model.fonte.nome}`;
     yMm += lineStrokeGap;
     desenharLinha(ctx, model, yMm, mm);
     // -----------------------------------------------------------------------------------------------------------------
@@ -302,7 +305,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Rodapé (informações adicionais)
     // TODO: mudar aqui quando for alterar o **
 
-    ctx.font = `${(model.fonte.alturaMm * TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}pt ${model.fonte.nome}`;
+    ctx.font = `${(model.fonte.alturaMm + (converterPTparaMM(TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT) - model.fonte.alturaMm))}mm ${model.fonte.nome}`;
 
     if (!model.informacoesAdicionais.texto) {
         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);

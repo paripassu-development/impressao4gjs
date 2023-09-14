@@ -1,3 +1,4 @@
+import {converterPTparaMM} from "../core/util/conversor-utils";
 import {FONTES, FONTES_NUTRICIONAL_VERTICAL} from "../fonts/fonts";
 
 export interface IValoresRotacao {
@@ -2179,7 +2180,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "fonte.alturaMm",
-                        padrao: 1,
+                        padrao: 2.82,
                     },
                     // TODO: ver se vai remover
                     {
@@ -3246,7 +3247,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "fonte.alturaMm",
-                        padrao: 1,
+                        padrao: 2.6,
                     },
                     // TODO: ver se vai remover
                     {
