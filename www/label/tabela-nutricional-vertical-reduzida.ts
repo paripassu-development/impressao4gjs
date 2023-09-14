@@ -350,7 +350,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         const linhasInformacoesPercentual = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
         linhasInformacoesPercentual.forEach((linha: string) => {
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
-            yMm += alturaLinhaMm / 2;
+            yMm += alturaLinhaMm;
         });
         // TODO: Adicionar Validação para quando mostrar ou não
         const linhasInformacaoAlimentoProntoParaConsumo = splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha);
