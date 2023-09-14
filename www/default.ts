@@ -209,7 +209,7 @@ export const DADOS_DEFAULT = {
         },
         {
             qtPorcao: "1",
-            rotulo: "Fibra Alimentar (g)",
+            rotulo: "Fibras Alimentares (g)",
             valorDiario: "3",
             qt100: "3",
         },
@@ -376,7 +376,7 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
     },
     {
         "qtPorcao": "1",
-        "rotulo": "Fibra Alimentar (g)",
+        "rotulo": "Fibras Alimentares (g)",
         "valorDiario": "3",
         "qt100": "3",
     },
