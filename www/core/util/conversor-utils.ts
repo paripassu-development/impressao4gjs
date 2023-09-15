@@ -9,4 +9,11 @@ const converterPTparaMM = (pt: number) => {
     return pt * 0.3528;
 };
 
-export { converterPtParaPX, converterPXParaPT, converterPTparaMM };
+const calculaTamanhoFonteByAlturaMMEFontePadraoPT = (alturaMM: number, tamanhoPadraoFontePT: number) => {
+    const valorMMDaFonteEmPT = converterPTparaMM(tamanhoPadraoFontePT);
+    return valorMMDaFonteEmPT > alturaMM
+        ? alturaMM * (alturaMM + (valorMMDaFonteEmPT - alturaMM))
+        : alturaMM * valorMMDaFonteEmPT;
+};
+
+export { converterPtParaPX, converterPXParaPT, converterPTparaMM, calculaTamanhoFonteByAlturaMMEFontePadraoPT};
