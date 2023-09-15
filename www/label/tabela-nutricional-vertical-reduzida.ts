@@ -355,7 +355,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, item, model.posicao.xMm  + ESPACAMENTO_CONTORNO_TABELA_EM_PT, yMm, mm, TextAlign.LEFT, degrees);
             desenharLinhaContornoVerticalDireita(ctx, model, yMm + 0.7, ESPACAMENTO_100G_000G_VD, mm, ESPACAMENTO_100G_000G_VD / 1.7);
             desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 1.8, model.posicao.xMm, mm, ESPACAMENTO_100G_000G_VD / 1.7);
-            yMm += alturaLinhaMm;
+            yMm += alturaLinhaMm / 2;
         });
     });
     // if (!model.informacoesAdicionais.texto) {
