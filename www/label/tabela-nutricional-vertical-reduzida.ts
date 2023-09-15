@@ -1,9 +1,5 @@
 import {fabric} from "fabric";
-import {
-    calculaTamanhoFonteByAlturaMMEFontePadraoPT,
-    converterPTparaMM,
-    converterPtParaPX
-} from "../core/util/conversor-utils";
+import {calculaTamanhoFonteByAlturaMMEFontePadraoPT, converterPTparaMM, converterPtParaPX} from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
@@ -51,9 +47,10 @@ interface IInformacoesNutriente {
 interface IInformacoesNutrientesTabelaNutricional {
     [key: string]: IInformacoesNutriente;
 }
+
+// TODO: alterar interface para suportar o ** além de *
 interface IElementoTabelaNutricionalInformacoesAdicionais {
     texto: string;
-    textoAlimentoProntoParaConsumo: string;
     caracteresPorLinha: number;
 }
 
@@ -119,7 +116,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += alturaLinhaMm;
 
     // Configurando fonte do Titulo
-    ctx.font = `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT)}mm ${model.fonte.nome}`;
+    ctx.font = `bold ${(calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT))}mm ${model.fonte.nome}`;
 
     // Titulo INFORMAÇÕES NUTRICIONAIS ---------------------------------------------------------------------------------
     strokeAlignedText(
@@ -137,35 +134,34 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Linha normal ----------------------------------------------------------------------------------------------------
     yMm += lineStrokeGap;
     desenharLinha(ctx, model, yMm, mm);
-    // TODO Verificar como deixar responsivas as linhas verticais
     desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_CONTORNO_TABELA_EM_PT * 4.5), ESPACAMENTO_100G_000G_VD + 8.1, mm, 4.8);
     desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm, 7.8, mm, 4.8);
     yMm += alturaLinhaMm / 1.5;
 
     // Configurando fonte de Informações e labels nutricionais
-    ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
+    ctx.font = `${(calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))}mmt ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
     const informacoesNutricionaisTextoPorcao = [
         {
             id: "Porções por embalagem: ",
             value: model.informacoesNutricionais.textoQuantidadeEmbalagem,
-            caseira: null,
+            caseira: null
         },
         {
             id: "Porção: ",
             value: model.informacoesNutricionais.textoQuantidadePorPorcao,
-            caseira: model.informacoesNutricionais.textoPorcaoCaseira,
-        },
-    ].map((infos) => {
+            caseira: model.informacoesNutricionais.textoPorcaoCaseira
+        }
+    ].map(infos => {
         strokeAlignedText(
             ctx,
             fabricCanvas,
             larguraMaxima,
             infos.id === "Porção: " ?
-             (infos.id + fillTemplate(infos.value, textBindings)
-                 + "(" + fillTemplate(infos.caseira, textBindings)) + ")"
-            : (infos.id + fillTemplate(infos.value, textBindings)),
+                (infos.id + fillTemplate(infos.value, textBindings)
+                    + "(" + fillTemplate(infos.caseira, textBindings)) + ")"
+                : (infos.id + fillTemplate(infos.value, textBindings)),
             model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT,
             yMm,
             mm,
@@ -173,9 +169,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             degrees,
         );
         yMm += alturaLinhaMm / 1.5;
-        // TODO Verificar como deixar responsivas as linhas verticais
         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - ESPACAMENTO_100G_000G_VD, 7.8, mm, ESPACAMENTO_100G_000G_VD);
-    });
+    })
 
     desenharLinhaContornoVerticalDireita(ctx, model, yMm - (alturaLinhaMm * 1.4), ESPACAMENTO_100G_000G_VD + 8.1, mm, ESPACAMENTO_100G_000G_VD + 1.5);
 
@@ -185,7 +180,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // -----------------------------------------------------------------------------------------------------------------
     // 100 g 000 g e %VD*
-    ctx.font = `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
+    ctx.font = `bold ${(calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))}mm ${model.fonte.nome}`;
 
     // TODO: deixar na formatação correta, fazer calculo para dar certo
     ctx.textAlign = TextAlign.RIGHT;
@@ -195,37 +190,34 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             id: null,
             value: getOrDefault(model.informacoesNutricionais, "textoQt100"),
             xMm: model.posicao.xMm  - (alturaLinhaMm * 5.5),
-            yMm: model.posicao.yMm - (alturaLinhaMm * 5.5),
+            yMm: model.posicao.yMm - (alturaLinhaMm * 5.5)
         },
         {
             id: null,
             value: fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings),
             xMm: model.posicao.xMm - (alturaLinhaMm * 3.5),
-            yMm: model.posicao.yMm - (alturaLinhaMm * 3.5),
+            yMm: model.posicao.yMm - (alturaLinhaMm * 3.5)
         },
         {
             id: null,
             value: getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario"),
             xMm: model.posicao.xMm - (alturaLinhaMm * 1.2),
-            yMm: model.posicao.yMm - (alturaLinhaMm * 1.2),
-        },
-    ];
-
-    textoCabecalhoMedidas.map((medida) => {
-        // TODO Verificar como deixar responsivas as linhas verticais
-        const inicioLinhaVertical = converterPTparaMM((TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT * 2) + TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT) + (alturaLinhaMm / 1.5);
-        const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
-        const distanciaEixoXLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT);
-        if (!!fabricCanvas) {
-            writeFabricText(fabricCanvas, ctx, medida.value, medida.xMm, yMm, larguraMaxima, mm, {degrees});
-        } else {
-            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, medida.value, medida.xMm, yMm, mm, TextAlign.RIGHT, degrees);
+            yMm: model.posicao.yMm - (alturaLinhaMm * 1.2)
         }
-        desenharLinhaVertical(ctx, model, model.posicao.yMm + inicioLinhaVertical, medida.xMm + distanciaEixoXLinhaVertical, mm, alturaLinhaVertical);
-        desenharLinhaContornoVerticalDireita(ctx, model, model.posicao.yMm + inicioLinhaVertical, ESPACAMENTO_100G_000G_VD + 8.1, mm, alturaLinhaVertical);
-        desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm + inicioLinhaVertical, 7.8, mm, alturaLinhaVertical);
-    });
-    ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
+    ]
+
+    textoCabecalhoMedidas.map(medida => {
+        if (!!fabricCanvas) {
+            writeFabricText(fabricCanvas, ctx, medida.value, medida.xMm + 1, yMm, larguraMaxima, mm, {degrees});
+        } else {
+            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, medida.value, medida.xMm + 1, yMm, mm, TextAlign.RIGHT, degrees);
+        }
+        console.log("Posição X: " + medida.xMm);
+        desenharLinhaVertical(ctx, model, yMm - 1, medida.xMm + 2.5, mm, (ESPACAMENTO_100G_000G_VD / 2));
+        desenharLinhaContornoVerticalDireita(ctx, model, yMm - 0.7, ESPACAMENTO_100G_000G_VD + 8.1, mm, ESPACAMENTO_100G_000G_VD / 1.5);
+        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 2), 7.8, mm, ESPACAMENTO_100G_000G_VD / 1.2);
+    })
+    ctx.font = `${((calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)))}mm ${model.fonte.nome}`;
     yMm += lineStrokeGap;
     desenharLinha(ctx, model, yMm, mm);
     // -----------------------------------------------------------------------------------------------------------------
@@ -234,63 +226,55 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         nutrientes.forEach((nutriente: any) => {
             textoCabecalhoMedidas.map((obj: any) => {
-                // TODO Verificar como deixar responsivas as linhas verticais
-                const inicioLinhaVertical = converterPTparaMM((TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT * 3) + TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT) + (alturaLinhaMm / 1.5) + lineStrokeGap;
-                const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
-                const distanciaEixoXLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT);
                 obj.id = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
                 if (obj.id !== undefined) {
-                        yMm += alturaLinhaMm / 1.7;
-                        ctx.textAlign = TextAlign.LEFT;
+                    yMm += alturaLinhaMm / 1.7;
+                    ctx.textAlign = TextAlign.LEFT;
 
-                        const nomeNutriente = getOrDefault(obj.id, "nome");
-                        if (!!fabricCanvas) {
-                            writeFabricText(fabricCanvas, ctx, nomeNutriente, obj.xMm, yMm, larguraMaxima, mm, {degrees});
-                        } else {
-                            ctx.strokeText(nomeNutriente, mm(obj.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-                        }
-                        strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textBindings),
-                            obj.xMm, yMm, mm, TextAlign.RIGHT, degrees);
-                        yMm += lineStrokeGap;
-                        desenharLinhaContornoVerticalDireita(ctx, model, yMm + inicioLinhaVertical, ESPACAMENTO_100G_000G_VD + 8.1, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-                        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm + inicioLinhaVertical, 7.8, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-                        desenharLinhaVertical(ctx, model, yMm, obj.xMm, mm, (ESPACAMENTO_100G_000G_VD / 2));
-                        desenharLinha(ctx, model, yMm, mm);
-                        // -----------------------------------------------------------------------------------------------------
+                    const nomeNutriente = getOrDefault(obj.id, "nome");
+                    if (!!fabricCanvas) {
+                        writeFabricText(fabricCanvas, ctx, nomeNutriente, obj.xMm, yMm, larguraMaxima, mm, {degrees});
+                    } else {
+                        ctx.strokeText(nomeNutriente, mm(obj.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+                    }
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textBindings),
+                        obj.xMm, yMm, mm, TextAlign.RIGHT, degrees);
+                    yMm += lineStrokeGap;
+                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 4), ESPACAMENTO_100G_000G_VD + 8.1, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 2), 7.8, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+                    desenharLinhaVertical(ctx, model, yMm, obj.xMm, mm, (ESPACAMENTO_100G_000G_VD / 2));
+                    desenharLinha(ctx, model, yMm, mm);
+                    // -----------------------------------------------------------------------------------------------------
                 }
-            });
+            })
         });
     } else {
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
         parametrosPadroesNutricionalV2.forEach((parametro: any) => {
-                // TODO Verificar como deixar responsivas as linhas verticais
-                const inicioLinhaVertical = converterPTparaMM((TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT * 3) + TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT);
-                const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
-                const distanciaEixoXLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT);
-                const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
-                if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
-                    yMm += alturaLinhaMm / 1.7;
-                    ctx.textAlign = TextAlign.LEFT;
-                    if (!!fabricCanvas) {
-                        writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
-                    } else {
-                        ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-                    }
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, model.posicao.xMm - (alturaLinhaMm * 5.5),
-                        yMm, mm, TextAlign.RIGHT, degrees);
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 3.5),
-                        yMm, mm, TextAlign.RIGHT, degrees);
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - (alturaLinhaMm * 1.2),
-                        yMm, mm, TextAlign.RIGHT, degrees);
-                    yMm += lineStrokeGap;
-                    textoCabecalhoMedidas.map((obj: any) => {
-                        desenharLinhaVertical(ctx, model, yMm + (inicioLinhaVertical - (converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) * parametrosPadroesNutricionalV2.length)), obj.xMm, mm, alturaLinhaVertical);
-                    });
-                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 4), ESPACAMENTO_100G_000G_VD + 8.1, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 2), 7.8, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-                    desenharLinha(ctx, model, yMm, mm);
-                    // -----------------------------------------------------------------------------------------------------
+            const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
+            if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
+                yMm += alturaLinhaMm / 1.7;
+                ctx.textAlign = TextAlign.LEFT;
+                if (!!fabricCanvas) {
+                    writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
+                } else {
+                    ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
                 }
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, model.posicao.xMm - (alturaLinhaMm * 5.5),
+                    yMm, mm, TextAlign.RIGHT, degrees);
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 3.5),
+                    yMm, mm, TextAlign.RIGHT, degrees);
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm,
+                    yMm, mm, TextAlign.RIGHT, degrees);
+                yMm += lineStrokeGap;
+                textoCabecalhoMedidas.map((obj: any) => {
+                    desenharLinhaVertical(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 4), obj.xMm, mm, (ESPACAMENTO_100G_000G_VD / 1.8));
+                })
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 4), ESPACAMENTO_100G_000G_VD + 8.1, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 2), 7.8, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+                desenharLinha(ctx, model, yMm, mm);
+                // -----------------------------------------------------------------------------------------------------
+            }
         });
 
         // -----------------------------------------------------------------------------------------------------------------
@@ -298,7 +282,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // Parametros extras
         if (!!textBindings) {
             textBindings.parametrosExtrasNutricionalV2.forEach((parametro: any) => {
-                // TODO Verificar como deixar responsivas as linhas verticais
                 yMm += alturaLinhaMm / 1.7;
                 ctx.textAlign = TextAlign.LEFT;
 
@@ -311,14 +294,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     yMm, mm, TextAlign.RIGHT, degrees);
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, model.posicao.xMm - (alturaLinhaMm * 3.5),
                     yMm, mm, TextAlign.RIGHT, degrees);
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - (alturaLinhaMm * 1.2),
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, model.posicao.xMm - alturaLinhaMm,
                     yMm, mm, TextAlign.RIGHT, degrees);
                 yMm += lineStrokeGap;
                 textoCabecalhoMedidas.map((obj: any) => {
                     desenharLinhaVertical(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 4), obj.xMm, mm, (ESPACAMENTO_100G_000G_VD / 1.8));
-                });
+                })
                 desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 4), ESPACAMENTO_100G_000G_VD + 8.1, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 2), 7.8, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 2), 7.8, mm,ESPACAMENTO_100G_000G_VD / 1.8);
                 desenharLinha(ctx, model, yMm, mm);
                 // -----------------------------------------------------------------------------------------------------
             });
@@ -341,22 +324,19 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // -----------------------------------------------------------------------------------------------------------------
     // Rodapé (informações adicionais)
+    // TODO: mudar aqui quando for alterar o **
 
-    ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}mm ${model.fonte.nome}`;
+    ctx.font = `${(calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT))}mm ${model.fonte.nome}`;
 
     if (!model.informacoesAdicionais.texto) {
         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, "<informacoesAdicionais.texto>", model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
     } else {
-        const linhasInformacoesPercentual = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
-        linhasInformacoesPercentual.forEach((linha: string) => {
+        const linhasInformacoesAdicionais = splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha);
+        linhasInformacoesAdicionais.forEach((linha: string) => {
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
-            yMm += alturaLinhaMm;
-        });
-        // TODO: Adicionar Validação para quando mostrar ou não
-        const linhasInformacaoAlimentoProntoParaConsumo = splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha);
-        linhasInformacaoAlimentoProntoParaConsumo.forEach((linha: string) => {
-            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
-            yMm += alturaLinhaMm / 2;
+            desenharLinhaContornoVerticalDireita(ctx, model, yMm + 0.2, ESPACAMENTO_100G_000G_VD + 8.1, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+            desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3), 7.8, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+            yMm += lineStrokeGap;
         });
     }
 
@@ -421,7 +401,7 @@ const desenharLinhaContornoVerticalDireita = (ctx: CanvasRenderingContext2D, mod
         mm((xMm + (model.dimensoes.larguraMaximaMm - TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))),
         mm(yMm) - (model.fonte.alturaMm * TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT),
         1,
-        mm(alturaLinhaVertical),
+        mm(alturaLinhaVertical)
     );
 };
 
@@ -433,7 +413,7 @@ const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, mo
         mm(xMm),
         mm(yMm) - (model.fonte.alturaMm - alturaLinhaVertical),
         1,
-        mm(alturaLinhaVertical),
+        mm(alturaLinhaVertical)
     );
 };
 
@@ -445,7 +425,7 @@ const desenharLinhaVertical = (ctx: CanvasRenderingContext2D, model: IElementoTa
         mm((xMm + (model.dimensoes.larguraMaximaMm - TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))),
         mm(yMm) - (model.fonte.alturaMm * TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT),
         1,
-        mm(alturaLinhaVertical),
+        mm(alturaLinhaVertical)
     );
 };
 

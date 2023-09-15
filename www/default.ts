@@ -145,7 +145,7 @@ export const DADOS_DEFAULT = {
         valorDiario: "**",
         qtPorcao: "0 g",
     }, {
-        rotulo: "Fibra Alimentar",
+        rotulo: "Fibras Alimentares",
         valorDiario: "7 %",
         qtPorcao: "7 mg",
     }, {
