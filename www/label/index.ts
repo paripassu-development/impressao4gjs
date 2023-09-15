@@ -103,9 +103,8 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
     // tslint:disable-next-line:no-console
     console.log("Dentro do create la na impressãojs");
     // tslint:disable-next-line:no-console
-    console.log({id});
-    // tslint:disable-next-line:no-console
     console.log({model});
+    // TODO: tenta passar dentro do text bindins
     // tslint:disable-next-line:no-console
     console.log({textBindings});
 
