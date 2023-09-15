@@ -5,7 +5,7 @@ import {
     converterPtParaPX,
 } from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
-import {setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
+import {alimentoProntoParaConsumo, setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
     splitLines,
     strokeAlignedText,
@@ -98,8 +98,6 @@ interface IElementoTabelaNutricionalModel {
 }
 
 const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
-    console.clear();
-    console.log(textBindings);
     setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
@@ -114,9 +112,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const alturaLinhaMm = model.fonte.alturaMm * 1.2;
     // 3?
     const lineStrokeGap = alturaLinhaMm / 3;
-
-    // tslint:disable-next-line:no-console
-    console.log(model);
 
     // Contorno de cima
     desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
@@ -192,8 +187,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
     const porcao = fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings);
-    // TODO: Concatenar com * quando for alimento pronto para consumo
-    const porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
+    let porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
+
+    if (alimentoProntoParaConsumo(textBindings)) {
+        porcao100g += "*";
+    }
 
     if (!!fabricCanvas) {
         writeFabricText(fabricCanvas, ctx, porcao100g, model.posicao.xMm  - (alturaLinhaMm * 7),
@@ -321,7 +319,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             yMm += alturaLinhaMm;
         });
 
-        if (textBindings && textBindings.alimentoProntoParaConsumo) {
+        if (alimentoProntoParaConsumo(textBindings)) {
             const linhasInformacaoAlimentoProntoParaConsumo = splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha);
             linhasInformacaoAlimentoProntoParaConsumo.forEach((linha: string) => {
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
