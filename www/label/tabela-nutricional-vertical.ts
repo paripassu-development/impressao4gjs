@@ -190,7 +190,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     let porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
 
     if (alimentoProntoParaConsumo(textBindings)) {
-        porcao100g += "*";
+        porcao100g += "**";
     }
 
     if (!!fabricCanvas) {
