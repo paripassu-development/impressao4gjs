@@ -5,7 +5,7 @@ import {
     converterPtParaPX
 } from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
-import {setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
+import {alimentoProntoParaConsumo, setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
     splitLines,
     strokeAlignedText,
@@ -187,13 +187,16 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // 100 g 000 g e %VD*
     ctx.font = `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
-    // TODO: deixar na formatação correta, fazer calculo para dar certo
+    let porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
+    if (alimentoProntoParaConsumo(textBindings)) {
+        porcao100g += "**";
+    }
     ctx.textAlign = TextAlign.RIGHT;
     const textoCabecalhoMedidas = [
         {
             // @ts-ignore
             id: null,
-            value: getOrDefault(model.informacoesNutricionais, "textoQt100"),
+            value: porcao100g,
             xMm: model.posicao.xMm  - (alturaLinhaMm * 5.5),
         },
         {
@@ -351,6 +354,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             value: splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha)
         },
     ].map((info) => {
+        if (!alimentoProntoParaConsumo(textBindings) && info.id === "linhasInformacaoAlimentoProntoParaConsumo") {
+            return;
+        }
         info.value.forEach((item) => {
             yMm += lineStrokeGap;
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, item, model.posicao.xMm  + ESPACAMENTO_CONTORNO_TABELA_EM_PT, yMm, mm, TextAlign.LEFT, degrees);
