@@ -120,6 +120,7 @@ export const DADOS_DEFAULT = {
     valorEnergeticoValDiario: "3",
     variedade: "caturra",
     zonaProducao: "norte",
+    "alimentoProntoParaConsumo": true,
     parametrosPadroes: [{
         rotulo: "Valor Energético",
         valorDiario: "2 %",
@@ -239,8 +240,8 @@ export const MODEL_DEFAULT = {
     },
     "etiqueta": {
         "dimensoes": {
-            "alturaMm": 80,
-            "larguraMm": 120,
+            "alturaMm": 70,
+            "larguraMm": 70,
         },
     },
     "pdf": {
@@ -262,8 +263,8 @@ export const MODEL_DEFAULT = {
                     "ocultarZerados": false,
                 },
                 "posicao": {
-                    "xMm": 0,
-                    "yMm": 2,
+                    "xMm": 2,
+                    "yMm": 0,
                 },
                 "dimensoes": {
                     "larguraMaximaMm": 64.69,
@@ -271,7 +272,7 @@ export const MODEL_DEFAULT = {
                 "fonte": {
                     "nome": "arial",
                     "alturaMm": 1,
-                    "forcaContorno": 1,
+                    "forcaContorno": 0.8,
                 },
                 "informacoesAdicionais": {
                     "texto": "*Percentual de valores diários fornecidos pela porção.",
