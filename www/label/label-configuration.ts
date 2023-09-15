@@ -2182,7 +2182,6 @@ const METADADOS_ELEMENTOS: any[] = [
                         campo: "fonte.alturaMm",
                         padrao: 2.82,
                     },
-                    // TODO: ver se vai remover
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.forca_contorno_fonte",
                         descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.forca_contorno_fonte.descricao",

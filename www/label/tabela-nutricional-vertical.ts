@@ -98,6 +98,8 @@ interface IElementoTabelaNutricionalModel {
 }
 
 const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
+    console.clear();
+    console.log(textBindings);
     setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
@@ -318,12 +320,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
             yMm += alturaLinhaMm;
         });
-        // TODO: Adicionar Validação para quando mostrar ou não
-        const linhasInformacaoAlimentoProntoParaConsumo = splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha);
-        linhasInformacaoAlimentoProntoParaConsumo.forEach((linha: string) => {
-            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
-            yMm += alturaLinhaMm / 2;
-        });
+
+        if (textBindings && textBindings.alimentoProntoParaConsumo) {
+            const linhasInformacaoAlimentoProntoParaConsumo = splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha);
+            linhasInformacaoAlimentoProntoParaConsumo.forEach((linha: string) => {
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
+                yMm += alturaLinhaMm / 2;
+            });
+        }
     }
 
     // Contorno de baixo
