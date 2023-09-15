@@ -72,5 +72,5 @@ export function setInformacoesV2PadraoZero(textBindings ?: any) {
 
 export function alimentoProntoParaConsumo(textBindings: any) {
     if (!textBindings) { return false; }
-    return textBindings.alimentoProntoParaConsumo ? textBindings && textBindings.alimentoProntoParaConsumo : false;
+    return textBindings.alimentoProntoParaConsumo ? textBindings.alimentoProntoParaConsumo : false;
 }
