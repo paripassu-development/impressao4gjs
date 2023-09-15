@@ -115,7 +115,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const lineStrokeGap = alturaLinhaMm / 3;
     const posicaoX100g = model.posicao.xMm  - (alturaLinhaMm * 5.5);
     const posicaoX000g = model.posicao.xMm  - (alturaLinhaMm * 3);
-    const posicaoXValorDiario = model.posicao.xMm - (alturaLinhaMm / 1.2);
+    const posicaoXValorDiario = model.posicao.xMm - (alturaLinhaMm / 2.5);
 
     // Contorno de cima
     desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
@@ -216,9 +216,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     textoCabecalhoMedidas.map((medida) => {
         // TODO Verificar como deixar responsivas as linhas verticais
-        const inicioLinhaVertical = converterPTparaMM((TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT * 2));
         const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + alturaLinhaMm / 1.5;
-        const distanciaEixoXLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT);
         if (!!fabricCanvas) {
             writeFabricText(fabricCanvas, ctx, medida.value, medida.xMm, yMm, larguraMaxima, mm, {degrees});
         } else {
@@ -268,7 +266,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         parametrosPadroesNutricionalV2.forEach((parametro: any) => {
                 // TODO Verificar como deixar responsivas as linhas verticais
                 const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
-                const distanciaEixoXLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT);
                 const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
                 if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
                     yMm += alturaLinhaMm / 1.7;
