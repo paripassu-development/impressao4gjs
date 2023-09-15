@@ -209,7 +209,7 @@ export const DADOS_DEFAULT = {
         },
         {
             qtPorcao: "1",
-            rotulo: "Fibra Alimentar (g)",
+            rotulo: "Fibras Alimentares (g)",
             valorDiario: "3",
             qt100: "3",
         },
@@ -274,7 +274,8 @@ export const MODEL_DEFAULT = {
                     "forcaContorno": 1,
                 },
                 "informacoesAdicionais": {
-                    "texto": "* Percentual de valores diários fornecidos pela porção.",
+                    "texto": "*Percentual de valores diários fornecidos pela porção.",
+                    "textoAlimentoProntoParaConsumo": "**No alimento pronto para consumo.",
                     "caracteresPorLinha": 70,
                 },
             },
@@ -375,7 +376,7 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
     },
     {
         "qtPorcao": "1",
-        "rotulo": "Fibra Alimentar (g)",
+        "rotulo": "Fibras Alimentares (g)",
         "valorDiario": "3",
         "qt100": "3",
     },

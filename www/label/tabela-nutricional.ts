@@ -41,6 +41,7 @@ interface IInformacoesNutrientesTabelaNutricional {
 
 interface IElementoTabelaNutricionalInformacoesAdicionais {
     texto: string;
+    textoAlimentoProntoParaConsumo: string;
     caracteresPorLinha: number;
 }
 

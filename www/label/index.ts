@@ -9,10 +9,10 @@ import {barraOrigemRastreada} from "./barra-origem-rastreada";
 import {mmPartial} from "./mm";
 import {qrcode} from "./qrcode";
 import {tabelaNutricional} from "./tabela-nutricional";
+import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
 import {tabelaNutricionalV2} from "./tabela-nutricional-v2";
 import {tabelaNutricionalVertical} from "./tabela-nutricional-vertical";
 import {tabelaNutricionalVerticalReduzida} from "./tabela-nutricional-vertical-reduzida";
-import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
 import {text} from "./text";
 import {Canvas} from "fabric/fabric-impl";
 
@@ -99,6 +99,15 @@ function isFabricRequired(model: IEtiquetaDocModel, textBindings: any) {
 }
 
 const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
+
+    // tslint:disable-next-line:no-console
+    console.log("Dentro do create la na impressãojs");
+    // tslint:disable-next-line:no-console
+    console.log({model});
+    // TODO: tenta passar dentro do text bindins
+    // tslint:disable-next-line:no-console
+    console.log({textBindings});
+
     let errors = new Array<Error>();
     const idElementoCanvas = id + "-etiqueta-canvas";
     const idElementoFabricCanvas = id + "-etiqueta-fabric-canvas";
@@ -217,6 +226,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
                 resolve(canvas);
             }
         } catch (e) {
+            // tslint:disable-next-line:no-console
             console.log(`Erro ao gerar imagem da etiqueta: ${JSON.stringify(e)}`);
             reject(e);
         }
