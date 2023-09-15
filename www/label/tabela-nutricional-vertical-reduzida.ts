@@ -116,7 +116,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // Contorno de cima
     desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
-    yMm += alturaLinhaMm / 1.5;
+    yMm += alturaLinhaMm;
 
     // Configurando fonte do Titulo
     ctx.font = `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT)}mm ${model.fonte.nome}`;
@@ -172,7 +172,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             TextAlign.LEFT,
             degrees,
         );
-        yMm += alturaLinhaMm / 2;
+        yMm += alturaLinhaMm / 1.5;
         // TODO Verificar como deixar responsivas as linhas verticais
         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - ESPACAMENTO_100G_000G_VD, model.posicao.xMm, mm, ESPACAMENTO_100G_000G_VD);
     });
@@ -218,9 +218,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         } else {
             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, medida.value, medida.xMm, yMm, mm, TextAlign.RIGHT, degrees);
         }
-        desenharLinhaVertical(ctx, model, model.posicao.yMm + ESPACAMENTO_100G_000G_VD * 2, medida.xMm - 1.3, mm, alturaLinhaVertical - 1);
-        desenharLinhaContornoVerticalDireita(ctx, model, model.posicao.yMm + ESPACAMENTO_100G_000G_VD * 2.1, ESPACAMENTO_100G_000G_VD + 2.2, mm, alturaLinhaVertical - 0.2);
-        desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm + ESPACAMENTO_100G_000G_VD * 1.8, model.posicao.xMm, mm, alturaLinhaVertical - 0.2);
+        desenharLinhaVertical(ctx, model, model.posicao.yMm + ESPACAMENTO_100G_000G_VD * 2.5, medida.xMm - 1.3, mm, alturaLinhaVertical - 1);
+        desenharLinhaContornoVerticalDireita(ctx, model, model.posicao.yMm + ESPACAMENTO_100G_000G_VD * 2.4, ESPACAMENTO_100G_000G_VD + 2.2, mm, alturaLinhaVertical - 0.2);
+        desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm + ESPACAMENTO_100G_000G_VD * 2.1, model.posicao.xMm, mm, alturaLinhaVertical - 0.2);
     });
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
     yMm += lineStrokeGap;
