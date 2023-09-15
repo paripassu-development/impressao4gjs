@@ -207,7 +207,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         {
             id: null,
             value: getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario"),
-            xMm: model.posicao.xMm - (alturaLinhaMm * 1.2),
+            xMm: model.posicao.xMm - (alturaLinhaMm / 1.2),
         },
     ];
 
