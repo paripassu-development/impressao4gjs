@@ -100,14 +100,6 @@ function isFabricRequired(model: IEtiquetaDocModel, textBindings: any) {
 
 const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
 
-    // tslint:disable-next-line:no-console
-    console.log("Dentro do create la na impressãojs");
-    // tslint:disable-next-line:no-console
-    console.log({model});
-    // TODO: tenta passar dentro do text bindins
-    // tslint:disable-next-line:no-console
-    console.log({textBindings});
-
     let errors = new Array<Error>();
     const idElementoCanvas = id + "-etiqueta-canvas";
     const idElementoFabricCanvas = id + "-etiqueta-fabric-canvas";

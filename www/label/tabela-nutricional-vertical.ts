@@ -5,7 +5,7 @@ import {
     converterPtParaPX,
 } from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
-import {setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
+import {alimentoProntoParaConsumo, setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
     splitLines,
     strokeAlignedText,
@@ -197,8 +197,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.textAlign = TextAlign.RIGHT;
     const textoValorDiario = getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario");
     const porcao = fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings);
-    // TODO: Concatenar com * quando for alimento pronto para consumo
-    const porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
+    let porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
+
+    if (alimentoProntoParaConsumo(textBindings)) {
+        porcao100g += "**";
+    }
 
     if (!!fabricCanvas) {
         writeFabricText(fabricCanvas, ctx, porcao100g, model.posicao.xMm  - (alturaLinhaMm * 7),
@@ -346,12 +349,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3), 7.8, mm, ESPACAMENTO_100G_000G_VD / 1.8);
             yMm += alturaLinhaMm;
         });
-        // TODO: Adicionar Validação para quando mostrar ou não
-        const linhasInformacaoAlimentoProntoParaConsumo = splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha);
-        linhasInformacaoAlimentoProntoParaConsumo.forEach((linha: string) => {
-            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
-            yMm += alturaLinhaMm / 2;
-        });
+
+        if (alimentoProntoParaConsumo(textBindings)) {
+            const linhasInformacaoAlimentoProntoParaConsumo = splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha);
+            linhasInformacaoAlimentoProntoParaConsumo.forEach((linha: string) => {
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm, yMm, mm, TextAlign.LEFT, degrees);
+                yMm += alturaLinhaMm / 2;
+            });
+        }
     }
 
     // Contorno de baixo
