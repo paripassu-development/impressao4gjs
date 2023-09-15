@@ -114,7 +114,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // 3?
     const lineStrokeGap = alturaLinhaMm / 3;
     const posicaoX100g = model.posicao.xMm  - (alturaLinhaMm * 5.5);
-    const posicaoX000g = model.posicao.xMm  - (alturaLinhaMm * 3.3);
+    const posicaoX000g = model.posicao.xMm  - (alturaLinhaMm * 3);
     const posicaoXValorDiario = model.posicao.xMm - (alturaLinhaMm / 1.2);
 
     // Contorno de cima
