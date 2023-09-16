@@ -1,0 +1,12 @@
+# CHANGELOG
+
+> Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
+
+
+## [v1.32.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.31.0%0D1.32.0) (15/09/2023)
+
+### Adicionado
+* ([RST-8729](https://paripassu.atlassian.net/browse/RST-8729)): Adicionadas novas tabelas nutricionais verticais, padrão e reduzida, seguindo a nova legislação RDC-429.
+
+### Adicionado
+* Versão inicial do changelog do projeto.
