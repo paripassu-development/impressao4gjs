@@ -120,6 +120,7 @@ export const DADOS_DEFAULT = {
     valorEnergeticoValDiario: "3",
     variedade: "caturra",
     zonaProducao: "norte",
+    "alimentoProntoParaConsumo": true,
     parametrosPadroes: [{
         rotulo: "Valor Energético",
         valorDiario: "2 %",
@@ -145,7 +146,7 @@ export const DADOS_DEFAULT = {
         valorDiario: "**",
         qtPorcao: "0 g",
     }, {
-        rotulo: "Fibra Alimentar",
+        rotulo: "Fibras Alimentares",
         valorDiario: "7 %",
         qtPorcao: "7 mg",
     }, {
@@ -159,6 +160,66 @@ export const DADOS_DEFAULT = {
         qtPorcao: "0 g",
         qt100: "0",
     }],
+    parametrosPadroesNutricionalV2: [{
+        qtPorcao: "126",
+        rotulo: "Valor Energético (kcal)",
+        valorDiario: "6",
+        qt100: "505",
+        },
+        {
+            qtPorcao: "13",
+            rotulo: "Carboidratos (g)",
+            valorDiario: "4",
+            qt100: "53",
+        },
+        {
+            qtPorcao: "2",
+            rotulo: "  Açúcares Totais (g)",
+            valorDiario: "",
+            qt100: "5",
+        },
+        {
+            qtPorcao: "1",
+            rotulo: "    Açúcares Adicionados (g)",
+            valorDiario: "2",
+            qt100: "4",
+        },
+        {
+            qtPorcao: "1",
+            rotulo: "Proteínas (g)",
+            valorDiario: "1",
+            qt100: "4",
+        },
+        {
+            qtPorcao: "7",
+            rotulo: "Gorduras Totais (g)",
+            valorDiario: "12",
+            qt100: "12",
+        },
+        {
+            qtPorcao: "3",
+            rotulo: "  Gorduras Saturadas (g)",
+            valorDiario: "18",
+            qt100: "14",
+        },
+        {
+            qtPorcao: "0",
+            rotulo: "  Gorduras trans (g)",
+            valorDiario: "0",
+            qt100: "0",
+        },
+        {
+            qtPorcao: "1",
+            rotulo: "Fibras Alimentares (g)",
+            valorDiario: "3",
+            qt100: "3",
+        },
+        {
+            qtPorcao: "150",
+            rotulo: "Sódio (mg)",
+            valorDiario: "8",
+            qt100: "600",
+    }],
     parametrosExtrasNutricionalV2: [{
         qtPorcao: "0",
         rotulo: "Vitamina C (g)",
@@ -169,191 +230,55 @@ export const DADOS_DEFAULT = {
 
 export const MODEL_DEFAULT = {
     "impressao": {
-        "resolucaoDpi": 203,
-        "etiquetasPorPagina": 4,
-        "gapXMm": 2,
         "larguraPaginaMm": 106,
+        "etiquetasPorPagina": 2,
+        "gapXMm": 0,
         "margemXMm": 0,
         "margemYMm": 0,
+        "resolucaoDpi": 300,
         "orientacaoEtiquetaGraus": 90,
     },
     "etiqueta": {
         "dimensoes": {
-            "alturaMm": 25,
-            "larguraMm": 40,
+            "alturaMm": 70,
+            "larguraMm": 70,
         },
+    },
+    "pdf": {
+        "etiquetaComBorda": false,
     },
     "desenho": {
         "elementos": [
             {
-                "tipo": "qrcode",
-                "posicao": {
-                    "xMm": 25,
-                    "yMm": 7,
+                "id": "06a342be-f223-452a-8745-a60f153b0349",
+                "tipo": "tabelaNutricionalVerticalReduzida",
+                "informacoesNutricionais": {
+                    "textoInformacaoNutricional": "INFORMAÇÃO NUTRICIONAL",
+                    "textoQuantidadePorPorcao": "{{{porcaoNutricionalV2}}}",
+                    "textoQuantidadeEmbalagem": "{{{porcoesPorEmbalagem}}}",
+                    "textoQt100": "100g",
+                    "textoAbreviadoValorDiario": "%VD*",
+                    "textoPorcaoCaseira": "{{{medidaCaseiraNutricionalV2}}}",
+                    "textoProporcaoCalorias": "{{{textoProporcaoCalorias}}}",
+                    "ocultarZerados": false,
                 },
-                "dimensoes": {
-                    "larguraMm": 13,
-                    "alturaMm": 13,
-                },
-                "valor": "{{{urlQrCode}}}",
-            },
-            {
-                "tipo": "texto",
-                "posicao": {
-                    "xMm": 25,
-                    "yMm": 6.5,
-                },
-                "dimensoes": {
-                    "larguraMaximaMm": 13,
-                },
-                "fonte": {
-                    "nome": "Consolas",
-                    "alturaMm": 1.9,
-                    "negrito": true,
-                },
-                "valor": "BY PARIPASSU",
-            },
-            {
-                "tipo": "texto",
                 "posicao": {
                     "xMm": 2,
-                    "yMm": 4.5,
+                    "yMm": 0,
                 },
                 "dimensoes": {
-                    "larguraMaximaMm": 35,
+                    "larguraMaximaMm": 64.69,
                 },
                 "fonte": {
-                    "nome": "Consolas",
-                    "alturaMm": 3,
-                    "negrito": true,
-                    "forcaContorno": 1.5,
+                    "nome": "arial",
+                    "alturaMm": 1,
+                    "forcaContorno": 0.8,
                 },
-                "valor": "{{{textoProduto}}}",
-                "fn": "caixaAlta",
-            },
-            {
-                "tipo": "texto",
-                "posicao": {
-                    "xMm": 2,
-                    "yMm": 6.5,
+                "informacoesAdicionais": {
+                    "texto": "*Percentual de valores diários fornecidos pela porção.",
+                    "textoAlimentoProntoParaConsumo": "**No alimento pronto para consumo.",
+                    "caracteresPorLinha": 70,
                 },
-                "dimensoes": {
-                    "larguraMaximaMm": 22.5,
-                },
-                "fonte": {
-                    "nome": "Consolas",
-                    "alturaMm": 2.2,
-                    "negrito": true,
-                    "forcaContorno": 1.5,
-                },
-                "valor": "RASTREAMENTO/LOTE",
-                "fn": "caixaAlta",
-            },
-            {
-                "tipo": "texto",
-                "posicao": {
-                    "xMm": 2,
-                    "yMm": 9,
-                },
-                "dimensoes": {
-                    "larguraMaximaMm": 22.5,
-                },
-                "fonte": {
-                    "nome": "Consolas",
-                    "alturaMm": 2.8,
-                    "negrito": true,
-                    "forcaContorno": 1.5,
-                },
-                "valor": "{{{codigoRastreamento}}}",
-                "fn": "caixaAlta",
-            },
-            {
-                "tipo": "texto",
-                "posicao": {
-                    "xMm": 2,
-                    "yMm": 12,
-                },
-                "dimensoes": {
-                    "larguraMaximaMm": 22.5,
-                },
-                "fonte": {
-                    "nome": "Consolas",
-                    "alturaMm": 2.0,
-                    "negrito": true,
-                },
-                "valor": "DATA DE ENTREGA",
-                "fn": "caixaAlta",
-            },
-            {
-                "tipo": "texto",
-                "posicao": {
-                    "xMm": 2,
-                    "yMm": 15,
-                },
-                "dimensoes": {
-                    "larguraMaximaMm": 22.5,
-                },
-                "fonte": {
-                    "nome": "Consolas",
-                    "alturaMm": 3.2,
-                    "negrito": true,
-                    "forcaContorno": 1.5,
-                },
-                "valor": "{{{dataEntrega}}}",
-                "fn": "caixaAlta",
-            },
-            {
-                "tipo": "texto",
-                "posicao": {
-                    "xMm": 2,
-                    "yMm": 17.5,
-                },
-                "dimensoes": {
-                    "larguraMaximaMm": 22.5,
-                },
-                "fonte": {
-                    "nome": "Consolas",
-                    "alturaMm": 2.0,
-                    "negrito": true,
-                },
-                "valor": "DATA DE VALIDADE",
-                "fn": "caixaAlta",
-            },
-            {
-                "tipo": "texto",
-                "posicao": {
-                    "xMm": 2,
-                    "yMm": 20,
-                },
-                "dimensoes": {
-                    "larguraMaximaMm": 22.5,
-                },
-                "fonte": {
-                    "nome": "Consolas",
-                    "alturaMm": 3.2,
-                    "negrito": true,
-                    "forcaContorno": 1.5,
-                },
-                "valor": "{{{dataValidade}}}",
-                "fn": "caixaAlta",
-            },
-            {
-                "tipo": "texto",
-                "posicao": {
-                    "xMm": 2,
-                    "yMm": 23,
-                },
-                "dimensoes": {
-                    "larguraMaximaMm": 35,
-                },
-                "fonte": {
-                    "nome": "Consolas",
-                    "alturaMm": 2.2,
-                    "negrito": true,
-                    "forcaContorno": 1.5,
-                },
-                "valor": "RASTREIE EM {{{site}}}",
-                "fn": "caixaAlta",
             },
         ],
     },
@@ -363,43 +288,43 @@ export const PARAMETROS_PADROES_NUTRICIONAL = [
     {
         "qtPorcao": "1 kcal= 4 kJ",
         "rotulo": "Valor Energético",
-        "valorDiario": "2 %"
+        "valorDiario": "2 %",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Carboidratos",
-        "valorDiario": "1 %"
+        "valorDiario": "1 %",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Proteínas",
-        "valorDiario": "1 %"
+        "valorDiario": "1 %",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Gorduras Totais",
-        "valorDiario": "1 %"
+        "valorDiario": "1 %",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Gorduras Saturadas",
-        "valorDiario": "1 %"
+        "valorDiario": "1 %",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Gorduras ###trans###",
-        "valorDiario": "**"
+        "valorDiario": "**",
     },
     {
         "qtPorcao": "1 g",
         "rotulo": "Fibra Alimentar",
-        "valorDiario": "1 %"
+        "valorDiario": "1 %",
     },
     {
         "qtPorcao": "1 mg",
         "rotulo": "Sódio",
-        "valorDiario": "1 %"
-    }
+        "valorDiario": "1 %",
+    },
 ];
 export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
     {
@@ -452,7 +377,7 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
     },
     {
         "qtPorcao": "1",
-        "rotulo": "Fibra Alimentar (g)",
+        "rotulo": "Fibras Alimentares (g)",
         "valorDiario": "3",
         "qt100": "3",
     },
@@ -463,3 +388,18 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
         "qt100": "600",
     },
 ];
+
+export const TAMANHO_FONTE_PADRAO_TITULO_EM_PT = 10;
+export const TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT = 8;
+export const TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT = 8;
+export const TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT = 6;
+export const TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT = 6;
+export const EXPESSURA_LINHA_GROSSA_EM_PT = 3;
+
+export const TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT = 10.77;
+export const TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT = 18.08;
+
+export const ESPACAMENTO_CONTORNO_TABELA_EM_PT = 0.5;
+export const ESPACAMENTO_100G_000G_VD = 6;
+
+export const BLACK = "#000000";

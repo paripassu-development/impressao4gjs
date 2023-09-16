@@ -9,8 +9,10 @@ import {barraOrigemRastreada} from "./barra-origem-rastreada";
 import {mmPartial} from "./mm";
 import {qrcode} from "./qrcode";
 import {tabelaNutricional} from "./tabela-nutricional";
-import {tabelaNutricionalV2} from "./tabela-nutricional-v2";
 import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
+import {tabelaNutricionalV2} from "./tabela-nutricional-v2";
+import {tabelaNutricionalVertical} from "./tabela-nutricional-vertical";
+import {tabelaNutricionalVerticalReduzida} from "./tabela-nutricional-vertical-reduzida";
 import {text} from "./text";
 import {Canvas} from "fabric/fabric-impl";
 
@@ -34,7 +36,7 @@ export const AIS_DATAS = [
     "15", // durabilidade minima
     "17", // durabilidade maxima
 ];
-export const AI_GTIN = "01"
+export const AI_GTIN = "01";
 export const AI_CONTEUDO = "02";
 export const AIS_PESO_LIQUIDO = "310";
 export const AIS_PRECO_UNIDADE_MEDIDA = "8005";
@@ -97,6 +99,7 @@ function isFabricRequired(model: IEtiquetaDocModel, textBindings: any) {
 }
 
 const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
+
     let errors = new Array<Error>();
     const idElementoCanvas = id + "-etiqueta-canvas";
     const idElementoFabricCanvas = id + "-etiqueta-fabric-canvas";
@@ -147,6 +150,18 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             tabelaNutricionalV2: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalV2.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    resolve();
+                });
+            },
+            tabelaNutricionalVertical: (): Promise<any> => {
+                return new Promise((resolve) => {
+                    tabelaNutricionalVertical.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    resolve();
+                });
+            },
+            tabelaNutricionalVerticalReduzida: (): Promise<any> => {
+                return new Promise((resolve) => {
+                    tabelaNutricionalVerticalReduzida.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
@@ -203,6 +218,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
                 resolve(canvas);
             }
         } catch (e) {
+            // tslint:disable-next-line:no-console
             console.log(`Erro ao gerar imagem da etiqueta: ${JSON.stringify(e)}`);
             reject(e);
         }
