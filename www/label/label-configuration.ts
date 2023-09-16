@@ -3196,7 +3196,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         categoria: "posicionamento",
                         obrigatorio: true,
                         campo: "posicao.xMm",
-                        padrao: 8,
+                        padrao: 2,
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
@@ -3204,7 +3204,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.yMm",
-                        padrao: 9,
+                        padrao: 0,
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
