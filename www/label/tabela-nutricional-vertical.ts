@@ -302,7 +302,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // Parametros extras
         if (!!textBindings) {
             textBindings.parametrosExtrasNutricionalV2.forEach((parametro: any) => {
-                // TODO Verificar como deixar responsivas as linhas verticais
                 yMm += alturaLinhaMm / 1.7;
                 ctx.textAlign = TextAlign.LEFT;
 
