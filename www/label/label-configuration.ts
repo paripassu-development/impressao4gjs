@@ -2143,22 +2143,22 @@ const METADADOS_ELEMENTOS: any[] = [
                     },
                 ],
             },
-            // {
-            //     nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
-            //     tipo: "OBJECT",
-            //     obrigatorio: true,
-            //     campo: "dimensoes",
-            //     itens: [
-            //         {
-            //             nome: "ras.ui.4g.etiqueta.configuracao.largura_maxima",
-            //             descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.largura_maxima.descricao",
-            //             tipo: "NUMERIC",
-            //             obrigatorio: true,
-            //             campo: "dimensoes.larguraMaximaMm",
-            //             padrao: 64.69,
-            //         },
-            //     ],
-            // },
+            {
+                nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
+                tipo: "OBJECT",
+                obrigatorio: true,
+                campo: "dimensoes",
+                itens: [
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.largura_maxima",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.largura_maxima.descricao",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "dimensoes.larguraMaximaMm",
+                        padrao: 64.69,
+                    },
+                ],
+            },
             {
                 nome: "ras.ui.4g.etiqueta.configuracao.fonte",
                 tipo: "OBJECT",
@@ -3216,22 +3216,22 @@ const METADADOS_ELEMENTOS: any[] = [
                     },
                 ],
             },
-            // {
-            //     nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
-            //     tipo: "OBJECT",
-            //     obrigatorio: true,
-            //     campo: "dimensoes",
-            //     itens: [
-            //         {
-            //             nome: "ras.ui.4g.etiqueta.configuracao.largura_maxima",
-            //             descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.largura_maxima.descricao",
-            //             tipo: "NUMERIC",
-            //             obrigatorio: true,
-            //             campo: "dimensoes.larguraMaximaMm",
-            //             padrao: 63,
-            //         },
-            //     ],
-            // },
+            {
+                nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
+                tipo: "OBJECT",
+                obrigatorio: true,
+                campo: "dimensoes",
+                itens: [
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.largura_maxima",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.largura_maxima.descricao",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "dimensoes.larguraMaximaMm",
+                        padrao: 63,
+                    },
+                ],
+            },
             {
                 nome: "ras.ui.4g.etiqueta.configuracao.fonte",
                 tipo: "OBJECT",
