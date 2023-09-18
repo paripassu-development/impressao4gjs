@@ -2,7 +2,7 @@ import {fabric} from "fabric";
 import {
     calculaTamanhoFonteByAlturaMMEFontePadraoPT,
     converterPTparaMM,
-    converterPtParaPX
+    converterPtParaPX,
 } from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {alimentoProntoParaConsumo, setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
@@ -15,8 +15,10 @@ import {
 import {
     BLACK,
     ESPACAMENTO_100G_000G_VD,
-    ESPACAMENTO_CONTORNO_TABELA_EM_PT,
-    EXPESSURA_LINHA_GROSSA_EM_PT,
+    ESPACAMENTO_CONTORNO_TABELA_EM_PT, ESPESSURA_LINHA_CONTORNO_EM_PT,
+    ESPESSURA_LINHA_GROSSA_EM_PT,
+    ESPESSURA_LINHA_PADRAO_EM_PT,
+    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT,
     PARAMETROS_PADROES_NUTRICIONAL_V2,
     TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT,
@@ -139,7 +141,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // Linha normal ----------------------------------------------------------------------------------------------------
     yMm += lineStrokeGap;
-    desenharLinha(ctx, model, yMm, mm);
+    desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
     // TODO Verificar como deixar responsivas as linhas verticais
     desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_CONTORNO_TABELA_EM_PT * 6.2), ESPACAMENTO_100G_000G_VD + 2.2, mm, 4.8);
     desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm, model.posicao.xMm, mm, 4.8);
@@ -183,7 +185,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     desenharLinhaContornoVerticalDireita(ctx, model, yMm - (alturaLinhaMm * 1.6), ESPACAMENTO_100G_000G_VD + 2.2, mm, ESPACAMENTO_100G_000G_VD + 1.6);
 
     // Linha grossa ----------------------------------------------------------------------------------------------------
-    desenharLinhaGrossa(ctx, model, yMm, mm);
+    desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_GROSSA_EM_PT);
     yMm += alturaLinhaMm / 1.2;
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -228,7 +230,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     });
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
     yMm += lineStrokeGap;
-    desenharLinha(ctx, model, yMm, mm);
+    desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
     // -----------------------------------------------------------------------------------------------------------------
 
     // Informações nutricionais
@@ -256,7 +258,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         desenharLinhaVertical(ctx, model, yMm - 2, obj.xMm - 1.7, mm, alturaLinhaVertical);
                         desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), ESPACAMENTO_100G_000G_VD + 2.2, mm, ESPACAMENTO_100G_000G_VD / 1.8);
                         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-                        desenharLinha(ctx, model, yMm, mm);
+                        desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
                         // -----------------------------------------------------------------------------------------------------
                 }
             });
@@ -286,7 +288,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         desenharLinhaVertical(ctx, model, yMm - 2, obj.xMm - 1.7, mm, alturaLinhaVertical);
                         desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), ESPACAMENTO_100G_000G_VD + 2.2, mm, ESPACAMENTO_100G_000G_VD / 1.8);
                         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-                        desenharLinha(ctx, model, yMm, mm);
+                        desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
                     });
 
                     // -----------------------------------------------------------------------------------------------------
@@ -319,9 +321,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), ESPACAMENTO_100G_000G_VD + 2.2, mm, ESPACAMENTO_100G_000G_VD / 1.5);
                     desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm, mm, ESPACAMENTO_100G_000G_VD / 1.8);
                 });
-                desenharLinha(ctx, model, yMm, mm);
-                // -----------------------------------------------------------------------------------------------------
             });
+            desenharLinha(ctx, model, yMm, mm, ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT);
             let texto = "NÃO CONTÉM QUANTIDADES SIGNIFICATIVAS DE ";
             if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
                 const naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter((parametro: any) =>
@@ -347,11 +348,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const informacoesAdicionais = [
         {
            id: "linhasInformacoesPercentual",
-           value: splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha)
+           value: splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha),
         },
         {
             id: "linhasInformacaoAlimentoProntoParaConsumo",
-            value: splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha)
+            value: splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha),
         },
     ].map((info) => {
         if (!alimentoProntoParaConsumo(textBindings) && info.id === "linhasInformacaoAlimentoProntoParaConsumo") {
@@ -377,24 +378,12 @@ const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, text
     return _.includes(textoInformacoesAdicionais, texto);
 };
 
-const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
+const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any, espessuraLinha: number) => {
     ctx.textAlign = TextAlign.LEFT;
-
+    ctx.lineWidth = converterPtParaPX(espessuraLinha);
     // x, y, largura e altura
     ctx.strokeRect(
         mm(model.posicao.xMm),
-        mm(yMm),
-        mm(model.dimensoes.larguraMaximaMm),
-        1,
-    );
-};
-
-const desenharLinhaGrossa = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
-    ctx.textAlign = TextAlign.LEFT;
-    ctx.lineWidth = converterPtParaPX(EXPESSURA_LINHA_GROSSA_EM_PT);
-    // x, y, largura e altura
-    ctx.strokeRect(
-        mm(model.posicao.xMm + 0.3),
         mm(yMm),
         mm(model.dimensoes.larguraMaximaMm),
         1,
@@ -421,6 +410,7 @@ const desenharLinhaContornoHorizontal = (ctx: CanvasRenderingContext2D, model: I
 
 const desenharLinhaContornoVerticalDireita = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
     ctx.textAlign = TextAlign.LEFT;
+    ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura
     ctx.strokeRect(
@@ -429,10 +419,12 @@ const desenharLinhaContornoVerticalDireita = (ctx: CanvasRenderingContext2D, mod
         1,
         mm(alturaLinhaVertical),
     );
+    ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
 
 const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
     ctx.textAlign = TextAlign.LEFT;
+    ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura
     ctx.strokeRect(
@@ -441,10 +433,12 @@ const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, mo
         1,
         mm(alturaLinhaVertical),
     );
+    ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
 
 const desenharLinhaVertical = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
     ctx.textAlign = TextAlign.LEFT;
+    ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura
     ctx.strokeRect(
@@ -453,6 +447,7 @@ const desenharLinhaVertical = (ctx: CanvasRenderingContext2D, model: IElementoTa
         1,
         mm(alturaLinhaVertical),
     );
+    ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
 
 export const tabelaNutricionalVerticalReduzida = {drawTable};

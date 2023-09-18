@@ -19,12 +19,10 @@ import {
     ESPESSURA_LINHA_CONTORNO_EM_PT,
     ESPESSURA_LINHA_GROSSA_EM_PT,
     ESPESSURA_LINHA_PADRAO_EM_PT, ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT,
-    EXPESSURA_LINHA_GROSSA_EM_PT,
     PARAMETROS_PADROES_NUTRICIONAL_V2,
     TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT,
     TAMANHO_FONTE_PADRAO_TITULO_EM_PT,
-    TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT,
 } from "../default";
 import {mmPartial} from "./mm";
 
@@ -354,11 +352,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const informacoesAdicionais = [
         {
             id: "linhasInformacoesPercentual",
-            value: splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha)
+            value: splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha),
         },
         {
             id: "linhasInformacaoAlimentoProntoParaConsumo",
-            value: splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha)
+            value: splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha),
         },
     ].map((info) => {
         if (!alimentoProntoParaConsumo(textBindings) && info.id === "linhasInformacaoAlimentoProntoParaConsumo") {
@@ -445,6 +443,7 @@ const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, mo
 
 const desenharLinhaVertical = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
     ctx.textAlign = TextAlign.LEFT;
+    ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura
     ctx.strokeRect(
@@ -453,6 +452,7 @@ const desenharLinhaVertical = (ctx: CanvasRenderingContext2D, model: IElementoTa
         1,
         mm(alturaLinhaVertical),
     );
+    ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
 
 export const tabelaNutricionalVertical = {drawTable};
