@@ -3,6 +3,12 @@
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
 
+
+## [v1.32.1](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.32.1%0D1.32.0) (18/09/2023)
+
+### Corrigido
+* ([RST-8818](https://paripassu.atlassian.net/browse/RST-8818)): Corrigido os detalhes apontados pela equipe de produto para ficar alinhada com a nova legislação.
+
 ## [v1.32.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.31.0%0D1.32.0) (15/09/2023)
 
 ### Adicionado
