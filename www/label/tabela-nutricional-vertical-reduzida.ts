@@ -284,8 +284,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     yMm += lineStrokeGap;
                     textoCabecalhoMedidas.map((obj: any) => {
                         desenharLinhaVertical(ctx, model, yMm - 1.5, obj.value === porcao100g ? obj.xMm - 1.5 : obj.xMm, mm, alturaLinhaVertical - 0.4);
-                        desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2);
-                        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm - 0.2, mm, ESPACAMENTO_100G_000G_VD / 1.5);
+                        desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2.2);
+                        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm - 0.2, mm, 3);
                         desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
                     });
 
