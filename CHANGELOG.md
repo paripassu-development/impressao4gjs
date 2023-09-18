@@ -4,6 +4,11 @@
 
 
 
+## [v1.32.2](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.32.2%0D1.32.1) (18/09/2023)
+
+### Ajustado
+* Realizado ajustes solicitados pela equipe de Produto para validação da versão.
+
 ## [v1.32.1](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.32.1%0D1.32.0) (18/09/2023)
 
 ### Corrigido
