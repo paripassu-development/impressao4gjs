@@ -337,7 +337,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         }
     }
 
-    yMm += alturaLinhaMm;
+    yMm += alturaLinhaMm / 2;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Rodapé (informações adicionais)
