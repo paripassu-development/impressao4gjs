@@ -143,7 +143,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += lineStrokeGap;
     desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
     // TODO Verificar como deixar responsivas as linhas verticais
-    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_CONTORNO_TABELA_EM_PT * 4.9), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 4);
+    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_CONTORNO_TABELA_EM_PT * 4), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 4);
     desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm, model.posicao.xMm - 0.2, mm, 4);
     yMm += alturaLinhaMm / 1.5;
 
