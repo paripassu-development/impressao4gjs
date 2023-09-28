@@ -99,22 +99,22 @@ export const calcularPosicaoCentralizadaTabelaNutricional = (chave: string, posi
 const objetoPosicoesCentralizadasTabelaNutricional = (chave: string, parametroQt: string) : PosicoesCentralizadasTabelaNutricional => {
     if (chave === 'qt100') {
          return {
-            "1": + 3.4,
-            "2": + 2.6,
-            "3": + temPontoDecimal(parametroQt) ? 2.3 : 1.9,
-            "4": + 1.3,
-            "5": + 1,
+            "1": + 3.1,
+            "2": + 2.4,
+            "3": + temPontoDecimal(parametroQt) ? 2.1 : 1.8,
+            "4": + 1.05,
+            "5": + 0.75,
             "7": - 0.7
         };
     }
     
     if (chave === 'qtPorcao') {
         return {
-            "1": + 3,
-            "2": + 2.2,
-            "3": + temPontoDecimal(parametroQt) ? 1.9 : 1.5,
+            "1": + 2.7,
+            "2": + 2.05,
+            "3": + temPontoDecimal(parametroQt) ? 1.8 : 1.35,
             "4": + 0.7,
-            "5": + 0.4,
+            "5": + 0.27,
             "6": - 0.4,
             "7": - 1.10
         };
@@ -122,11 +122,11 @@ const objetoPosicoesCentralizadasTabelaNutricional = (chave: string, parametroQt
 
     if (chave === 'valorDiario') {
         return {
-            "1": + 2.6,
-            "2": + 2,
-            "3": + temPontoDecimal(parametroQt) ? 1.6 : 1.2,
-            "4": + 0.5,
-            "5": + 0.2,
+            "1": + 2.5,
+            "2": + 1.9,
+            "3": + temPontoDecimal(parametroQt) ? 1.5 : 1.15,
+            "4": + 0.4,
+            "5": + 0.1,
             "6": - 0.6,
             "7": - 1.3
         };
