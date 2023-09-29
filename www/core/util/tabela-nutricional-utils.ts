@@ -75,6 +75,14 @@ export function alimentoProntoParaConsumo(textBindings: any) {
     return textBindings.alimentoProntoParaConsumo ? textBindings.alimentoProntoParaConsumo : false;
 }
 
+export const colunas = {
+    qt100: 'qt100',
+    qtPorcao: 'qtPorcao',
+    valorDiario: 'valorDiario'
+};
+
+type ColunaNutricional = keyof typeof colunas;
+
 type PosicoesCentralizadasTabelaNutricional = {
     [key: string]: number;
     "1": number;
@@ -88,7 +96,7 @@ type PosicoesCentralizadasTabelaNutricional = {
 
 export const calcularPosicaoCentralizadaTextoQuantidadePorcao = (larguraMaxima: number, textoPorcao: string): number => {
     const lenghtTextoPorcao = textoPorcao.length.toString();
-    console.log(lenghtTextoPorcao)
+    
     const valoresPosicoes: PosicoesCentralizadasTabelaNutricional = {
         "1": 1.3,
         "2": 1.9,
@@ -102,18 +110,18 @@ export const calcularPosicaoCentralizadaTextoQuantidadePorcao = (larguraMaxima: 
     return valoresPosicoes[lenghtTextoPorcao] ? larguraMaxima - valoresPosicoes[lenghtTextoPorcao] : larguraMaxima
 }
 
-export const calcularPosicaoCentralizadaTabelaNutricional = (chave: string, posicaoXg: number, parametroQt: number): number => {
+export const calcularPosicaoCentralizadaTabelaNutricional = (coluna: ColunaNutricional, posicaoXg: number, parametroQt: number): number => {
     const parametroQtString = parametroQt.toString();
 
     const tamanhoParametroQt = parametroQtString.length;
    
-    const valorAlinhamento: PosicoesCentralizadasTabelaNutricional = objetoPosicoesCentralizadasTabelaNutricional(chave, parametroQtString)
+    const valorAlinhamento: PosicoesCentralizadasTabelaNutricional = objetoPosicoesCentralizadasTabelaNutricional(coluna, parametroQtString)
 
     return valorAlinhamento[tamanhoParametroQt.toString()] ? posicaoXg - valorAlinhamento[tamanhoParametroQt.toString()] : posicaoXg;
 }
 
-const objetoPosicoesCentralizadasTabelaNutricional = (chave: string, parametroQt: string) : PosicoesCentralizadasTabelaNutricional => {
-    if (chave === 'qt100') {
+const objetoPosicoesCentralizadasTabelaNutricional = (coluna: ColunaNutricional, parametroQt: string) : PosicoesCentralizadasTabelaNutricional => {
+    if (coluna === colunas.qt100) {
          return {
             "1": + 3.1,
             "2": + 2.4,
@@ -124,7 +132,7 @@ const objetoPosicoesCentralizadasTabelaNutricional = (chave: string, parametroQt
         };
     }
     
-    if (chave === 'qtPorcao') {
+    if (coluna === colunas.qtPorcao) {
         return {
             "1": + 2.7,
             "2": + 2.05,
@@ -136,7 +144,7 @@ const objetoPosicoesCentralizadasTabelaNutricional = (chave: string, parametroQt
         };
     }
 
-    if (chave === 'valorDiario') {
+    if (coluna === colunas.valorDiario) {
         return {
             "1": + 2.5,
             "2": + 1.9,

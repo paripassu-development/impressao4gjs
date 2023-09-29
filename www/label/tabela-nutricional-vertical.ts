@@ -5,7 +5,12 @@ import {
     converterPtParaPX,
 } from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
-import {alimentoProntoParaConsumo, setInformacoesV2PadraoZero,  calcularPosicaoCentralizadaTabelaNutricional, calcularPosicaoCentralizadaTextoQuantidadePorcao} from "../core/util/tabela-nutricional-utils";
+import {
+    alimentoProntoParaConsumo,
+    setInformacoesV2PadraoZero,
+    calcularPosicaoCentralizadaTabelaNutricional,
+    calcularPosicaoCentralizadaTextoQuantidadePorcao
+} from "../core/util/tabela-nutricional-utils";
 import {
     splitLines,
     strokeAlignedText,
@@ -293,11 +298,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 } else {
                     ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
                 }
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100,  calcularPosicaoCentralizadaTabelaNutricional('qt100', posicaoX100g, parametro.qt100),
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100,  calcularPosicaoCentralizadaTabelaNutricional("qt100", posicaoX100g, parametro.qt100),
                     yMm, mm, TextAlign.RIGHT, degrees);
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, calcularPosicaoCentralizadaTabelaNutricional('qtPorcao', posicaoX000g, parametro.qtPorcao),
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, calcularPosicaoCentralizadaTabelaNutricional("qtPorcao", posicaoX000g, parametro.qtPorcao),
                     yMm, mm, TextAlign.RIGHT, degrees);
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, calcularPosicaoCentralizadaTabelaNutricional('valorDiario', posicaoXValorDiario, parametro.valorDiario),
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, calcularPosicaoCentralizadaTabelaNutricional("valorDiario", posicaoXValorDiario, parametro.valorDiario),
                     yMm, mm, TextAlign.RIGHT, degrees);
                 yMm += lineStrokeGap;
                 textoCabecalhoMedidas.map((obj: any) => {
@@ -324,11 +329,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 } else {
                     ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
                 }
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, calcularPosicaoCentralizadaTabelaNutricional('qt100', posicaoX100g, parametro.qt100),            
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, calcularPosicaoCentralizadaTabelaNutricional("qt100", posicaoX100g, parametro.qt100),            
                     yMm, mm, TextAlign.RIGHT, degrees);
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, calcularPosicaoCentralizadaTabelaNutricional('qtPorcao', posicaoX000g, parametro.qtPorcao),
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, calcularPosicaoCentralizadaTabelaNutricional("qtPorcao", posicaoX000g, parametro.qtPorcao),
                     yMm, mm, TextAlign.RIGHT, degrees);
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, calcularPosicaoCentralizadaTabelaNutricional('qtPorcao', posicaoXValorDiario + 0.3, parametro.valorDiario),
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, calcularPosicaoCentralizadaTabelaNutricional("valorDiario", posicaoXValorDiario + 0.1, parametro.valorDiario),
                     yMm, mm, TextAlign.RIGHT, degrees);
                 yMm += lineStrokeGap;
                 textoCabecalhoMedidas.map((obj: any) => {
