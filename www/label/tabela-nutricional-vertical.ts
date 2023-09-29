@@ -5,7 +5,7 @@ import {
     converterPtParaPX,
 } from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
-import {alimentoProntoParaConsumo, setInformacoesV2PadraoZero,  calcularPosicaoCentralizadaTabelaNutricional} from "../core/util/tabela-nutricional-utils";
+import {alimentoProntoParaConsumo, setInformacoesV2PadraoZero,  calcularPosicaoCentralizadaTabelaNutricional, calcularPosicaoCentralizadaTextoQuantidadePorcao} from "../core/util/tabela-nutricional-utils";
 import {
     splitLines,
     strokeAlignedText,
@@ -222,7 +222,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     textoCabecalhoMedidas.map((medida) => {
         //------ Texto Cabeçalho
         /* TODO 
-            - Foi necessário adicionar um ternário aninhando para centralizar a informação do da coluna 15g 
+            - Foi necessário adicionar um ternário aninhado para centralizar a informação da coluna Quantidade Porcao "15g" 
             - E outro ternário para centralizar a informação quando o porcao100g for 100g ou 100g**
         */ 
         const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT) + alturaLinhaMm / 1.5;
@@ -231,7 +231,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         } else {
             strokeAlignedText(ctx, fabricCanvas, 
                 medida.id === 2 
-                    ? larguraMaxima - 1.3 
+                    ? calcularPosicaoCentralizadaTextoQuantidadePorcao(larguraMaxima, medida.value)
                     : medida.value === porcao100g.replace("**", "") 
                     ? larguraMaxima - 1 
                     : larguraMaxima,

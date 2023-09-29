@@ -86,6 +86,22 @@ type PosicoesCentralizadasTabelaNutricional = {
     "7": number;
 };
 
+export const calcularPosicaoCentralizadaTextoQuantidadePorcao = (larguraMaxima: number, textoPorcao: string): number => {
+    const lenghtTextoPorcao = textoPorcao.length.toString();
+    console.log(lenghtTextoPorcao)
+    const valoresPosicoes: PosicoesCentralizadasTabelaNutricional = {
+        "1": 1.3,
+        "2": 1.9,
+        "3": 1.2,
+        "4": 0.45,
+        "5": - 0.2,
+        "6": - 0.87,
+        "7": - 1.35
+    }
+
+    return valoresPosicoes[lenghtTextoPorcao] ? larguraMaxima - valoresPosicoes[lenghtTextoPorcao] : larguraMaxima
+}
+
 export const calcularPosicaoCentralizadaTabelaNutricional = (chave: string, posicaoXg: number, parametroQt: number): number => {
     const parametroQtString = parametroQt.toString();
 
