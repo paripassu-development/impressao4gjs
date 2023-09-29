@@ -75,11 +75,26 @@ export function alimentoProntoParaConsumo(textBindings: any) {
     return textBindings.alimentoProntoParaConsumo ? textBindings.alimentoProntoParaConsumo : false;
 }
 
+/* -- TODO ---------------------------------------------------------------------------------------------------- 
+- Para realizar a centralização dos valores na tabela:
+     Foi necessário mapear as posições conforme o length do valor a ser inserido, devido a forma que a tabela foi construida.
+- Como as linhas verticais são apenas sobreposições das linhas horizontais as mesmas não formam retângulos reais, 
+    não sendo possível centralizar de forma dinâmica. 
+*/
+
+//Manter chaves e valores com o mesmo nome
+export const tipoTabela = {
+    v2Normal: 'v2Normal',
+    v2Reduzida: 'v2Reduzida'
+};
+
 export const colunas = {
     qt100: 'qt100',
     qtPorcao: 'qtPorcao',
     valorDiario: 'valorDiario'
 };
+
+type TipoTabelaNutricional = keyof typeof tipoTabela;
 
 type ColunaNutricional = keyof typeof colunas;
 
@@ -91,13 +106,32 @@ type PosicoesCentralizadasTabelaNutricional = {
     "4": number;
     "5": number;
     "6"?: number;
-    "7": number;
+    "7"?: number;
 };
 
-export const calcularPosicaoCentralizadaTextoQuantidadePorcao = (larguraMaxima: number, textoPorcao: string): number => {
+// Função que centraliza apenas o textoQuantidadePorPorcao tabela nutricional normal e reduzida
+export const calcularPosicaoCentralizadaTextoQuantidadePorcao = (parametroTipoTabela: TipoTabelaNutricional, larguraMaxima: number, textoPorcao: string): number => {
     const lenghtTextoPorcao = textoPorcao.length.toString();
-    
-    const valoresPosicoes: PosicoesCentralizadasTabelaNutricional = {
+
+    const valoresPosicoes: PosicoesCentralizadasTabelaNutricional = posicoesCentralizadasTextoQuantidadePorcao(parametroTipoTabela);
+
+    return valoresPosicoes[lenghtTextoPorcao] ? larguraMaxima - valoresPosicoes[lenghtTextoPorcao] : larguraMaxima;
+}
+
+const posicoesCentralizadasTextoQuantidadePorcao = (parametroTipoTabela: TipoTabelaNutricional): PosicoesCentralizadasTabelaNutricional => {
+    if (parametroTipoTabela === tipoTabela.v2Reduzida) {
+        return {
+            "1": 1.3,
+            "2": 0.73,
+            "3": 0.13,
+            "4": - 0.5,
+            "5": - 1.1,
+            "6": - 1.68,
+            "7": - 2.4
+        }
+    }
+
+    return {
         "1": 1.3,
         "2": 1.9,
         "3": 1.2,
@@ -106,23 +140,26 @@ export const calcularPosicaoCentralizadaTextoQuantidadePorcao = (larguraMaxima: 
         "6": - 0.87,
         "7": - 1.35
     }
-
-    return valoresPosicoes[lenghtTextoPorcao] ? larguraMaxima - valoresPosicoes[lenghtTextoPorcao] : larguraMaxima
 }
 
-export const calcularPosicaoCentralizadaTabelaNutricional = (coluna: ColunaNutricional, posicaoXg: number, parametroQt: number): number => {
+export const calcularPosicaoCentralizadaTabelaNutricional = (parametroTipoTabela: TipoTabelaNutricional, coluna: ColunaNutricional, posicaoXg: number, parametroQt: number): number => {
     const parametroQtString = parametroQt.toString();
 
     const tamanhoParametroQt = parametroQtString.length;
-   
-    const valorAlinhamento: PosicoesCentralizadasTabelaNutricional = objetoPosicoesCentralizadasTabelaNutricional(coluna, parametroQtString)
+
+    const valorAlinhamento: PosicoesCentralizadasTabelaNutricional =
+        parametroTipoTabela === tipoTabela.v2Reduzida ?
+            valoresPosicoesCentralizadasTabelaNutricionalReduzida(coluna, parametroQtString)
+            : valoresPosicoesCentralizadasTabelaNutricional(coluna, parametroQtString)
 
     return valorAlinhamento[tamanhoParametroQt.toString()] ? posicaoXg - valorAlinhamento[tamanhoParametroQt.toString()] : posicaoXg;
 }
 
-const objetoPosicoesCentralizadasTabelaNutricional = (coluna: ColunaNutricional, parametroQt: string) : PosicoesCentralizadasTabelaNutricional => {
+// Positivo posiciona os valores para esquerda - Negativo para direita
+
+const valoresPosicoesCentralizadasTabelaNutricional = (coluna: ColunaNutricional, parametroQt: string): PosicoesCentralizadasTabelaNutricional => {
     if (coluna === colunas.qt100) {
-         return {
+        return {
             "1": + 3.1,
             "2": + 2.4,
             "3": + temPontoDecimal(parametroQt) ? 2.1 : 1.8,
@@ -131,7 +168,7 @@ const objetoPosicoesCentralizadasTabelaNutricional = (coluna: ColunaNutricional,
             "7": - 0.7
         };
     }
-    
+
     if (coluna === colunas.qtPorcao) {
         return {
             "1": + 2.7,
@@ -157,7 +194,46 @@ const objetoPosicoesCentralizadasTabelaNutricional = (coluna: ColunaNutricional,
     }
 }
 
+const valoresPosicoesCentralizadasTabelaNutricionalReduzida = (coluna: ColunaNutricional, parametroQt: string): PosicoesCentralizadasTabelaNutricional => {
+    if (coluna === colunas.qt100) {
+        return {
+            "1": + 2.3,
+            "2": + 1.7,
+            "3": + temPontoDecimal(parametroQt) ? 1.4 : 1.1,
+            "4": + 0.5,
+            "5": + 0.22,
+            "6": - 0.4,
+            "7": - 1
+        };
+    }
+
+    if (coluna === colunas.qtPorcao) {
+        return {
+            "1": + 1.25,
+            "2": + 0.7,
+            "3": + temPontoDecimal(parametroQt) ? 0.46 : 0.2,
+            "4": - 0.45,
+            "5": - 0.7,
+            "6": - 1.34,
+            "7": - 1.9
+        };
+    }
+
+    if (coluna === colunas.valorDiario) {
+        return {
+            "1": + 1.6,
+            "2": + 1,
+            "3": + temPontoDecimal(parametroQt) ? 0.8 : 0.48,
+            "4": - 0.2,
+            "5": - 0.5,
+            "6": - 1.1,
+            "7": - 1.7
+        };
+    }
+}
+
 function temPontoDecimal(numeroString: string): boolean {
     const pontoIndex = numeroString.indexOf('.');
     return pontoIndex !== -1;
 }
+// ---------------------------------- Fim TODO Centralização -------------------------------------------------------
