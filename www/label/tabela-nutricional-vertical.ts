@@ -125,8 +125,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const posicaoX100g = model.posicao.xMm  - (alturaLinhaMm * 6);
     const posicaoX000g = model.posicao.xMm  - (alturaLinhaMm * 3.1);
     const posicaoXValorDiario = model.posicao.xMm - (alturaLinhaMm / 2.5);
+    const valorEspacamentoYMmRotulos = 0.38; // Alterar esse valor para alinhamento vertical dos rotulos nutricionais
     const valorEspacamentoYMmValores = 0.46; // Alterar esse valor para alinhamento vertical dos valores nutricionais
-    const valorEspacamentoYMmRotulos = 0.38; // Alterar esse valor para alinhamento vertical dos valores nutricionais
 
     // Contorno de cima
     desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
@@ -175,7 +175,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             caseira: model.informacoesNutricionais.textoPorcaoCaseira,
         },
     ].map((infos) => {
-        adicionarEspacoEntreNumeroELetra
         const textoPorcao = fillTemplate(infos.value, textBindings);
         strokeAlignedText(
             ctx,

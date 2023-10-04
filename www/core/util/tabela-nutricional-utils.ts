@@ -112,7 +112,7 @@ type PosicoesCentralizadasTabelaNutricional = {
 // Função que centraliza apenas o textoQuantidadePorPorcao tabela nutricional normal e reduzida
 export const calcularPosicaoCentralizadaTextoQuantidadePorcao = (parametroTipoTabela: TipoTabelaNutricional, larguraMaxima: number, textoPorcao: string): number => {
     const lenghtTextoPorcao = textoPorcao.length.toString();
-    
+        
     const valoresPosicoes: PosicoesCentralizadasTabelaNutricional = posicoesCentralizadasTextoQuantidadePorcao(parametroTipoTabela);
 
     return valoresPosicoes[lenghtTextoPorcao] ? larguraMaxima - valoresPosicoes[lenghtTextoPorcao] : larguraMaxima;
@@ -122,12 +122,12 @@ const posicoesCentralizadasTextoQuantidadePorcao = (parametroTipoTabela: TipoTab
     if (parametroTipoTabela === tipoTabela.v2Reduzida) {
         return {
             "1": 1.3,
-            "2": 0.73,
-            "3": 0.13,
-            "4": - 0.5,
-            "5": - 1.1,
-            "6": - 1.68,
-            "7": - 2.4
+            "2": 1.3,
+            "3": 0.4,
+            "4": - 0.2, 
+            "5": - 0.8,
+            "6": - 1.38,
+            "7": - 2
         }
     }
 
