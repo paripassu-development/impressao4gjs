@@ -299,4 +299,10 @@ const justifyText = (context: CanvasRenderingContext2D, maxLen: number, text: st
     return textJustified;
 };
 
-export {splitLines, splitLinesAutoSize, strokeAlignedText, writeFabricText, TextAlign};
+function adicionarEspacoEntreNumeroELetra(text: string): string {
+    const regex = /(\d)([a-zA-Z])/g;
+    const textoConvertido = text.replace(regex, '$1 $2');
+    return textoConvertido;
+}
+
+export {splitLines, splitLinesAutoSize, strokeAlignedText, writeFabricText, TextAlign, adicionarEspacoEntreNumeroELetra};
