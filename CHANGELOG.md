@@ -4,6 +4,17 @@
 
 
 
+## [v1.33.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.33.0%0D1.32.3) (04/10/2023)
+
+### Alterado
+* ([RST-8841](https://paripassu.atlassian.net/browse/RST-8841) e [RST-8842](https://paripassu.atlassian.net/browse/RST-8842)): Alinhamento vertical dos dados das tabelas nutricionais verticais padrão e reduzida. Adicionado espaçamento nos labels e unidades nutricionais nas tabelas nutricionais..
+
+
+## [v1.32.3](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.32.3%0D1.32.2) (02/10/2023)
+
+### Alterado
+* ([RST-8746](https://paripassu.atlassian.net/browse/RST-8746)): Alinhamento dos valores nutricionais de forma centralizada na coluna das Tabelas Verticais Reduzida e Padrão. O valor dos textos agora seguem apenas a primeira palavra iniciando com letra maiúscula.
+
 ## [v1.32.2](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.32.2%0D1.32.1) (18/09/2023)
 
 ### Ajustado
