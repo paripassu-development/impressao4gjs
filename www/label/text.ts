@@ -93,54 +93,6 @@ const drawText = (ctx: CanvasRenderingContext2D, fabricCanvas: Canvas, dpi: numb
 
 };
 
-const drawTextLinear = (ctx: CanvasRenderingContext2D, fabricCanvas: Canvas, dpi: number, model: IElementoTextoModel, textBindings?: any) => {
-    if (!isVariableBindingEmpty(model, textBindings)) {
-        const mm = mmPartial(dpi);
-        const degrees = model.posicao.rotacao || 0;
-        ctx.save();
-        ctx.textAlign = model.posicao.alinhar || "end";
-        ctx.fillStyle = "#000000";
-        ctx.strokeStyle = "#000000";
-        ctx.rotate(degrees * Math.PI / 180);
-        ctx.font = `${model.fonte.negrito ? "bold" : ""} ${Math.round(mm(model.fonte.alturaMm))}px ${model.fonte.nome}`;
-        let renderedText = textBindings ? Mustache.render(model.valor, textBindings) : model.valor.replace("{{{", "<").replace("}}}", ">");
-        if (textFunctions[model.fn] && textBindings) {
-            renderedText = textFunctions[model.fn](renderedText);
-        }
-        ctx.lineWidth = model.fonte.forcaContorno || 0;
-
-        if (!!model.multiplasLinhas) {
-            let yMm = model.posicao.yMm;
-            const alturaLinhaMm = model.fonte.alturaMm;
-            const larguraMaxima = model.dimensoes.larguraMaximaMm;
-            const maximoNumeroDeLinhas = model.multiplasLinhas.numeroMaximoDeLinhas || -1;
-            const alturaMinimaFonteMm = model.multiplasLinhas.alturaMinimaFonteMm ? model.multiplasLinhas.alturaMinimaFonteMm : ALTURA_MINIMA_FONT_MM;
-            const linhas = getMultiplasLinhas(ctx, model, renderedText, larguraMaxima, maximoNumeroDeLinhas, alturaMinimaFonteMm, dpi);
-            let alinhamento = model.multiplasLinhas.alinhamento || "left";
-            let contaLinha = 0;
-
-            linhas.forEach((linha: string) => {
-                if (contaLinha === linhas.length - 1 && alinhamento === "justify") {
-                    alinhamento = "left";
-                }
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, linha, model.posicao.xMm + 1, yMm + 14, mm, alinhamento, degrees);
-                yMm += alturaLinhaMm * 1.2;
-                contaLinha++;
-            });
-        } else {
-            if (!!fabricCanvas) {
-                writeFabricText(fabricCanvas, ctx, renderedText, model.posicao.xMm, model.posicao.yMm, model.dimensoes.larguraMaximaMm, mm, {degrees});
-            } else {
-                ctx.strokeText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
-                ctx.fillText(renderedText, mm(model.posicao.xMm), mm(model.posicao.yMm), mm(model.dimensoes.larguraMaximaMm));
-            }
-        }
-
-        ctx.restore();
-    }
-
-};
-
 function desenharQuadradoSeparador(ctx: CanvasRenderingContext2D, model: IElementoTextoModel, mm: any, yMm: number, xMm: number) {
     ctx.fillRect(mm((model.posicao.xMm + xMm)), mm(yMm), 5, 5);
 };
@@ -179,4 +131,4 @@ const textFunctions: any = {
 
 const ALTURA_MINIMA_FONT_MM = 1.2;
 
-export const text = { drawText, drawTextLinear };
+export const text = { drawText };
