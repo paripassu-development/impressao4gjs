@@ -93,10 +93,6 @@ const drawText = (ctx: CanvasRenderingContext2D, fabricCanvas: Canvas, dpi: numb
 
 };
 
-function desenharQuadradoSeparador(ctx: CanvasRenderingContext2D, model: IElementoTextoModel, mm: any, yMm: number, xMm: number) {
-    ctx.fillRect(mm((model.posicao.xMm + xMm)), mm(yMm), 5, 5);
-};
-
 function getMultiplasLinhas(context: CanvasRenderingContext2D, model: IElementoTextoModel, texto: string,
                             larguraMaxima: number, maximoNumeroDeLinhas: number, alturaMinimaFonteMm: number, dpi: number): string[] {
     if (maximoNumeroDeLinhas > 0) {
