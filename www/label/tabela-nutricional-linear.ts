@@ -346,14 +346,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             });
         }
 
-        informacoesNutricionaisDivididas.forEach(elemento => {
+        informacoesNutricionaisDivididas.forEach((elemento: string, index: number, array: string[]) => {
             let tamanhoLengthCadaObjeto = elemento.length;
             let teste = larguraMaxima - 1.1;
             const espacoEmBranco = 3;
 
             if (verificaSeCabeNaLinha(posicaoAtualCharNaLinha, tamanhoLengthCadaObjeto, teste)) {
 
-                if (elemento === quadradoVirtual) {
+                if (index !== array.length - 1 && elemento === quadradoVirtual) {
                     desenharQuadradoSeparadorElementos(ctx, mm, model, yIncrementado - 0.9, posicaoAtualCharNaLinha + espacoEmBranco);
                 } else if (elemento !== quadradoVirtual) {
                     strokeAlignedText(
@@ -368,10 +368,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         degrees,
                     )
                 }
-
                 posicaoAtualCharNaLinha += 0.35;
                 posicaoAtualCharNaLinha += tamanhoLengthCadaObjeto;
             } else {
+                // Pula linha quando atingir a largura máxima
                 valorMaximoPosicaoX = POSICAO_X;
                 xIncrementado = model.posicao.xMm + 1;
                 posicaoAtualCharNaLinha = 0;
