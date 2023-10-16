@@ -2286,20 +2286,6 @@ const METADADOS_ELEMENTOS: any[] = [
                         padrao: "{{{textoProporcaoCalorias}}}",
                     },
                     {
-                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.ocultar_parametros_zerados",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.ocultar_parametros_zerados.descricao",
-                        tipo: "BOOLEAN",
-                        obrigatorio: false,
-                        campo: "informacoesNutricionais.ocultarZerados",
-                        preRequisito: [
-                            {
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
-                                tipo: "EXISTENCIA",
-                                oposto: true,
-                            },
-                        ],
-                    },
-                    {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.parametros_nutricionais",
                         tipo: "OBJECT",
                         campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
@@ -3358,20 +3344,6 @@ const METADADOS_ELEMENTOS: any[] = [
                         obrigatorio: true,
                         campo: "informacoesNutricionais.textoProporcaoCalorias",
                         padrao: "{{{textoProporcaoCalorias}}}",
-                    },
-                    {
-                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.ocultar_parametros_zerados",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.ocultar_parametros_zerados.descricao",
-                        tipo: "BOOLEAN",
-                        obrigatorio: false,
-                        campo: "informacoesNutricionais.ocultarZerados",
-                        preRequisito: [
-                            {
-                                campo: "informacoesNutricionais.informacoesNutrientesTabelaNutricional",
-                                tipo: "EXISTENCIA",
-                                oposto: true,
-                            },
-                        ],
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.parametros_nutricionais",
