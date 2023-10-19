@@ -141,6 +141,8 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
                     resolve();
                 });
             },
+            /* TODO - Remover tabelaNutricional, tabelaNutricionalV2, tabelaNutricionalEmLinha após completa adequação
+            *   dos clientes com as novas nutricionais verticais*/
             tabelaNutricional: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricional.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);

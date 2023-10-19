@@ -160,6 +160,9 @@ const METADADOS_PDF: any = {
     ],
 };
 
+/* TODO - Remover de METADADOS_ELEMENTOS as -> tabelaNutricional, tabelaNutricionalV2, tabelaNutricionalEmLinha após
+    completa adequação dos clientes com as novas nutricionais verticais */
+
 const METADADOS_ELEMENTOS: any[] = [
     {
         nome: "ras.ui.4g.etiqueta.configuracao.barra_origem_rastreada",
