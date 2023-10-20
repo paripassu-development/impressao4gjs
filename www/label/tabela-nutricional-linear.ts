@@ -211,8 +211,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += alturaLinhaMm + 1;
 
     // -----------------------------------------------------------------------------------------------------------------
-    // Informações nutricionais
 
+    // Informações nutricionais
     if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         nutrientes.forEach((nutriente: any) => {
             textoCabecalhoMedidas.map((obj: any) => {
@@ -238,7 +238,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
 
         // variáveis de posicionamento na etiqueta
-        let valorMaximoPosicaoX: number = larguraMaxima - 1.5;
+        let valorMaximoPosicaoX: number = larguraMaxima - 3;
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
         let yIncrementado: number = yMm;
         let contadorIndex: number = 0;
@@ -325,16 +325,23 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 informacoesNutricionaisDivididas.push(quadradoVirtual);
 
                 if (textBindings.parametrosExtrasNutricionalV2.length > 3 && textBindings.parametrosExtrasNutricionalV2.length < 7) {
-                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 35);
-                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 34);
+                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 36);
+                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 35);
                 } else if (textBindings.parametrosExtrasNutricionalV2.length > 7) {
-                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 38);
-                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 36);
+                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 40);
+                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 38);
                 } else {
                     desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 33);
                     desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 32);
                 }
             });
+
+            // Inserir espaço entre os nomes compostos dos Parâmetros Extras
+            for (let i: number = 115; i < informacoesNutricionaisDivididas.length; i += 12) {
+                if (informacoesNutricionaisDivididas[i]) {
+                    informacoesNutricionaisDivididas[i] = informacoesNutricionaisDivididas[i] + montaApenasEspaco();
+                }
+            }
         }
 
         // Insere "dos quais" quando for Açúcares totais e "das quais" quando for Gorduras totais
@@ -352,18 +359,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
         informacoesNutricionaisDivididas[83] = montaApenasVirgula();
 
-        // Inserir espaço entre os nomes compostos dos Parâmetros Extras
-        for (let i = 119; i < informacoesNutricionaisDivididas.length; i += 12) {
-            console.log(i);
-            // if (informacoesNutricionaisDivididas[i]) {
-            //     informacoesNutricionaisDivididas[i] = informacoesNutricionaisDivididas[i] + " ";
-            // }
-            //
-            // if (informacoesNutricionaisDivididas[i + 1]) {
-            //     informacoesNutricionaisDivididas[i + 1] = informacoesNutricionaisDivididas[i + 1] + " ";
-            // }
-        }
-
         console.log({informacoesNutricionaisDivididas});
 
         // Monta as informações nutricionais de forma linear
@@ -371,6 +366,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             let tamanhoProximoElemento: number;
             let tamanhoLengthCadaObjeto: number = elemento.length;
             let posicaoX: number = posicaoAtualCharNaLinha;
+            let textAlign: string = contadorPulaLinhas === 0 ? TextAlign.LEFT : TextAlign.JUSTIFY;
+
+            // Ajusta posicinamento virgula dos quais/das quais
+            if (index === 5 || index === 6 || index === 23 || index === 34 || index === 69 || index === 83) {
+                posicaoAtualCharNaLinha -= 0.75;
+            }
 
             // Verifica se fonte é em negrito
             if (elemento.indexOf("_") !== -1) {
@@ -415,9 +416,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     tamanhoLengthCadaObjeto = elemento.length;
 
                     // TODO ver melhor forma de quebrar em FIBRAS
-                    if (index === 96) {
-                        tamanhoLengthCadaObjeto = elemento.length + 4;
-                    }
+                    // if (index === 96) {
+                    //     tamanhoLengthCadaObjeto = elemento.length + 4;
+                    // }
 
                     ctx.font = isBold
                         ? `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`
@@ -431,7 +432,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         posicaoAtualCharNaLinha,
                         yIncrementado,
                         mm,
-                        TextAlign.LEFT,
+                        textAlign,
                         degrees,
                     )
                 }
@@ -441,15 +442,19 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     tamanhoLengthCadaObjeto = 23;
                 }
 
-                posicaoAtualCharNaLinha += 0.35;
-                posicaoAtualCharNaLinha += tamanhoLengthCadaObjeto;
-
                 if (contadorPulaLinhas === 0) {
                     contadorIndex++;
                 }
 
+                // Forma para deixar texto mais alinhado com a borda direita (justificado)
+                if (contadorPulaLinhas > 0 && ((valorMaximoPosicaoX - posicaoAtualCharNaLinha) > 2)) {
+                    posicaoAtualCharNaLinha += (0.34 * 2);
+                } else {
+                    posicaoAtualCharNaLinha += 0.35;
+                }
+                posicaoAtualCharNaLinha += tamanhoLengthCadaObjeto;
+
             } else {
-                console.log("entrei no pula linha");
                 // Pula linha quando atingir a largura máxima
                 tamanhoLengthCadaObjeto = elemento.length;
                 posicaoAtualCharNaLinha = model.posicao.xMm + 1;
@@ -464,7 +469,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     posicaoAtualCharNaLinha,
                     yIncrementado,
                     mm,
-                    TextAlign.LEFT,
+                    textAlign,
                     degrees,
                 )
                 posicaoAtualCharNaLinha += tamanhoLengthCadaObjeto;
@@ -523,7 +528,7 @@ const verificaSeCabeNaLinha = (valorTotalAtual: number, valorDoProximoElemento: 
 };
 
 const verificaSeContemNumeroPulandoDoisElementos = (array: string[], index: number): RegExpMatchArray => {
-    const contemNumeros = /[0-9]/;
+    const contemNumeros:RegExp = /[0-9]/;
     return array[index + 2].match(contemNumeros);
 }
 
