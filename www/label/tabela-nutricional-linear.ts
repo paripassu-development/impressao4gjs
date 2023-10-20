@@ -371,7 +371,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
 
                 if (verificaSeDesenhaQuadradoSeparador(elemento, index, array, elementosTextuais.quadradoVirtual)) {
-                    desenharQuadradoSeparadorElementos(ctx, mm, model, yIncrementado - 0.9, posicaoX);
+                    desenharQuadradoSeparador(ctx, mm, yIncrementado - 0.9, posicaoX);
                 } else if (elemento !== elementosTextuais.quadradoVirtual) {
                     tamanhoLengthCadaObjeto = elemento.length;
 
@@ -598,10 +598,6 @@ const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, mo
 };
 
 export const desenharQuadradoSeparador = (ctx: CanvasRenderingContext2D, mm: any, yMm: number, xMm: number) => {
-    ctx.fillRect(mm(xMm), mm(yMm), 5, 5);
-};
-
-export const desenharQuadradoSeparadorElementos = (ctx: CanvasRenderingContext2D, mm: any,  model: IElementoTabelaNutricionalModel, yMm: number, xMm: number) => {
     ctx.fillRect(mm(xMm), mm(yMm), 5, 5);
 };
 
