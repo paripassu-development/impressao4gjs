@@ -202,7 +202,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         );
         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 3.3, model.posicao.xMm - 0.2, mm, 5.4);
     });
-    desenharQuadradoSeparador(ctx, model, yMm + 50, posicaoXPorcoesPorEmbalagem + 250);
+    desenharQuadradoSeparador(ctx, mm, yMm - 1, model.posicao.xMm + 30);
     desenharLinhaContornoVerticalDireita(ctx, model, yMm - alturaLinhaMm, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 7.8);
     yMm += alturaLinhaMm / 1.4;
 
@@ -328,9 +328,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             // Ajusta posicionamento Parâmetros extras
-            // if (index === 119) {
-            //     posicaoAtualCharNaLinha -= 1;
-            // }
+            if (index === 119) {
+                posicaoAtualCharNaLinha -= 1;
+            }
 
             // Verifica se fonte é em negrito
             if (elemento.indexOf("_") !== -1) {
@@ -406,18 +406,18 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 }
 
                 // Forma para deixar texto mais alinhado com a borda direita (justificado)
-                // if (contadorPulaLinhas > 0 && contadorPulaLinhas < 5) {
-                //     posicaoAtualCharNaLinha += (0.34 * 2);
-                // } else if (contadorPulaLinhas >= 5) {
-                //     posicaoAtualCharNaLinha += 0.5;
-                // } else {
-                //     posicaoAtualCharNaLinha += 0.35;
-                // }
-                if (contadorPulaLinhas >= 0 && contadorPulaLinhas < 5) {
+                if (contadorPulaLinhas > 0 && contadorPulaLinhas < 5) {
                     posicaoAtualCharNaLinha += (0.34 * 2);
-                } else {
+                } else if (contadorPulaLinhas >= 5) {
                     posicaoAtualCharNaLinha += 0.5;
+                } else {
+                    posicaoAtualCharNaLinha += 0.35;
                 }
+                // if (contadorPulaLinhas >= 0 && contadorPulaLinhas < 5) {
+                //     posicaoAtualCharNaLinha += (0.34 * 2);
+                // } else {
+                //     posicaoAtualCharNaLinha += 0.5;
+                // }
                 posicaoAtualCharNaLinha += tamanhoLengthCadaObjeto;
 
             } else {
@@ -606,8 +606,8 @@ const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, mo
     ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
 
-export const desenharQuadradoSeparador = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number) => {
-    ctx.fillRect((model.posicao.xMm + xMm), yMm, 5, 5);
+export const desenharQuadradoSeparador = (ctx: CanvasRenderingContext2D, mm: any, yMm: number, xMm: number) => {
+    ctx.fillRect(mm(xMm), mm(yMm), 5, 5);
 };
 
 export const desenharQuadradoSeparadorElementos = (ctx: CanvasRenderingContext2D, mm: any,  model: IElementoTabelaNutricionalModel, yMm: number, xMm: number) => {
