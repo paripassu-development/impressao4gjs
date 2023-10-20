@@ -4244,7 +4244,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         categoria: "posicionamento",
                         obrigatorio: true,
                         campo: "posicao.xMm",
-                        padrao: 0,
+                        padrao: 2,
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
@@ -4293,7 +4293,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         opcoes: FONTES,
                         obrigatorio: true,
                         campo: "fonte.nome",
-                        padrao: "consolas",
+                        padrao: "arial",
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.altura",
@@ -4301,7 +4301,7 @@ const METADADOS_ELEMENTOS: any[] = [
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "fonte.alturaMm",
-                        padrao: 2.6,
+                        padrao: 2.1,
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.forca_contorno_fonte",

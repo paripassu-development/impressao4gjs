@@ -284,6 +284,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
         });
 
+        // TODO verificar se a validação feita na linha 239 é suficiente!!!
         // Parâmetros extras
         // if (!!textBindings) {
         //     textBindings
@@ -328,9 +329,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             // Ajusta posicionamento Parâmetros extras
-            if (index === 119) {
-                posicaoAtualCharNaLinha -= 1;
-            }
+            // if (index === 119) {
+            //     posicaoAtualCharNaLinha -= 1;
+            // }
 
             // Verifica se fonte é em negrito
             if (elemento.indexOf("_") !== -1) {
@@ -374,11 +375,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 } else if (elemento !== elementosTextuais.quadradoVirtual) {
                     tamanhoLengthCadaObjeto = elemento.length;
 
-                    // TODO ver melhor forma de quebrar em FIBRAS
-                    // if (index === 96) {
-                    //     tamanhoLengthCadaObjeto = elemento.length + 4;
-                    // }
-
                     ctx.font = isBold
                         ? `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`
                         : `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
@@ -413,11 +409,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 } else {
                     posicaoAtualCharNaLinha += 0.35;
                 }
-                // if (contadorPulaLinhas >= 0 && contadorPulaLinhas < 5) {
-                //     posicaoAtualCharNaLinha += (0.34 * 2);
-                // } else {
-                //     posicaoAtualCharNaLinha += 0.5;
-                // }
                 posicaoAtualCharNaLinha += tamanhoLengthCadaObjeto;
 
             } else {
@@ -612,22 +603,6 @@ export const desenharQuadradoSeparador = (ctx: CanvasRenderingContext2D, mm: any
 
 export const desenharQuadradoSeparadorElementos = (ctx: CanvasRenderingContext2D, mm: any,  model: IElementoTabelaNutricionalModel, yMm: number, xMm: number) => {
     ctx.fillRect(mm(xMm), mm(yMm), 5, 5);
-};
-
-// TODO: Deixar essa budega bonita depois
-const montaStringInteira = (parametro: any) => {
-    const nome = montaApenasNomeNutriente(parametro);
-    const quantidade100 = parametro.qt100;
-    const unidade = pegaUnidadeDoRotulo(parametro.rotulo);
-    const parentesesInicial = "(";
-    const parentesesFinal = ")";
-    const valorPorcao = parametro.qtPorcao;
-    const virgula = ",";
-    const valorDiario = parametro.valorDiario;
-    const sinalPorcentagem = "%"
-    const espaco = " ";
-
-    return nome + espaco + quantidade100 + espaco + unidade + espaco + parentesesInicial + valorPorcao + espaco + unidade + virgula + espaco + valorDiario + sinalPorcentagem + parentesesFinal;
 };
 
 const montaApenasNomeNutriente = (parametro: any) => {
