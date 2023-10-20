@@ -273,14 +273,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas);
 
             if (parametrosExtrasNutricionalV2.length > 3 && parametrosExtrasNutricionalV2.length < 7) {
-                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 36);
-                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 35);
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 20.5);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 23);
             } else if (parametrosExtrasNutricionalV2.length > 7) {
-                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 40);
-                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 38);
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 25);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 26);
             } else {
-                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 33);
-                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 32);
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 20.5);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 23);
             }
         });
 
@@ -294,18 +294,22 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         informacoesNutricionaisDivididas[23] = montaApenasVirgula();
 
         informacoesNutricionaisDivididas.splice(24, 0, "dos");
-        informacoesNutricionaisDivididas.splice(25, 0, " quais");
+        informacoesNutricionaisDivididas.splice(25, 0, " quais ");
 
         informacoesNutricionaisDivididas[34] = montaApenasVirgula();
         informacoesNutricionaisDivididas[69] = montaApenasVirgula();
 
         informacoesNutricionaisDivididas.splice(70, 0, "das");
-        informacoesNutricionaisDivididas.splice(71, 0, " quais");
+        informacoesNutricionaisDivididas.splice(71, 0, " quais ");
 
         informacoesNutricionaisDivididas[83] = montaApenasVirgula();
 
         // Adicionar espaçamento no parâmetro extra
         for (let i: number = 119; i < informacoesNutricionaisDivididas.length; i += 12) {
+            if (informacoesNutricionaisDivididas[i]) {
+                informacoesNutricionaisDivididas[i] = informacoesNutricionaisDivididas[i] + montaApenasEspaco();
+            }
+
            if (informacoesNutricionaisDivididas[i + 1]) {
                 informacoesNutricionaisDivididas[i + 1] = informacoesNutricionaisDivididas[i + 1] + montaApenasEspaco();
             }
@@ -324,9 +328,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             // Ajusta posicionamento Parâmetros extras
-            if (index === 119) {
-                posicaoAtualCharNaLinha -= 1;
-            }
+            // if (index === 119) {
+            //     posicaoAtualCharNaLinha -= 1;
+            // }
 
             // Verifica se fonte é em negrito
             if (elemento.indexOf("_") !== -1) {
@@ -351,11 +355,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             // Insere espaço entre os nomes compostos
             if (index === 26 || index === 35 ||index === 58 || index === 84) {
                 elemento = elemento + montaApenasEspaco();
-            } else if (index === 72) {
+            } else if (index === 72 || index === 96) {
                 elemento = elemento + montaApenasEspaco() + montaApenasEspaco();
             }
 
-            if (index === 36 || index === 73 || index === 97) {
+            if (index === 36 || index === 59 || index === 73 || index === 85 || index === 97) {
                 elemento = elemento + montaApenasEspaco();
             }
 
@@ -402,12 +406,17 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 }
 
                 // Forma para deixar texto mais alinhado com a borda direita (justificado)
-                if (contadorPulaLinhas > 0 && contadorPulaLinhas < 5) {
+                // if (contadorPulaLinhas > 0 && contadorPulaLinhas < 5) {
+                //     posicaoAtualCharNaLinha += (0.34 * 2);
+                // } else if (contadorPulaLinhas >= 5) {
+                //     posicaoAtualCharNaLinha += 0.5;
+                // } else {
+                //     posicaoAtualCharNaLinha += 0.35;
+                // }
+                if (contadorPulaLinhas >= 0 && contadorPulaLinhas < 5) {
                     posicaoAtualCharNaLinha += (0.34 * 2);
-                } else if (contadorPulaLinhas >= 5) {
-                    posicaoAtualCharNaLinha += 0.5;
                 } else {
-                    posicaoAtualCharNaLinha += 0.35;
+                    posicaoAtualCharNaLinha += 0.5;
                 }
                 posicaoAtualCharNaLinha += tamanhoLengthCadaObjeto;
 
