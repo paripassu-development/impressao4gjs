@@ -20,7 +20,7 @@ import {
     ESPACAMENTO_CONTORNO_TABELA_EM_PT, ESPESSURA_LINHA_CONTORNO_EM_PT,
     ESPESSURA_LINHA_GROSSA_EM_PT,
     ESPESSURA_LINHA_PADRAO_EM_PT,
-    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT,
+    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT, PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2,
     PARAMETROS_PADROES_NUTRICIONAL_V2,
     TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT,
@@ -236,6 +236,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         });
     } else {
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
+        const parametrosExtrasNutricionalV2 = !!textBindings ? textBindings.parametrosExtrasNutricionalV2 : PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2;
 
         // variáveis de posicionamento na etiqueta
         let valorMaximoPosicaoX: number = larguraMaxima - 3;
@@ -244,105 +245,49 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         let contadorIndex: number = 0;
         let contadorPulaLinhas: number = 0;
 
-        // variáveis de texto das informações nutricionais
-        let unidadeDoRotulo: string;
-        let parametroExtraUnidade: string;
-        let espaco: string = montaApenasEspaco();
-        let parentesesInicial: string = montaApenasParentesesInicial();
-        let virgula: string = montaApenasVirgula();
-        let sinalPorcentagem: string = montaApenasSinalPorcentagem() + espaco;
-        let parentesesFinal: string = montaApenasParentesesFinal();
-        let valorDiario: string;
-        let quadradoVirtual = montaApenasEspaco();
-
-        let isBold = false;
-
-        const por100GFormatado = "Por " + porcao100g + espaco + parentesesInicial + fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings) + virgula + espaco + getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario") + parentesesFinal + ": ";
+        // negrito
+        let isBold: boolean = false;
 
         let informacoesNutricionaisDivididas: string[] = [];
+
+        const elementosTextuais = {
+            espaco: montaApenasEspaco(),
+            parentesesInicial: montaApenasParentesesInicial(),
+            virgula: montaApenasVirgula(),
+            sinalPorcentagem: montaApenasSinalPorcentagem(),
+            parentesesFinal: montaApenasParentesesFinal(),
+            quadradoVirtual: montaApenasEspaco()
+        }
+
+        const por100GFormatado: string = "Por " + porcao100g + elementosTextuais.espaco + elementosTextuais.parentesesInicial +
+            fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings) + elementosTextuais.virgula + elementosTextuais.espaco +
+            getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario") + elementosTextuais.parentesesFinal + ": ";
+
         informacoesNutricionaisDivididas.push(por100GFormatado);
 
-        parametrosPadroesNutricionalV2.forEach((parametro: any, index: number, array: any) => {
-                const nomeNutrienteFormatado = montaApenasNomeNutriente(parametro) + espaco;
-                let nomeCompostoNutriente: string[];
-                const nomeCompostoNutrienteTamanho = nomeNutrienteFormatado.trim().split(/\s+/).length;
-                const quantidade100 = montaApenasQuantidade100(parametro);
-                unidadeDoRotulo = montaApenasUnidadeDoRotulo(parametro);
-                const quantidadePorcao = montaApenasQuantidadePorcao(parametro);
-                valorDiario = montaApenasValorDiario(parametro);
-
-                // Separa os nomes compostos em strings individuais
-                if (nomeCompostoNutrienteTamanho > 1) {
-                    nomeCompostoNutriente = nomeNutrienteFormatado.split(" ", 2);
-                    informacoesNutricionaisDivididas.push(...nomeCompostoNutriente);
-                } else {
-                    informacoesNutricionaisDivididas.push(nomeNutrienteFormatado);
-                }
-                informacoesNutricionaisDivididas.push(quantidade100 + espaco);
-                informacoesNutricionaisDivididas.push(unidadeDoRotulo + espaco);
-                informacoesNutricionaisDivididas.push(parentesesInicial);
-                informacoesNutricionaisDivididas.push("_" + quantidadePorcao + "_");
-                informacoesNutricionaisDivididas.push("_" + unidadeDoRotulo + "_");
-                if (parametro.rotulo !== "  Açúcares totais (g)") {
-                    informacoesNutricionaisDivididas.push(virgula);
-                    informacoesNutricionaisDivididas.push(valorDiario);
-                    informacoesNutricionaisDivididas.push(sinalPorcentagem);
-                }
-                informacoesNutricionaisDivididas.push(parentesesFinal);
-                informacoesNutricionaisDivididas.push(quadradoVirtual);
+        parametrosPadroesNutricionalV2.forEach((parametro: any) => {
+            montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas);
         })
 
-        // Parametros extras
-        if (!!textBindings) {
-            textBindings.parametrosExtrasNutricionalV2.forEach((parametro: any) => {
-                const nomeParametroExtra = montaApenasNomeNutriente(parametro) + espaco;
-                let nomeCompostoParametroExtra: string[];
-                const nomeCompostoParametroExtraTamanho = nomeParametroExtra.trim().split(/\s+/).length;
-                const parametroExtraQuantidade100 = montaApenasQuantidade100(parametro);
-                parametroExtraUnidade = montaApenasUnidadeDoRotulo(parametro);
-                const parametroExtraQuantidadePorcao = montaApenasQuantidadePorcao(parametro) + espaco;
-                const parametroExtraValorDiario = montaApenasValorDiario(parametro);
+        parametrosExtrasNutricionalV2.forEach((parametro: any) => {
+            montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas);
 
-                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 28);
-                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 28);
-
-                // Separa os nomes compostos em strings individuais
-                if (nomeCompostoParametroExtraTamanho > 1) {
-                    nomeCompostoParametroExtra = nomeParametroExtra.split(" ", 2);
-                    informacoesNutricionaisDivididas.push(...nomeCompostoParametroExtra);
-                } else {
-                    informacoesNutricionaisDivididas.push(nomeParametroExtra);
-                }
-                informacoesNutricionaisDivididas.push(espaco + espaco + parametroExtraQuantidade100);
-                informacoesNutricionaisDivididas.push(parametroExtraUnidade + espaco);
-                informacoesNutricionaisDivididas.push(parentesesInicial);
-                informacoesNutricionaisDivididas.push("_" + parametroExtraQuantidadePorcao + "_");
-                informacoesNutricionaisDivididas.push("_" + parametroExtraUnidade + "_");
-                informacoesNutricionaisDivididas.push(virgula);
-                informacoesNutricionaisDivididas.push(parametroExtraValorDiario);
-                informacoesNutricionaisDivididas.push(sinalPorcentagem);
-                informacoesNutricionaisDivididas.push(parentesesFinal);
-                informacoesNutricionaisDivididas.push(quadradoVirtual);
-
-                if (textBindings.parametrosExtrasNutricionalV2.length > 3 && textBindings.parametrosExtrasNutricionalV2.length < 7) {
-                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 36);
-                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 35);
-                } else if (textBindings.parametrosExtrasNutricionalV2.length > 7) {
-                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 40);
-                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 38);
-                } else {
-                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 33);
-                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 32);
-                }
-            });
-
-            // Inserir espaço entre os nomes compostos dos Parâmetros Extras
-            for (let i: number = 115; i < informacoesNutricionaisDivididas.length; i += 12) {
-                if (informacoesNutricionaisDivididas[i]) {
-                    informacoesNutricionaisDivididas[i] = informacoesNutricionaisDivididas[i] + montaApenasEspaco();
-                }
+            if (parametrosExtrasNutricionalV2.length > 3 && parametrosExtrasNutricionalV2.length < 7) {
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 36);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 35);
+            } else if (parametrosExtrasNutricionalV2.length > 7) {
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 40);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 38);
+            } else {
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 15, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 33);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 20, model.posicao.xMm - 0.2, mm, 32);
             }
-        }
+        });
+
+        // Parâmetros extras
+        // if (!!textBindings) {
+        //     textBindings
+        // }
 
         // Insere "dos quais" quando for Açúcares totais e "das quais" quando for Gorduras totais
         // Retira quadrado separador quando for Açúcares adicionados, Gorduras saturadas e trans
@@ -359,7 +304,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
         informacoesNutricionaisDivididas[83] = montaApenasVirgula();
 
-        console.log({informacoesNutricionaisDivididas});
+        // Adicionar espaçamento no parâmetro extra
+        for (let i: number = 119; i < informacoesNutricionaisDivididas.length; i += 12) {
+           if (informacoesNutricionaisDivididas[i + 1]) {
+                informacoesNutricionaisDivididas[i + 1] = informacoesNutricionaisDivididas[i + 1] + montaApenasEspaco();
+            }
+        }
 
         // Monta as informações nutricionais de forma linear
         informacoesNutricionaisDivididas.forEach((elemento: string, index: number, array: string[]) => {
@@ -371,6 +321,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             // Ajusta posicinamento virgula dos quais/das quais
             if (index === 5 || index === 6 || index === 23 || index === 34 || index === 69 || index === 83) {
                 posicaoAtualCharNaLinha -= 0.75;
+            }
+
+            // Ajusta posicionamento Parâmetros extras
+            if (index === 119) {
+                posicaoAtualCharNaLinha -= 1;
             }
 
             // Verifica se fonte é em negrito
@@ -410,9 +365,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
 
-                if (verificaSeDesenhaQuadradoSeparador(elemento, index, array, quadradoVirtual)) {
+                if (verificaSeDesenhaQuadradoSeparador(elemento, index, array, elementosTextuais.quadradoVirtual)) {
                     desenharQuadradoSeparadorElementos(ctx, mm, model, yIncrementado - 0.9, posicaoX);
-                } else if (elemento !== quadradoVirtual) {
+                } else if (elemento !== elementosTextuais.quadradoVirtual) {
                     tamanhoLengthCadaObjeto = elemento.length;
 
                     // TODO ver melhor forma de quebrar em FIBRAS
@@ -447,8 +402,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 }
 
                 // Forma para deixar texto mais alinhado com a borda direita (justificado)
-                if (contadorPulaLinhas > 0 && ((valorMaximoPosicaoX - posicaoAtualCharNaLinha) > 2)) {
+                if (contadorPulaLinhas > 0 && contadorPulaLinhas < 5) {
                     posicaoAtualCharNaLinha += (0.34 * 2);
+                } else if (contadorPulaLinhas >= 5) {
+                    posicaoAtualCharNaLinha += 0.5;
                 } else {
                     posicaoAtualCharNaLinha += 0.35;
                 }
@@ -530,6 +487,43 @@ const verificaSeCabeNaLinha = (valorTotalAtual: number, valorDoProximoElemento: 
 const verificaSeContemNumeroPulandoDoisElementos = (array: string[], index: number): RegExpMatchArray => {
     const contemNumeros:RegExp = /[0-9]/;
     return array[index + 2].match(contemNumeros);
+}
+
+const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, informacoesNutricionaisDivididas: string[]) => {
+    let unidadeDoRotulo: string;
+    let valorDiario: string;
+
+    const nomeNutrienteFormatado = montaApenasNomeNutriente(parametro) + elementosTextuais.espaco;
+    const quantidade100 = montaApenasQuantidade100(parametro);
+    unidadeDoRotulo = montaApenasUnidadeDoRotulo(parametro);
+    const quantidadePorcao = montaApenasQuantidadePorcao(parametro);
+    valorDiario = montaApenasValorDiario(parametro);
+
+    separarNomesCompostosEmIndividuais(nomeNutrienteFormatado, informacoesNutricionaisDivididas);
+    informacoesNutricionaisDivididas.push(quantidade100 + elementosTextuais.espaco);
+    informacoesNutricionaisDivididas.push(unidadeDoRotulo + elementosTextuais.espaco);
+    informacoesNutricionaisDivididas.push(elementosTextuais.parentesesInicial);
+    informacoesNutricionaisDivididas.push("_" + quantidadePorcao + "_");
+    informacoesNutricionaisDivididas.push("_" + unidadeDoRotulo + "_");
+    if (parametro.rotulo !== "  Açúcares totais (g)") {
+        informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
+        informacoesNutricionaisDivididas.push(valorDiario);
+        informacoesNutricionaisDivididas.push(elementosTextuais.sinalPorcentagem + elementosTextuais.espaco);
+    }
+    informacoesNutricionaisDivididas.push(elementosTextuais.parentesesFinal);
+    informacoesNutricionaisDivididas.push(elementosTextuais.quadradoVirtual);
+}
+
+const separarNomesCompostosEmIndividuais = (nomeNutrienteFormatado: string, informacoesNutricionaisDivididas: string[]) => {
+    const nomeCompostoNutrienteTamanho = nomeNutrienteFormatado.trim().split(/\s+/).length;
+    let nomeCompostoNutriente: string[];
+
+    if (nomeCompostoNutrienteTamanho > 1) {
+        nomeCompostoNutriente = nomeNutrienteFormatado.split(" ", 2);
+        informacoesNutricionaisDivididas.push(...nomeCompostoNutriente);
+    } else {
+        informacoesNutricionaisDivididas.push(nomeNutrienteFormatado);
+    }
 }
 
 const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any, espessuraLinha: number) => {

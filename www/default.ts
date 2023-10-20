@@ -389,6 +389,15 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
     },
 ];
 
+export const PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2 = [
+    {
+        "qtPorcao": "0",
+        "rotulo": "Vitamina C (g)",
+        "valorDiario": "0",
+        "qt100": "0"
+    },
+];
+
 export const TAMANHO_FONTE_PADRAO_TITULO_EM_PT = 10;
 export const TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT = 8;
 export const TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT = 8;
