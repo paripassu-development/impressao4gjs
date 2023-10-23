@@ -238,6 +238,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // negrito
         let isBold: boolean = false;
 
+        let indexPrimeiroParametroExtra: number;
+
         let informacoesNutricionaisDivididas: string[] = [];
 
         const elementosTextuais = {
@@ -330,6 +332,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             let posicaoX: number = posicaoAtualCharNaLinha;
             let textAlign: string = contadorPulaLinhas === 0 ? TextAlign.LEFT : TextAlign.JUSTIFY;
 
+            if (elemento.indexOf("Sódio ") === 0) {
+                indexPrimeiroParametroExtra = index + 11;
+            }
+
+            if (array[indexPrimeiroParametroExtra]) {
+                posicaoAtualCharNaLinha -= -1;
+            }
+
             // Ajusta posicionamento virgula dos quais/das quais
             if (index === 5 || index === 6 || index === 23 || index === 34 || index === 69 || index === 83) {
                 posicaoAtualCharNaLinha -= 0.75;
@@ -395,7 +405,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 // Forma para deixar texto mais alinhado com a borda direita (justificado)
                 if (contadorPulaLinhas > 0 && contadorPulaLinhas < 5) {
                     posicaoAtualCharNaLinha += (0.34 * 2);
-                } else if (contadorPulaLinhas >= 5) {
+                } else if (contadorPulaLinhas >= 5 && (valorMaximoPosicaoX - posicaoAtualCharNaLinha) < 10) {
                     posicaoAtualCharNaLinha += 0.5;
                 } else {
                     posicaoAtualCharNaLinha += 0.35;
