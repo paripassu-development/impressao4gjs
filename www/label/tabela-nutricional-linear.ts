@@ -409,7 +409,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     posicaoAtualCharNaLinha += (0.34 * 2);
                 } else if (contadorPulaLinhas >= 5) {
                     posicaoAtualCharNaLinha += 0.5;
-                    valorMaximoPosicaoX = larguraMaxima;
                 } else {
                     posicaoAtualCharNaLinha += 0.35;
                 }
