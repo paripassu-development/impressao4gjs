@@ -389,9 +389,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 }
 
                 // Ajusta tamanho da parte "Por 100g ... :"
-                if (index === 0) {
-                    tamanhoLengthCadaObjeto = 24;
-                }
+                // if (index === 0) {
+                //     tamanhoLengthCadaObjeto = 24;
+                // }
 
                 if (contadorPulaLinhas === 0) {
                     contadorIndex++;
