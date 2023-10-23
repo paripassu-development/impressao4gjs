@@ -375,7 +375,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             if (contadorPulaLinhas > 0 && contadorPulaLinhas < 5) {
                 valorMaximoPosicaoX = larguraMaxima + 1;
             } else if (contadorPulaLinhas >= 5) {
-                valorMaximoPosicaoX = larguraMaxima + 0.5;
+                valorMaximoPosicaoX = larguraMaxima + 0.2;
             }
 
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
