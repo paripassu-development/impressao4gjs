@@ -334,7 +334,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             // }
 
             // Verifica se fonte é em negrito
-            if (elemento.indexOf("_") !== -1) {
+            if (elemento.indexOf("&") !== -1) {
                 verificaSeContemNumeroPulandoDoisElementos(array, index)
                     ? elemento = elemento.slice(1, -1)
                     : elemento = elemento.slice(1, -1) + montaApenasEspaco();
@@ -503,8 +503,8 @@ const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, i
     informacoesNutricionaisDivididas.push(quantidade100 + elementosTextuais.espaco);
     informacoesNutricionaisDivididas.push(unidadeDoRotulo + elementosTextuais.espaco);
     informacoesNutricionaisDivididas.push(elementosTextuais.parentesesInicial);
-    informacoesNutricionaisDivididas.push("_" + quantidadePorcao + "_");
-    informacoesNutricionaisDivididas.push("_" + unidadeDoRotulo + "_");
+    informacoesNutricionaisDivididas.push("&" + quantidadePorcao + "&");
+    informacoesNutricionaisDivididas.push("&" + unidadeDoRotulo + "&");
     if (parametro.rotulo !== "  Açúcares totais (g)") {
         informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
         informacoesNutricionaisDivididas.push(valorDiario);
