@@ -6,7 +6,7 @@ import {
 } from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {
-    alimentoProntoParaConsumo, calcularPosicaoCentralizadaTabelaNutricional,
+    alimentoProntoParaConsumo,
     setInformacoesV2PadraoZero,
 } from "../core/util/tabela-nutricional-utils";
 import {
@@ -27,9 +27,6 @@ import {
     TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT,
 } from "../default";
 import {mmPartial} from "./mm";
-import {
-    IElementoTextoModelmultiplasLinhas,
-} from "./text";
 
 interface IElementoTabelaNutricionalModelPosicao {
     xMm: number;
@@ -73,12 +70,7 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoAbreviadoValorDiario: string;
     textoProporcaoCalorias: string;
     informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
-    ocultarZerados: boolean;
     parametrosPadroesNutricionalV2: [any];
-}
-
-interface IElementoTabelaNutricionalOpcoes {
-    ocultarLinhas?: boolean;
 }
 
 const nutrientes = [
@@ -101,8 +93,6 @@ export interface IElementoTabelaNutricionalModel {
     fonte: IElementoTabelaNutricionalModelFonte;
     informacoesNutricionais: IElementoTabelaNutricionalModelInformacoesNutricionais;
     informacoesAdicionais: IElementoTabelaNutricionalInformacoesAdicionais;
-    multiplasLinhas: IElementoTextoModelmultiplasLinhas;
-    opcoes?: IElementoTabelaNutricionalOpcoes;
     larguraMaximaMm: number;
 }
 

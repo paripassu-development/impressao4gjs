@@ -4229,7 +4229,7 @@ const METADADOS_ELEMENTOS: any[] = [
     {
         nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linear",
         tipo: "tabelaNutricionalLinear",
-        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.descricao",
+        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.descricao",
         camposConfiguraveis: [
             {
                 nome: "ras.ui.4g.etiqueta.configuracao.posicao",
@@ -4239,7 +4239,7 @@ const METADADOS_ELEMENTOS: any[] = [
                 itens: [
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.posicao_horizontal.descricao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.posicao_horizontal.descricao",
                         tipo: "NUMERIC",
                         categoria: "posicionamento",
                         obrigatorio: true,
@@ -4248,7 +4248,7 @@ const METADADOS_ELEMENTOS: any[] = [
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.posicao_vertical.descricao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.posicao_vertical.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.yMm",
@@ -4256,7 +4256,7 @@ const METADADOS_ELEMENTOS: any[] = [
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.rotacao.descricao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.rotacao.descricao",
                         campo: "posicao.rotacao",
                         tipo: "OPTIONS",
                         opcoes: VALORES_ROTACAO,
@@ -4288,7 +4288,7 @@ const METADADOS_ELEMENTOS: any[] = [
                 itens: [
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.nome_fonte",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.nome_fonte.descricao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.nome_fonte.descricao",
                         tipo: "OPTIONS",
                         opcoes: FONTES,
                         obrigatorio: true,
@@ -4297,7 +4297,7 @@ const METADADOS_ELEMENTOS: any[] = [
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.altura",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.altura_fonte.descricao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.altura_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "fonte.alturaMm",
@@ -4305,66 +4305,12 @@ const METADADOS_ELEMENTOS: any[] = [
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.forca_contorno_fonte",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.forca_contorno_fonte.descricao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.forca_contorno_fonte.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: false,
                         campo: "fonte.forcaContorno",
-                    },
-                    {
-                        nome: "ras.ui.4g.etiqueta.configuracao.negrito_fonte",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.negrito_fonte.descricao",
-                        tipo: "BOOLEAN",
-                        obrigatorio: false,
-                        campo: "fonte.negrito",
-                    },
-                ],
-            },
-            {
-                nome: "ras.ui.4g.etiqueta.configuracao.multiplas_linhas",
-                tipo: "OBJECT",
-                obrigatorio: false,
-                campo: "multiplasLinhas",
-                itens: [
-                    {
-                        nome: "ras.ui.4g.etiqueta.configuracao.numero_maximo_linhas",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.numero_maximo_linhas.descricao",
-                        tipo: "NUMERIC",
-                        obrigatorio: false,
-                        campo: "multiplasLinhas.numeroMaximoDeLinhas",
-                        padrao: 0,
-                    },
-                    {
-                        nome: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.altura_minima_fonte",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.altura_minima_fonte.descricao",
-                        tipo: "NUMERIC",
-                        obrigatorio: false,
-                        campo: "multiplasLinhas.alturaMinimaFonteMm",
-                    },
-                    {
-                        nome: "ras.ui.4g.etiqueta.configuracao.alinhamento",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional_linha.alinhamento.descricao",
-                        tipo: "OPTIONS",
-                        opcoes: [
-                            {
-                                texto: "ras.ui.4g.etiqueta.configuracao.esquerda",
-                                valor: "left",
-                            },
-                            {
-                                texto: "ras.ui.4g.etiqueta.configuracao.direita",
-                                valor: "right",
-                            },
-                            {
-                                texto: "ras.ui.4g.etiqueta.configuracao.centro",
-                                valor: "center",
-                            },
-                            {
-                                texto: "ras.ui.4g.etiqueta.configuracao.justificado",
-                                valor: "justify",
-                            },
-                        ],
-                        obrigatorio: false,
-                        campo: "multiplasLinhas.alinhamento",
-                    },
+                        padrao: 0.8,
+                    }
                 ],
             },
             {
