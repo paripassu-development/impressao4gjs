@@ -229,7 +229,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         const parametrosExtrasNutricionalV2 = !!textBindings ? textBindings.parametrosExtrasNutricionalV2 : PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2;
 
         // variáveis de posicionamento na etiqueta
-        let valorMaximoPosicaoX: number = larguraMaxima - 4;
+        let valorMaximoPosicaoX: number = larguraMaxima - 3;
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
         let yIncrementado: number = yMm;
         let contadorIndex: number = 0;
