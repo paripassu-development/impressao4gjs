@@ -334,15 +334,15 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             // }
 
             // Verifica se fonte é em negrito
-            if (elemento.indexOf("&") !== -1) {
-                verificaSeContemNumeroPulandoDoisElementos(array, index)
-                    ? elemento = elemento.slice(1, -1)
-                    : elemento = elemento.slice(1, -1) + montaApenasEspaco();
-                tamanhoLengthCadaObjeto = elemento.length;
-                isBold = true;
-            } else {
-                isBold = false;
-            }
+            // if (elemento.indexOf("&") !== -1) {
+            //     verificaSeContemNumeroPulandoDoisElementos(array, index)
+            //         ? elemento = elemento.slice(1, -1)
+            //         : elemento = elemento.slice(1, -1) + montaApenasEspaco();
+            //     tamanhoLengthCadaObjeto = elemento.length;
+            //     isBold = true;
+            // } else {
+            //     isBold = false;
+            // }
 
             // Verifica o tamanho do próximo elemento a ser printado na tela
             if (index < array.length - 1) {
@@ -503,8 +503,10 @@ const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, i
     informacoesNutricionaisDivididas.push(quantidade100 + elementosTextuais.espaco);
     informacoesNutricionaisDivididas.push(unidadeDoRotulo + elementosTextuais.espaco);
     informacoesNutricionaisDivididas.push(elementosTextuais.parentesesInicial);
-    informacoesNutricionaisDivididas.push("&" + quantidadePorcao + "&");
-    informacoesNutricionaisDivididas.push("&" + unidadeDoRotulo + "&");
+    // informacoesNutricionaisDivididas.push("&" + quantidadePorcao + "&");
+    // informacoesNutricionaisDivididas.push("&" + unidadeDoRotulo + "&");
+    informacoesNutricionaisDivididas.push(quantidadePorcao);
+    informacoesNutricionaisDivididas.push(unidadeDoRotulo);
     if (parametro.rotulo !== "  Açúcares totais (g)") {
         informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
         informacoesNutricionaisDivididas.push(valorDiario);
