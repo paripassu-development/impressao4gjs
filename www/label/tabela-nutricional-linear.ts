@@ -363,13 +363,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             // Insere espaço entre os nomes compostos
-            if (index === 26 || index === 84) {
+            if (elemento.indexOf("Açúcares" || "Gorduras" || "Fibras")) {
                 elemento = elemento + montaApenasEspaco();
-            } else if (index === 35 || index === 58 || index === 72 || index === 96) {
-                elemento = elemento + montaApenasEspaco() + montaApenasEspaco();
             }
+            // } else if (index === 35 || index === 58 || index === 72 || index === 96) {
+            //     elemento = elemento + montaApenasEspaco() + montaApenasEspaco();
+            // }
 
-            if (index === 36 || index === 59 || index === 73 || index === 85 || index === 97) {
+            if (elemento.indexOf("totais" || "adicionados" || "saturadas" || "trans" || "alimentares")) {
                 elemento = elemento + montaApenasEspaco();
             }
 
