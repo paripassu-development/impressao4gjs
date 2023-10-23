@@ -323,6 +323,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
         }
 
+        console.log({informacoesNutricionaisDivididas});
+
         // Monta as informações nutricionais de forma linear
         informacoesNutricionaisDivididas.forEach((elemento: string, index: number, array: string[]) => {
             let tamanhoProximoElemento: number;
@@ -361,9 +363,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             // Insere espaço entre os nomes compostos
-            if (index === 26 || index === 35 ||index === 58 || index === 84) {
+            if (index === 26 || index === 84) {
                 elemento = elemento + montaApenasEspaco();
-            } else if (index === 72 || index === 96) {
+            } else if (index === 35 || index === 58 || index === 72 || index === 96) {
                 elemento = elemento + montaApenasEspaco() + montaApenasEspaco();
             }
 
