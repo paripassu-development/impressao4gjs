@@ -229,7 +229,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         const parametrosExtrasNutricionalV2 = !!textBindings ? textBindings.parametrosExtrasNutricionalV2 : PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2;
 
         // variáveis de posicionamento na etiqueta
-        let valorMaximoPosicaoX: number = larguraMaxima - 3;
+        let valorMaximoPosicaoX: number = larguraMaxima - 3.5;
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
         let yIncrementado: number = yMm;
         let contadorIndex: number = 0;
@@ -330,7 +330,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             let posicaoX: number = posicaoAtualCharNaLinha;
             let textAlign: string = contadorPulaLinhas === 0 ? TextAlign.LEFT : TextAlign.JUSTIFY;
 
-            // Ajusta posicinamento virgula dos quais/das quais
+            // Ajusta posicionamento virgula dos quais/das quais
             if (index === 5 || index === 6 || index === 23 || index === 34 || index === 69 || index === 83) {
                 posicaoAtualCharNaLinha -= 0.75;
             }
@@ -361,7 +361,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             if (contadorPulaLinhas > 0) {
-                valorMaximoPosicaoX = larguraMaxima + 1;
+                valorMaximoPosicaoX = larguraMaxima + 2;
             }
 
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
@@ -387,11 +387,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         degrees,
                     )
                 }
-
-                // Ajusta tamanho da parte "Por 100g ... :"
-                // if (index === 0) {
-                //     tamanhoLengthCadaObjeto = 24;
-                // }
 
                 if (contadorPulaLinhas === 0) {
                     contadorIndex++;
