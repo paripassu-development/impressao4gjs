@@ -268,14 +268,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas);
 
             if (parametrosExtrasNutricionalV2.length > 3 && parametrosExtrasNutricionalV2.length < 7) {
-                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 19);
-                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21);
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 20.5);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21.5);
             } else if (parametrosExtrasNutricionalV2.length > 7) {
                 desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 25);
                 desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 26);
             } else {
-                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 19);
-                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21);
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 20.5);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21.5);
             }
         });
 
