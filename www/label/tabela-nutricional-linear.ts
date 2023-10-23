@@ -512,10 +512,7 @@ const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, i
     informacoesNutricionaisDivididas.push(elementosTextuais.parentesesInicial);
     informacoesNutricionaisDivididas.push("&" + quantidadePorcao + "&");
     informacoesNutricionaisDivididas.push("&" + unidadeDoRotulo + "&");
-    // informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
-    // informacoesNutricionaisDivididas.push(valorDiario);
-    // informacoesNutricionaisDivididas.push(elementosTextuais.sinalPorcentagem + elementosTextuais.espaco);
-    if (parametro.rotulo !== "  Açúcares totais (g)") {
+    if (!parametro.rotulo.includes("Açúcares totais")) {
         informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
         informacoesNutricionaisDivididas.push(valorDiario);
         informacoesNutricionaisDivididas.push(elementosTextuais.sinalPorcentagem + elementosTextuais.espaco);
