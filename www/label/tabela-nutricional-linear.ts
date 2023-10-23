@@ -110,6 +110,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const alturaLinhaMm = model.fonte.alturaMm * 1.46;
     const lineStrokeGap = alturaLinhaMm / 3;
     const posicaoXPorcoesPorEmbalagem = 1;
+    let porcaoLength: number = "Porções por embalagem: ".length + (model.informacoesNutricionais.textoQuantidadeEmbalagem).length;
     const textoCabecalhoMedidas = [
         {
             // @ts-ignore
@@ -173,7 +174,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             id: "Porção: ",
             value: model.informacoesNutricionais.textoQuantidadePorPorcao,
             caseira: model.informacoesNutricionais.textoPorcaoCaseira,
-            xMm: posicaoXPorcoesPorEmbalagem + 30.5,
+            xMm: (porcaoLength / 1.6) + 2,
         },
     ].map((infos) => {
         strokeAlignedText(
@@ -191,9 +192,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             degrees,
         );
         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 3.3, model.posicao.xMm - 0.2, mm, 5.4);
+        desenharLinhaContornoVerticalDireita(ctx, model, yMm - alturaLinhaMm, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 7.8);
+        desenharQuadradoSeparador(ctx, mm, yMm - 1, model.posicao.xMm + (porcaoLength / 1.6));
     });
-    desenharQuadradoSeparador(ctx, mm, yMm - 1, model.posicao.xMm + 30);
-    desenharLinhaContornoVerticalDireita(ctx, model, yMm - alturaLinhaMm, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 7.8);
+
     yMm += alturaLinhaMm / 1.4;
 
     // Linha grossa ----------------------------------------------------------------------------------------------------
