@@ -323,8 +323,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
         }
 
-        console.log({informacoesNutricionaisDivididas});
-
         // Monta as informações nutricionais de forma linear
         informacoesNutricionaisDivididas.forEach((elemento: string, index: number, array: string[]) => {
             let tamanhoProximoElemento: number;
@@ -336,11 +334,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             if (index === 5 || index === 6 || index === 23 || index === 34 || index === 69 || index === 83) {
                 posicaoAtualCharNaLinha -= 0.75;
             }
-
-            // Ajusta posicionamento Parâmetros extras
-            // if (index === 119) {
-            //     posicaoAtualCharNaLinha -= 1;
-            // }
 
             // Verifica se fonte é em negrito
             if (elemento.indexOf("&") !== -1) {
@@ -363,11 +356,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             // Insere espaço entre os nomes compostos
-            if (elemento.indexOf("Açúcares" || "Gorduras" || "Fibras") === 0) {
-                elemento = elemento + montaApenasEspaco();
-            }
-
-            if (elemento.indexOf("totais" || "adicionados" || "saturadas" || "trans" || "alimentares") === 0) {
+            if (verificaSeEhNomeCompostoParaIncluirEspaco(elemento)) {
                 elemento = elemento + montaApenasEspaco();
             }
 
@@ -401,7 +390,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
                 // Ajusta tamanho da parte "Por 100g ... :"
                 if (index === 0) {
-                    tamanhoLengthCadaObjeto = 23;
+                    tamanhoLengthCadaObjeto = 24;
                 }
 
                 if (contadorPulaLinhas === 0) {
@@ -494,6 +483,17 @@ const verificaSeCabeNaLinha = (valorTotalAtual: number, valorDoProximoElemento: 
 const verificaSeContemNumeroPulandoDoisElementos = (array: string[], index: number): RegExpMatchArray => {
     const contemNumeros:RegExp = /[0-9]/;
     return array[index + 2].match(contemNumeros);
+}
+
+const verificaSeEhNomeCompostoParaIncluirEspaco = (elemento: string) => {
+    return elemento.indexOf("Açúcares") === 0 ||
+           elemento.indexOf("Gorduras") === 0 ||
+           elemento.indexOf("Fibras") === 0 ||
+            elemento.indexOf("totais") === 0 ||
+            elemento.indexOf("adicionados") === 0 ||
+            elemento.indexOf("saturadas") === 0 ||
+            elemento.indexOf("trans") === 0 ||
+            elemento.indexOf("alimentares") === 0
 }
 
 const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, informacoesNutricionaisDivididas: string[]) => {
