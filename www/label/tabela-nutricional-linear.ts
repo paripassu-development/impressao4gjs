@@ -363,14 +363,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             // Insere espaço entre os nomes compostos
-            if (elemento.indexOf("Açúcares" || "Gorduras" || "Fibras")) {
+            if (elemento.indexOf("Açúcares" || "Gorduras" || "Fibras") === 0) {
                 elemento = elemento + montaApenasEspaco();
             }
-            // } else if (index === 35 || index === 58 || index === 72 || index === 96) {
-            //     elemento = elemento + montaApenasEspaco() + montaApenasEspaco();
-            // }
 
-            if (elemento.indexOf("totais" || "adicionados" || "saturadas" || "trans" || "alimentares")) {
+            if (elemento.indexOf("totais" || "adicionados" || "saturadas" || "trans" || "alimentares") === 0) {
                 elemento = elemento + montaApenasEspaco();
             }
 
@@ -515,14 +512,14 @@ const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, i
     informacoesNutricionaisDivididas.push(elementosTextuais.parentesesInicial);
     informacoesNutricionaisDivididas.push("&" + quantidadePorcao + "&");
     informacoesNutricionaisDivididas.push("&" + unidadeDoRotulo + "&");
-    informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
-    informacoesNutricionaisDivididas.push(valorDiario);
-    informacoesNutricionaisDivididas.push(elementosTextuais.sinalPorcentagem + elementosTextuais.espaco);
-    // if (parametro.rotulo !== "  Açúcares totais (g)") {
-    //     informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
-    //     informacoesNutricionaisDivididas.push(valorDiario);
-    //     informacoesNutricionaisDivididas.push(elementosTextuais.sinalPorcentagem + elementosTextuais.espaco);
-    // }
+    // informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
+    // informacoesNutricionaisDivididas.push(valorDiario);
+    // informacoesNutricionaisDivididas.push(elementosTextuais.sinalPorcentagem + elementosTextuais.espaco);
+    if (parametro.rotulo !== "  Açúcares totais (g)") {
+        informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
+        informacoesNutricionaisDivididas.push(valorDiario);
+        informacoesNutricionaisDivididas.push(elementosTextuais.sinalPorcentagem + elementosTextuais.espaco);
+    }
     informacoesNutricionaisDivididas.push(elementosTextuais.parentesesFinal);
     informacoesNutricionaisDivididas.push(elementosTextuais.quadradoVirtual);
 }
