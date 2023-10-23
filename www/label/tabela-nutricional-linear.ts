@@ -407,7 +407,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 // Forma para deixar texto mais alinhado com a borda direita (justificado)
                 if (contadorPulaLinhas > 0 && contadorPulaLinhas < 5) {
                     posicaoAtualCharNaLinha += (0.34 * 2);
-                } else if (contadorPulaLinhas >= 5 && (valorMaximoPosicaoX - posicaoAtualCharNaLinha) < 10) {
+                } else if (contadorPulaLinhas >= 5) {
                     posicaoAtualCharNaLinha += 0.5;
                 } else {
                     posicaoAtualCharNaLinha += 0.35;
