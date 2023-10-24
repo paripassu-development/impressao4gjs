@@ -350,12 +350,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 indexProximosParametrosExtras = index + 1;
             }
 
-            if (array[indexProximosParametrosExtras] && elemento.indexOf(parametrosExtrasDivididos[0]) === -1) {
+            if (array[indexProximosParametrosExtras] && index !== indexPrimeiroParametroExtra) {
                 posicaoAtualCharNaLinha -= 0.8;
             }
 
             // Ajusta posicionamento virgula dos quais/das quais
-            if (index === 5 || index === 6 || index === 23 || index === 34 || index === 69 || index === 83) {
+            if (identificaVirgulasDosQuaisDasQuais(index)) {
                 posicaoAtualCharNaLinha -= 0.75;
             }
 
@@ -513,6 +513,10 @@ const verificaSeEhNomeCompostoParaIncluirEspaco = (elemento: string) => {
             elemento.indexOf("saturadas") === 0 ||
             elemento.indexOf("trans") === 0 ||
             elemento.indexOf("alimentares") === 0
+}
+
+const identificaVirgulasDosQuaisDasQuais = (index: number) => {
+    return index === 5 || index === 6 || index === 23 || index === 34 || index === 69 || index === 83
 }
 
 const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, informacoesNutricionaisDivididas: string[]) => {
