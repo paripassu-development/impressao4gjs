@@ -339,7 +339,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             if (array[indexPrimeiroParametroExtra]) {
-                posicaoAtualCharNaLinha -= -0.4;
+                posicaoAtualCharNaLinha -= -1;
             }
 
             // Ajusta posicionamento virgula dos quais/das quais
