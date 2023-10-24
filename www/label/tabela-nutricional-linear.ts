@@ -252,9 +252,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // negrito
         let isBold: boolean = false;
 
-        let indexPrimeiroParametroExtra: number;
-        let indexProximosParametrosExtras: number;
-
         let informacoesNutricionaisDivididas: string[] = [];
         let parametrosExtrasDivididos: string[] = [];
 
@@ -337,7 +334,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 informacoesNutricionaisDivididas[i] = informacoesNutricionaisDivididas[i] + montaApenasEspaco();
             }
 
-           if (informacoesNutricionaisDivididas[i + 1]) {
+            if (informacoesNutricionaisDivididas[i + 1]) {
                 informacoesNutricionaisDivididas[i + 1] = informacoesNutricionaisDivididas[i + 1] + montaApenasEspaco();
             }
         }
