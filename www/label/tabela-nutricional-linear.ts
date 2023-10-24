@@ -241,8 +241,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         let isBold: boolean = false;
 
         let indexPrimeiroParametroExtra: number;
+        let indexProximosParametrosExtras: number;
 
         let informacoesNutricionaisDivididas: string[] = [];
+        let parametrosExtrasDivididos: string[] = [];
 
         const elementosTextuais = {
             espaco: montaApenasEspaco(),
@@ -269,6 +271,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         })
 
         parametrosExtrasNutricionalV2.forEach((parametro: any) => {
+            montarInformacoesNutricionais(parametro, elementosTextuais, parametrosExtrasDivididos);
             montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas);
 
             if (parametrosExtrasNutricionalV2.length > 3 && parametrosExtrasNutricionalV2.length < 7) {
@@ -334,11 +337,20 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             let posicaoX: number = posicaoAtualCharNaLinha;
             let textAlign: string = contadorPulaLinhas === 0 ? TextAlign.LEFT : TextAlign.JUSTIFY;
 
+            // Ajusta posicionamento dos novos parâmetros extras a cada linha pulada para que seja desenhado o quadrado separador
             if (elemento.indexOf("Sódio") === 0) {
                 indexPrimeiroParametroExtra = index + 11;
             }
 
             if (array[indexPrimeiroParametroExtra]) {
+                posicaoAtualCharNaLinha -= -1;
+            }
+
+            if (elemento === elementosTextuais.quadradoVirtual && contadorPulaLinhas >= 5) {
+                indexProximosParametrosExtras = index + 1;
+            }
+
+            if (array[indexProximosParametrosExtras] && elemento.indexOf(parametrosExtrasDivididos[0]) !== -1) {
                 posicaoAtualCharNaLinha -= -1;
             }
 
@@ -375,9 +387,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             if (contadorPulaLinhas > 0) {
                 valorMaximoPosicaoX = larguraMaxima + 1;
             }
-            // } else if (contadorPulaLinhas >= 5) {
-            //     valorMaximoPosicaoX = larguraMaxima + 0.1;
-            // }
 
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
 
