@@ -349,23 +349,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             let posicaoX: number = posicaoAtualCharNaLinha;
             let textAlign: string = contadorPulaLinhas === 0 ? TextAlign.LEFT : TextAlign.JUSTIFY;
 
-            // Ajusta posicionamento dos novos parâmetros extras a cada linha pulada para que seja desenhado o quadrado separador
-            if (elemento.indexOf("Sódio") === 0) {
-                indexPrimeiroParametroExtra = index + 11;
-            }
-
-            if (array[indexPrimeiroParametroExtra]) {
-                posicaoAtualCharNaLinha -= -1;
-            }
-
-            if (elemento === elementosTextuais.quadradoVirtual && contadorPulaLinhas >= 5) {
-                indexProximosParametrosExtras = index + 1;
-            }
-
-            if (array[indexProximosParametrosExtras] && index !== indexPrimeiroParametroExtra) {
-                posicaoAtualCharNaLinha -= 0.8;
-            }
-
             // Ajusta posicionamento virgula dos quais/das quais
             if (identificaVirgulasDosQuaisDasQuais(index)) {
                 posicaoAtualCharNaLinha -= 0.75;
@@ -442,20 +425,26 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 // Pula linha quando atingir a largura máxima
                 tamanhoLengthCadaObjeto = elemento.length;
                 posicaoAtualCharNaLinha = model.posicao.xMm + 1;
+                posicaoX = posicaoAtualCharNaLinha;
                 yIncrementado = yMm += 2.5;
                 contadorIndex = 0;
 
-                strokeAlignedText(
-                    ctx,
-                    fabricCanvas,
-                    valorMaximoPosicaoX,
-                    elemento,
-                    posicaoAtualCharNaLinha,
-                    yIncrementado,
-                    mm,
-                    textAlign,
-                    degrees,
-                )
+                if (verificaSeDesenhaQuadradoSeparador(elemento, index, array, elementosTextuais.quadradoVirtual)) {
+                    desenharQuadradoSeparador(ctx, mm, yIncrementado - 0.9, posicaoX);
+                    posicaoAtualCharNaLinha += (0.34 * 2);
+                } else {
+                    strokeAlignedText(
+                        ctx,
+                        fabricCanvas,
+                        valorMaximoPosicaoX,
+                        elemento,
+                        posicaoAtualCharNaLinha,
+                        yIncrementado,
+                        mm,
+                        textAlign,
+                        degrees,
+                    )
+                }
                 posicaoAtualCharNaLinha += tamanhoLengthCadaObjeto;
                 contadorPulaLinhas++;
             }
