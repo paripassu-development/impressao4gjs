@@ -339,7 +339,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             if (array[indexPrimeiroParametroExtra]) {
-                posicaoAtualCharNaLinha -= -1;
+                posicaoAtualCharNaLinha -= -0.4;
             }
 
             // Ajusta posicionamento virgula dos quais/das quais
@@ -408,12 +408,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 }
 
                 // Forma para deixar texto mais alinhado com a borda direita (justificado)
-                if (contadorPulaLinhas > 0) {
+                if (contadorPulaLinhas > 0 && contadorPulaLinhas < 5) {
                     posicaoAtualCharNaLinha += (0.34 * 2);
+                } else if (contadorPulaLinhas >= 5) {
+                    posicaoAtualCharNaLinha += 0.25;
                 } else {
-                // } else if (contadorPulaLinhas >= 5) {
-                //     posicaoAtualCharNaLinha += 0.5;
-                // } else {
                     posicaoAtualCharNaLinha += 0.35;
                 }
                 posicaoAtualCharNaLinha += tamanhoLengthCadaObjeto;
