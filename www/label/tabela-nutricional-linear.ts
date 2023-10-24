@@ -330,13 +330,16 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
         // Adicionar espaçamento no parâmetro extra quando for nome composto
         for (let i: number = 119; i < informacoesNutricionaisDivididas.length; i += verificaSeContemNumeroPulandoUmElemento(informacoesNutricionaisDivididas, i)) {
-            if (informacoesNutricionaisDivididas[i]) {
-                informacoesNutricionaisDivididas[i] = informacoesNutricionaisDivididas[i] + montaApenasEspaco();
+            if (verificaSeContemNumeroPulandoUmElemento(informacoesNutricionaisDivididas, i) === 12) {
+                if (informacoesNutricionaisDivididas[i]) {
+                    informacoesNutricionaisDivididas[i] = informacoesNutricionaisDivididas[i] + montaApenasEspaco();
+                }
+
+                if (informacoesNutricionaisDivididas[i + 1]) {
+                    informacoesNutricionaisDivididas[i + 1] = informacoesNutricionaisDivididas[i + 1] + montaApenasEspaco();
+                }
             }
 
-            if (informacoesNutricionaisDivididas[i + 1]) {
-                informacoesNutricionaisDivididas[i + 1] = informacoesNutricionaisDivididas[i + 1] + montaApenasEspaco();
-            }
         }
 
         // Monta as informações nutricionais de forma linear
