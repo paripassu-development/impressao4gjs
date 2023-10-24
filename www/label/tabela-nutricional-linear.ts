@@ -379,8 +379,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 elemento = elemento + montaApenasEspaco();
             }
 
-            if (contadorPulaLinhas > 0) {
+            if (contadorPulaLinhas > 0 && contadorPulaLinhas < 6) {
                 valorMaximoPosicaoX = larguraMaxima + 1;
+            } else {
+                valorMaximoPosicaoX = larguraMaxima;
             }
 
             console.log("_______________________________________");
