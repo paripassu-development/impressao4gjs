@@ -323,7 +323,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         informacoesNutricionaisDivididas[34] = montaApenasVirgula();
         informacoesNutricionaisDivididas[69] = montaApenasVirgula();
 
-        informacoesNutricionaisDivididas.splice(70, 0, "das");
+        informacoesNutricionaisDivididas.splice(70, 0, " das ");
         informacoesNutricionaisDivididas.splice(71, 0, " quais ");
 
         informacoesNutricionaisDivididas[83] = montaApenasVirgula();
