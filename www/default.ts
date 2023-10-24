@@ -398,21 +398,32 @@ export const PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2 = [
     },
 ];
 
-export const TAMANHO_FONTE_PADRAO_TITULO_EM_PT = 10;
-export const TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT = 8;
-export const TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT = 8;
-export const TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT = 6;
-export const TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT = 6;
-export const EXPESSURA_LINHA_GROSSA_EM_PT = 3;
+export const TAMANHO_FONTE_PADRAO_TITULO_EM_PT: number = 10;
+export const TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT: number = 8;
+export const TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT: number = 8;
+export const TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT: number = 6;
+export const TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT: number = 6;
+export const TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT: number = 10.77;
+export const TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT: number = 18.08;
 
-export const TAMANHO_LINHA_PADRAO_TABELA_VERTICAL_EM_PT = 10.77;
-export const TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT = 18.08;
-export const ESPESSURA_LINHA_PADRAO_EM_PT = 0.25;
-export const ESPESSURA_LINHA_GROSSA_EM_PT = 3;
-export const ESPESSURA_LINHA_CONTORNO_EM_PT = 0.5;
-export const ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT = 1;
+export const ESPESSURA_LINHA_PADRAO_EM_PT: number = 0.25;
+export const ESPESSURA_LINHA_GROSSA_EM_PT: number = 3;
+export const EXPESSURA_LINHA_GROSSA_EM_PT: number = 3;
+export const ESPESSURA_LINHA_CONTORNO_EM_PT: number = 0.5;
+export const ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT: number = 1;
 
-export const ESPACAMENTO_CONTORNO_TABELA_EM_PT = 0.5;
-export const ESPACAMENTO_100G_000G_VD = 6;
+export const ESPACAMENTO_CONTORNO_TABELA_EM_PT: number = 0.5;
+export const ESPACAMENTO_100G_000G_VD: number = 6;
 
-export const BLACK = "#000000";
+export const E_COMERCIAL: string = "&";
+export const ACUCARES: string = "Açúcares";
+export const ACUCARES_TOTAIS: string = "Açúcares totais";
+export const GORDURAS: string = "Gorduras";
+export const FIBRAS: string = "Fibras";
+export const TOTAIS: string = "totais";
+export const ADICIONADOS: string = "adicionados";
+export const SATURADAS: string = "saturadas";
+export const TRANS: string = "trans";
+export const ALIMENTARES: string = "alimentares";
+
+export const BLACK: string = "#000000";

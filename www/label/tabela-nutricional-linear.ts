@@ -15,16 +15,28 @@ import {
     TextAlign, writeFabricText,
 } from "../core/util/text-utils";
 import {
+    ACUCARES,
+    ACUCARES_TOTAIS,
+    ADICIONADOS,
+    ALIMENTARES,
     BLACK,
+    E_COMERCIAL,
     ESPACAMENTO_100G_000G_VD,
-    ESPACAMENTO_CONTORNO_TABELA_EM_PT, ESPESSURA_LINHA_CONTORNO_EM_PT,
+    ESPACAMENTO_CONTORNO_TABELA_EM_PT,
+    ESPESSURA_LINHA_CONTORNO_EM_PT,
     ESPESSURA_LINHA_GROSSA_EM_PT,
     ESPESSURA_LINHA_PADRAO_EM_PT,
-    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT, PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2,
+    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT,
+    FIBRAS,
+    GORDURAS,
+    PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2,
     PARAMETROS_PADROES_NUTRICIONAL_V2,
+    SATURADAS,
     TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT,
     TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT,
+    TOTAIS,
+    TRANS,
 } from "../default";
 import {mmPartial} from "./mm";
 
@@ -360,7 +372,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             // Verifica se fonte é em negrito
-            if (elemento.indexOf("&") !== -1) {
+            if (elemento.indexOf(E_COMERCIAL) !== -1) {
                 verificaSeContemNumeroPulandoDoisElementos(array, index)
                     ? elemento = elemento.slice(1, -1)
                     : elemento = elemento.slice(1, -1) + montaApenasEspaco();
@@ -372,7 +384,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
             // Verifica o tamanho do próximo elemento a ser printado na tela
             if (index < array.length - 1) {
-                if (array[index + 1].indexOf("_") !== -1) {
+                if (array[index + 1].indexOf(E_COMERCIAL) !== -1) {
                     tamanhoProximoElemento = array[index + 1].length - 2;
                 } else {
                     tamanhoProximoElemento = array[index + 1].length;
@@ -505,14 +517,14 @@ const verificaSeContemNumeroPulandoDoisElementos = (array: string[], index: numb
 }
 
 const verificaSeEhNomeCompostoParaIncluirEspaco = (elemento: string) => {
-    return elemento.indexOf("Açúcares") === 0 ||
-           elemento.indexOf("Gorduras") === 0 ||
-           elemento.indexOf("Fibras") === 0 ||
-            elemento.indexOf("totais") === 0 ||
-            elemento.indexOf("adicionados") === 0 ||
-            elemento.indexOf("saturadas") === 0 ||
-            elemento.indexOf("trans") === 0 ||
-            elemento.indexOf("alimentares") === 0
+    return elemento.indexOf(ACUCARES) === 0 ||
+           elemento.indexOf(GORDURAS) === 0 ||
+           elemento.indexOf(FIBRAS) === 0 ||
+            elemento.indexOf(TOTAIS) === 0 ||
+            elemento.indexOf(ADICIONADOS) === 0 ||
+            elemento.indexOf(SATURADAS) === 0 ||
+            elemento.indexOf(TRANS) === 0 ||
+            elemento.indexOf(ALIMENTARES) === 0
 }
 
 const identificaVirgulasDosQuaisDasQuais = (index: number) => {
@@ -533,9 +545,9 @@ const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, i
     informacoesNutricionaisDivididas.push(quantidade100 + elementosTextuais.espaco);
     informacoesNutricionaisDivididas.push(unidadeDoRotulo + elementosTextuais.espaco);
     informacoesNutricionaisDivididas.push(elementosTextuais.parentesesInicial);
-    informacoesNutricionaisDivididas.push("&" + quantidadePorcao + "&");
-    informacoesNutricionaisDivididas.push("&" + unidadeDoRotulo + "&");
-    if (!parametro.rotulo.includes("Açúcares totais")) {
+    informacoesNutricionaisDivididas.push(E_COMERCIAL + quantidadePorcao + E_COMERCIAL);
+    informacoesNutricionaisDivididas.push(E_COMERCIAL + unidadeDoRotulo + E_COMERCIAL);
+    if (!parametro.rotulo.includes(ACUCARES_TOTAIS)) {
         informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
         informacoesNutricionaisDivididas.push(valorDiario);
         informacoesNutricionaisDivididas.push(elementosTextuais.sinalPorcentagem + elementosTextuais.espaco);
