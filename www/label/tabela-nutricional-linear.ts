@@ -253,7 +253,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         let isBold: boolean = false;
 
         let informacoesNutricionaisDivididas: string[] = [];
-        let parametrosExtrasDivididos: string[] = [];
 
         const elementosTextuais = {
             espaco: montaApenasEspaco(),
@@ -280,7 +279,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         })
 
         parametrosExtrasNutricionalV2.forEach((parametro: any) => {
-            montarInformacoesNutricionais(parametro, elementosTextuais, parametrosExtrasDivididos);
             montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas);
 
             if (parametrosExtrasNutricionalV2.length > 3 && parametrosExtrasNutricionalV2.length < 6) {
@@ -384,18 +382,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             } else if (contadorPulaLinhas >= 6) {
                 valorMaximoPosicaoX = larguraMaxima;
             }
-
-            console.log("_______________________________________");
-            console.log(array);
-            console.log({elemento});
-            console.log({posicaoAtualCharNaLinha});
-            console.log({tamanhoProximoElemento});
-            console.log({tamanhoLengthCadaObjeto});
-            console.log({contadorIndex});
-            console.log({index});
-            console.log({contadorPulaLinhas});
-            console.log("cabe na linha? " + (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)));
-
 
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
 
