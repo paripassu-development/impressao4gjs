@@ -277,9 +277,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             if (parametrosExtrasNutricionalV2.length > 3 && parametrosExtrasNutricionalV2.length < 7) {
                 desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 20.5);
                 desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21.5);
-            } else if (parametrosExtrasNutricionalV2.length > 7) {
-                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 25);
-                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 26);
+            } else if (parametrosExtrasNutricionalV2.length > 6) {
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 23.5);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 24);
             } else {
                 desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 20.5);
                 desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21.5);
@@ -350,8 +350,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 indexProximosParametrosExtras = index + 1;
             }
 
-            if (array[indexProximosParametrosExtras] && elemento.indexOf(parametrosExtrasDivididos[0]) !== -1) {
-                posicaoAtualCharNaLinha -= -1;
+            if (array[indexProximosParametrosExtras] && elemento.indexOf(parametrosExtrasDivididos[0]) === -1) {
+                posicaoAtualCharNaLinha -= 0.8;
             }
 
             // Ajusta posicionamento virgula dos quais/das quais
