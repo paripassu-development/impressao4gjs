@@ -328,8 +328,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
         informacoesNutricionaisDivididas[83] = montaApenasVirgula();
 
-        // Adicionar espaçamento no parâmetro extra
-        for (let i: number = 119; i < informacoesNutricionaisDivididas.length; i += 12) {
+        // Adicionar espaçamento no parâmetro extra quando for nome composto
+        for (let i: number = 119; i < informacoesNutricionaisDivididas.length; i += verificaSeContemNumeroPulandoUmElemento(informacoesNutricionaisDivididas, i)) {
             if (informacoesNutricionaisDivididas[i]) {
                 informacoesNutricionaisDivididas[i] = informacoesNutricionaisDivididas[i] + montaApenasEspaco();
             }
@@ -381,15 +381,15 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             console.log("_______________________________________");
-            console.log(array);
-            console.log({elemento});
-            console.log({posicaoAtualCharNaLinha});
-            console.log({tamanhoProximoElemento});
-            console.log({tamanhoLengthCadaObjeto});
-            console.log({contadorIndex});
-            console.log({index});
-            console.log({contadorPulaLinhas});
-            console.log("cabe na linha? " + (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)));
+            // console.log(array);
+            // console.log({elemento});
+            // console.log({posicaoAtualCharNaLinha});
+            // console.log({tamanhoProximoElemento});
+            // console.log({tamanhoLengthCadaObjeto});
+            // console.log({contadorIndex});
+            // console.log({index});
+            // console.log({contadorPulaLinhas});
+            // console.log("cabe na linha? " + (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)));
 
 
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
@@ -512,6 +512,15 @@ const verificaSeCabeNaLinha = (valorTotalAtual: number, valorDoProximoElemento: 
 const verificaSeContemNumeroPulandoDoisElementos = (array: string[], index: number): RegExpMatchArray => {
     const contemNumeros:RegExp = /[0-9]/;
     return array[index + 2].match(contemNumeros);
+}
+
+const verificaSeContemNumeroPulandoUmElemento = (array: string[], index: number): number => {
+    const contemNumeros:RegExp = /[0-9]/;
+    if (array[index + 1].match(contemNumeros)) {
+        return 11;
+    } else {
+        return 12;
+    }
 }
 
 const verificaSeEhNomeCompostoParaIncluirEspaco = (elemento: string) => {
