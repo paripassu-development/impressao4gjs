@@ -386,15 +386,15 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
 
             console.log("_______________________________________");
-            // console.log(array);
-            // console.log({elemento});
-            // console.log({posicaoAtualCharNaLinha});
-            // console.log({tamanhoProximoElemento});
-            // console.log({tamanhoLengthCadaObjeto});
-            // console.log({contadorIndex});
-            // console.log({index});
-            // console.log({contadorPulaLinhas});
-            // console.log("cabe na linha? " + (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)));
+            console.log(array);
+            console.log({elemento});
+            console.log({posicaoAtualCharNaLinha});
+            console.log({tamanhoProximoElemento});
+            console.log({tamanhoLengthCadaObjeto});
+            console.log({contadorIndex});
+            console.log({index});
+            console.log({contadorPulaLinhas});
+            console.log("cabe na linha? " + (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)));
 
 
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
