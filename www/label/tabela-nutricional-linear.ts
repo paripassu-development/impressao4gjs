@@ -250,7 +250,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         //     valorMaximoPosicaoX = larguraMaxima - 4;
         // }
         if (porcao100g.indexOf("**") !== -1) {
-            valorMaximoPosicaoX = (larguraMaxima - 3) - model.posicao.xMm;
+            valorMaximoPosicaoX = model.posicao.xMm === 2 ? (larguraMaxima - 3) - model.posicao.xMm : (larguraMaxima - 1) + model.posicao.xMm;
         } else {
             valorMaximoPosicaoX = (larguraMaxima - 2) - model.posicao.xMm;
         }
