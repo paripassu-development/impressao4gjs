@@ -15,6 +15,7 @@ import {tabelaNutricionalVertical} from "./tabela-nutricional-vertical";
 import {tabelaNutricionalVerticalReduzida} from "./tabela-nutricional-vertical-reduzida";
 import {text} from "./text";
 import {Canvas} from "fabric/fabric-impl";
+import {tabelaNutricionalLinear} from "./tabela-nutricional-linear";
 
 export const GS1_DATE_PATTERN = "YYmmDD";
 export const BARCODE_IMG_ELEMENT_ID = "barcode-img";
@@ -164,6 +165,12 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             tabelaNutricionalVerticalReduzida: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalVerticalReduzida.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    resolve();
+                });
+            },
+            tabelaNutricionalLinear: (): Promise<any> => {
+                return new Promise((resolve) => {
+                    tabelaNutricionalLinear.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
