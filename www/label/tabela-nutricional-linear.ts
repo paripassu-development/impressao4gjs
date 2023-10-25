@@ -218,26 +218,26 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     // Informações nutricionais
     if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
-        nutrientes.forEach((nutriente: any) => {
-            textoCabecalhoMedidas.map((obj: any) => {
-                obj.id = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
-                if (obj.id !== undefined) {
-                    yMm += alturaLinhaMm / 1.7;
-                    const nomeNutriente = getOrDefault(obj.id, "nome");
-                    if (!!fabricCanvas) {
-                        writeFabricText(fabricCanvas, ctx, nomeNutriente, obj.xMm, yMm, larguraMaxima, mm, {degrees});
-                    } else {
-                        ctx.strokeText(nomeNutriente, mm(obj.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-                    }
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textBindings),
-                        model.posicao.xMm + obj.xMm, yMm, mm, TextAlign.LEFT, degrees);
-                    yMm += alturaLinhaMm / 3;
-                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2.2);
-                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm, model.posicao.xMm - 0.2, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-                    // -----------------------------------------------------------------------------------------------------
-                }
-            });
-        });
+        // nutrientes.forEach((nutriente: any) => {
+        //     textoCabecalhoMedidas.map((obj: any) => {
+        //         obj.id = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
+        //         if (obj.id !== undefined) {
+        //             yMm += alturaLinhaMm / 1.7;
+        //             const nomeNutriente = getOrDefault(obj.id, "nome");
+        //             if (!!fabricCanvas) {
+        //                 writeFabricText(fabricCanvas, ctx, nomeNutriente, obj.xMm, yMm, larguraMaxima, mm, {degrees});
+        //             } else {
+        //                 ctx.strokeText(nomeNutriente, mm(obj.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+        //             }
+        //             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textBindings),
+        //                 model.posicao.xMm + obj.xMm, yMm, mm, TextAlign.LEFT, degrees);
+        //             yMm += alturaLinhaMm / 3;
+        //             desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2.2);
+        //             desenharLinhaContornoVerticalEsquerda(ctx, model, yMm, model.posicao.xMm - 0.2, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+        //             // -----------------------------------------------------------------------------------------------------
+        //         }
+        //     });
+        // });
     } else {
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
         const parametrosExtrasNutricionalV2 = !!textBindings ? textBindings.parametrosExtrasNutricionalV2 : PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2;
@@ -505,22 +505,18 @@ const verificaSeContemNumeroPulandoDoisElementos = (array: string[], index: numb
 
 const verificaSeContemNumeroPulandoUmElemento = (array: string[], index: number): number => {
     const contemNumeros:RegExp = /[0-9]/;
-    if (array[index + 1].match(contemNumeros)) {
-        return 11;
-    } else {
-        return 12;
-    }
+    return array[index + 1].match(contemNumeros) ? 11 : 12;
 }
 
 const verificaSeEhNomeCompostoParaIncluirEspaco = (elemento: string) => {
     return elemento.indexOf(ACUCARES) === 0 ||
            elemento.indexOf(GORDURAS) === 0 ||
            elemento.indexOf(FIBRAS) === 0 ||
-            elemento.indexOf(TOTAIS) === 0 ||
-            elemento.indexOf(ADICIONADOS) === 0 ||
-            elemento.indexOf(SATURADAS) === 0 ||
-            elemento.indexOf(TRANS) === 0 ||
-            elemento.indexOf(ALIMENTARES) === 0
+           elemento.indexOf(TOTAIS) === 0 ||
+           elemento.indexOf(ADICIONADOS) === 0 ||
+           elemento.indexOf(SATURADAS) === 0 ||
+           elemento.indexOf(TRANS) === 0 ||
+           elemento.indexOf(ALIMENTARES) === 0
 }
 
 const identificaVirgulasDosQuaisDasQuais = (index: number) => {
