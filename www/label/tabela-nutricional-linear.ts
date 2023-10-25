@@ -542,7 +542,7 @@ const definirValorMaximoX = (model: any, larguraMaxima: number, porcao100g: stri
             ? (larguraMaxima - 3) - model.posicao.xMm
             : (larguraMaxima - 4) - model.posicao.xMm;
     } else {
-        return (larguraMaxima - 2) + model.posicao.xMm;
+        return (larguraMaxima - 7) + model.posicao.xMm;
     }
 }
 
