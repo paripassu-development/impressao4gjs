@@ -537,7 +537,7 @@ const definirValorMaximoX = (model: any, larguraMaxima: number, porcao100g: stri
         return porcao100g.indexOf("**") !== -1
             ? (larguraMaxima - 7) - model.posicao.xMm
             : (larguraMaxima - 6) - model.posicao.xMm;
-    } else if (model.posicao.xMm > 0 && model.posicao.xMm < 3) {
+    } else if (model.posicao.xMm > 0) {
         return porcao100g.indexOf("**") !== -1
             ? (larguraMaxima - 3) - model.posicao.xMm
             : (larguraMaxima - 4) - model.posicao.xMm;
