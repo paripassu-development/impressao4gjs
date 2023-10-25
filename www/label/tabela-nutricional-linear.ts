@@ -249,10 +249,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // } else {
         //     valorMaximoPosicaoX = larguraMaxima - 4;
         // }
+        console.log("model.posicao.xMm: " + model.posicao.xMm);
         if (porcao100g.indexOf("**") !== -1) {
             valorMaximoPosicaoX = model.posicao.xMm === 2 ? (larguraMaxima - 3) - model.posicao.xMm : (larguraMaxima - 1) + model.posicao.xMm;
         } else {
-            valorMaximoPosicaoX = (larguraMaxima - 2) - model.posicao.xMm;
+            valorMaximoPosicaoX = model.posicao.xMm === 2 ? (larguraMaxima - 2) - model.posicao.xMm : (larguraMaxima - 1) + model.posicao.xMm;
         }
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
         let yIncrementado: number = yMm;
