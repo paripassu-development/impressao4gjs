@@ -243,20 +243,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         const parametrosExtrasNutricionalV2 = !!textBindings ? textBindings.parametrosExtrasNutricionalV2 : PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2;
 
         // variáveis de posicionamento na etiqueta
-        let valorMaximoPosicaoX: number;
         // if (porcao100g.indexOf("**") !== -1) {
         //     valorMaximoPosicaoX = larguraMaxima - 5;
         // } else {
         //     valorMaximoPosicaoX = larguraMaxima - 4;
         // }
+        let valorMaximoPosicaoX: number = definirValorMaximoX(model, larguraMaxima, porcao100g);
         console.log("model.posicao.xMm: " + model.posicao.xMm);
-        if (porcao100g.indexOf("**") !== -1) {
-            valorMaximoPosicaoX = definirValorMaximoXComAsterisco(model, larguraMaxima);
-            console.log("entrei aqui com ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
-        } else {
-            valorMaximoPosicaoX = definirValorMaximoXSemAsterisco(model, larguraMaxima);
-            console.log("entrei aqui SEM ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
-        }
+        console.log("entrei aqui com ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
         let yIncrementado: number = yMm;
         let contadorIndex: number = 0;
@@ -538,23 +532,19 @@ const verificaSeEhNomeCompostoParaIncluirEspaco = (elemento: string) => {
            elemento.indexOf(ALIMENTARES) === 0
 }
 
-const definirValorMaximoXSemAsterisco = (model: any, larguraMaxima: number) => {
+const definirValorMaximoX = (model: any, larguraMaxima: number, porcao100g: string) => {
     if (model.posicao.xMm === 0) {
-        return (larguraMaxima - 6) - model.posicao.xMm;
+        return porcao100g.indexOf("**") !== -1
+            ? (larguraMaxima - 7) - model.posicao.xMm
+            : (larguraMaxima - 6) - model.posicao.xMm;
     } else if (model.posicao.xMm > 0 && model.posicao.xMm < 3) {
-        return (larguraMaxima - 4) - model.posicao.xMm;
+        return porcao100g.indexOf("**") !== -1
+            ? (larguraMaxima - 3) - model.posicao.xMm
+            : (larguraMaxima - 4) - model.posicao.xMm;
     } else {
-        return larguraMaxima - 5;
-    }
-}
-
-const definirValorMaximoXComAsterisco = (model: any, larguraMaxima: number) => {
-    if (model.posicao.xMm === 0) {
-        return (larguraMaxima - 6) - model.posicao.xMm;
-    } else if (model.posicao.xMm > 0 && model.posicao.xMm < 3) {
-        return (larguraMaxima - 3) - model.posicao.xMm;
-    } else {
-        return (larguraMaxima - 1) + model.posicao.xMm;
+        return porcao100g.indexOf("**") !== -1
+            ? (larguraMaxima - 1) + model.posicao.xMm
+            : larguraMaxima - 5;
     }
 }
 
