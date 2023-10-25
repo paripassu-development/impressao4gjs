@@ -254,7 +254,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             valorMaximoPosicaoX = model.posicao.xMm === 2 ? (larguraMaxima - 3) - model.posicao.xMm : (larguraMaxima - 1) + model.posicao.xMm;
             console.log("entrei aqui com ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
         } else {
-            valorMaximoPosicaoX = model.posicao.xMm === 2 ? (larguraMaxima - 2) - model.posicao.xMm : (larguraMaxima - 5) - model.posicao.xMm;
+            valorMaximoPosicaoX = definirValorMaximoX(model, larguraMaxima);
             console.log("entrei aqui SEM ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
         }
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
@@ -536,6 +536,16 @@ const verificaSeEhNomeCompostoParaIncluirEspaco = (elemento: string) => {
            elemento.indexOf(SATURADAS) === 0 ||
            elemento.indexOf(TRANS) === 0 ||
            elemento.indexOf(ALIMENTARES) === 0
+}
+
+const definirValorMaximoX = (model: any, larguraMaxima: number) => {
+    if (model.posicao.xMm === 0) {
+        return (larguraMaxima - 6) - model.posicao.xMm;
+    } else if (model.posicao.xMm > 0 && model.posicao.xMm < 3) {
+        return (larguraMaxima - 2) - model.posicao.xMm;
+    } else {
+        return (larguraMaxima - 1) + model.posicao.xMm;
+    }
 }
 
 const identificaVirgulasDosQuaisDasQuais = (index: number) => {
