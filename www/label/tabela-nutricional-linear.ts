@@ -123,21 +123,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const lineStrokeGap = alturaLinhaMm / 3;
     const posicaoXPorcoesPorEmbalagem = 1;
     let porcaoLength: number = "Porções por embalagem: ".length + (model.informacoesNutricionais.textoQuantidadeEmbalagem).length;
-    const textoCabecalhoMedidas = [
-        {
-            // @ts-ignore
-            id: null,
-            xMm: posicaoXPorcoesPorEmbalagem + 25,
-        },
-        {
-            id: null,
-            xMm: posicaoXPorcoesPorEmbalagem + 35,
-        },
-        {
-            id: null,
-            xMm: posicaoXPorcoesPorEmbalagem + 45,
-        },
-    ];
     let porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
 
     if (alimentoProntoParaConsumo(textBindings)) {
@@ -243,11 +228,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         const parametrosExtrasNutricionalV2 = !!textBindings ? textBindings.parametrosExtrasNutricionalV2 : PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2;
 
         // variáveis de posicionamento na etiqueta
-        // if (porcao100g.indexOf("**") !== -1) {
-        //     valorMaximoPosicaoX = larguraMaxima - 5;
-        // } else {
-        //     valorMaximoPosicaoX = larguraMaxima - 4;
-        // }
         let valorMaximoPosicaoX: number = definirValorMaximoX(model, larguraMaxima, porcao100g);
         console.log("model.posicao.xMm: " + model.posicao.xMm);
         console.log("entrei aqui com ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
@@ -299,24 +279,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21.5);
             }
         });
-
-        // TODO verificar se a validação feita na linha 239 é suficiente!!!
-        // if (!!textBindings) {
-        //     textBindings.parametrosExtrasNutricionalV2.forEach((parametro: any) => {
-        //         montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas);
-        //
-        //         if (textBindings.parametrosExtrasNutricionalV2.length > 3 && textBindings.parametrosExtrasNutricionalV2.length < 7) {
-        //             desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 20.5);
-        //             desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 23);
-        //         } else if (textBindings.parametrosExtrasNutricionalV2.length > 7) {
-        //             desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 25);
-        //             desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 26);
-        //         } else {
-        //             desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 20.5);
-        //             desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 23);
-        //         }
-        //     });
-        // }
 
         // Insere "dos quais" quando for Açúcares totais e "das quais" quando for Gorduras totais
         // Retira quadrado separador quando for Açúcares adicionados, Gorduras saturadas e trans
@@ -383,12 +345,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             if (verificaSeEhNomeCompostoParaIncluirEspaco(elemento)) {
                 elemento = elemento + montaApenasEspaco();
             }
-
-            // if (contadorPulaLinhas > 0 && contadorPulaLinhas < 6) {
-            //     valorMaximoPosicaoX = larguraMaxima + 1;
-            // } else if (contadorPulaLinhas >= 6) {
-            //     valorMaximoPosicaoX = larguraMaxima;
-            // }
 
             if (contadorPulaLinhas > 0 && contadorPulaLinhas < 6) {
                 valorMaximoPosicaoX = (larguraMaxima - 1) + model.posicao.xMm;
