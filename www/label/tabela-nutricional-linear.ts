@@ -541,10 +541,6 @@ const definirValorMaximoX = (model: any, larguraMaxima: number, porcao100g: stri
         return porcao100g.indexOf("**") !== -1
             ? (larguraMaxima - 3) - model.posicao.xMm
             : (larguraMaxima - 4) - model.posicao.xMm;
-    } else {
-        return porcao100g.indexOf("**") !== -1
-            ? (larguraMaxima - 1) + model.posicao.xMm
-            : larguraMaxima - 5;
     }
 }
 
