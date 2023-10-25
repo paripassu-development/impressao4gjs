@@ -393,7 +393,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             if (contadorPulaLinhas > 0 && contadorPulaLinhas < 6) {
                 valorMaximoPosicaoX = (larguraMaxima - 1) + model.posicao.xMm;
             } else if (contadorPulaLinhas >= 6) {
-                valorMaximoPosicaoX = larguraMaxima - model.posicao.xMm;
+                if (model.posicao.xMm > 3) {
+                    valorMaximoPosicaoX = (larguraMaxima - 7) + model.posicao.xMm;
+                } else {
+                    valorMaximoPosicaoX = larguraMaxima - model.posicao.xMm;
+                }
             }
 
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
