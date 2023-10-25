@@ -251,10 +251,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // }
         console.log("model.posicao.xMm: " + model.posicao.xMm);
         if (porcao100g.indexOf("**") !== -1) {
-            "entrei aqui com **"
+            console.log("entrei aqui com ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
             valorMaximoPosicaoX = model.posicao.xMm === 2 ? (larguraMaxima - 3) - model.posicao.xMm : (larguraMaxima - 1) + model.posicao.xMm;
         } else {
-            "entrei aqui sem **"
+            console.log("entrei aqui SEM ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
             valorMaximoPosicaoX = model.posicao.xMm === 2 ? (larguraMaxima - 2) - model.posicao.xMm : (larguraMaxima - 1) + model.posicao.xMm;
         }
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
