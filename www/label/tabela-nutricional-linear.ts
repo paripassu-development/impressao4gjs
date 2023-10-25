@@ -254,7 +254,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             valorMaximoPosicaoX = model.posicao.xMm === 2 ? (larguraMaxima - 3) - model.posicao.xMm : (larguraMaxima - 1) + model.posicao.xMm;
             console.log("entrei aqui com ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
         } else {
-            valorMaximoPosicaoX = model.posicao.xMm === 2 ? (larguraMaxima - 2) - model.posicao.xMm : (larguraMaxima - 3) - model.posicao.xMm;
+            valorMaximoPosicaoX = model.posicao.xMm === 2 ? (larguraMaxima - 2) - model.posicao.xMm : (larguraMaxima - 5) - model.posicao.xMm;
             console.log("entrei aqui SEM ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
         }
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
