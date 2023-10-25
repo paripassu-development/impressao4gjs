@@ -244,10 +244,15 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
         // variáveis de posicionamento na etiqueta
         let valorMaximoPosicaoX: number;
+        // if (porcao100g.indexOf("**") !== -1) {
+        //     valorMaximoPosicaoX = larguraMaxima - 5;
+        // } else {
+        //     valorMaximoPosicaoX = larguraMaxima - 4;
+        // }
         if (porcao100g.indexOf("**") !== -1) {
-            valorMaximoPosicaoX = model.posicao.xMm !== 0 ? larguraMaxima - (model.posicao.xMm * 2) : (larguraMaxima - 4) - model.posicao.xMm;
+            valorMaximoPosicaoX = (larguraMaxima - 3) - model.posicao.xMm;
         } else {
-            valorMaximoPosicaoX = model.posicao.xMm !== 0 ? larguraMaxima - (model.posicao.xMm * 2 - 1) : (larguraMaxima - 5) - model.posicao.xMm;
+            valorMaximoPosicaoX = (larguraMaxima - 2) - model.posicao.xMm;
         }
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
         let yIncrementado: number = yMm;
@@ -382,8 +387,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 elemento = elemento + montaApenasEspaco();
             }
 
+            // if (contadorPulaLinhas > 0 && contadorPulaLinhas < 6) {
+            //     valorMaximoPosicaoX = larguraMaxima + 1;
+            // } else if (contadorPulaLinhas >= 6) {
+            //     valorMaximoPosicaoX = larguraMaxima;
+            // }
+
             if (contadorPulaLinhas > 0 && contadorPulaLinhas < 6) {
-                valorMaximoPosicaoX = model.posicao.xMm !== 0 ? larguraMaxima + (model.posicao.xMm / 2) : (larguraMaxima - 1) + model.posicao.xMm;
+                valorMaximoPosicaoX = (larguraMaxima - 1) + model.posicao.xMm;
             } else if (contadorPulaLinhas >= 6) {
                 valorMaximoPosicaoX = larguraMaxima - model.posicao.xMm;
             }
