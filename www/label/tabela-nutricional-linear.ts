@@ -245,7 +245,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // variáveis de posicionamento na etiqueta
         let valorMaximoPosicaoX: number;
         if (porcao100g.indexOf("**") !== -1) {
-            valorMaximoPosicaoX = larguraMaxima - 4.8;
+            valorMaximoPosicaoX = larguraMaxima - 5;
         } else {
             valorMaximoPosicaoX = larguraMaxima - 4;
         }
