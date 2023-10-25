@@ -229,8 +229,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
         // variáveis de posicionamento na etiqueta
         let valorMaximoPosicaoX: number = definirValorMaximoX(model, larguraMaxima, porcao100g);
-        console.log("model.posicao.xMm: " + model.posicao.xMm);
-        console.log("entrei aqui com ** e o valorMaximoPosicaoX é: " + valorMaximoPosicaoX);
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
         let yIncrementado: number = yMm;
         let contadorIndex: number = 0;
