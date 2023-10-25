@@ -542,9 +542,9 @@ const definirValorMaximoX = (model: any, larguraMaxima: number) => {
     if (model.posicao.xMm === 0) {
         return (larguraMaxima - 6) - model.posicao.xMm;
     } else if (model.posicao.xMm > 0 && model.posicao.xMm < 3) {
-        return (larguraMaxima - 2) - model.posicao.xMm;
+        return (larguraMaxima - 4) - model.posicao.xMm;
     } else {
-        return (larguraMaxima - 1) + model.posicao.xMm;
+        return (larguraMaxima - 1) - model.posicao.xMm;
     }
 }
 
