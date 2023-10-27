@@ -160,6 +160,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
+    console.log("model.informacoesNutricionais.textoQuantidadeEmbalagem: " + model.informacoesNutricionais.textoQuantidadeEmbalagem);
+    console.log((model.informacoesNutricionais.textoQuantidadeEmbalagem).length);
+    console.log("Porções por embalagem: " + "Porções por embalagem: ".length);
+    console.log({porcaoLength});
     const informacoesNutricionaisTextoPorcao = [
         {
             id: "Porções por embalagem: ",
