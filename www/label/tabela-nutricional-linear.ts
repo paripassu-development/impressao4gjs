@@ -160,10 +160,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
-    console.log("model.informacoesNutricionais.textoQuantidadeEmbalagem: " + model.informacoesNutricionais.textoQuantidadeEmbalagem);
-    console.log((model.informacoesNutricionais.textoQuantidadeEmbalagem).length);
-    console.log("Porções por embalagem: " + "Porções por embalagem: ".length);
-    console.log({porcaoLength});
     const informacoesNutricionaisTextoPorcao = [
         {
             id: "Porções por embalagem: ",
@@ -175,9 +171,13 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             id: "Porção: ",
             value: model.informacoesNutricionais.textoQuantidadePorPorcao,
             caseira: model.informacoesNutricionais.textoPorcaoCaseira,
-            xMm: (porcaoLength / 1.6) + 2,
+            xMm: porcaoLength + 2,
         },
     ].map((infos) => {
+        console.log("model.informacoesNutricionais.textoQuantidadeEmbalagem 1: " + model.informacoesNutricionais.textoQuantidadeEmbalagem);
+        console.log((model.informacoesNutricionais.textoQuantidadeEmbalagem).length);
+        console.log("Porções por embalagem: " + "Porções por embalagem: ".length);
+        console.log({porcaoLength});
         strokeAlignedText(
             ctx,
             fabricCanvas,
@@ -194,8 +194,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         );
         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 3.3, model.posicao.xMm - 0.2, mm, 5.4);
         desenharLinhaContornoVerticalDireita(ctx, model, yMm - alturaLinhaMm, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 7.8);
-        desenharQuadradoSeparador(ctx, mm, yMm - 1, model.posicao.xMm + (porcaoLength / 1.6));
+        desenharQuadradoSeparador(ctx, mm, yMm - 1, model.posicao.xMm + porcaoLength);
     });
+
+    console.log("model.informacoesNutricionais.textoQuantidadeEmbalagem 2: " + model.informacoesNutricionais.textoQuantidadeEmbalagem);
 
     yMm += alturaLinhaMm / 1.4;
 
