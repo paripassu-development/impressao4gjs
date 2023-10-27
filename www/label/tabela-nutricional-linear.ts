@@ -122,7 +122,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const alturaLinhaMm = model.fonte.alturaMm * 1.46;
     const lineStrokeGap = alturaLinhaMm / 3;
     const posicaoXPorcoesPorEmbalagem = 1;
-    let porcaoLength: number = "Porções por embalagem: ".length + (model.informacoesNutricionais.textoQuantidadeEmbalagem).length;
     let porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
 
     if (alimentoProntoParaConsumo(textBindings)) {
@@ -160,6 +159,16 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
+    let porcaoLength: number = "Porções por embalagem: ".length + (fillTemplate(model.informacoesNutricionais.textoQuantidadeEmbalagem, textBindings)).length;
+
+    console.log({model});
+    console.log("model.informacoesNutricionais.textoQuantidadeEmbalagem 1: " + model.informacoesNutricionais.textoQuantidadeEmbalagem);
+    console.log((model.informacoesNutricionais.textoQuantidadeEmbalagem).length);
+    console.log("Porções por embalagem LENGTH: " + "Porções por embalagem: ".length);
+    console.log("fillTemplate(infos.value, textBindings): " + fillTemplate(model.informacoesNutricionais.textoQuantidadeEmbalagem, textBindings));
+    console.log("fillTemplate(infos.value, textBindings) LENGTH: " + fillTemplate(model.informacoesNutricionais.textoQuantidadeEmbalagem, textBindings).length);
+    console.log({porcaoLength});
+
     const informacoesNutricionaisTextoPorcao = [
         {
             id: "Porções por embalagem: ",
@@ -174,10 +183,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             xMm: porcaoLength + 2,
         },
     ].map((infos) => {
-        console.log("model.informacoesNutricionais.textoQuantidadeEmbalagem 1: " + model.informacoesNutricionais.textoQuantidadeEmbalagem);
-        console.log((model.informacoesNutricionais.textoQuantidadeEmbalagem).length);
-        console.log("Porções por embalagem: " + "Porções por embalagem: ".length);
-        console.log({porcaoLength});
         strokeAlignedText(
             ctx,
             fabricCanvas,
@@ -196,8 +201,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         desenharLinhaContornoVerticalDireita(ctx, model, yMm - alturaLinhaMm, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 7.8);
         desenharQuadradoSeparador(ctx, mm, yMm - 1, model.posicao.xMm + porcaoLength);
     });
-
-    console.log("model.informacoesNutricionais.textoQuantidadeEmbalagem 2: " + model.informacoesNutricionais.textoQuantidadeEmbalagem);
 
     yMm += alturaLinhaMm / 1.4;
 
