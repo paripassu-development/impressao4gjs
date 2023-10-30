@@ -8,6 +8,8 @@ import {
 import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
 import {Canvas} from "fabric/fabric-impl";
+import {calculaTamanhoFonteByAlturaMMEFontePadraoPT} from "../core/util/conversor-utils";
+import {TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT} from "../default";
 
 interface IElementoTextoModelPosicao {
     xMm: number;
