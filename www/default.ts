@@ -415,6 +415,7 @@ export const ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT: number = 1;
 
 export const ESPACAMENTO_CONTORNO_TABELA_EM_PT: number = 0.5;
 export const ESPACAMENTO_100G_000G_VD: number = 6;
+export const ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS: number = 6;
 
 export const E_COMERCIAL: string = "&";
 export const ACUCARES: string = "Açúcares";

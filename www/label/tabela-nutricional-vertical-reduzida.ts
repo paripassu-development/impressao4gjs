@@ -22,10 +22,13 @@ import {
 import {
     BLACK,
     ESPACAMENTO_100G_000G_VD,
-    ESPACAMENTO_CONTORNO_TABELA_EM_PT, ESPESSURA_LINHA_CONTORNO_EM_PT,
-    ESPESSURA_LINHA_GROSSA_EM_PT, ESPESSURA_LINHA_MEDIA_EM_PT,
+    ESPACAMENTO_CONTORNO_TABELA_EM_PT, ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS,
+    ESPESSURA_LINHA_CONTORNO_EM_PT,
+    ESPESSURA_LINHA_GROSSA_EM_PT,
+    ESPESSURA_LINHA_MEDIA_EM_PT,
     ESPESSURA_LINHA_PADRAO_EM_PT,
-    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT, NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE,
+    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT,
+    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE,
     PARAMETROS_PADROES_NUTRICIONAL_V2,
     TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT,
@@ -366,28 +369,49 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
         // -------------------------------------------------------------------------------------------------------------
         // Início Não contém quantidades significativas de
+
         // TODO: continuar aqui, separar em um método
         // desenhaNaoContemQuantidadesSignificativasDe(model.informacoesNutricionais.ocultarZerados, parametrosPadroesNutricionalV2);
         if (model.informacoesNutricionais.ocultarZerados) {
-            // Linha Media ---------------------------------------------------------------------------------------------
+
             desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_MEDIA_EM_PT);
             yMm += alturaLinhaMm / 1.2;
-            // TODO: quebrar as linhas
-            strokeAlignedText(ctx,
-                fabricCanvas,
-                larguraMaxima,
-                montaTextoNaoContemQuantidadesSignificativasDe(
+
+            const linhasInformacoesAdicionais = splitLines(montaTextoNaoContemQuantidadesSignificativasDe(
                     extraiNutrientesVazios(parametrosPadroesNutricionalV2),
-                ),
-                model.posicao.xMm,
-                yMm,
+                )
+                , model.informacoesAdicionais.caracteresPorLinha);
+            // TODO: Deixar a altura dinamica com base no tamanho da linha
+            desenharLinhaContornoVerticalDireita(ctx,
+                model,
+                yMm - (ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS / 3.6),
+                model.posicao.xMm + (ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS + 0.31),
                 mm,
-                TextAlign.LEFT,
-                degrees);
-            yMm += alturaLinhaMm;
-            // TODO: alterar as constantes utilizadas
-            desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 1.6);
-            desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm - 0.2, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+                alturaLinhaMm * 2.5,
+            );
+
+            desenharLinhaContornoVerticalEsquerda(ctx,
+                model,
+                yMm - (ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS / 1.8),
+                model.posicao.xMm - 0.2,
+                mm,
+                alturaLinhaMm * 2.5,
+            );
+
+            linhasInformacoesAdicionais.forEach((linha: string) => {
+                strokeAlignedText(ctx,
+                    fabricCanvas,
+                    larguraMaxima,
+                    linha,
+                    model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT,
+                    yMm,
+                    mm,
+                    TextAlign.LEFT,
+                    degrees,
+                );
+
+                yMm += alturaLinhaMm / 1.6;
+            });
             desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
         }
 
