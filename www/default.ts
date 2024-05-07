@@ -376,10 +376,10 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
         "qt100": "0",
     },
     {
-        "qtPorcao": "1",
+        "qtPorcao": "0",
         "rotulo": "Fibras alimentares (g)",
-        "valorDiario": "3",
-        "qt100": "3",
+        "valorDiario": "0",
+        "qt100": "0",
     },
     {
         "qtPorcao": "150",

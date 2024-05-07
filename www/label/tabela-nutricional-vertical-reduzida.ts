@@ -366,8 +366,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
         // -------------------------------------------------------------------------------------------------------------
         // Início Não contém quantidades significativas de
-        // TODO remover os console log depois
-        console.clear();
         // TODO: continuar aqui, separar em um método
         // desenhaNaoContemQuantidadesSignificativasDe(model.informacoesNutricionais.ocultarZerados, parametrosPadroesNutricionalV2);
         if (model.informacoesNutricionais.ocultarZerados) {
