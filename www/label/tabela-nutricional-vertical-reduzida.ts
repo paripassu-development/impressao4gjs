@@ -381,19 +381,19 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     extraiNutrientesVazios(parametrosPadroesNutricionalV2),
                 )
                 , model.informacoesAdicionais.caracteresPorLinha);
-            // TODO: Deixar a altura dinamica com base no tamanho da linha
-            desenharLinhaContornoVerticalDireita(ctx,
-                model,
-                yMm - (ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS / 3.6),
-                model.posicao.xMm + (ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS + 0.31),
-                mm,
-                alturaLinhaMm * 2.5,
-            );
 
             desenharLinhaContornoVerticalEsquerda(ctx,
                 model,
                 yMm - (ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS / 1.8),
                 model.posicao.xMm - 0.2,
+                mm,
+                alturaLinhaMm * 2.5,
+            );
+
+            desenharLinhaContornoVerticalDireita(ctx,
+                model,
+                yMm - (ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS / 9),
+                model.posicao.xMm + (ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS + 0.31),
                 mm,
                 alturaLinhaMm * 2.5,
             );
