@@ -408,6 +408,7 @@ export const TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT: numbe
 
 export const ESPESSURA_LINHA_PADRAO_EM_PT: number = 0.25;
 export const ESPESSURA_LINHA_GROSSA_EM_PT: number = 3;
+export const ESPESSURA_LINHA_MEDIA_EM_PT: number = 1.5;
 export const EXPESSURA_LINHA_GROSSA_EM_PT: number = 3;
 export const ESPESSURA_LINHA_CONTORNO_EM_PT: number = 0.5;
 export const ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT: number = 1;

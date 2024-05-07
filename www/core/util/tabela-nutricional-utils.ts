@@ -240,9 +240,6 @@ function temPontoDecimal(numeroString: string): boolean {
 // ---------------------------------- Fim Centralização -------------------------------------------------------
 
 export const nutrienteZerado = (nutriente: any) => {
-    // TODO: Remover console logs depois
-    console.log(nutriente);
-
     return !!(
         (
             nutriente.valorDiario === "0" &&

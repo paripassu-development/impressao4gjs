@@ -23,7 +23,7 @@ import {
     BLACK,
     ESPACAMENTO_100G_000G_VD,
     ESPACAMENTO_CONTORNO_TABELA_EM_PT, ESPESSURA_LINHA_CONTORNO_EM_PT,
-    ESPESSURA_LINHA_GROSSA_EM_PT,
+    ESPESSURA_LINHA_GROSSA_EM_PT, ESPESSURA_LINHA_MEDIA_EM_PT,
     ESPESSURA_LINHA_PADRAO_EM_PT,
     ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT,
     PARAMETROS_PADROES_NUTRICIONAL_V2,
@@ -157,7 +157,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // Linha normal ----------------------------------------------------------------------------------------------------
     yMm += lineStrokeGap;
     desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
-    // TODO Verificar como deixar responsivas as linhas verticais
     desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_CONTORNO_TABELA_EM_PT * 4), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 4);
     desenharLinhaContornoVerticalEsquerda(ctx, model, model.posicao.yMm, model.posicao.xMm - 0.2, mm, 4);
     yMm += alturaLinhaMm / 1.5;
@@ -197,7 +196,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             degrees,
         );
         yMm += alturaLinhaMm / 1.5;
-        // TODO Verificar como deixar responsivas as linhas verticais
         desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 4, model.posicao.xMm - 0.2, mm, 4);
     });
 
@@ -236,7 +234,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ];
 
     textoCabecalhoMedidas.map((medida) => {
-        // TODO Verificar como deixar responsivas as linhas verticais
         // Ternario utilizado para centralizar o cabeçalho das colunas
         const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + alturaLinhaMm / 1.5;
         if (!!fabricCanvas) {
@@ -272,7 +269,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         nutrientes.forEach((nutriente: any) => {
             textoCabecalhoMedidas.map((obj: any) => {
-                // TODO Verificar como deixar responsivas as linhas verticais
                 const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
                 obj.id = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
                 if (obj.id !== undefined) {
@@ -299,7 +295,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     } else {
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
         parametrosPadroesNutricionalV2.forEach((nutriente: any) => {
-                // TODO Verificar como deixar responsivas as linhas verticais
                 const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
                 const matchArray: any[] = nutriente.qtPorcao ? nutriente.qtPorcao.match(/[0-9]/mg, "") : "";
                 if (!model.informacoesNutricionais.ocultarZerados || (matchArray && !matchArray.every((elemento: any) => elemento === "0" || !elemento))) {
@@ -329,13 +324,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     // -----------------------------------------------------------------------------------------------------
                 }
         });
-
-        // TODO: continuar aqui, fazer as linhas, separar em um método
-        if (model.informacoesNutricionais.ocultarZerados) {
-            nutrientesZerados = extraiNutrientesVazios(parametrosPadroesNutricionalV2);
-            // TODO: remover o console log depois
-            console.log(nutrientesZerados);
-        }
         // -----------------------------------------------------------------------------------------------------------------
 
         // Parametros extras
@@ -379,6 +367,21 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
                 }
             }
+        }
+
+        // TODO: continuar aqui, fazer as linhas, separar em um método
+        // desenhaNaoContemQuantidadesSignificativasDe(model.informacoesNutricionais.ocultarZerados, parametrosPadroesNutricionalV2);
+        if (model.informacoesNutricionais.ocultarZerados) {
+            // Linha Media ---------------------------------------------------------------------------------------------
+            desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_MEDIA_EM_PT);
+            yMm += alturaLinhaMm / 1.2;
+            nutrientesZerados = extraiNutrientesVazios(parametrosPadroesNutricionalV2);
+            // TODO: remover o console log depois
+            console.log(nutrientesZerados);
+
+            // TODO: Colocar o texto aqui
+
+            desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
         }
     }
 
@@ -493,5 +496,10 @@ const desenharLinhaVertical = (ctx: CanvasRenderingContext2D, model: IElementoTa
     );
     ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
+
+// TODO: continuar Martinho, colocar em método
+// const desenhaNaoContemQuantidadesSignificativasDe (nutrientes: any) {
+//
+// };
 
 export const tabelaNutricionalVerticalReduzida = {drawTable};
