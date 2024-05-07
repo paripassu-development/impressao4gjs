@@ -1,3 +1,15 @@
+import {
+    G,
+    KCAL,
+    L,
+    MG,
+    ML,
+    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE, PONTO_FINAL,
+    STRING_VAZIA,
+    VIRGULA,
+    VIRGULA_ESPACO,
+} from "../../default";
+
 const informacoesPadraoZero = [
     "valorEnergeticoQtPorcao",
     "valorEnergeticoValDiario",
@@ -256,11 +268,11 @@ export const nutrienteZerado = (nutriente: any) => {
 
 export const removeUnidadeRotulos = (rotulo: any) => {
     return rotulo
-        .replace("(kcal)", "")
-        .replace("(g)", "")
-        .replace("(mg)", "")
-        .replace("(l)", "")
-        .replace("(ml)", "")
+        .replace(KCAL, STRING_VAZIA)
+        .replace(G, STRING_VAZIA)
+        .replace(MG, STRING_VAZIA)
+        .replace(L, STRING_VAZIA)
+        .replace(ML, STRING_VAZIA)
         .trimStart()
         .trimEnd();
 };
@@ -275,4 +287,8 @@ export const extraiNutrientesVazios = (nutrientes: any) => {
     });
 
     return nutrientesVazios;
+};
+
+export const montaTextoNaoContemQuantidadesSignificativasDe = (nutrientes: any) => {
+    return NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE + nutrientes.toString().replaceAll(VIRGULA, VIRGULA_ESPACO) + PONTO_FINAL;
 };

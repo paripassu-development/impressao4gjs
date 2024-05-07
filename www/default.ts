@@ -364,10 +364,10 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
         "qt100": "12",
     },
     {
-        "qtPorcao": "3",
+        "qtPorcao": "0",
         "rotulo": "  Gorduras saturadas (g)",
-        "valorDiario": "18",
-        "qt100": "14",
+        "valorDiario": "0",
+        "qt100": "0",
     },
     {
         "qtPorcao": "0",
@@ -428,3 +428,16 @@ export const TRANS: string = "trans";
 export const ALIMENTARES: string = "alimentares";
 
 export const BLACK: string = "#000000";
+
+export const NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE: string = "Não contém quantidades significativas de ";
+export const STRING_VAZIA = "";
+
+export const KCAL: string = "(kcal)";
+export const G: string = "(g)";
+export const MG: string = "(mg)";
+export const L: string = "(l)";
+export const ML: string = "(ml)";
+
+export const VIRGULA: string = ",";
+export const VIRGULA_ESPACO: string = ", ";
+export const PONTO_FINAL: string = ".";

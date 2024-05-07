@@ -10,10 +10,9 @@ export const ErrosPrefix = {
     ERROR_OBRIGATORIEDADE: "[Campo obrigatório]",
 };
 
-
 export const TipoError = Enum({
     GS1: "gs1",
-    OBRIGATORIO: "obrigatorio"
+    OBRIGATORIO: "obrigatorio",
 });
 
 export type TipoError = Enum<typeof TipoError>;
@@ -23,19 +22,19 @@ export const intervaloTamanhoFonte: any = {
         proporcaoTamanhoFonte2: {min: 3, max: 3, tamanhoFonte: 2},
         proporcaoTamanhoFonte3: {min: 4, max: 5, tamanhoFonte: 3},
         proporcaoTamanhoFonte4: {min: 6, max: 7, tamanhoFonte: 4},
-        proporcaoTamanhoFonte6: {min: 8, max: Number.MAX_VALUE, tamanhoFonte: 6}
+        proporcaoTamanhoFonte6: {min: 8, max: Number.MAX_VALUE, tamanhoFonte: 6},
     },  // proporção 1.3333333333
     "telegrama": {
         proporcaoTamanhoFonte2: {min: 3, max: 3, tamanhoFonte: 2},
         proporcaoTamanhoFonte3: {min: 4, max: 5, tamanhoFonte: 3},
         proporcaoTamanhoFonte4: {min: 6, max: 7, tamanhoFonte: 4},
-        proporcaoTamanhoFonte6: {min: 8, max: Number.MAX_VALUE, tamanhoFonte: 6}
+        proporcaoTamanhoFonte6: {min: 8, max: Number.MAX_VALUE, tamanhoFonte: 6},
     }, // proporção 1.3333333333
     "fromwhereyouare": {
         proporcaoTamanhoFonte2: {min: 3, max: 3, tamanhoFonte: 2},
         proporcaoTamanhoFonte3: {min: 4, max: 4, tamanhoFonte: 3},
         proporcaoTamanhoFonte4: {min: 5, max: 7, tamanhoFonte: 4},
-        proporcaoTamanhoFonte6: {min: 8, max: Number.MAX_VALUE, tamanhoFonte: 6}
+        proporcaoTamanhoFonte6: {min: 8, max: Number.MAX_VALUE, tamanhoFonte: 6},
     }, // proporção 1.25
     "dejavusansmono-bold": {
         proporcaoTamanhoFonte2: {min: 3, max: 3, tamanhoFonte: 2},
@@ -72,6 +71,5 @@ export const intervaloTamanhoFonte: any = {
         proporcaoTamanhoFonte3: {min: 5, max: 6, tamanhoFonte: 3},
         proporcaoTamanhoFonte4: {min: 7, max: 9, tamanhoFonte: 4},
         proporcaoTamanhoFonte6: {min: 10, max: Number.MAX_VALUE, tamanhoFonte: 6},
-    } // proporção 1.666666666666667
+    }, // proporção 1.666666666666667
 };
-

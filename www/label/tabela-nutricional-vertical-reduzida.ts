@@ -10,7 +10,7 @@ import {
     calcularPosicaoCentralizadaTabelaNutricional,
     calcularPosicaoCentralizadaTextoQuantidadePorcao,
     extraiNutrientesVazios,
-    setInformacoesV2PadraoZero, nutrienteZerado,
+    montaTextoNaoContemQuantidadesSignificativasDe, nutrienteZerado, setInformacoesV2PadraoZero,
 } from "../core/util/tabela-nutricional-utils";
 import {
     adicionarEspacoEntreNumeroELetra,
@@ -25,7 +25,7 @@ import {
     ESPACAMENTO_CONTORNO_TABELA_EM_PT, ESPESSURA_LINHA_CONTORNO_EM_PT,
     ESPESSURA_LINHA_GROSSA_EM_PT, ESPESSURA_LINHA_MEDIA_EM_PT,
     ESPESSURA_LINHA_PADRAO_EM_PT,
-    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT,
+    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT, NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE,
     PARAMETROS_PADROES_NUTRICIONAL_V2,
     TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT,
@@ -109,10 +109,6 @@ interface IElementoTabelaNutricionalModel {
 
 const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
 
-    // TODO remover os console log depois
-    console.clear();
-    console.log("Model da tabela reduzia: ", model);
-
     setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
@@ -132,7 +128,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const posicaoXValorDiario = model.posicao.xMm - (alturaLinhaMm / 2.5);
     const valorEspacamentoYMmRotulos = 0.28; // Alterar esse valor para alinhamento vertical dos rotulos nutricionais
     const valorEspacamentoYMmValores = 0.43; // Alterar esse valor para alinhamento vertical dos valores nutricionais
-    let nutrientesZerados: any[] = [];
 
     // Contorno de cima
     desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
@@ -369,20 +364,37 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             }
         }
 
-        // TODO: continuar aqui, fazer as linhas, separar em um método
+        // -------------------------------------------------------------------------------------------------------------
+        // Início Não contém quantidades significativas de
+        // TODO remover os console log depois
+        console.clear();
+        // TODO: continuar aqui, separar em um método
         // desenhaNaoContemQuantidadesSignificativasDe(model.informacoesNutricionais.ocultarZerados, parametrosPadroesNutricionalV2);
         if (model.informacoesNutricionais.ocultarZerados) {
             // Linha Media ---------------------------------------------------------------------------------------------
             desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_MEDIA_EM_PT);
             yMm += alturaLinhaMm / 1.2;
-            nutrientesZerados = extraiNutrientesVazios(parametrosPadroesNutricionalV2);
-            // TODO: remover o console log depois
-            console.log(nutrientesZerados);
-
-            // TODO: Colocar o texto aqui
-
+            // TODO: quebrar as linhas
+            strokeAlignedText(ctx,
+                fabricCanvas,
+                larguraMaxima,
+                montaTextoNaoContemQuantidadesSignificativasDe(
+                    extraiNutrientesVazios(parametrosPadroesNutricionalV2),
+                ),
+                model.posicao.xMm,
+                yMm,
+                mm,
+                TextAlign.LEFT,
+                degrees);
+            yMm += alturaLinhaMm;
+            // TODO: alterar as constantes utilizadas
+            desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 1.6);
+            desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm - 0.2, mm, ESPACAMENTO_100G_000G_VD / 1.8);
             desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
         }
+
+        // Fim Não contém quantidades significativas de
+        // -------------------------------------------------------------------------------------------------------------
     }
 
     yMm += alturaLinhaMm / 2;
