@@ -370,8 +370,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // -------------------------------------------------------------------------------------------------------------
         // Início Não contém quantidades significativas de
 
-        // TODO: continuar aqui, separar em um método
-        // desenhaNaoContemQuantidadesSignificativasDe(model.informacoesNutricionais.ocultarZerados, parametrosPadroesNutricionalV2);
         if (model.informacoesNutricionais.ocultarZerados) {
 
             desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_MEDIA_EM_PT);
@@ -530,10 +528,5 @@ const desenharLinhaVertical = (ctx: CanvasRenderingContext2D, model: IElementoTa
     );
     ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
-
-// TODO: continuar Martinho, colocar em método
-// const desenhaNaoContemQuantidadesSignificativasDe (nutrientes: any) {
-//
-// };
 
 export const tabelaNutricionalVerticalReduzida = {drawTable};

@@ -240,7 +240,7 @@ export const MODEL_DEFAULT = {
     },
     "etiqueta": {
         "dimensoes": {
-            "alturaMm": 50,
+            "alturaMm": 70,
             "larguraMm": 120,
         },
     },
