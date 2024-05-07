@@ -10,7 +10,7 @@ import {
     calcularPosicaoCentralizadaTabelaNutricional,
     calcularPosicaoCentralizadaTextoQuantidadePorcao,
     extraiNutrientesVazios,
-    setInformacoesV2PadraoZero, verificaNutrienteZerado,
+    setInformacoesV2PadraoZero, nutrienteZerado,
 } from "../core/util/tabela-nutricional-utils";
 import {
     adicionarEspacoEntreNumeroELetra,
@@ -301,8 +301,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         parametrosPadroesNutricionalV2.forEach((nutriente: any) => {
                 // TODO Verificar como deixar responsivas as linhas verticais
                 const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
-                const matchArray: any[] = nutriente.qtPorcao.match(/[0-9]/mg, "");
-                if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
+                const matchArray: any[] = nutriente.qtPorcao ? nutriente.qtPorcao.match(/[0-9]/mg, "") : "";
+                if (!model.informacoesNutricionais.ocultarZerados || (matchArray && !matchArray.every((elemento: any) => elemento === "0" || !elemento))) {
                     yMm += alturaLinhaMm / 1.7;
                     const yMmValores = yMm + valorEspacamentoYMmValores;
                     const yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
@@ -330,9 +330,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 }
         });
 
-        // TODO: continuar aqui, fazer pivot quando estiver filtrando os zerados ou não
-        nutrientesZerados = extraiNutrientesVazios(parametrosPadroesNutricionalV2);
-        console.log(nutrientesZerados);
+        // TODO: continuar aqui, fazer as linhas, separar em um método
+        if (model.informacoesNutricionais.ocultarZerados) {
+            nutrientesZerados = extraiNutrientesVazios(parametrosPadroesNutricionalV2);
+            // TODO: remover o console log depois
+            console.log(nutrientesZerados);
+        }
         // -----------------------------------------------------------------------------------------------------------------
 
         // Parametros extras

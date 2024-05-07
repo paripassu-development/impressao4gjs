@@ -260,7 +260,7 @@ export const MODEL_DEFAULT = {
                     "textoAbreviadoValorDiario": "%VD*",
                     "textoPorcaoCaseira": "{{{medidaCaseiraNutricionalV2}}}",
                     "textoProporcaoCalorias": "{{{textoProporcaoCalorias}}}",
-                    "ocultarZerados": false,
+                    "ocultarZerados": true,
                 },
                 "posicao": {
                     "xMm": 2,
@@ -334,10 +334,10 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
         "qt100": "505",
     },
     {
-        "qtPorcao": "13",
+        "qtPorcao": "",
         "rotulo": "Carboidratos (g)",
-        "valorDiario": "4",
-        "qt100": "53",
+        "valorDiario": "",
+        "qt100": "",
     },
     {
         "qtPorcao": "2",
@@ -352,10 +352,10 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
         "qt100": "4",
     },
     {
-        "qtPorcao": "1",
+        "qtPorcao": "0",
         "rotulo": "Proteínas (g)",
-        "valorDiario": "1",
-        "qt100": "4",
+        "valorDiario": "0",
+        "qt100": "0",
     },
     {
         "qtPorcao": "7",
@@ -394,7 +394,7 @@ export const PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2 = [
         "qtPorcao": "0",
         "rotulo": "Vitamina C (g)",
         "valorDiario": "0",
-        "qt100": "0"
+        "qt100": "0",
     },
 ];
 
