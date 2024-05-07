@@ -290,5 +290,9 @@ export const extraiNutrientesVazios = (nutrientes: any) => {
 };
 
 export const montaTextoNaoContemQuantidadesSignificativasDe = (nutrientes: any) => {
-    return NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE + nutrientes.toString().replaceAll(VIRGULA, VIRGULA_ESPACO) + PONTO_FINAL;
+    return NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE
+        + nutrientes
+            .toString()
+            .replaceAll(VIRGULA, VIRGULA_ESPACO)
+        + PONTO_FINAL;
 };
