@@ -278,15 +278,7 @@ export const removeUnidadeRotulos = (rotulo: any) => {
 };
 
 export const extraiNutrientesVazios = (nutrientes: any) => {
-    const nutrientesVazios: any[] = [];
-
-    nutrientes.forEach((nutriente: any) => {
-        if (nutrienteZerado(nutriente)) {
-            nutrientesVazios.push(removeUnidadeRotulos(nutriente.rotulo));
-        }
-    });
-
-    return nutrientesVazios;
+    return nutrientes.filter(nutrienteZerado).map((nutriente: any) => removeUnidadeRotulos(nutriente.rotulo));
 };
 
 export const montaTextoNaoContemQuantidadesSignificativasDe = (nutrientes: any) => {
