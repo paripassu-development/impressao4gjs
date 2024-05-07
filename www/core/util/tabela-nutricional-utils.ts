@@ -237,3 +237,43 @@ function temPontoDecimal(numeroString: string): boolean {
     return pontoIndex !== -1;
 }
 // ---------------------------------- Fim TODO Centralização -------------------------------------------------------
+
+// TODO: verificar os valores
+// model.informacoesNutricionais.ocultarZerados
+// model.informacoesAdicionais.caracteresPorLinha
+
+export const verificaNutrienteZerado = (nutriente: any) => {
+    console.log(nutriente.rotulo);
+    console.log(nutriente.valorDiario);
+    console.log(nutriente.qt100);
+    console.log(nutriente.qtPorcao);
+
+    return !!(
+        nutriente.valorDiario === "0" &&
+        nutriente.qt100 === "0" &&
+        nutriente.qtPorcao === "0"
+    );
+};
+
+export const removeUnidadeRotulos = (rotulo: any) => {
+    return rotulo
+        .replace("(kcal)", "")
+        .replace("(g)", "")
+        .replace("(mg)", "")
+        .replace("(l)", "")
+        .replace("(ml)", "")
+        .trimStart()
+        .trimEnd();
+};
+
+export const extraiNutrientesVazios = (nutrientes: any) => {
+    let nutrientesVazios: any[] = [];
+
+    nutrientes.forEach((nutriente: any) => {
+        if (verificaNutrienteZerado(nutriente)) {
+            nutrientesVazios.push(removeUnidadeRotulos(nutriente.rotulo));
+        }
+    });
+
+    return nutrientesVazios;
+};

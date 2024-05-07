@@ -235,13 +235,13 @@ export const MODEL_DEFAULT = {
         "gapXMm": 0,
         "margemXMm": 0,
         "margemYMm": 0,
-        "resolucaoDpi": 300,
+        "resolucaoDpi": 203,
         "orientacaoEtiquetaGraus": 90,
     },
     "etiqueta": {
         "dimensoes": {
-            "alturaMm": 70,
-            "larguraMm": 70,
+            "alturaMm": 50,
+            "larguraMm": 120,
         },
     },
     "pdf": {
@@ -271,7 +271,7 @@ export const MODEL_DEFAULT = {
                 },
                 "fonte": {
                     "nome": "arial",
-                    "alturaMm": 1,
+                    "alturaMm": 1.8,
                     "forcaContorno": 0.8,
                 },
                 "informacoesAdicionais": {

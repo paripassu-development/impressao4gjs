@@ -5,7 +5,13 @@ import {
     converterPtParaPX,
 } from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
-import {alimentoProntoParaConsumo, setInformacoesV2PadraoZero, calcularPosicaoCentralizadaTextoQuantidadePorcao, calcularPosicaoCentralizadaTabelaNutricional} from "../core/util/tabela-nutricional-utils";
+import {
+    alimentoProntoParaConsumo,
+    calcularPosicaoCentralizadaTabelaNutricional,
+    calcularPosicaoCentralizadaTextoQuantidadePorcao,
+    extraiNutrientesVazios,
+    setInformacoesV2PadraoZero, verificaNutrienteZerado,
+} from "../core/util/tabela-nutricional-utils";
 import {
     adicionarEspacoEntreNumeroELetra,
     splitLines,
@@ -102,6 +108,11 @@ interface IElementoTabelaNutricionalModel {
 }
 
 const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
+
+    // TODO remover os console log depois
+    console.clear();
+    console.log("Model da tabela reduzia: ", model);
+
     setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
@@ -121,6 +132,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const posicaoXValorDiario = model.posicao.xMm - (alturaLinhaMm / 2.5);
     const valorEspacamentoYMmRotulos = 0.28; // Alterar esse valor para alinhamento vertical dos rotulos nutricionais
     const valorEspacamentoYMmValores = 0.43; // Alterar esse valor para alinhamento vertical dos valores nutricionais
+    let nutrientesZerados: any[] = [];
 
     // Contorno de cima
     desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
@@ -231,8 +243,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             writeFabricText(fabricCanvas, ctx, medida.value, medida.xMm, yMm, larguraMaxima, mm, {degrees});
         } else {
             strokeAlignedText(
-                ctx, 
-                fabricCanvas, 
+                ctx,
+                fabricCanvas,
                 medida.id === 2
                     ? calcularPosicaoCentralizadaTextoQuantidadePorcao("v2Reduzida", larguraMaxima, medida.value) // 15 g
                     : medida.value === porcao100g.replace("**", "")
@@ -240,11 +252,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         : medida.id === 3
                             ? larguraMaxima + 0.68 // %VD
                             : larguraMaxima + 0.68, // 100 g**
-                adicionarEspacoEntreNumeroELetra(medida.value), 
-                medida.xMm, 
+                adicionarEspacoEntreNumeroELetra(medida.value),
+                medida.xMm,
                 yMm + 0.3,
-                mm, 
-                TextAlign.RIGHT, 
+                mm,
+                TextAlign.RIGHT,
                 degrees);
         }
         desenharLinhaVertical(ctx, model, model.posicao.yMm + ESPACAMENTO_100G_000G_VD * 2, medida.value === porcao100g ? medida.xMm - 1.5 : medida.xMm, mm, alturaLinhaVertical - 1);
@@ -276,35 +288,35 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                         strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textBindings),
                             obj.xMm, yMm, mm, TextAlign.RIGHT, degrees);
                         yMm += lineStrokeGap;
-                    desenharLinhaVertical(ctx, model, yMm - 1.5, obj.value === porcao100g ? obj.xMm - 1.5 : obj.xMm, mm, alturaLinhaVertical - 0.4);
-                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2.2);
-                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm - 0.2, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-                    desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
+                        desenharLinhaVertical(ctx, model, yMm - 1.5, obj.value === porcao100g ? obj.xMm - 1.5 : obj.xMm, mm, alturaLinhaVertical - 0.4);
+                        desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2.2);
+                        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm - 0.2, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+                        desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
                         // -----------------------------------------------------------------------------------------------------
                 }
             });
         });
     } else {
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
-        parametrosPadroesNutricionalV2.forEach((parametro: any) => {
+        parametrosPadroesNutricionalV2.forEach((nutriente: any) => {
                 // TODO Verificar como deixar responsivas as linhas verticais
                 const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
-                const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
+                const matchArray: any[] = nutriente.qtPorcao.match(/[0-9]/mg, "");
                 if (!model.informacoesNutricionais.ocultarZerados || !matchArray.every((elemento: any) => elemento === "0")) {
                     yMm += alturaLinhaMm / 1.7;
                     const yMmValores = yMm + valorEspacamentoYMmValores;
                     const yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
                     ctx.textAlign = TextAlign.LEFT;
                     if (!!fabricCanvas) {
-                        writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
+                        writeFabricText(fabricCanvas, ctx, nutriente.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
                     } else {
-                        ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMmTextoRotulo), mm(model.dimensoes.larguraMaximaMm));
+                        ctx.strokeText(nutriente.rotulo, mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMmTextoRotulo), mm(model.dimensoes.larguraMaximaMm));
                     }
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qt100", posicaoX100g, parametro.qt100),
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, nutriente.qt100, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qt100", posicaoX100g, nutriente.qt100),
                         yMmValores, mm, TextAlign.RIGHT, degrees);
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qtPorcao", posicaoX000g, parametro.qtPorcao),
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, nutriente.qtPorcao, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qtPorcao", posicaoX000g, nutriente.qtPorcao),
                         yMmValores, mm, TextAlign.RIGHT, degrees);
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "valorDiario", posicaoXValorDiario, parametro.valorDiario),
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, nutriente.valorDiario, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "valorDiario", posicaoXValorDiario, nutriente.valorDiario),
                         yMmValores, mm, TextAlign.RIGHT, degrees);
                     yMm += lineStrokeGap;
                     textoCabecalhoMedidas.map((obj: any) => {
@@ -318,6 +330,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 }
         });
 
+        // TODO: continuar aqui, fazer pivot quando estiver filtrando os zerados ou não
+        nutrientesZerados = extraiNutrientesVazios(parametrosPadroesNutricionalV2);
+        console.log(nutrientesZerados);
         // -----------------------------------------------------------------------------------------------------------------
 
         // Parametros extras
@@ -409,9 +424,9 @@ const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutr
     ctx.lineWidth = converterPtParaPX(espessuraLinha);
     // x, y, largura e altura
     ctx.strokeRect(
-        mm(model.posicao.xMm + 0.45), //posiciona linha horizontal eixo x
+        mm(model.posicao.xMm + 0.45), // posiciona linha horizontal eixo x
         mm(yMm),
-        mm(model.dimensoes.larguraMaximaMm - 0.8), //define tamanho linha horizontal para não encostar nas bordas
+        mm(model.dimensoes.larguraMaximaMm - 0.8), // define tamanho linha horizontal para não encostar nas bordas
         1,
     );
     ctx.lineWidth = model.fonte.forcaContorno || 0;
