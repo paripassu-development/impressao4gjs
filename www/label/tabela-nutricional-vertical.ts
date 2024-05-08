@@ -380,14 +380,15 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         // -------------------------------------------------------------------------------------------------------------
         // Início Não contém quantidades significativas de
 
-        if (model.informacoesNutricionais.ocultarZerados) {
+        const listaNutrientesZerados = extraiNutrientesVazios(parametrosPadroesNutricionalV2);
+        if (model.informacoesNutricionais.ocultarZerados && listaNutrientesZerados.length !== 0) {
 
             desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_MEDIA_EM_PT);
             yMm += alturaLinhaMm / 1.2;
 
             const linhasInformacoesAdicionais = splitLines(
                 montaTextoNaoContemQuantidadesSignificativasDe(
-                    extraiNutrientesVazios(parametrosPadroesNutricionalV2),
+                    listaNutrientesZerados,
                 )
                 , model.informacoesAdicionais.caracteresPorLinha,
             );

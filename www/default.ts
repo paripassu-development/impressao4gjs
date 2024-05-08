@@ -271,7 +271,7 @@ export const MODEL_DEFAULT = {
                 },
                 "fonte": {
                     "nome": "arial",
-                    "alturaMm": 1.8,
+                    "alturaMm": 2.1,
                     "forcaContorno": 0.8,
                 },
                 "informacoesAdicionais": {
