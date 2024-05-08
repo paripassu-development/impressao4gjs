@@ -2,7 +2,10 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v1.35.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.35.0%0D1.35.0) (08/05/2024)
 
+### Adicionado
+* ([RST-8874](https://paripassu.atlassian.net/browse/RST-8874)): Adicionado a opção 'Não contém quantidades significativas de...' para as tabelas nutricionais verticais.
 
 ## [v1.34.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.34.0%0D1.33.0) (30/10/2023)
 
