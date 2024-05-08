@@ -442,3 +442,5 @@ export const ML: string = "(ml)";
 export const VIRGULA: string = ",";
 export const VIRGULA_ESPACO: string = ", ";
 export const PONTO_FINAL: string = ".";
+export const REGEX_ULTIMA_VIRGULA: any = /,([^,]*)$/;
+export const ESPACO_E: string = " e$1";

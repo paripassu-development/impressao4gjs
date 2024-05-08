@@ -1,10 +1,11 @@
 import {
+    ESPACO_E,
     G,
     KCAL,
     L,
     MG,
     ML,
-    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE, PONTO_FINAL,
+    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE, PONTO_FINAL, REGEX_ULTIMA_VIRGULA,
     STRING_VAZIA,
     VIRGULA,
     VIRGULA_ESPACO,
@@ -286,5 +287,6 @@ export const montaTextoNaoContemQuantidadesSignificativasDe = (nutrientes: any) 
         + nutrientes
             .toString()
             .replaceAll(VIRGULA, VIRGULA_ESPACO)
+            .replace(REGEX_ULTIMA_VIRGULA, ESPACO_E)
         + PONTO_FINAL;
 };
