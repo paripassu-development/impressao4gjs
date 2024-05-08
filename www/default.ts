@@ -235,13 +235,13 @@ export const MODEL_DEFAULT = {
         "gapXMm": 0,
         "margemXMm": 0,
         "margemYMm": 0,
-        "resolucaoDpi": 300,
+        "resolucaoDpi": 203,
         "orientacaoEtiquetaGraus": 90,
     },
     "etiqueta": {
         "dimensoes": {
             "alturaMm": 70,
-            "larguraMm": 70,
+            "larguraMm": 120,
         },
     },
     "pdf": {
@@ -260,7 +260,7 @@ export const MODEL_DEFAULT = {
                     "textoAbreviadoValorDiario": "%VD*",
                     "textoPorcaoCaseira": "{{{medidaCaseiraNutricionalV2}}}",
                     "textoProporcaoCalorias": "{{{textoProporcaoCalorias}}}",
-                    "ocultarZerados": false,
+                    "ocultarZerados": true,
                 },
                 "posicao": {
                     "xMm": 2,
@@ -271,7 +271,7 @@ export const MODEL_DEFAULT = {
                 },
                 "fonte": {
                     "nome": "arial",
-                    "alturaMm": 1,
+                    "alturaMm": 2.1,
                     "forcaContorno": 0.8,
                 },
                 "informacoesAdicionais": {
@@ -334,10 +334,10 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
         "qt100": "505",
     },
     {
-        "qtPorcao": "13",
+        "qtPorcao": "",
         "rotulo": "Carboidratos (g)",
-        "valorDiario": "4",
-        "qt100": "53",
+        "valorDiario": "",
+        "qt100": "",
     },
     {
         "qtPorcao": "2",
@@ -352,10 +352,10 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
         "qt100": "4",
     },
     {
-        "qtPorcao": "1",
+        "qtPorcao": "0",
         "rotulo": "Proteínas (g)",
-        "valorDiario": "1",
-        "qt100": "4",
+        "valorDiario": "0",
+        "qt100": "0",
     },
     {
         "qtPorcao": "7",
@@ -364,10 +364,10 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
         "qt100": "12",
     },
     {
-        "qtPorcao": "3",
+        "qtPorcao": "0",
         "rotulo": "  Gorduras saturadas (g)",
-        "valorDiario": "18",
-        "qt100": "14",
+        "valorDiario": "0",
+        "qt100": "0",
     },
     {
         "qtPorcao": "0",
@@ -376,10 +376,10 @@ export const PARAMETROS_PADROES_NUTRICIONAL_V2 = [
         "qt100": "0",
     },
     {
-        "qtPorcao": "1",
+        "qtPorcao": "0",
         "rotulo": "Fibras alimentares (g)",
-        "valorDiario": "3",
-        "qt100": "3",
+        "valorDiario": "0",
+        "qt100": "0",
     },
     {
         "qtPorcao": "150",
@@ -394,7 +394,7 @@ export const PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2 = [
         "qtPorcao": "0",
         "rotulo": "Vitamina C (g)",
         "valorDiario": "0",
-        "qt100": "0"
+        "qt100": "0",
     },
 ];
 
@@ -408,12 +408,14 @@ export const TAMANHO_LINHA_DO_LABEL_COLUNAS_VALORES_TABELA_VERTICAL_EM_PT: numbe
 
 export const ESPESSURA_LINHA_PADRAO_EM_PT: number = 0.25;
 export const ESPESSURA_LINHA_GROSSA_EM_PT: number = 3;
+export const ESPESSURA_LINHA_MEDIA_EM_PT: number = 1.5;
 export const EXPESSURA_LINHA_GROSSA_EM_PT: number = 3;
 export const ESPESSURA_LINHA_CONTORNO_EM_PT: number = 0.5;
 export const ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT: number = 1;
 
 export const ESPACAMENTO_CONTORNO_TABELA_EM_PT: number = 0.5;
 export const ESPACAMENTO_100G_000G_VD: number = 6;
+export const ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS: number = 6;
 
 export const E_COMERCIAL: string = "&";
 export const ACUCARES: string = "Açúcares";
@@ -427,3 +429,18 @@ export const TRANS: string = "trans";
 export const ALIMENTARES: string = "alimentares";
 
 export const BLACK: string = "#000000";
+
+export const NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE: string = "Não contém quantidades significativas de ";
+export const STRING_VAZIA = "";
+
+export const KCAL: string = "(kcal)";
+export const G: string = "(g)";
+export const MG: string = "(mg)";
+export const L: string = "(l)";
+export const ML: string = "(ml)";
+
+export const VIRGULA: string = ",";
+export const VIRGULA_ESPACO: string = ", ";
+export const PONTO_FINAL: string = ".";
+export const REGEX_ULTIMA_VIRGULA: any = /,([^,]*)$/;
+export const ESPACO_E: string = " e$1";

@@ -1,3 +1,16 @@
+import {
+    ESPACO_E,
+    G,
+    KCAL,
+    L,
+    MG,
+    ML,
+    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE, PONTO_FINAL, REGEX_ULTIMA_VIRGULA,
+    STRING_VAZIA,
+    VIRGULA,
+    VIRGULA_ESPACO,
+} from "../../default";
+
 const informacoesPadraoZero = [
     "valorEnergeticoQtPorcao",
     "valorEnergeticoValDiario",
@@ -75,30 +88,31 @@ export function alimentoProntoParaConsumo(textBindings: any) {
     return textBindings.alimentoProntoParaConsumo ? textBindings.alimentoProntoParaConsumo : false;
 }
 
-/* -- TODO ---------------------------------------------------------------------------------------------------- 
+/* -- TODO ----------------------------------------------------------------------------------------------------
 - Para realizar a centralização dos valores na tabela:
      Foi necessário mapear as posições conforme o length do valor a ser inserido, devido a forma que a tabela foi construida.
-- Como as linhas verticais são apenas sobreposições das linhas horizontais as mesmas não formam retângulos reais, 
-    não sendo possível centralizar de forma dinâmica. 
+- Como as linhas verticais são apenas sobreposições das linhas horizontais as mesmas não formam retângulos reais,
+    não sendo possível centralizar de forma dinâmica.
 */
 
-//Manter chaves e valores com o mesmo nome
+// Manter chaves e valores com o mesmo nome
 export const tipoTabela = {
-    v2Normal: 'v2Normal',
-    v2Reduzida: 'v2Reduzida'
+    v2Normal: "v2Normal",
+    v2Reduzida: "v2Reduzida",
 };
 
 export const colunas = {
-    qt100: 'qt100',
-    qtPorcao: 'qtPorcao',
-    valorDiario: 'valorDiario'
+    qt100: "qt100",
+    qtPorcao: "qtPorcao",
+    valorDiario: "valorDiario",
 };
 
 type TipoTabelaNutricional = keyof typeof tipoTabela;
 
 type ColunaNutricional = keyof typeof colunas;
 
-type PosicoesCentralizadasTabelaNutricional = {
+// tslint:disable-next-line:interface-name
+interface PosicoesCentralizadasTabelaNutricional {
     [key: string]: number;
     "1": number;
     "2": number;
@@ -107,16 +121,16 @@ type PosicoesCentralizadasTabelaNutricional = {
     "5": number;
     "6"?: number;
     "7"?: number;
-};
+}
 
 // Função que centraliza apenas o textoQuantidadePorPorcao tabela nutricional normal e reduzida
 export const calcularPosicaoCentralizadaTextoQuantidadePorcao = (parametroTipoTabela: TipoTabelaNutricional, larguraMaxima: number, textoPorcao: string): number => {
     const lenghtTextoPorcao = textoPorcao.length.toString();
-        
+
     const valoresPosicoes: PosicoesCentralizadasTabelaNutricional = posicoesCentralizadasTextoQuantidadePorcao(parametroTipoTabela);
 
     return valoresPosicoes[lenghtTextoPorcao] ? larguraMaxima - valoresPosicoes[lenghtTextoPorcao] : larguraMaxima;
-}
+};
 
 const posicoesCentralizadasTextoQuantidadePorcao = (parametroTipoTabela: TipoTabelaNutricional): PosicoesCentralizadasTabelaNutricional => {
     if (parametroTipoTabela === tipoTabela.v2Reduzida) {
@@ -124,11 +138,11 @@ const posicoesCentralizadasTextoQuantidadePorcao = (parametroTipoTabela: TipoTab
             "1": 1.3,
             "2": 1.3,
             "3": 0.4,
-            "4": - 0.2, 
+            "4": - 0.2,
             "5": - 0.8,
             "6": - 1.38,
-            "7": - 2
-        }
+            "7": - 2,
+        };
     }
 
     return {
@@ -138,9 +152,9 @@ const posicoesCentralizadasTextoQuantidadePorcao = (parametroTipoTabela: TipoTab
         "4": 0.9,
         "5": + 0.2,
         "6": - 0.47,
-        "7": - 1.3
-    }
-}
+        "7": - 1.3,
+    };
+};
 
 export const calcularPosicaoCentralizadaTabelaNutricional = (parametroTipoTabela: TipoTabelaNutricional, coluna: ColunaNutricional, posicaoXg: number, parametroQt: number): number => {
     const parametroQtString = parametroQt.toString();
@@ -150,10 +164,10 @@ export const calcularPosicaoCentralizadaTabelaNutricional = (parametroTipoTabela
     const valorAlinhamento: PosicoesCentralizadasTabelaNutricional =
         parametroTipoTabela === tipoTabela.v2Reduzida ?
             valoresPosicoesCentralizadasTabelaNutricionalReduzida(coluna, parametroQtString)
-            : valoresPosicoesCentralizadasTabelaNutricional(coluna, parametroQtString)
+            : valoresPosicoesCentralizadasTabelaNutricional(coluna, parametroQtString);
 
     return valorAlinhamento[tamanhoParametroQt.toString()] ? posicaoXg - valorAlinhamento[tamanhoParametroQt.toString()] : posicaoXg;
-}
+};
 
 // Positivo posiciona os valores para esquerda - Negativo para direita
 
@@ -165,7 +179,7 @@ const valoresPosicoesCentralizadasTabelaNutricional = (coluna: ColunaNutricional
             "3": + temPontoDecimal(parametroQt) ? 2.1 : 1.8,
             "4": + 1.05,
             "5": + 0.75,
-            "7": - 0.7
+            "7": - 0.7,
         };
     }
 
@@ -177,7 +191,7 @@ const valoresPosicoesCentralizadasTabelaNutricional = (coluna: ColunaNutricional
             "4": + 0.7,
             "5": + 0.27,
             "6": - 0.4,
-            "7": - 1.10
+            "7": - 1.10,
         };
     }
 
@@ -189,10 +203,10 @@ const valoresPosicoesCentralizadasTabelaNutricional = (coluna: ColunaNutricional
             "4": + 0.4,
             "5": + 0.1,
             "6": - 0.6,
-            "7": - 1.3
+            "7": - 1.3,
         };
     }
-}
+};
 
 const valoresPosicoesCentralizadasTabelaNutricionalReduzida = (coluna: ColunaNutricional, parametroQt: string): PosicoesCentralizadasTabelaNutricional => {
     if (coluna === colunas.qt100) {
@@ -203,7 +217,7 @@ const valoresPosicoesCentralizadasTabelaNutricionalReduzida = (coluna: ColunaNut
             "4": + 0.5,
             "5": + 0.22,
             "6": - 0.4,
-            "7": - 1
+            "7": - 1,
         };
     }
 
@@ -215,7 +229,7 @@ const valoresPosicoesCentralizadasTabelaNutricionalReduzida = (coluna: ColunaNut
             "4": - 0.45,
             "5": - 0.7,
             "6": - 1.34,
-            "7": - 1.9
+            "7": - 1.9,
         };
     }
 
@@ -227,13 +241,52 @@ const valoresPosicoesCentralizadasTabelaNutricionalReduzida = (coluna: ColunaNut
             "4": - 0.2,
             "5": - 0.5,
             "6": - 1.1,
-            "7": - 1.7
+            "7": - 1.7,
         };
     }
-}
+};
 
 function temPontoDecimal(numeroString: string): boolean {
-    const pontoIndex = numeroString.indexOf('.');
+    const pontoIndex = numeroString.indexOf(".");
     return pontoIndex !== -1;
 }
-// ---------------------------------- Fim TODO Centralização -------------------------------------------------------
+// ---------------------------------- Fim Centralização -------------------------------------------------------
+
+export const nutrienteZerado = (nutriente: any) => {
+    return !!(
+        (
+            nutriente.valorDiario === "0" &&
+            nutriente.qt100 === "0" &&
+            nutriente.qtPorcao === "0"
+        )
+        || (
+            nutriente.valorDiario.trim().length === 0 &&
+            nutriente.qt100.trim().length === 0 &&
+            nutriente.qtPorcao.trim().length === 0
+        )
+    );
+};
+
+export const removeUnidadeRotulos = (rotulo: any) => {
+    return rotulo
+        .replace(KCAL, STRING_VAZIA)
+        .replace(G, STRING_VAZIA)
+        .replace(MG, STRING_VAZIA)
+        .replace(L, STRING_VAZIA)
+        .replace(ML, STRING_VAZIA)
+        .trimStart()
+        .trimEnd();
+};
+
+export const extraiNutrientesVazios = (nutrientes: any) => {
+    return nutrientes.filter(nutrienteZerado).map((nutriente: any) => removeUnidadeRotulos(nutriente.rotulo));
+};
+
+export const montaTextoNaoContemQuantidadesSignificativasDe = (nutrientes: any) => {
+    return NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE
+        + nutrientes
+            .toString()
+            .replaceAll(VIRGULA, VIRGULA_ESPACO)
+            .replace(REGEX_ULTIMA_VIRGULA, ESPACO_E)
+        + PONTO_FINAL;
+};
