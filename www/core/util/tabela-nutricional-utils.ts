@@ -1,5 +1,6 @@
 import {
-    ESPACO_E,
+    ABRE_PARENTESES,
+    ESPACO_E, FECHA_PARENTESES,
     G,
     KCAL,
     L,
@@ -289,4 +290,11 @@ export const montaTextoNaoContemQuantidadesSignificativasDe = (nutrientes: any) 
             .replaceAll(VIRGULA, VIRGULA_ESPACO)
             .replace(REGEX_ULTIMA_VIRGULA, ESPACO_E)
         + PONTO_FINAL;
+};
+
+export const montaRotuloDinamicoUnidadePorcao = (rotulo: string, unidadePorcao: string) => {
+    return rotulo.replace(
+        G,
+        `${ABRE_PARENTESES}${unidadePorcao}${FECHA_PARENTESES}`,
+    );
 };
