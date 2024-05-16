@@ -9,7 +9,7 @@ import {
     alimentoProntoParaConsumo,
     calcularPosicaoCentralizadaTabelaNutricional,
     calcularPosicaoCentralizadaTextoQuantidadePorcao,
-    extraiNutrientesVazios,
+    extraiNutrientesVazios, montaRotuloDinamicoUnidadePorcao,
     montaTextoNaoContemQuantidadesSignificativasDe, nutrienteZerado, setInformacoesV2PadraoZero,
 } from "../core/util/tabela-nutricional-utils";
 import {
@@ -301,9 +301,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     const yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
                     ctx.textAlign = TextAlign.LEFT;
                     if (!!fabricCanvas) {
-                        writeFabricText(fabricCanvas, ctx, nutriente.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
+                        writeFabricText(fabricCanvas, ctx, montaRotuloDinamicoUnidadePorcao(nutriente.rotulo, textBindings.porcaoNutricionalV2), model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
                     } else {
-                        ctx.strokeText(nutriente.rotulo, mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMmTextoRotulo), mm(model.dimensoes.larguraMaximaMm));
+                        ctx.strokeText(montaRotuloDinamicoUnidadePorcao(nutriente.rotulo, textBindings.porcaoNutricionalV2), mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMmTextoRotulo), mm(model.dimensoes.larguraMaximaMm));
                     }
                     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, nutriente.qt100, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qt100", posicaoX100g, nutriente.qt100),
                         yMmValores, mm, TextAlign.RIGHT, degrees);
