@@ -1,11 +1,12 @@
 import {
-    ESPACO_E,
+    ABRE_PARENTESES,
+    ESPACO_E, FECHA_PARENTESES,
     G,
     KCAL,
     L,
     MG,
     ML,
-    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE, PONTO_FINAL, REGEX_ULTIMA_VIRGULA,
+    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE, PONTO_FINAL, REGEX_REMOVE_NUMEROS, REGEX_ULTIMA_VIRGULA,
     STRING_VAZIA,
     VIRGULA,
     VIRGULA_ESPACO,
@@ -289,4 +290,11 @@ export const montaTextoNaoContemQuantidadesSignificativasDe = (nutrientes: any) 
             .replaceAll(VIRGULA, VIRGULA_ESPACO)
             .replace(REGEX_ULTIMA_VIRGULA, ESPACO_E)
         + PONTO_FINAL;
+};
+
+export const montaRotuloDinamicoUnidadePorcao = (rotulo: string, unidadePorcao: string) => {
+    return rotulo.replace(
+        G,
+        `${ABRE_PARENTESES}${unidadePorcao.replace(REGEX_REMOVE_NUMEROS, "")}${FECHA_PARENTESES}`,
+    );
 };
