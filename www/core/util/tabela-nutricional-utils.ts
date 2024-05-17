@@ -293,8 +293,8 @@ export const montaTextoNaoContemQuantidadesSignificativasDe = (nutrientes: any) 
 };
 
 export const montaRotuloDinamicoUnidadePorcao = (rotulo: string, unidadePorcao: string) => {
-    return rotulo.replace(
-        G,
-        `${ABRE_PARENTESES}${unidadePorcao.replace(REGEX_REMOVE_NUMEROS, "")}${FECHA_PARENTESES}`,
-    );
+    const unidadeComParenteses = unidadePorcao
+        ? `${ABRE_PARENTESES}${unidadePorcao.replace(REGEX_REMOVE_NUMEROS, "")}${FECHA_PARENTESES}`
+        : G;
+    return rotulo.replace(G, unidadeComParenteses);
 };
