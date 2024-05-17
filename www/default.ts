@@ -447,3 +447,4 @@ export const ESPACO_E: string = " e$1";
 export const ABRE_PARENTESES: string = "(";
 export const FECHA_PARENTESES: string = ")";
 export const REGEX_REMOVE_NUMEROS: any = /\d+/g;
+export const APENAS_G: string = "g";
