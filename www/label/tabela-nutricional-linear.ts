@@ -6,7 +6,7 @@ import {
 } from "../core/util/conversor-utils";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {
-    alimentoProntoParaConsumo,
+    alimentoProntoParaConsumo, extraiPorcao, montaRotuloDinamicoUnidadePorcaoTabelaLinear,
     setInformacoesV2PadraoZero,
 } from "../core/util/tabela-nutricional-utils";
 import {
@@ -19,7 +19,7 @@ import {
     ACUCARES_TOTAIS,
     ADICIONADOS,
     ALIMENTARES,
-    BLACK,
+    BLACK, DADOS_DEFAULT,
     E_COMERCIAL,
     ESPACAMENTO_100G_000G_VD,
     ESPACAMENTO_CONTORNO_TABELA_EM_PT,
@@ -109,7 +109,9 @@ export interface IElementoTabelaNutricionalModel {
 }
 
 const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
-    setInformacoesV2PadraoZero(textBindings);
+    const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
+    const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
+    setInformacoesV2PadraoZero(textbindsTratada);
     const mm = mmPartial(dpi);
     ctx.save();
     const degrees = model.posicao.rotacao || 0;
@@ -122,10 +124,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const alturaLinhaMm = model.fonte.alturaMm * 1.46;
     const lineStrokeGap = alturaLinhaMm / 3;
     const posicaoXPorcoesPorEmbalagem = 1;
-    let porcao100g = getOrDefault(model.informacoesNutricionais, "textoQt100");
+    const porcao100G = getOrDefault(model.informacoesNutricionais, "textoQt100");
+    let porcao100Tratada = porcao100G.replace(extraiPorcao(porcao100G), unidadeTratada);
 
-    if (alimentoProntoParaConsumo(textBindings)) {
-        porcao100g += "**";
+    if (alimentoProntoParaConsumo(textbindsTratada)) {
+        porcao100Tratada += "**";
     }
 
     // Contorno de cima
@@ -159,7 +162,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
-    const porcaoLength: number = "Porções por embalagem: ".length + (fillTemplate(model.informacoesNutricionais.textoQuantidadeEmbalagem, textBindings)).length;
+    const porcaoLength: number = "Porções por embalagem: ".length + (fillTemplate(model.informacoesNutricionais.textoQuantidadeEmbalagem, textbindsTratada)).length;
 
     const informacoesNutricionaisTextoPorcao = [
         {
@@ -180,9 +183,9 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             fabricCanvas,
             larguraMaxima,
             infos.id === "Porção: " ?
-                (infos.id + fillTemplate(infos.value, textBindings)
-                    + " (" + fillTemplate(infos.caseira, textBindings)) + ")"
-                : (infos.id + fillTemplate(infos.value, textBindings)),
+                (infos.id + fillTemplate(infos.value, textbindsTratada)
+                    + " (" + fillTemplate(infos.caseira, textbindsTratada)) + ")"
+                : (infos.id + fillTemplate(infos.value, textbindsTratada)),
             model.posicao.xMm + infos.xMm,
             yMm,
             mm,
@@ -215,7 +218,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         //             } else {
         //                 ctx.strokeText(nomeNutriente, mm(obj.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
         //             }
-        //             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textBindings),
+        //             strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textbindsTratada),
         //                 model.posicao.xMm + obj.xMm, yMm, mm, TextAlign.LEFT, degrees);
         //             yMm += alturaLinhaMm / 3;
         //             desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2.2);
@@ -225,11 +228,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         //     });
         // });
     } else {
-        const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
-        const parametrosExtrasNutricionalV2 = !!textBindings ? textBindings.parametrosExtrasNutricionalV2 : PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2;
+        const parametrosPadroesNutricionalV2 = !!textbindsTratada ? textbindsTratada.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
+        const parametrosExtrasNutricionalV2 = !!textbindsTratada ? textbindsTratada.parametrosExtrasNutricionalV2 : PARAMETROS_EXTRAS_PADROES_NUTRICIONAL_V2;
 
         // variáveis de posicionamento na etiqueta
-        let valorMaximoPosicaoX: number = definirValorMaximoX(model, larguraMaxima, porcao100g);
+        let valorMaximoPosicaoX: number = definirValorMaximoX(model, larguraMaxima, porcao100Tratada);
         let posicaoAtualCharNaLinha: number = model.posicao.xMm + 1;
         let yIncrementado: number = yMm;
         let contadorIndex: number = 0;
@@ -249,14 +252,14 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             quadradoVirtual: montaApenasEspaco(),
         };
 
-        const por100GFormatado: string = "Por " + porcao100g + elementosTextuais.espaco + elementosTextuais.parentesesInicial +
-            fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings) + elementosTextuais.virgula + elementosTextuais.espaco +
+        const por100GFormatado: string = "Por " + porcao100Tratada + elementosTextuais.espaco + elementosTextuais.parentesesInicial +
+            fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textbindsTratada) + elementosTextuais.virgula + elementosTextuais.espaco +
             getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario") + elementosTextuais.parentesesFinal + ": ";
 
         informacoesNutricionaisDivididas.push(por100GFormatado);
 
         parametrosPadroesNutricionalV2.forEach((parametro: any) => {
-            montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas);
+            montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas, unidadeTratada);
 
             if (parametrosExtrasNutricionalV2.length === 0) {
                 desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 18);
@@ -265,7 +268,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         });
 
         parametrosExtrasNutricionalV2.forEach((parametro: any) => {
-            montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas);
+            montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas, unidadeTratada);
 
             if (parametrosExtrasNutricionalV2.length > 3 && parametrosExtrasNutricionalV2.length < 6) {
                 desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 20.5);
@@ -441,7 +444,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 value: splitLines(model.informacoesAdicionais.textoAlimentoProntoParaConsumo, model.informacoesAdicionais.caracteresPorLinha),
             },
         ].map((info) => {
-            if (!alimentoProntoParaConsumo(textBindings) && info.id === "linhasInformacaoAlimentoProntoParaConsumo") {
+            if (!alimentoProntoParaConsumo(textbindsTratada) && info.id === "linhasInformacaoAlimentoProntoParaConsumo") {
                 return;
             }
             info.value.forEach((item) => {
@@ -511,7 +514,7 @@ const identificaVirgulasDosQuaisDasQuais = (index: number) => {
     return index === 5 || index === 6 || index === 23 || index === 34 || index === 69 || index === 83;
 };
 
-const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, informacoesNutricionaisDivididas: string[]) => {
+const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, informacoesNutricionaisDivididas: string[], unidadeTratada: string) => {
     let unidadeDoRotulo: string;
     let valorDiario: string;
 
@@ -520,13 +523,14 @@ const montarInformacoesNutricionais = (parametro: any, elementosTextuais: any, i
     unidadeDoRotulo = montaApenasUnidadeDoRotulo(parametro);
     const quantidadePorcao = montaApenasQuantidadePorcao(parametro);
     valorDiario = montaApenasValorDiario(parametro);
+    const unidadeRotuloTratada = montaRotuloDinamicoUnidadePorcaoTabelaLinear(unidadeDoRotulo, unidadeTratada);
 
     separarNomesCompostosEmIndividuais(nomeNutrienteFormatado, informacoesNutricionaisDivididas);
     informacoesNutricionaisDivididas.push(quantidade100 + elementosTextuais.espaco);
-    informacoesNutricionaisDivididas.push(unidadeDoRotulo + elementosTextuais.espaco);
+    informacoesNutricionaisDivididas.push(unidadeRotuloTratada + elementosTextuais.espaco);
     informacoesNutricionaisDivididas.push(elementosTextuais.parentesesInicial);
     informacoesNutricionaisDivididas.push(E_COMERCIAL + quantidadePorcao + E_COMERCIAL);
-    informacoesNutricionaisDivididas.push(E_COMERCIAL + unidadeDoRotulo + E_COMERCIAL);
+    informacoesNutricionaisDivididas.push(E_COMERCIAL + unidadeRotuloTratada + E_COMERCIAL);
     if (!parametro.rotulo.includes(ACUCARES_TOTAIS)) {
         informacoesNutricionaisDivididas.push(elementosTextuais.virgula);
         informacoesNutricionaisDivididas.push(valorDiario);

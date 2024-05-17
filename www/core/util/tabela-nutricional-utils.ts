@@ -1,5 +1,5 @@
 import {
-    ABRE_PARENTESES,
+    ABRE_PARENTESES, APENAS_G,
     ESPACO_E, FECHA_PARENTESES,
     G,
     KCAL,
@@ -11,6 +11,7 @@ import {
     VIRGULA,
     VIRGULA_ESPACO,
 } from "../../default";
+import {text} from "../../label/text";
 
 const informacoesPadraoZero = [
     "valorEnergeticoQtPorcao",
@@ -292,9 +293,19 @@ export const montaTextoNaoContemQuantidadesSignificativasDe = (nutrientes: any) 
         + PONTO_FINAL;
 };
 
-export const montaRotuloDinamicoUnidadePorcao = (rotulo: string, unidadePorcao: string) => {
+export const extraiPorcao = (textoPorcao: string) => {
+    return textoPorcao.replace(REGEX_REMOVE_NUMEROS, STRING_VAZIA);
+};
+
+export const montaRotuloDinamicoUnidadePorcaoTabelaVertical = (rotulo: string, unidadePorcao: string) => {
     return rotulo.replace(
         G,
-        `${ABRE_PARENTESES}${unidadePorcao.replace(REGEX_REMOVE_NUMEROS, "")}${FECHA_PARENTESES}`,
+        `${ABRE_PARENTESES}${extraiPorcao(unidadePorcao)}${FECHA_PARENTESES}`,
+    );
+};
+
+export const montaRotuloDinamicoUnidadePorcaoTabelaLinear = (unidade: string, unidadePorcao: string) => {
+    return unidade.replace(
+        APENAS_G, unidadePorcao.replace(REGEX_REMOVE_NUMEROS, STRING_VAZIA),
     );
 };
