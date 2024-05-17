@@ -22,15 +22,15 @@ import {
 } from "../core/util/text-utils";
 import {
     BLACK,
-    ESPACAMENTO_100G_000G_VD,
-    ESPACAMENTO_CONTORNO_TABELA_EM_PT, ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS,
-    ESPESSURA_LINHA_CONTORNO_EM_PT,
-    ESPESSURA_LINHA_GROSSA_EM_PT, ESPESSURA_LINHA_MEDIA_EM_PT,
-    ESPESSURA_LINHA_PADRAO_EM_PT, ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT,
+    DADOS_DEFAULT,
+    ESPACAMENTO_100G_000G_VD, ESPACAMENTO_CONTORNO_TABELA_EM_PT,
+    ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS,
+    ESPESSURA_LINHA_CONTORNO_EM_PT, ESPESSURA_LINHA_GROSSA_EM_PT,
+    ESPESSURA_LINHA_MEDIA_EM_PT, ESPESSURA_LINHA_PADRAO_EM_PT,
+    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT,
     PARAMETROS_PADROES_NUTRICIONAL_V2,
     TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
-    TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT,
-    TAMANHO_FONTE_PADRAO_TITULO_EM_PT,
+    TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT, TAMANHO_FONTE_PADRAO_TITULO_EM_PT,
 } from "../default";
 import {mmPartial} from "./mm";
 
@@ -214,6 +214,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         porcao100g += "**";
     }
     ctx.textAlign = TextAlign.RIGHT;
+    const valorPorcaoDefaultEdicao = (textBindings && textBindings.porcaoNutricionalV2) ? textBindings : DADOS_DEFAULT;
     const textoCabecalhoMedidas = [
         {
             // @ts-ignore
@@ -223,7 +224,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         },
         {
             id: 2,
-            value: adicionarEspacoEntreNumeroELetra(fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, textBindings)),
+            value: adicionarEspacoEntreNumeroELetra(fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, valorPorcaoDefaultEdicao)),
             xMm: posicaoX000g,
         },
         {
@@ -308,10 +309,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 const yMmValores = yMm + valorEspacamentoYMmValores;
                 const yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
                 ctx.textAlign = TextAlign.LEFT;
+                const porcaoNutricional = (textBindings && textBindings.porcaoNutricionalV2) ? textBindings.porcaoNutricionalV2 : DADOS_DEFAULT.porcaoNutricionalV2;
                 if (!!fabricCanvas) {
-                    writeFabricText(fabricCanvas, ctx, montaRotuloDinamicoUnidadePorcao(nutriente.rotulo, textBindings.porcaoNutricionalV2), model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
+                    writeFabricText(fabricCanvas, ctx, montaRotuloDinamicoUnidadePorcao(nutriente.rotulo, porcaoNutricional), model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
                 } else {
-                    ctx.strokeText(montaRotuloDinamicoUnidadePorcao(nutriente.rotulo, textBindings.porcaoNutricionalV2), mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMmTextoRotulo), mm(model.dimensoes.larguraMaximaMm));
+                    ctx.strokeText(montaRotuloDinamicoUnidadePorcao(nutriente.rotulo, porcaoNutricional), mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMmTextoRotulo), mm(model.dimensoes.larguraMaximaMm));
                 }
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, nutriente.qt100,  calcularPosicaoCentralizadaTabelaNutricional("v2Normal", "qt100", posicaoX100g, nutriente.qt100),
                     yMmValores, mm, TextAlign.RIGHT, degrees);
