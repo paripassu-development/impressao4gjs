@@ -14,6 +14,10 @@ export class ValidateModelUtils {
         "pesoLiquidoAgranelNutricional"
     ];
 
+    private static VARIAVEIS_NUTRICIONAIS: string[] = [
+        "contemGluten",
+    ];
+
     public static validateAll = (model: any) => {
         const alerts: any[] = [];
         ValidateModelUtils.validatePDF(model, alerts);
@@ -90,6 +94,9 @@ export class ValidateModelUtils {
             if (!!elemento.valor && EtiquetaUtils.isCampo(elemento.valor, this.VARIAVEIS_PESO)) {
                 ValidateModelUtils.validaAlturaCampoPeso(elemento.fonte, alerts, index);
             }
+            if (!!elemento.valor && EtiquetaUtils.isCampo(elemento.valor, this.VARIAVEIS_NUTRICIONAIS)) {
+                ValidateModelUtils.validaAlturaCampoNutricional(elemento.fonte, alerts, index);
+            }
         }
     }
 
@@ -108,6 +115,14 @@ export class ValidateModelUtils {
             alerts.push({campo: campo, message: "ras4.ui.txt.erro.etiqueta.nao_atende_ao_peso_minimo_50_gramas_ou_litros", parametros: "", tipoAlerta: TipoAlerta.ERRO});
         }
 
+    }
+
+    private static validaAlturaCampoNutricional(fonte: any, alerts: any[], index: number) {
+        const intervaloFonte = intervaloTamanhoFonte[fonte.nome];
+        const campo = "desenho.elementos." + index + ".fonte.alturaMm";
+        if (fonte.alturaMm < intervaloFonte.proporcaoTamanhoFonte1.max) {
+            alerts.push({campo: campo, message: "ras4.ui.template.etiqueta.atende_tamanho_minimo_1mm", parametros: {max: 50}, tipoAlerta: TipoAlerta.ERRO});
+        }
     }
 
     public static validaRequisito(item: any, model: any, tipo: any) {
