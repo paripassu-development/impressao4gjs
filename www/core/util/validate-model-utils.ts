@@ -16,6 +16,8 @@ export class ValidateModelUtils {
 
     private static VARIAVEIS_NUTRICIONAIS: string[] = [
         "contemGluten",
+        "advertenciaSobreAlergenicos",
+        "advertenciaSobreLactose",
     ];
 
     public static validateAll = (model: any) => {
