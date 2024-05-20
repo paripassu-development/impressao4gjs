@@ -1,5 +1,6 @@
 import * as Mustache from "mustache";
 import {
+    ocultaCampoTextoComBaseNoValor,
     splitLines,
     splitLinesAutoSize,
     strokeAlignedText,
@@ -59,6 +60,7 @@ const drawText = (ctx: CanvasRenderingContext2D, fabricCanvas: Canvas, dpi: numb
         if (textFunctions[model.fn] && textBindings) {
             renderedText = textFunctions[model.fn](renderedText);
         }
+        renderedText = ocultaCampoTextoComBaseNoValor(renderedText);
         ctx.lineWidth = model.fonte.forcaContorno || 0;
 
         if (!!model.multiplasLinhas) {
