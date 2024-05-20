@@ -111,7 +111,7 @@ export const DADOS_DEFAULT = {
     medidaCaseiraNutricionalV2: "2 xícaras",
     porcaoNutricionalV2: "15g",
     contemGluten: "CONTÉM GLÚTEN",
-    advertenciaSobreAlergenicos: "PODE CONTER AMENDOIN.",
+    advertenciaSobreAlergenicos: "ALÉRGICOS: PODE CONTER AMENDOIN.",
     advertenciaSobreLactose: "CONTÉM LACTOSE",
     tipoCodigoBarras: "ean13",
     unidadeEmbalagem: "un",
