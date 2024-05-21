@@ -317,8 +317,8 @@ export const montaRotuloDinamicoUnidadePorcaoTabelaLinear = (unidade: string, un
     );
 };
 
-export const ocultaCampoPorcao100SeTabelaSimplificada = (porcao: string, configuracao: any) => {
-    if (!configuracao.tabelaSimplificada) { return false; }
+export const contemTodasRegrasTabelaSimplificada = async (porcao: string, configuracao: any) => {
+    if (!configuracao.tabelaSimplificada || configuracao.tabelaSimplificada === false) { return false; }
     const apenasValorPorcao = porcao.replace(REGEX_APENAS_NUMEROS, STRING_VAZIA);
     return (apenasValorPorcao === VALOR_PORCAO_100);
 };

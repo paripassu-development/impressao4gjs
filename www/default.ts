@@ -109,7 +109,7 @@ export const DADOS_DEFAULT = {
     textoProporcaoCalorias: "999 kcal = 4180kj",
     porcoesPorEmbalagem: "45g",
     medidaCaseiraNutricionalV2: "2 xícaras",
-    porcaoNutricionalV2: "225g",
+    porcaoNutricionalV2: "100g",
     contemGluten: "CONTÉM GLÚTEN",
     advertenciaSobreAlergenicos: "ALÉRGICOS: PODE CONTER AMENDOIN.",
     advertenciaSobreLactose: "CONTÉM LACTOSE",

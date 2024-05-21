@@ -9,8 +9,13 @@ import {
     alimentoProntoParaConsumo,
     calcularPosicaoCentralizadaTabelaNutricional,
     calcularPosicaoCentralizadaTextoQuantidadePorcao,
-    extraiNutrientesVazios, extraiPorcao, montaRotuloDinamicoUnidadePorcaoTabelaVertical,
-    montaTextoNaoContemQuantidadesSignificativasDe, nutrienteZerado, setInformacoesV2PadraoZero,
+    extraiNutrientesVazios,
+    extraiPorcao,
+    montaRotuloDinamicoUnidadePorcaoTabelaVertical,
+    montaTextoNaoContemQuantidadesSignificativasDe,
+    nutrienteZerado,
+    contemTodasRegrasTabelaSimplificada,
+    setInformacoesV2PadraoZero,
 } from "../core/util/tabela-nutricional-utils";
 import {
     adicionarEspacoEntreNumeroELetra,
@@ -79,6 +84,7 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoProporcaoCalorias: string;
     informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
     ocultarZerados: boolean;
+    tabelaSimplificada: boolean;
     parametrosPadroesNutricionalV2: [any];
 }
 
@@ -109,9 +115,10 @@ interface IElementoTabelaNutricionalModel {
     opcoes?: IElementoTabelaNutricionalOpcoes;
 }
 
-const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
+const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
     const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
+    const TABELA_SIMPLIFICADA = await contemTodasRegrasTabelaSimplificada(textbindsTratada.porcaoNutricionalV2, model.informacoesNutricionais);
     setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
@@ -126,8 +133,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     const alturaLinhaMm = model.fonte.alturaMm * 1.46;
     // 3?
     const lineStrokeGap = alturaLinhaMm / 3;
-    const posicaoX100g = model.posicao.xMm  - (alturaLinhaMm * 5.5);
-    const posicaoX000g = model.posicao.xMm  - (alturaLinhaMm * 3);
+    const posicaoX100g = model.posicao.xMm - (alturaLinhaMm * 5.5);
+    const posicaoX000g = model.posicao.xMm - (alturaLinhaMm * 3);
     const posicaoXValorDiario = model.posicao.xMm - (alturaLinhaMm / 2.5);
     const valorEspacamentoYMmRotulos = 0.28; // Alterar esse valor para alinhamento vertical dos rotulos nutricionais
     const valorEspacamentoYMmValores = 0.43; // Alterar esse valor para alinhamento vertical dos valores nutricionais
@@ -191,7 +198,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 : (infos.titulo + adicionarEspacoEntreNumeroELetra(textoPorcao)),
             model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT,
             infos.id === 0 ? yMm + 0.4 // ternário para espaçamento entre porcao p embalagem e porcao: 15 g (2 xícaras)
-            : yMm + 0.9,
+                : yMm + 0.9,
             mm,
             TextAlign.LEFT,
             degrees,
@@ -210,29 +217,37 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // 100 g 000 g e %VD*
     ctx.font = `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
-    if (alimentoProntoParaConsumo(textBindings)) {
-        porcao100Tratada += "**";
-    }
     ctx.textAlign = TextAlign.RIGHT;
     const valorPorcaoDefaultEdicao = (textBindings && textBindings.porcaoNutricionalV2) ? textBindings : DADOS_DEFAULT;
-    const textoCabecalhoMedidas = [
-        {
+    let porcaoXTratada = adicionarEspacoEntreNumeroELetra(fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, valorPorcaoDefaultEdicao));
+
+    if (alimentoProntoParaConsumo(textBindings)) {
+        (!TABELA_SIMPLIFICADA) ? porcao100Tratada += "**" : porcaoXTratada += "**";
+    }
+    const cabecalhoPorcao100 = {
             // @ts-ignore
             id: 1,
             value: porcao100Tratada,
             xMm: posicaoX100g,
-        },
-        {
+        };
+    const cabecalhoPorcaoX = {
             id: 2,
-            value: adicionarEspacoEntreNumeroELetra(fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, valorPorcaoDefaultEdicao)),
+            value: porcaoXTratada,
             xMm: posicaoX000g,
-        },
-        {
-            id: 3,
-            value: getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario"),
-            xMm: posicaoXValorDiario,
-        },
-    ];
+        };
+    const cabecalhoValorDiario = {
+        id: 3,
+        value: getOrDefault(model.informacoesNutricionais, "textoAbreviadoValorDiario"),
+        xMm: posicaoXValorDiario,
+    };
+
+    const textoCabecalhoMedidas: any[] = [];
+
+    if (!TABELA_SIMPLIFICADA) {
+        textoCabecalhoMedidas.push(cabecalhoPorcao100);
+    }
+    textoCabecalhoMedidas.push(cabecalhoPorcaoX);
+    textoCabecalhoMedidas.push(cabecalhoValorDiario);
 
     textoCabecalhoMedidas.map((medida) => {
         // Ternario utilizado para centralizar o cabeçalho das colunas
@@ -273,58 +288,60 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
                 obj.id = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
                 if (obj.id !== undefined) {
-                        yMm += alturaLinhaMm / 1.7;
-                        ctx.textAlign = TextAlign.LEFT;
+                    yMm += alturaLinhaMm / 1.7;
+                    ctx.textAlign = TextAlign.LEFT;
 
-                        const nomeNutriente = getOrDefault(obj.id, "nome");
-                        if (!!fabricCanvas) {
-                            writeFabricText(fabricCanvas, ctx, nomeNutriente, obj.xMm, yMm, larguraMaxima, mm, {degrees});
-                        } else {
-                            ctx.strokeText(nomeNutriente, mm(obj.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
-                        }
-                        strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textBindings),
-                            obj.xMm, yMm, mm, TextAlign.RIGHT, degrees);
-                        yMm += lineStrokeGap;
-                        desenharLinhaVertical(ctx, model, yMm - 1.5, obj.value === porcao100Tratada ? obj.xMm - 1.5 : obj.xMm, mm, alturaLinhaVertical - 0.4);
-                        desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2.2);
-                        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm - 0.2, mm, ESPACAMENTO_100G_000G_VD / 1.8);
-                        desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
-                        // -----------------------------------------------------------------------------------------------------
+                    const nomeNutriente = getOrDefault(obj.id, "nome");
+                    if (!!fabricCanvas) {
+                        writeFabricText(fabricCanvas, ctx, nomeNutriente, obj.xMm, yMm, larguraMaxima, mm, {degrees});
+                    } else {
+                        ctx.strokeText(nomeNutriente, mm(obj.xMm), mm(yMm), mm(model.dimensoes.larguraMaximaMm));
+                    }
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, fillTemplate(obj.id, textBindings),
+                        obj.xMm, yMm, mm, TextAlign.RIGHT, degrees);
+                    yMm += lineStrokeGap;
+                    desenharLinhaVertical(ctx, model, yMm - 1.5, obj.value === porcao100Tratada ? obj.xMm - 1.5 : obj.xMm, mm, alturaLinhaVertical - 0.4);
+                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2.2);
+                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm - 0.2, mm, ESPACAMENTO_100G_000G_VD / 1.8);
+                    desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
+                    // -----------------------------------------------------------------------------------------------------
                 }
             });
         });
     } else {
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
         parametrosPadroesNutricionalV2.forEach((nutriente: any) => {
-                const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
-                const matchArray: any[] = nutriente.qtPorcao ? nutriente.qtPorcao.match(/[0-9]/mg, "") : "";
-                if (!model.informacoesNutricionais.ocultarZerados || (matchArray && !matchArray.every((elemento: any) => elemento === "0" || !elemento))) {
-                    yMm += alturaLinhaMm / 1.7;
-                    const yMmValores = yMm + valorEspacamentoYMmValores;
-                    const yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
-                    ctx.textAlign = TextAlign.LEFT;
-                    const porcaoNutricional = (textBindings && textBindings.porcaoNutricionalV2) ? textBindings.porcaoNutricionalV2 : DADOS_DEFAULT.porcaoNutricionalV2;
-                    if (!!fabricCanvas) {
-                        writeFabricText(fabricCanvas, ctx, montaRotuloDinamicoUnidadePorcaoTabelaVertical(nutriente.rotulo, porcaoNutricional), model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
-                    } else {
-                        ctx.strokeText(montaRotuloDinamicoUnidadePorcaoTabelaVertical(nutriente.rotulo, porcaoNutricional), mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMmTextoRotulo), mm(model.dimensoes.larguraMaximaMm));
-                    }
+            const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
+            const matchArray: any[] = nutriente.qtPorcao ? nutriente.qtPorcao.match(/[0-9]/mg, "") : "";
+            if (!model.informacoesNutricionais.ocultarZerados || (matchArray && !matchArray.every((elemento: any) => elemento === "0" || !elemento))) {
+                yMm += alturaLinhaMm / 1.7;
+                const yMmValores = yMm + valorEspacamentoYMmValores;
+                const yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
+                ctx.textAlign = TextAlign.LEFT;
+                const porcaoNutricional = (textBindings && textBindings.porcaoNutricionalV2) ? textBindings.porcaoNutricionalV2 : DADOS_DEFAULT.porcaoNutricionalV2;
+                if (!!fabricCanvas) {
+                    writeFabricText(fabricCanvas, ctx, montaRotuloDinamicoUnidadePorcaoTabelaVertical(nutriente.rotulo, porcaoNutricional), model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
+                } else {
+                    ctx.strokeText(montaRotuloDinamicoUnidadePorcaoTabelaVertical(nutriente.rotulo, porcaoNutricional), mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMmTextoRotulo), mm(model.dimensoes.larguraMaximaMm));
+                }
+                if (TABELA_SIMPLIFICADA === false) {
                     strokeAlignedText(ctx, fabricCanvas, larguraMaxima, nutriente.qt100, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qt100", posicaoX100g, nutriente.qt100),
                         yMmValores, mm, TextAlign.RIGHT, degrees);
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, nutriente.qtPorcao, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qtPorcao", posicaoX000g, nutriente.qtPorcao),
-                        yMmValores, mm, TextAlign.RIGHT, degrees);
-                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, nutriente.valorDiario, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "valorDiario", posicaoXValorDiario, nutriente.valorDiario),
-                        yMmValores, mm, TextAlign.RIGHT, degrees);
-                    yMm += lineStrokeGap;
-                    textoCabecalhoMedidas.map((obj: any) => {
-                        desenharLinhaVertical(ctx, model, yMm - 1.5, obj.value === porcao100Tratada ? obj.xMm - 1.5 : obj.xMm, mm, alturaLinhaVertical - 0.4);
-                        desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2.2);
-                        desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm - 0.2, mm, 2.7);
-                        desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
-                    });
-
-                    // -----------------------------------------------------------------------------------------------------
                 }
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, nutriente.qtPorcao, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qtPorcao", posicaoX000g, nutriente.qtPorcao),
+                    yMmValores, mm, TextAlign.RIGHT, degrees);
+                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, nutriente.valorDiario, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "valorDiario", posicaoXValorDiario, nutriente.valorDiario),
+                    yMmValores, mm, TextAlign.RIGHT, degrees);
+                yMm += lineStrokeGap;
+                textoCabecalhoMedidas.map((obj: any) => {
+                    desenharLinhaVertical(ctx, model, yMm - 1.5, obj.value === porcao100Tratada ? obj.xMm - 1.5 : obj.xMm, mm, alturaLinhaVertical - 0.4);
+                    desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 3.6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 2.2);
+                    desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - (ESPACAMENTO_100G_000G_VD / 1.8), model.posicao.xMm - 0.2, mm, 2.7);
+                    desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
+                });
+
+                // -----------------------------------------------------------------------------------------------------
+            }
         });
         // -----------------------------------------------------------------------------------------------------------------
 
@@ -341,8 +358,10 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 } else {
                     ctx.strokeText(parametro.rotulo, mm(model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT), mm(yMmTextoRotulo), mm(model.dimensoes.larguraMaximaMm));
                 }
-                strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qt100", posicaoX100g, parametro.qt100),
-                    yMmValores, mm, TextAlign.RIGHT, degrees);
+                if (TABELA_SIMPLIFICADA === false) {
+                    strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qt100, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qt100", posicaoX100g, parametro.qt100),
+                        yMmValores, mm, TextAlign.RIGHT, degrees);
+                }
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.qtPorcao, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "qtPorcao", posicaoX000g, parametro.qtPorcao),
                     yMmValores, mm, TextAlign.RIGHT, degrees);
                 strokeAlignedText(ctx, fabricCanvas, larguraMaxima, parametro.valorDiario, calcularPosicaoCentralizadaTabelaNutricional("v2Reduzida", "valorDiario", posicaoXValorDiario, parametro.valorDiario),
@@ -355,7 +374,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
                     // -----------------------------------------------------------------------------------------------------
                 });
-               });
+            });
             desenharLinha(ctx, model, yMm, mm, ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT);
             let texto = "";
             if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
@@ -432,8 +451,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
     const informacoesAdicionais = [
         {
-           id: "linhasInformacoesPercentual",
-           value: splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha),
+            id: "linhasInformacoesPercentual",
+            value: splitLines(model.informacoesAdicionais.texto, model.informacoesAdicionais.caracteresPorLinha),
         },
         {
             id: "linhasInformacaoAlimentoProntoParaConsumo",
@@ -445,7 +464,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         }
         info.value.forEach((item) => {
             yMm += lineStrokeGap;
-            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, item, model.posicao.xMm  + ESPACAMENTO_CONTORNO_TABELA_EM_PT, yMm, mm, TextAlign.LEFT, degrees);
+            strokeAlignedText(ctx, fabricCanvas, larguraMaxima, item, model.posicao.xMm + ESPACAMENTO_CONTORNO_TABELA_EM_PT, yMm, mm, TextAlign.LEFT, degrees);
             desenharLinhaContornoVerticalDireita(ctx, model, yMm - 0.5, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, ESPACAMENTO_100G_000G_VD / 1.5);
             desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 3.1, model.posicao.xMm - 0.2, mm, ESPACAMENTO_100G_000G_VD / 1.4);
             yMm += alturaLinhaMm / 2;
