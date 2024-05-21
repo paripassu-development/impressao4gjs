@@ -305,6 +305,7 @@ export const montaRotuloDinamicoUnidadePorcaoTabelaVertical = (rotulo: string, u
 };
 
 export const montaRotuloDinamicoUnidadePorcaoTabelaLinear = (unidade: string, unidadePorcao: string) => {
+    if (unidade === APENAS_MG) { return unidade; }
     return unidade.replace(
         APENAS_G, unidadePorcao.replace(REGEX_REMOVE_NUMEROS, STRING_VAZIA),
     );

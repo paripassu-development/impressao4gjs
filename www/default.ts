@@ -529,5 +529,6 @@ export const ABRE_PARENTESES: string = "(";
 export const FECHA_PARENTESES: string = ")";
 export const REGEX_REMOVE_NUMEROS: any = /\d+/g;
 export const APENAS_G: string = "g";
+export const APENAS_MG: string = "mg";
 
 export const VALORES_PARA_OCULTAR: string[] = ["NÃO SE APLICA"];
