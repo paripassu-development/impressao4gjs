@@ -536,3 +536,5 @@ export const APENAS_MG: string = "mg";
 export const VALOR_PORCAO_100: string = "100";
 
 export const VALORES_PARA_OCULTAR: string[] = ["NÃO SE APLICA"];
+
+export const INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO: string = "**";
