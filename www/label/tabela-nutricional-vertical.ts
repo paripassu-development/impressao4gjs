@@ -27,7 +27,7 @@ import {
     ESPACAMENTO_LINHA_NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS,
     ESPESSURA_LINHA_CONTORNO_EM_PT, ESPESSURA_LINHA_GROSSA_EM_PT,
     ESPESSURA_LINHA_MEDIA_EM_PT, ESPESSURA_LINHA_PADRAO_EM_PT,
-    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT,
+    ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT, INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO,
     PARAMETROS_PADROES_NUTRICIONAL_V2,
     TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT,
     TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT, TAMANHO_FONTE_PADRAO_TITULO_EM_PT,
@@ -113,6 +113,12 @@ interface IElementoTabelaNutricionalModel {
 const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
     const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
+    // TODO: remover os console logs depois que terminar a tarefa
+    console.log(textbindsTratada);
+    console.log(model.informacoesNutricionais);
+    console.log(model.informacoesNutricionais.tabelaSimplificada);
+    const TABELA_SIMPLIFICADA = await contemTodasRegrasTabelaSimplificada(textbindsTratada.porcaoNutricionalV2, model.informacoesNutricionais);
+    console.log({TABELA_SIMPLIFICADA});
     setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
@@ -218,7 +224,9 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     let porcaoXTratada = adicionarEspacoEntreNumeroELetra(fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, valorPorcaoDefaultEdicao));
 
     if (alimentoProntoParaConsumo(textBindings)) {
-        (!TABELA_SIMPLIFICADA) ? porcao100Tratada += "**" : porcaoXTratada += "**";
+        (!TABELA_SIMPLIFICADA)
+            ? porcao100Tratada += INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO
+            : porcaoXTratada += INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO;
     }
 
     const cabecalhoPorcao100 = {
