@@ -1,3 +1,4 @@
+import {STRING_VAZIA, VALORES_PARA_OCULTAR} from "../../default";
 import {mmPartial} from "../../label/mm";
 import {fabric} from "fabric";
 import {
@@ -305,4 +306,11 @@ function adicionarEspacoEntreNumeroELetra(text: string): string {
     return textoConvertido;
 }
 
-export {splitLines, splitLinesAutoSize, strokeAlignedText, writeFabricText, TextAlign, adicionarEspacoEntreNumeroELetra};
+const ocultaCampoTextoComBaseNoValor = (valor: string): any => {
+    if (VALORES_PARA_OCULTAR.some((item) => item.toUpperCase() === valor.toUpperCase())) {
+        return STRING_VAZIA;
+    }
+    return valor;
+};
+
+export {splitLines, splitLinesAutoSize, strokeAlignedText, writeFabricText, TextAlign, adicionarEspacoEntreNumeroELetra, ocultaCampoTextoComBaseNoValor};

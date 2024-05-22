@@ -110,6 +110,9 @@ export const DADOS_DEFAULT = {
     porcoesPorEmbalagem: "45g",
     medidaCaseiraNutricionalV2: "2 xícaras",
     porcaoNutricionalV2: "15g",
+    contemGluten: "CONTÉM GLÚTEN",
+    advertenciaSobreAlergenicos: "ALÉRGICOS: PODE CONTER AMENDOIN.",
+    advertenciaSobreLactose: "CONTÉM LACTOSE",
     tipoCodigoBarras: "ean13",
     unidadeEmbalagem: "un",
     urlQrCode: "http://pqr.io?c=PNBJ20AIR1IR1ABT&f=152&u=kg&k=1",
@@ -229,58 +232,136 @@ export const DADOS_DEFAULT = {
 };
 
 export const MODEL_DEFAULT = {
-    "impressao": {
-        "larguraPaginaMm": 106,
-        "etiquetasPorPagina": 2,
-        "gapXMm": 0,
-        "margemXMm": 0,
-        "margemYMm": 0,
-        "resolucaoDpi": 203,
-        "orientacaoEtiquetaGraus": 90,
-    },
-    "etiqueta": {
-        "dimensoes": {
-            "alturaMm": 70,
-            "larguraMm": 120,
-        },
-    },
+
     "pdf": {
-        "etiquetaComBorda": false,
-    },
+    "etiquetaComBorda": false,
+},
     "desenho": {
-        "elementos": [
-            {
-                "id": "06a342be-f223-452a-8745-a60f153b0349",
-                "tipo": "tabelaNutricionalVerticalReduzida",
-                "informacoesNutricionais": {
-                    "textoInformacaoNutricional": "INFORMAÇÃO NUTRICIONAL",
-                    "textoQuantidadePorPorcao": "{{{porcaoNutricionalV2}}}",
-                    "textoQuantidadeEmbalagem": "{{{porcoesPorEmbalagem}}}",
-                    "textoQt100": "100g",
-                    "textoAbreviadoValorDiario": "%VD*",
-                    "textoPorcaoCaseira": "{{{medidaCaseiraNutricionalV2}}}",
-                    "textoProporcaoCalorias": "{{{textoProporcaoCalorias}}}",
-                    "ocultarZerados": true,
-                },
-                "posicao": {
-                    "xMm": 2,
-                    "yMm": 0,
-                },
-                "dimensoes": {
-                    "larguraMaximaMm": 64.69,
-                },
-                "fonte": {
-                    "nome": "arial",
-                    "alturaMm": 2.1,
-                    "forcaContorno": 0.8,
-                },
-                "informacoesAdicionais": {
-                    "texto": "*Percentual de valores diários fornecidos pela porção.",
-                    "textoAlimentoProntoParaConsumo": "**No alimento pronto para consumo.",
-                    "caracteresPorLinha": 70,
-                },
+    "elementos": [
+        {
+            "fn": "",
+            "tipo": "texto",
+            "fonte": {
+                "nome": "consolas",
+                "negrito": false,
+                "alturaMm": 7,
             },
-        ],
+            "valor": "{{{ean13Nutricional}}}",
+            "posicao": {
+                "xMm": 55,
+                "yMm": 35,
+            },
+            "dimensoes": {
+                "larguraMaximaMm": 30,
+            },
+            "iconeItem": "text-background",
+            "id": "66a94459-b804-4ae1-96f1-d31e5cc1eae5",
+        },
+        {
+            "fn": "",
+            "tipo": "texto",
+            "fonte": {
+                "nome": "consolas",
+                "negrito": false,
+                "alturaMm": 7,
+            },
+            "valor": "{{{contemGluten}}}",
+            "posicao": {
+                "xMm": 55,
+                "yMm": 25,
+            },
+            "dimensoes": {
+                "larguraMaximaMm": 60,
+            },
+            "iconeItem": "text-background",
+            "id": "457b24c2-d569-4684-aa45-e6c77d30e82e",
+        },
+        {
+            "fn": "",
+            "tipo": "texto",
+            "fonte": {
+                "nome": "consolas",
+                "negrito": false,
+                "alturaMm": 7,
+            },
+            "valor": "{{{advertenciaSobreAlergenicos}}}",
+            "posicao": {
+                "xMm": 55,
+                "yMm": 15,
+            },
+            "dimensoes": {
+                "larguraMaximaMm": 60,
+            },
+            "iconeItem": "text-background",
+            "id": "02ff7317-9753-43ab-9b9d-0e33563b65ba",
+        },
+        {
+            "fn": "",
+            "tipo": "texto",
+            "fonte": {
+                "nome": "consolas",
+                "negrito": false,
+                "alturaMm": 7,
+            },
+            "valor": "{{{advertenciaSobreLactose}}}",
+            "posicao": {
+                "xMm": 55,
+                "yMm": 5,
+            },
+            "dimensoes": {
+                "larguraMaximaMm": 60,
+            },
+            "iconeItem": "text-background",
+            "id": "e13a6f76-7c0c-4361-81a5-a78286f03e81",
+        },
+        {
+            "tipo": "tabelaNutricionalVerticalReduzida",
+            "fonte": {
+                "nome": "arial",
+                "alturaMm": 2.1,
+                "forcaContorno": 0.8,
+            },
+            "posicao": {
+                "xMm": 2,
+                "yMm": 0,
+            },
+            "dimensoes": {
+                "larguraMaximaMm": 51.7,
+            },
+            "iconeItem": "list-alt",
+            "informacoesAdicionais": {
+                "texto": "*Percentual de valores diários fornecidos pela porção.",
+                "caracteresPorLinha": 70,
+                "textoAlimentoProntoParaConsumo": "**No alimento pronto para consumo.",
+            },
+            "informacoesNutricionais": {
+                "textoQt100": "100g",
+                "ocultarZerados": false,
+                "textoPorcaoCaseira": "{{{medidaCaseiraNutricionalV2}}}",
+                "textoProporcaoCalorias": "{{{textoProporcaoCalorias}}}",
+                "textoQuantidadeEmbalagem": "{{{porcoesPorEmbalagem}}}",
+                "textoQuantidadePorPorcao": "{{{porcaoNutricionalV2}}}",
+                "textoAbreviadoValorDiario": "%VD*",
+                "textoInformacaoNutricional": "INFORMAÇÃO NUTRICIONAL",
+            },
+            "id": "8cd000cb-f2dd-4add-b930-50a1faa4a80f",
+        },
+    ],
+},
+    "etiqueta": {
+    "dimensoes": {
+        "alturaMm": 50,
+        "larguraMm": 120,
+    },
+},
+    "impressao": {
+    "gapXMm": 0,
+    "margemXMm": 0,
+    "margemYMm": 0,
+    "resolucaoDpi": 203,
+    "larguraPaginaMm": 106,
+    "etiquetasPorPagina": 2,
+    "orientacaoEtiquetaGraus": 90,
     },
 };
 
@@ -444,3 +525,10 @@ export const VIRGULA_ESPACO: string = ", ";
 export const PONTO_FINAL: string = ".";
 export const REGEX_ULTIMA_VIRGULA: any = /,([^,]*)$/;
 export const ESPACO_E: string = " e$1";
+export const ABRE_PARENTESES: string = "(";
+export const FECHA_PARENTESES: string = ")";
+export const REGEX_REMOVE_NUMEROS: any = /\d+/g;
+export const APENAS_G: string = "g";
+export const APENAS_MG: string = "mg";
+
+export const VALORES_PARA_OCULTAR: string[] = ["NÃO SE APLICA"];

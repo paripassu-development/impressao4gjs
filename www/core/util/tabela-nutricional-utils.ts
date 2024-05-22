@@ -1,15 +1,17 @@
 import {
-    ESPACO_E,
+    ABRE_PARENTESES, APENAS_G, APENAS_MG,
+    ESPACO_E, FECHA_PARENTESES,
     G,
     KCAL,
     L,
     MG,
     ML,
-    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE, PONTO_FINAL, REGEX_ULTIMA_VIRGULA,
+    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE, PONTO_FINAL, REGEX_REMOVE_NUMEROS, REGEX_ULTIMA_VIRGULA,
     STRING_VAZIA,
     VIRGULA,
     VIRGULA_ESPACO,
 } from "../../default";
+import {text} from "../../label/text";
 
 const informacoesPadraoZero = [
     "valorEnergeticoQtPorcao",
@@ -289,4 +291,22 @@ export const montaTextoNaoContemQuantidadesSignificativasDe = (nutrientes: any) 
             .replaceAll(VIRGULA, VIRGULA_ESPACO)
             .replace(REGEX_ULTIMA_VIRGULA, ESPACO_E)
         + PONTO_FINAL;
+};
+
+export const extraiPorcao = (textoPorcao: string) => {
+    return textoPorcao.replace(REGEX_REMOVE_NUMEROS, STRING_VAZIA);
+};
+
+export const montaRotuloDinamicoUnidadePorcaoTabelaVertical = (rotulo: string, unidadePorcao: string) => {
+    return rotulo.replace(
+        G,
+        `${ABRE_PARENTESES}${extraiPorcao(unidadePorcao)}${FECHA_PARENTESES}`,
+    );
+};
+
+export const montaRotuloDinamicoUnidadePorcaoTabelaLinear = (unidade: string, unidadePorcao: string) => {
+    if (unidade === APENAS_MG) { return unidade; }
+    return unidade.replace(
+        APENAS_G, unidadePorcao.replace(REGEX_REMOVE_NUMEROS, STRING_VAZIA),
+    );
 };
