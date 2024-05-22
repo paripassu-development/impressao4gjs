@@ -79,7 +79,6 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoProporcaoCalorias: string;
     informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
     ocultarZerados: boolean;
-    tabelaSimplificada: boolean;
     parametrosPadroesNutricionalV2: [any];
 }
 
@@ -108,17 +107,13 @@ interface IElementoTabelaNutricionalModel {
     informacoesNutricionais: IElementoTabelaNutricionalModelInformacoesNutricionais;
     informacoesAdicionais: IElementoTabelaNutricionalInformacoesAdicionais;
     opcoes?: IElementoTabelaNutricionalOpcoes;
+    tabelaSimplificada: boolean;
 }
 
 const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
     const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
-    // TODO: remover os console logs depois que terminar a tarefa
-    console.log(textbindsTratada);
-    console.log(model.informacoesNutricionais);
-    console.log(model.informacoesNutricionais.tabelaSimplificada);
-    const TABELA_SIMPLIFICADA = await contemTodasRegrasTabelaSimplificada(textbindsTratada.porcaoNutricionalV2, model.informacoesNutricionais);
-    console.log({TABELA_SIMPLIFICADA});
+    const TABELA_SIMPLIFICADA = await contemTodasRegrasTabelaSimplificada(textbindsTratada.porcaoNutricionalV2, textbindsTratada.tabelaSimplificada);
     setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();

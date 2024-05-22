@@ -84,7 +84,6 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     textoProporcaoCalorias: string;
     informacoesNutrientesTabelaNutricional: IInformacoesNutrientesTabelaNutricional;
     ocultarZerados: boolean;
-    tabelaSimplificada: boolean;
     parametrosPadroesNutricionalV2: [any];
 }
 
@@ -113,17 +112,13 @@ interface IElementoTabelaNutricionalModel {
     informacoesNutricionais: IElementoTabelaNutricionalModelInformacoesNutricionais;
     informacoesAdicionais: IElementoTabelaNutricionalInformacoesAdicionais;
     opcoes?: IElementoTabelaNutricionalOpcoes;
+    tabelaSimplificada: boolean;
 }
 
 const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
-    // TODO: remover os console logs depois que terminar a tarefa
-    console.log(textbindsTratada);
-    console.log(model.informacoesNutricionais);
-    console.log(model.informacoesNutricionais.tabelaSimplificada);
-
     const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
-    const TABELA_SIMPLIFICADA = await contemTodasRegrasTabelaSimplificada(textbindsTratada.porcaoNutricionalV2, model.informacoesNutricionais);
+    const TABELA_SIMPLIFICADA = await contemTodasRegrasTabelaSimplificada(textbindsTratada.porcaoNutricionalV2, textbindsTratada.tabelaSimplificada);
     setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
@@ -135,7 +130,6 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     const larguraMaxima = model.dimensoes.larguraMaximaMm;
     let yMm = model.posicao.yMm;
     // Altura 3.8mm
-    console.log({TABELA_SIMPLIFICADA});
     const alturaLinhaMm = model.fonte.alturaMm * 1.46;
     // 3?
     const lineStrokeGap = alturaLinhaMm / 3;
