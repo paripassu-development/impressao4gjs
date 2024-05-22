@@ -150,6 +150,7 @@ const posicoesCentralizadasTextoQuantidadePorcao = (parametroTipoTabela: TipoTab
             "5": - 0.8,
             "6": - 1.38,
             "7": - 2,
+            "8": - 2.2,
         };
     }
 
@@ -161,6 +162,7 @@ const posicoesCentralizadasTextoQuantidadePorcao = (parametroTipoTabela: TipoTab
         "5": + 0.2,
         "6": - 0.47,
         "7": - 1.3,
+        "8": + 1,
     };
 };
 
