@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v1.36.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.36.0%0D1.35.0) (22/05/2024)
+
+### Adicionado
+* ([RST-8807](https://paripassu.atlassian.net/browse/RST-8807)): Adicionado suporte a liquidos nas tabelas nutricionais.
+
 ## [v1.35.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.35.0%0D1.35.0) (08/05/2024)
 
 ### Adicionado
