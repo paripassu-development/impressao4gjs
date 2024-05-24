@@ -109,7 +109,7 @@ export const DADOS_DEFAULT = {
     textoProporcaoCalorias: "999 kcal = 4180kj",
     porcoesPorEmbalagem: "45g",
     medidaCaseiraNutricionalV2: "2 xícaras",
-    porcaoNutricionalV2: "15g",
+    porcaoNutricionalV2: "100g",
     contemGluten: "CONTÉM GLÚTEN",
     advertenciaSobreAlergenicos: "ALÉRGICOS: PODE CONTER AMENDOIN.",
     advertenciaSobreLactose: "CONTÉM LACTOSE",
@@ -337,6 +337,7 @@ export const MODEL_DEFAULT = {
             "informacoesNutricionais": {
                 "textoQt100": "100g",
                 "ocultarZerados": false,
+                "tabelaSimplificada": false,
                 "textoPorcaoCaseira": "{{{medidaCaseiraNutricionalV2}}}",
                 "textoProporcaoCalorias": "{{{textoProporcaoCalorias}}}",
                 "textoQuantidadeEmbalagem": "{{{porcoesPorEmbalagem}}}",
@@ -528,7 +529,12 @@ export const ESPACO_E: string = " e$1";
 export const ABRE_PARENTESES: string = "(";
 export const FECHA_PARENTESES: string = ")";
 export const REGEX_REMOVE_NUMEROS: any = /\d+/g;
+export const REGEX_APENAS_NUMEROS: any = /\D/g;
 export const APENAS_G: string = "g";
 export const APENAS_MG: string = "mg";
 
+export const VALOR_PORCAO_100: string = "100";
+
 export const VALORES_PARA_OCULTAR: string[] = ["NÃO SE APLICA"];
+
+export const INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO: string = "**";
