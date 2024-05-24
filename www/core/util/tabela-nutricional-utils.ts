@@ -1,13 +1,19 @@
 import {
-    ABRE_PARENTESES, APENAS_G, APENAS_MG,
-    ESPACO_E, FECHA_PARENTESES,
+    ABRE_PARENTESES,
+    APENAS_G,
+    APENAS_MG,
+    ESPACO_E,
+    FECHA_PARENTESES,
     G,
     KCAL,
     L,
     MG,
     ML,
-    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE, PONTO_FINAL, REGEX_REMOVE_NUMEROS, REGEX_ULTIMA_VIRGULA,
-    STRING_VAZIA,
+    NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE,
+    PONTO_FINAL, REGEX_APENAS_NUMEROS,
+    REGEX_REMOVE_NUMEROS,
+    REGEX_ULTIMA_VIRGULA,
+    STRING_VAZIA, VALOR_PORCAO_100,
     VIRGULA,
     VIRGULA_ESPACO,
 } from "../../default";
@@ -144,6 +150,7 @@ const posicoesCentralizadasTextoQuantidadePorcao = (parametroTipoTabela: TipoTab
             "5": - 0.8,
             "6": - 1.38,
             "7": - 2,
+            "8": - 2.2,
         };
     }
 
@@ -155,6 +162,7 @@ const posicoesCentralizadasTextoQuantidadePorcao = (parametroTipoTabela: TipoTab
         "5": + 0.2,
         "6": - 0.47,
         "7": - 1.3,
+        "8": + 1,
     };
 };
 
@@ -309,4 +317,10 @@ export const montaRotuloDinamicoUnidadePorcaoTabelaLinear = (unidade: string, un
     return unidade.replace(
         APENAS_G, unidadePorcao.replace(REGEX_REMOVE_NUMEROS, STRING_VAZIA),
     );
+};
+
+export const contemTodasRegrasTabelaSimplificada = async (porcao: string, tabelaSimplificada: boolean) => {
+    if (tabelaSimplificada === false) { return false; }
+    const apenasValorPorcao = porcao.replace(REGEX_APENAS_NUMEROS, STRING_VAZIA);
+    return (apenasValorPorcao === VALOR_PORCAO_100);
 };
