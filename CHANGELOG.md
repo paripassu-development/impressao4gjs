@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v1.37.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.37.0%0D1.36.0) (24/05/2024)
+
+### Adicionado
+* ([RST-9015](https://paripassu.atlassian.net/browse/RST-9015)): Agora tabelas verticais consegue ter o modelo simplificado dinamicamente com base no cadastro da nutricional.
+
 ## [v1.36.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.36.0%0D1.35.0) (22/05/2024)
 
 ### Adicionado
