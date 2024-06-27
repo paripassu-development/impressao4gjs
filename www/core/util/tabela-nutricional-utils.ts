@@ -319,8 +319,6 @@ export const montaRotuloDinamicoUnidadePorcaoTabelaLinear = (unidade: string, un
     );
 };
 
-export const contemTodasRegrasTabelaSimplificada = async (porcao: string, tabelaSimplificada: boolean) => {
-    if (tabelaSimplificada === false) { return false; }
-    const apenasValorPorcao = porcao.replace(REGEX_APENAS_NUMEROS, STRING_VAZIA);
-    return (apenasValorPorcao === VALOR_PORCAO_100);
+export const contemTodasRegrasTabelaSimplificada = async (tabelaSimplificada: boolean) => {
+    return !!(tabelaSimplificada);
 };
