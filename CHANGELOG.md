@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v1.37.1](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.37.1%0D1.37.0) (27/06/2024)
+
+### Atualizado
+* ([RST-9149](https://paripassu.atlassian.net/browse/RST-9149)): Atualizada regra de tabela simplificada, agora apenas com a flag na nutricional já é o suficiente para ocultar o campo de 100g.
+
 ## [v1.37.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.37.0%0D1.36.0) (24/05/2024)
 
 ### Adicionado
