@@ -118,7 +118,7 @@ interface IElementoTabelaNutricionalModel {
 const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoTabelaNutricionalModel, textBindings?: any) => {
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
     const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
-    const TABELA_SIMPLIFICADA = await contemTodasRegrasTabelaSimplificada(textbindsTratada.porcaoNutricionalV2, textbindsTratada.tabelaSimplificada);
+    const TABELA_SIMPLIFICADA = await contemTodasRegrasTabelaSimplificada(textbindsTratada.tabelaSimplificada);
     setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
