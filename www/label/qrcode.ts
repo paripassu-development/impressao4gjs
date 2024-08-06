@@ -2,7 +2,7 @@ import * as Mustache from "mustache";
 import {mmPartial} from "./mm";
 
 declare var require: any;
-const QRCode: any = require("qrcodejs2");
+const QRCode: any = require("qrcodejs2-fixes");
 
 interface IElementoQrcodeModelPosicao {
     xMm: number;

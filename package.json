@@ -46,6 +46,7 @@
     "moment": "^2.21.0",
     "mustache": "2.3.0",
     "qrcodejs2": "0.0.2",
+    "qrcodejs2-fixes": "^0.0.2",
     "source-map-support": "^0.5.10"
   }
 }
