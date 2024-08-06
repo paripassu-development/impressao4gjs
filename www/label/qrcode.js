@@ -1,6 +1,6 @@
 var Mustache = require("mustache");
 var mm_1 = require("./mm");
-var QRCode = require("qrcodejs2");
+var QRCode = require("qrcodejs2-fixes");
 var drawQrcode = function (id, ctx, dpi, model, textBindings) {
     var mm = mm_1.mmPartial(dpi);
     var qrcodeImg = createQrCode(id, {
