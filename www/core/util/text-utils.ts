@@ -1,10 +1,11 @@
-import {STRING_VAZIA, VALORES_PARA_OCULTAR} from "../../default";
-import {mmPartial} from "../../label/mm";
 import {fabric} from "fabric";
 import {
     Canvas,
-    TextOptions
+    TextOptions,
 } from "fabric/fabric-impl";
+import * as _ from "lodash";
+import {STRING_VAZIA, VALORES_PARA_OCULTAR} from "../../default";
+import {mmPartial} from "../../label/mm";
 
 interface IFabricTextLineStyle {
     [charIndex: number]: TextOptions
