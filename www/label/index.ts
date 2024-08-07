@@ -1,4 +1,5 @@
 import {fabric} from "fabric";
+// @ts-ignore
 import * as _ from "lodash";
 import * as Mustache from "mustache";
 import {Error} from "../core/common/error";
@@ -10,12 +11,11 @@ import {mmPartial} from "./mm";
 import {qrcode} from "./qrcode";
 import {tabelaNutricional} from "./tabela-nutricional";
 import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
+import {tabelaNutricionalLinear} from "./tabela-nutricional-linear";
 import {tabelaNutricionalV2} from "./tabela-nutricional-v2";
 import {tabelaNutricionalVertical} from "./tabela-nutricional-vertical";
 import {tabelaNutricionalVerticalReduzida} from "./tabela-nutricional-vertical-reduzida";
 import {text} from "./text";
-import {Canvas} from "fabric/fabric-impl";
-import {tabelaNutricionalLinear} from "./tabela-nutricional-linear";
 
 export const GS1_DATE_PATTERN = "YYmmDD";
 export const BARCODE_IMG_ELEMENT_ID = "barcode-img";
@@ -108,7 +108,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
     const canvas = canvasUtils.createCanvas(idElementoCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
     const ctx = canvasUtils.createContext(canvas);
     const el = document.getElementById(id);
-    const validacoes = _.indexBy(model.validacoes, "variavel") as any;
+    const validacoes = _.keyBy(model.validacoes, "variavel") as any;
     el.appendChild(canvas);
     const promises: Array<Promise<any>> = [];
     canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
