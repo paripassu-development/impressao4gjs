@@ -16,6 +16,7 @@ import {tabelaNutricionalVerticalReduzida} from "./tabela-nutricional-vertical-r
 import {text} from "./text";
 import {Canvas} from "fabric/fabric-impl";
 import {tabelaNutricionalLinear} from "./tabela-nutricional-linear";
+import {imageAltoTeor} from "./imagem-alto-teor";
 
 export const GS1_DATE_PATTERN = "YYmmDD";
 export const BARCODE_IMG_ELEMENT_ID = "barcode-img";
@@ -183,6 +184,12 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             barraOrigemRastreada: (): Promise<any> => {
                 return new Promise((resolve) => {
                     barraOrigemRastreada.drawBarraOrigemRastreada(id, ctx, model.impressao.resolucaoDpi, elemento);
+                    resolve();
+                });
+            },
+            imageAltoTeor: (): Promise<any> => {
+                return new Promise((resolve) => {
+                    imageAltoTeor.drawAltoTeor(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },

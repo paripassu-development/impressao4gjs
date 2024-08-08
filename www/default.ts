@@ -347,6 +347,17 @@ export const MODEL_DEFAULT = {
             },
             "id": "8cd000cb-f2dd-4add-b930-50a1faa4a80f",
         },
+        {
+            "tipo": "imageAltoTeor",
+            "posicao": {
+                "xMm": 2,
+                "yMm": 0,
+            },
+            "dimensoes": {
+                "larguraMaximaMm": 51.7,
+            },
+            "id": "8cd000cb-f2dd-4add-b930-50a1faa4a90f",
+        },
     ],
 },
     "etiqueta": {
@@ -538,3 +549,6 @@ export const VALOR_PORCAO_100: string = "100";
 export const VALORES_PARA_OCULTAR: string[] = ["NÃO SE APLICA"];
 
 export const INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO: string = "**";
+
+// Images
+export const ALTO_TEOR_UNICO_ACUCAR = "assets/images/alto-teor-acucar.svg"
