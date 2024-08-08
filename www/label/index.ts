@@ -132,12 +132,14 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             qrcode: (): Promise<any> => {
                 return new Promise((resolve) => {
                     qrcode.drawQrcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             texto: (): Promise<any> => {
                 return new Promise((resolve) => {
                     text.drawText(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
@@ -146,42 +148,49 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             tabelaNutricional: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricional.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             tabelaNutricionalV2: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalV2.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             tabelaNutricionalVertical: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalVertical.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             tabelaNutricionalVerticalReduzida: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalVerticalReduzida.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             tabelaNutricionalLinear: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalLinear.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             tabelaNutricionalEmLinha: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalInline.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             barraOrigemRastreada: (): Promise<any> => {
                 return new Promise((resolve) => {
                     barraOrigemRastreada.drawBarraOrigemRastreada(id, ctx, model.impressao.resolucaoDpi, elemento);
+                    // @ts-ignore
                     resolve();
                 });
             },

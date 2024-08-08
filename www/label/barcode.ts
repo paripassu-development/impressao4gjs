@@ -270,6 +270,7 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
                 ctx.rotate(degrees * Math.PI / 180);
                 ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
                 ctx.restore();
+                // @ts-ignore
                 resolve();
             };
         });
