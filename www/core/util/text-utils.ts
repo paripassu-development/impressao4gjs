@@ -4,6 +4,7 @@ import {
     TextOptions,
 // tslint:disable-next-line:no-submodule-imports
 } from "fabric/fabric-impl";
+import _ from "lodash";
 import {STRING_VAZIA, VALORES_PARA_OCULTAR} from "../../default";
 import {mmPartial} from "../../label/mm";
 

@@ -1,4 +1,5 @@
 import {fabric} from "fabric";
+import _ from "lodash";
 import {
     calculaTamanhoFonteByAlturaMMEFontePadraoPT,
     converterPTparaMM,

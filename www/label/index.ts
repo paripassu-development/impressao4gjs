@@ -108,7 +108,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
     const canvas = canvasUtils.createCanvas(idElementoCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
     const ctx = canvasUtils.createContext(canvas);
     const el = document.getElementById(id);
-    const validacoes = _.keyBy(model.validacoes, "variavel") as any;
+    const validacoes = _.indexBy(model.validacoes, "variavel") as any;
     el.appendChild(canvas);
     const promises: Array<Promise<any>> = [];
     canvasUtils.drawBackground(ctx, canvas.width, canvas.height);

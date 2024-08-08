@@ -1,4 +1,5 @@
 import {fabric} from "fabric";
+import _ from "lodash";
 import {fillTemplate, getOrDefault} from "../core/util/param-utils";
 import {setInformacoesV2PadraoZero} from "../core/util/tabela-nutricional-utils";
 import {
