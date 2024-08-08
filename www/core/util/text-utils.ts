@@ -24,6 +24,8 @@ interface IFabricTextOptions {
     degrees?: number;
 }
 
+export type CanvasTextAlign = "start" | "end" | "left" | "right" | "center";
+
 const TextAlign = {
     LEFT: "left",
     RIGHT: "right",
@@ -172,8 +174,6 @@ function resolveCharStyles(text: string, markersConfig: ITextMarkerConfig[]): IF
         styles: {0: lineStyle},
     };
 }
-
-type CanvasTextAlign = "start" | "end" | "left" | "right" | "center";
 
 const strokeAlignedText = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, larguraMaxima: number, text: string, xMm: number, yMm: number, mm: any, textAlign: string, degrees?: number) => {
     let x = xMm;

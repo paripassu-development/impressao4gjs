@@ -1,5 +1,6 @@
 import * as Mustache from "mustache";
 import {
+    CanvasTextAlign,
     ocultaCampoTextoComBaseNoValor,
     splitLines,
     splitLinesAutoSize,
@@ -51,7 +52,7 @@ const drawText = (ctx: CanvasRenderingContext2D, fabricCanvas: Canvas, dpi: numb
         const mm = mmPartial(dpi);
         const degrees = model.posicao.rotacao || 0;
         ctx.save();
-        ctx.textAlign = model.posicao.alinhar || "start";
+        ctx.textAlign = model.posicao.alinhar as CanvasTextAlign || "start" as CanvasTextAlign;
         ctx.fillStyle = "#000000";
         ctx.strokeStyle = "#000000";
         ctx.rotate(degrees * Math.PI / 180);

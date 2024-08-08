@@ -10,6 +10,7 @@ import {
     setInformacoesV2PadraoZero,
 } from "../core/util/tabela-nutricional-utils";
 import {
+    CanvasTextAlign,
     splitLines,
     strokeAlignedText,
     TextAlign, writeFabricText,
@@ -553,7 +554,7 @@ const separarNomesCompostosEmIndividuais = (nomeNutrienteFormatado: string, info
 };
 
 const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any, espessuraLinha: number) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(espessuraLinha);
     // x, y, largura e altura
     ctx.strokeRect(
@@ -566,7 +567,7 @@ const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutr
 };
 
 const desenharLinhaGrossa = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_GROSSA_EM_PT);
     // x, y, largura e altura
     ctx.strokeRect(
@@ -583,7 +584,7 @@ const desenharLinhaContornoHorizontal = (ctx: CanvasRenderingContext2D, model: I
     const espacoMargemInterna = converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT);
     const tamanhoLinhaContornoTotalMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * espacoMargemInterna);
 
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
 
     // x, y, largura e altura
     ctx.strokeRect(
@@ -596,7 +597,7 @@ const desenharLinhaContornoHorizontal = (ctx: CanvasRenderingContext2D, model: I
 };
 
 const desenharLinhaContornoVerticalDireita = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura
@@ -610,7 +611,7 @@ const desenharLinhaContornoVerticalDireita = (ctx: CanvasRenderingContext2D, mod
 };
 
 const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura
