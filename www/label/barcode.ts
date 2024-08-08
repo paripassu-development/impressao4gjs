@@ -1,4 +1,8 @@
+import JsBarcode from "jsbarcode";
+import moment from "moment";
 import * as Mustache from "mustache";
+import {Error} from "../core/common/error";
+import {ErrosPrefix, TipoError} from "../core/constants/constants-impressao";
 import {canvasUtils} from "../core/util/canvas-utils";
 import {
     AI_CONTEUDO, AI_GTIN,
@@ -18,11 +22,6 @@ import {
     ITF_DEFAULT,
 } from "./index";
 import {mmPartial} from "./mm";
-import JsBarcode = require("jsbarcode");
-import moment = require("moment");
-import {Error} from "../core/common/error";
-import {ErrosPrefix, TipoError} from "../core/constants/constants-impressao";
-
 const bwipjs: any = require("bwip-js");
 const _: any = require("lodash");
 
