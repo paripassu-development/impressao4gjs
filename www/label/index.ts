@@ -130,13 +130,13 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
                         errors = _.union(errors, error);
                     });
             },
-            qrcode: (): Promise<any> => {
+            qrcode: (): Promise<void> => {
                 return new Promise((resolve) => {
                     qrcode.drawQrcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
-            texto: (): Promise<any> => {
+            texto: (): Promise<void> => {
                 return new Promise((resolve) => {
                     text.drawText(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
@@ -144,43 +144,43 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             },
             /* TODO - Remover tabelaNutricional, tabelaNutricionalV2, tabelaNutricionalEmLinha após completa adequação
             *   dos clientes com as novas nutricionais verticais*/
-            tabelaNutricional: (): Promise<any> => {
+            tabelaNutricional: (): Promise<void> => {
                 return new Promise((resolve) => {
                     tabelaNutricional.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
-            tabelaNutricionalV2: (): Promise<any> => {
+            tabelaNutricionalV2: (): Promise<void> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalV2.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
-            tabelaNutricionalVertical: (): Promise<any> => {
+            tabelaNutricionalVertical: (): Promise<void> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalVertical.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
-            tabelaNutricionalVerticalReduzida: (): Promise<any> => {
+            tabelaNutricionalVerticalReduzida: (): Promise<void> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalVerticalReduzida.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
-            tabelaNutricionalLinear: (): Promise<any> => {
+            tabelaNutricionalLinear: (): Promise<void> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalLinear.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
-            tabelaNutricionalEmLinha: (): Promise<any> => {
+            tabelaNutricionalEmLinha: (): Promise<void> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalInline.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },
-            barraOrigemRastreada: (): Promise<any> => {
+            barraOrigemRastreada: (): Promise<void> => {
                 return new Promise((resolve) => {
                     barraOrigemRastreada.drawBarraOrigemRastreada(id, ctx, model.impressao.resolucaoDpi, elemento);
                     resolve();
