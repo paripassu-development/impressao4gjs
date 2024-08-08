@@ -173,6 +173,8 @@ function resolveCharStyles(text: string, markersConfig: ITextMarkerConfig[]): IF
     };
 }
 
+type CanvasTextAlign = "start" | "end" | "left" | "right" | "center";
+
 const strokeAlignedText = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, larguraMaxima: number, text: string, xMm: number, yMm: number, mm: any, textAlign: string, degrees?: number) => {
     let x = xMm;
     if (textAlign === TextAlign.CENTER) {
@@ -182,7 +184,8 @@ const strokeAlignedText = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.C
     } else if (textAlign === TextAlign.JUSTIFY) {
         text = justifyText(ctx, mm(larguraMaxima), text);
     }
-    ctx.textAlign = textAlign;
+
+    ctx.textAlign = textAlign as CanvasTextAlign;
 
     if (!!fabricCanvas) {
         writeFabricText(fabricCanvas, ctx, text, x, yMm, larguraMaxima, mm, {degrees});
