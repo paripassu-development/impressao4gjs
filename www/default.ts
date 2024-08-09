@@ -551,4 +551,8 @@ export const VALORES_PARA_OCULTAR: string[] = ["NÃO SE APLICA"];
 export const INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO: string = "**";
 
 // Images
-export const ALTO_TEOR_UNICO_ACUCAR = "assets/images/alto-teor-acucar.svg"
+export const ALTO_TEOR_UNICO_ACUCAR = "assets/images/alto-teor-acucar.svg";
+
+export const ALTO_TEOR_UNICO_SODIO = "assets/images/alto-teor-sodio.svg";
+
+export const ALTO_TEOR_GORDURA_SATURADA = "assets/images/alto-teor-gordura-saturada.svg";
