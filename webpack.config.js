@@ -40,8 +40,8 @@ module.exports = {
                 ],
                 loader: "file-loader",
                 options: {
-                    name: "images/[name]--[hash].[ext]",  // Certifique-se de que isso está criando as imagens corretamente
-                    outputPath: "images/",                // Coloca as imagens em 'target/dist/images'
+                    name: "images/[name]--[hash].[ext]",
+                    outputPath: "images/",
                 }
             },
             {//fonts
