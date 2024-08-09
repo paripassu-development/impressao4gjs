@@ -6,7 +6,6 @@
 
 
 import {fabric} from "fabric";
-import {DrawUtils} from "../core/util/draw-utils";
 import {ALTO_TEOR_UNICO_ACUCAR} from "../default";
 
 interface IElementoAltoTeorModelPosicao {

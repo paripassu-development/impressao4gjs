@@ -38,7 +38,11 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, "assets/images")
                 ],
-                loader: "file-loader"
+                loader: "file-loader",
+                options: {
+                    name: "images/[name]--[hash].[ext]",  // Certifique-se de que isso está criando as imagens corretamente
+                    outputPath: "images/",                // Coloca as imagens em 'target/dist/images'
+                }
             },
             {//fonts
                 test: /\.(eot|otf|svg|ttf|woff2?)($|\?)/,
