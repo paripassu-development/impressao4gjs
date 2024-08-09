@@ -354,7 +354,8 @@ export const MODEL_DEFAULT = {
                 "yMm": 0,
             },
             "dimensoes": {
-                "larguraMaximaMm": 51.7,
+                "alturaMm": 5,
+                "larguraMm": 5,
             },
             "id": "8cd000cb-f2dd-4add-b930-50a1faa4a90f",
         },
@@ -551,7 +552,7 @@ export const VALORES_PARA_OCULTAR: string[] = ["NÃO SE APLICA"];
 export const INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO: string = "**";
 
 // Images
-export const ALTO_TEOR_UNICO_ACUCAR = "assets/images/alto-teor-unico-acucar.svg";
+export const ALTO_TEOR_UNICO_ACUCAR = "images/alto-teor-unico-acucar.svg";
 
 export const ALTO_TEOR_UNICO_SODIO = "assets/images/alto-teor-unico-sodio.svg";
 

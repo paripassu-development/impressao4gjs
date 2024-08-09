@@ -7,6 +7,8 @@
 
 import {fabric} from "fabric";
 import {ALTO_TEOR_UNICO_ACUCAR} from "../default";
+import {mmPartial} from "./mm";
+
 
 interface IElementoAltoTeorModelPosicao {
     xMm: number;
@@ -15,7 +17,8 @@ interface IElementoAltoTeorModelPosicao {
 }
 
 interface IElementoAltoTeorModelDimensoes {
-    larguraMaximaMm: number;
+    alturaMm: number;
+    larguraMm: number;
 }
 
 interface IElementoAltoTeorModel {
@@ -25,19 +28,37 @@ interface IElementoAltoTeorModel {
 }
 
 
-const drawAltoTeor = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
-
+const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
+    const mm = mmPartial(dpi);
     console.log("Entrou no drawAltoTeor");
 
-    const imgSvgAltoTeor = new Image(45, 45);
-    imgSvgAltoTeor.src = ALTO_TEOR_UNICO_ACUCAR;
-
-    imgSvgAltoTeor.onload = () => {
-        console.log("Imagem carregada:", imgSvgAltoTeor);
+    createImgAltoTeor({
+        height: mm(model.dimensoes.alturaMm),
+        width: mm(model.dimensoes.larguraMm),
+    }, (imgSvgAltoTeor) => {
         ctx.drawImage(imgSvgAltoTeor, 0, 0);
+    });
+}
+
+
+interface ICreateAltoTeorOptions {
+    height: number;
+    width: number;
+}
+
+const createImgAltoTeor = (options: ICreateAltoTeorOptions, callback: (img: HTMLImageElement) => void) => {
+    const imgSvgAltoTeorCreated = new Image();
+
+    imgSvgAltoTeorCreated.height = options.height;
+    imgSvgAltoTeorCreated.width = options.width;
+    imgSvgAltoTeorCreated.src = ALTO_TEOR_UNICO_ACUCAR;
+
+    imgSvgAltoTeorCreated.onload = () => {
+        console.log("Imagem carregada:", imgSvgAltoTeorCreated);
+        callback(imgSvgAltoTeorCreated);
     };
 
-    imgSvgAltoTeor.onerror = (error) => {
+    imgSvgAltoTeorCreated.onerror = (error) => {
         console.error("Erro ao carregar a imagem:", error);
     };
 }
