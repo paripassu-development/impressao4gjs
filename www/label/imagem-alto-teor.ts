@@ -6,8 +6,8 @@
 
 
 import {fabric} from "fabric";
-import {ALTO_TEOR_UNICO_ACUCAR} from "../default";
 import {mmPartial} from "./mm";
+import {getAltoTeorImagePath} from "../core/util/image-utils";
 
 
 interface IElementoAltoTeorModelPosicao {
@@ -32,9 +32,12 @@ const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas
     const mm = mmPartial(dpi);
     console.log("Entrou no drawAltoTeor");
 
+    const altoTeorImgPath = getAltoTeorImagePath(model.tipo);
+
     createImgAltoTeor({
         height: mm(model.dimensoes.alturaMm),
         width: mm(model.dimensoes.larguraMm),
+        src: altoTeorImgPath,
     }, (imgSvgAltoTeor) => {
         ctx.drawImage(imgSvgAltoTeor, 0, 0);
     });
@@ -44,6 +47,7 @@ const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas
 interface ICreateAltoTeorOptions {
     height: number;
     width: number;
+    src: string;
 }
 
 const createImgAltoTeor = (options: ICreateAltoTeorOptions, callback: (img: HTMLImageElement) => void) => {
@@ -51,7 +55,7 @@ const createImgAltoTeor = (options: ICreateAltoTeorOptions, callback: (img: HTML
 
     imgSvgAltoTeorCreated.height = options.height;
     imgSvgAltoTeorCreated.width = options.width;
-    imgSvgAltoTeorCreated.src = ALTO_TEOR_UNICO_ACUCAR;
+    imgSvgAltoTeorCreated.src = options.src;
 
     imgSvgAltoTeorCreated.onload = () => {
         console.log("Imagem carregada:", imgSvgAltoTeorCreated);
