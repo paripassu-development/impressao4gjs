@@ -7,7 +7,7 @@
 
 import {fabric} from "fabric";
 import {mmPartial} from "./mm";
-import {getAltoTeorImagePath} from "../core/util/image-utils";
+import {getPathAltoTeor} from "../core/util/image-utils";
 
 
 interface IElementoAltoTeorModelPosicao {
@@ -21,10 +21,18 @@ interface IElementoAltoTeorModelDimensoes {
     larguraMm: number;
 }
 
+interface IElementoAltoTeorModelNutricional {
+    sodio: number;
+    acucar: number;
+    gorduraSaturada: number;
+}
+
+
 interface IElementoAltoTeorModel {
     tipo: string;
     posicao: IElementoAltoTeorModelPosicao;
     dimensoes: IElementoAltoTeorModelDimensoes;
+    nutricional: IElementoAltoTeorModelNutricional;
 }
 
 
@@ -32,12 +40,19 @@ const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas
     const mm = mmPartial(dpi);
     console.log("Entrou no drawAltoTeor");
 
-    const altoTeorImgPath = getAltoTeorImagePath(model.tipo);
+
+    //mock de teste:
+    const mockNutricional: IElementoAltoTeorModelNutricional = {
+        sodio: 500,
+        acucar: 20,
+        gorduraSaturada: 8,
+    };
+
 
     createImgAltoTeor({
         height: mm(model.dimensoes.alturaMm),
         width: mm(model.dimensoes.larguraMm),
-        src: altoTeorImgPath,
+        src: getPathAltoTeor(mockNutricional),
     }, (imgSvgAltoTeor) => {
         ctx.drawImage(imgSvgAltoTeor, 0, 0);
     });
