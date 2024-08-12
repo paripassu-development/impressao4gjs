@@ -36,12 +36,11 @@ module.exports = {
             {
                 test: /\.svg$/,
                 include: [
-                    path.resolve(__dirname, "assets/images")
+                    path.resolve(__dirname, "www/assets/images")
                 ],
                 loader: "file-loader",
                 options: {
-                    name: "images/[name]--[hash].[ext]",
-                    outputPath: "images/",
+                    name: "images/[name]--[hash].[ext]"
                 }
             },
             {//fonts
