@@ -17,22 +17,21 @@ import {
 
 interface IElementoAltoTeorModelNutricional {
     sodioQt100: number;
-    acucaresTotaisQt100: number;
+    acucaresAdicionadosQt100: number;
     gorduraSaturadaQt100: number;
 }
 
 export const getPathAltoTeor = (nutricional: IElementoAltoTeorModelNutricional): string => {
-    //TODO: REMOVER CONSOLE.LOG
-    console.log("Entrou no getAltoTeorImagePath");
     // TODO: Melhorar validações
     if (!nutricional) { return STRING_VAZIA; }
-    if (!nutricional.acucaresTotaisQt100) { return STRING_VAZIA; }
+    if (!nutricional.acucaresAdicionadosQt100) { return STRING_VAZIA; }
     if (!nutricional.gorduraSaturadaQt100) { return STRING_VAZIA; }
+    if (!nutricional.sodioQt100) { return STRING_VAZIA; }
 
     if (nutricional.sodioQt100 >= VALOR_MINIMO_ALTO_TEOR_SODIO) {
         return ALTO_TEOR_UNICO_SODIO;
     }
-    if (nutricional.acucaresTotaisQt100 >= VALOR_MINIMO_ALTO_TEOR_ACUCAR) {
+    if (nutricional.acucaresAdicionadosQt100 >= VALOR_MINIMO_ALTO_TEOR_ACUCAR) {
         return ALTO_TEOR_UNICO_ACUCAR;
     }
     if (nutricional.gorduraSaturadaQt100 >= VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA) {

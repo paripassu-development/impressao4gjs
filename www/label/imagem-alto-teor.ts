@@ -8,7 +8,6 @@
 
 
 import {fabric} from "fabric";
-import {mmPartial} from "./mm";
 import {getPathAltoTeor} from "../core/util/image-utils";
 import {DADOS_DEFAULT} from "../default";
 import {extraiPorcao} from "../core/util/tabela-nutricional-utils";
@@ -27,7 +26,7 @@ interface IElementoAltoTeorModelDimensoes {
 
 interface IElementoAltoTeorModelNutricional {
     sodioQt100: number;
-    acucaresTotaisQt100: number;
+    acucaresAdicionadosQt100: number;
     gorduraSaturadaQt100: number;
 }
 
@@ -41,50 +40,38 @@ interface IElementoAltoTeorModel {
 const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
     const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
-    // const mm = mmPartial(dpi);
     const posicaoYMm = model.posicao.yMm;
     const posicaoXMm = model.posicao.xMm;
-    const {sodioQt100, acucaresTotaisQt100, gorduraSaturadaQt100} = textbindsTratada;
-
-    // TODO: remover depois os console
-    console.clear();
-    console.table(textbindsTratada);
-    console.log(sodioQt100, acucaresTotaisQt100, gorduraSaturadaQt100);
+    const alturaMm = model.dimensoes.alturaMm;
+    const larguraMm = model.dimensoes.larguraMm;
+    const {sodioQt100, acucaresAdicionadosQt100, gorduraSaturadaQt100} = textbindsTratada;
 
     createImgAltoTeor({
-        alturaMm: (model.dimensoes.alturaMm),
-        larguraMm: (model.dimensoes.larguraMm),
         imageSvg: getPathAltoTeor({
             sodioQt100: sodioQt100,
-            acucaresTotaisQt100: acucaresTotaisQt100,
+            acucaresAdicionadosQt100: acucaresAdicionadosQt100,
             gorduraSaturadaQt100: gorduraSaturadaQt100,
         }),
     }, (imgSvgAltoTeor) => {
-        ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm);
+        ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
     });
 }
 
 interface ICreateAltoTeorOptions {
-    alturaMm: number;
-    larguraMm: number;
     imageSvg: string;
 }
 
 const createImgAltoTeor = (options: ICreateAltoTeorOptions, callback: (img: HTMLImageElement) => void) => {
-    const altura = options.alturaMm;
-    const largura = options.larguraMm;
 
-    const imgSvgAltoTeorCreated = new Image(largura, altura);
+    const imgSvgAltoTeorCreated = new Image();
     imgSvgAltoTeorCreated.src = options.imageSvg;
 
     imgSvgAltoTeorCreated.onload = () => {
-        //TODO: REMOVER CONSOLE.LOG
-        console.log("Imagem carregada:", imgSvgAltoTeorCreated);
         callback(imgSvgAltoTeorCreated);
     };
 
     imgSvgAltoTeorCreated.onerror = (error) => {
-        console.error("Erro ao carregar a imagem:", error);
+        console.error(error);
     };
 }
 
