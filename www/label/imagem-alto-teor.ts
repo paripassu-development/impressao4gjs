@@ -71,7 +71,7 @@ const createImgAltoTeor = (options: ICreateAltoTeorOptions, callback: (img: HTML
     };
 
     imgSvgAltoTeorCreated.onerror = (error) => {
-        console.error(error);
+        console.error("Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.", error);
     };
 }
 

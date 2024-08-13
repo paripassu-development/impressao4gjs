@@ -10,9 +10,12 @@ import {
     ALTO_TEOR_UNICO_GORDURA_SATURADA,
     ALTO_TEOR_UNICO_SODIO,
     STRING_VAZIA,
-    VALOR_MINIMO_ALTO_TEOR_ACUCAR,
-    VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA,
-    VALOR_MINIMO_ALTO_TEOR_SODIO
+    VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO,
+    VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO,
+    VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO,
+    L,
+    G,
+    MG
 } from "../../default";
 
 interface IElementoAltoTeorModelNutricional {
@@ -28,13 +31,13 @@ export const getPathAltoTeor = (nutricional: IElementoAltoTeorModelNutricional):
     if (!nutricional.gorduraSaturadaQt100) { return STRING_VAZIA; }
     if (!nutricional.sodioQt100) { return STRING_VAZIA; }
 
-    if (nutricional.sodioQt100 >= VALOR_MINIMO_ALTO_TEOR_SODIO) {
+    if (nutricional.sodioQt100 >= VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO) {
         return ALTO_TEOR_UNICO_SODIO;
     }
-    if (nutricional.acucaresAdicionadosQt100 >= VALOR_MINIMO_ALTO_TEOR_ACUCAR) {
+    if (nutricional.acucaresAdicionadosQt100 >= VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO) {
         return ALTO_TEOR_UNICO_ACUCAR;
     }
-    if (nutricional.gorduraSaturadaQt100 >= VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA) {
+    if (nutricional.gorduraSaturadaQt100 >= VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO) {
         return ALTO_TEOR_UNICO_GORDURA_SATURADA;
     }
     return STRING_VAZIA;
