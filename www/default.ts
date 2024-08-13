@@ -551,7 +551,12 @@ export const VALORES_PARA_OCULTAR: string[] = ["NÃO SE APLICA"];
 
 export const INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO: string = "**";
 
+export const VALOR_MINIMO_ALTO_TEOR_ACUCAR = 15;
+export const VALOR_MINIMO_ALTO_TEOR_SODIO = 600;
+export const VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA = 6;
+
 // Images
 export const ALTO_TEOR_UNICO_ACUCAR = "images/alto-teor-unico-acucar.svg";
 export const ALTO_TEOR_UNICO_SODIO = "images/alto-teor-unico-sodio.svg";
 export const ALTO_TEOR_UNICO_GORDURA_SATURADA = "images/alto-teor-unico-gordura-saturada.svg";
+

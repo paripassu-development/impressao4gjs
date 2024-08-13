@@ -6,67 +6,12 @@
 //#TODO: Verificar como passar os parametros de dimensao para desenhar as imagens
 //#TODO: Criar os tokens no label-configuration.ts (verificar como cria-los no bd)
 
-// {
-//     nome: "ras.ui.4g.etiqueta.configuracao.image_alto_teor",
-//     tipo: "imageAltoTeor",
-//     descricao: "ras.ui.4g.etiqueta.configuracao.image_alto_teor.descricao",
-//     camposConfiguraveis: [
-//     {
-//         nome: "ras.ui.4g.etiqueta.configuracao.posicao",
-//         tipo: "OBJECT",
-//         obrigatorio: true,
-//         campo: "posicao",
-//         itens: [
-//             {
-//                 nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
-//                 descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.posicao_horizontal.descricao",
-//                 tipo: "NUMERIC",
-//                 categoria: "posicionamento",
-//                 obrigatorio: true,
-//                 campo: "posicao.xMm",
-//                 padrao: 0,
-//             },
-//             {
-//                 nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
-//                 descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.posicao_vertical.descricao",
-//                 tipo: "NUMERIC",
-//                 obrigatorio: true,
-//                 campo: "posicao.yMm",
-//                 padrao: 2,
-//             },
-//             {
-//                 nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
-//                 descricao: "Ângulo de rotação da tabela nutricional dentro da etiqueta",
-//                 campo: "posicao.rotacao",
-//                 tipo: "OPTIONS",
-//                 opcoes: VALORES_ROTACAO,
-//                 obrigatorio: false,
-//             },
-//         ],
-//     },
-//     {
-//         nome: "ras.ui.4g.etiqueta.configuracao.dimensoes",
-//         tipo: "OBJECT",
-//         obrigatorio: true,
-//         campo: "dimensoes",
-//         itens: [
-//             {
-//                 nome: "ras.ui.4g.etiqueta.configuracao.largura_maxima",
-//                 descricao: "ras.ui.4g.etiqueta.configuracao.tabela_nutricional.largura_maxima.descricao",
-//                 tipo: "NUMERIC",
-//                 obrigatorio: true,
-//                 campo: "dimensoes.larguraMaximaMm",
-//                 padrao: 43,
-//             },
-//         ],
-//     },
-
-
-
 
 import {fabric} from "fabric";
 import {mmPartial} from "./mm";
 import {getPathAltoTeor} from "../core/util/image-utils";
+import {DADOS_DEFAULT} from "../default";
+import {extraiPorcao} from "../core/util/tabela-nutricional-utils";
 
 
 interface IElementoAltoTeorModelPosicao {
@@ -81,11 +26,10 @@ interface IElementoAltoTeorModelDimensoes {
 }
 
 interface IElementoAltoTeorModelNutricional {
-    sodio: number;
-    acucaresTotais: number;
-    gorduraSaturada: number;
+    sodioQt100: number;
+    acucaresTotaisQt100: number;
+    gorduraSaturadaQt100: number;
 }
-
 
 interface IElementoAltoTeorModel {
     tipo: string;
@@ -94,34 +38,36 @@ interface IElementoAltoTeorModel {
     nutricional: IElementoAltoTeorModelNutricional;
 }
 
-
 const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
+    const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
+    const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
     // const mm = mmPartial(dpi);
     const posicaoYMm = model.posicao.yMm;
     const posicaoXMm = model.posicao.xMm;
-    console.log("Entrou no drawAltoTeor");
+    const {sodioQt100, acucaresTotaisQt100, gorduraSaturadaQt100} = textbindsTratada;
 
-    //mock de teste:
-    const mockNutricional: IElementoAltoTeorModelNutricional = {
-        sodio: 500,
-        acucaresTotais: 20,
-        gorduraSaturada: 8,
-    };
+    // TODO: remover depois os console
+    console.clear();
+    console.table(textbindsTratada);
+    console.log(sodioQt100, acucaresTotaisQt100, gorduraSaturadaQt100);
 
     createImgAltoTeor({
         alturaMm: (model.dimensoes.alturaMm),
         larguraMm: (model.dimensoes.larguraMm),
-        src: getPathAltoTeor(mockNutricional),
+        imageSvg: getPathAltoTeor({
+            sodioQt100: sodioQt100,
+            acucaresTotaisQt100: acucaresTotaisQt100,
+            gorduraSaturadaQt100: gorduraSaturadaQt100,
+        }),
     }, (imgSvgAltoTeor) => {
         ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm);
     });
 }
 
-
 interface ICreateAltoTeorOptions {
     alturaMm: number;
     larguraMm: number;
-    src: string;
+    imageSvg: string;
 }
 
 const createImgAltoTeor = (options: ICreateAltoTeorOptions, callback: (img: HTMLImageElement) => void) => {
@@ -129,9 +75,10 @@ const createImgAltoTeor = (options: ICreateAltoTeorOptions, callback: (img: HTML
     const largura = options.larguraMm;
 
     const imgSvgAltoTeorCreated = new Image(largura, altura);
-    imgSvgAltoTeorCreated.src = options.src;
+    imgSvgAltoTeorCreated.src = options.imageSvg;
 
     imgSvgAltoTeorCreated.onload = () => {
+        //TODO: REMOVER CONSOLE.LOG
         console.log("Imagem carregada:", imgSvgAltoTeorCreated);
         callback(imgSvgAltoTeorCreated);
     };

@@ -8,25 +8,35 @@
 import {
     ALTO_TEOR_UNICO_ACUCAR,
     ALTO_TEOR_UNICO_GORDURA_SATURADA,
-    ALTO_TEOR_UNICO_SODIO
+    ALTO_TEOR_UNICO_SODIO,
+    STRING_VAZIA,
+    VALOR_MINIMO_ALTO_TEOR_ACUCAR,
+    VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA,
+    VALOR_MINIMO_ALTO_TEOR_SODIO
 } from "../../default";
 
 interface IElementoAltoTeorModelNutricional {
-    sodio: number;
-    acucaresTotais: number;
-    gorduraSaturada: number;
+    sodioQt100: number;
+    acucaresTotaisQt100: number;
+    gorduraSaturadaQt100: number;
 }
 
 export const getPathAltoTeor = (nutricional: IElementoAltoTeorModelNutricional): string => {
+    //TODO: REMOVER CONSOLE.LOG
     console.log("Entrou no getAltoTeorImagePath");
-    if (nutricional.sodio >= 600) {
+    // TODO: Melhorar validações
+    if (!nutricional) { return STRING_VAZIA; }
+    if (!nutricional.acucaresTotaisQt100) { return STRING_VAZIA; }
+    if (!nutricional.gorduraSaturadaQt100) { return STRING_VAZIA; }
+
+    if (nutricional.sodioQt100 >= VALOR_MINIMO_ALTO_TEOR_SODIO) {
         return ALTO_TEOR_UNICO_SODIO;
     }
-    if (nutricional.acucaresTotais >= 30) {
+    if (nutricional.acucaresTotaisQt100 >= VALOR_MINIMO_ALTO_TEOR_ACUCAR) {
         return ALTO_TEOR_UNICO_ACUCAR;
     }
-    if (nutricional.gorduraSaturada >= 6) {
+    if (nutricional.gorduraSaturadaQt100 >= VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA) {
         return ALTO_TEOR_UNICO_GORDURA_SATURADA;
     }
-    return "";
+    return STRING_VAZIA;
 };
