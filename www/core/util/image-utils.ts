@@ -2,6 +2,8 @@
 //#TODO: -> ex: caso a nutricional apontar qtd de acucar superior a 'x' valor a imagem de alto teor de acucar deve aparecer
 //#TODO: Deixar o mais generico possivel para servir para os 3 tipos de alto teor + suas possiveis combinações
 //#TODO: (posterior) -> uma vez selecionado alto teor em acucar o mesmo n deve aparecer novamente
+//#TODO: Verificar como validar diferentes unidades de medida (mg e g)
+
 
 import {
     ALTO_TEOR_UNICO_ACUCAR,
@@ -11,7 +13,7 @@ import {
 
 interface IElementoAltoTeorModelNutricional {
     sodio: number;
-    acucar: number;
+    acucaresTotais: number;
     gorduraSaturada: number;
 }
 
@@ -20,7 +22,7 @@ export const getPathAltoTeor = (nutricional: IElementoAltoTeorModelNutricional):
     if (nutricional.sodio >= 600) {
         return ALTO_TEOR_UNICO_SODIO;
     }
-    if (nutricional.acucar >= 30) {
+    if (nutricional.acucaresTotais >= 30) {
         return ALTO_TEOR_UNICO_ACUCAR;
     }
     if (nutricional.gorduraSaturada >= 6) {
@@ -28,11 +30,3 @@ export const getPathAltoTeor = (nutricional: IElementoAltoTeorModelNutricional):
     }
     return "";
 };
-
-
-
-
-
-
-
-

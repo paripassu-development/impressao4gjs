@@ -553,7 +553,5 @@ export const INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO: string = "**";
 
 // Images
 export const ALTO_TEOR_UNICO_ACUCAR = "images/alto-teor-unico-acucar.svg";
-
 export const ALTO_TEOR_UNICO_SODIO = "images/alto-teor-unico-sodio.svg";
-
 export const ALTO_TEOR_UNICO_GORDURA_SATURADA = "images/alto-teor-unico-gordura-saturada.svg";
