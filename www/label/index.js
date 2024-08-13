@@ -18,7 +18,7 @@ var mm_1 = require("./mm");
 var qrcode_1 = require("./qrcode");
 var tabela_nutricional_1 = require("./tabela-nutricional");
 var text_1 = require("./text");
-var create = function*(id, model, textBindings) {
+var create = async function(id, model, textBindings) {
     var nomeElementoCanvas = id + "-etiqueta-canvas";
     var mm = mm_1.mmPartial(model.impressao.resolucaoDpi);
     var canvas = canvas_utils_1.canvasUtils.createCanvas(nomeElementoCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
@@ -61,7 +61,7 @@ var create = function*(id, model, textBindings) {
             promises.push(tipos[elemento.tipo]());
         }
     });
-    yield Promise.all(promises);
+    await Promise.all(promises);
     redrawWithoutGrayscale(ctx, canvas.width, canvas.height);
     return canvas;
 };
