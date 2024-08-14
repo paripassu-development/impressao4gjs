@@ -350,12 +350,12 @@ export const MODEL_DEFAULT = {
         {
             "tipo": "imageAltoTeor",
             "posicao": {
-                "xMm": 2,
-                "yMm": 0,
+                "xMm": 0,
+                "yMm": 2,
             },
             "dimensoes": {
-                "alturaMm": 5,
-                "larguraMm": 5,
+                "alturaMm": 30,
+                "larguraMm": 30,
             },
             "id": "8cd000cb-f2dd-4add-b930-50a1faa4a90f",
         },

@@ -12,10 +12,7 @@ import {
     STRING_VAZIA,
     VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO,
     VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO,
-    VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO,
-    L,
-    G,
-    MG
+    VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO
 } from "../../default";
 
 interface IElementoAltoTeorModelNutricional {

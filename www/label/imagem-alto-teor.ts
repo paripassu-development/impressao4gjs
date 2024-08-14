@@ -16,7 +16,6 @@ import {extraiPorcao} from "../core/util/tabela-nutricional-utils";
 interface IElementoAltoTeorModelPosicao {
     xMm: number;
     yMm: number;
-    rotacao: number;
 }
 
 interface IElementoAltoTeorModelDimensoes {
@@ -39,7 +38,7 @@ interface IElementoAltoTeorModel {
 
 const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
-    const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
+    //const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
     const posicaoYMm = model.posicao.yMm;
     const posicaoXMm = model.posicao.xMm;
     const alturaMm = model.dimensoes.alturaMm;
