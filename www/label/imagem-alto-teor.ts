@@ -39,42 +39,45 @@ interface IElementoAltoTeorModel {
 
 const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
-    //const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
     const posicaoYMm = model.posicao.yMm;
     const posicaoXMm = model.posicao.xMm;
     const alturaMm = model.dimensoes.alturaMm;
     const larguraMm = model.dimensoes.larguraMm;
     const degrees = model.posicao.rotacao || 0;
-    const {sodioQt100, acucaresAdicionadosQt100, gorduraSaturadaQt100} = textbindsTratada;
+    const { sodioQt100, acucaresAdicionadosQt100, gorduraSaturadaQt100 } = textbindsTratada;
 
-    createImgAltoTeor({
+    const imgSvgAltoTeor = createImgAltoTeor({
         imageSvg: getPathAltoTeor({
             sodioQt100: sodioQt100,
             acucaresAdicionadosQt100: acucaresAdicionadosQt100,
             gorduraSaturadaQt100: gorduraSaturadaQt100,
         }),
-    }, (imgSvgAltoTeor) => {
-        ctx.rotate(degrees * Math.PI / 180);
-        ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
     });
-}
+
+    imgSvgAltoTeor.onload = () => {
+        ctx.rotate((degrees * Math.PI) / 180);
+        ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
+    };
+
+    imgSvgAltoTeor.onerror = (error) => {
+        console.error(
+            "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.",
+            error
+        );
+    };
+};
+
 
 interface ICreateAltoTeorOptions {
     imageSvg: string;
 }
 
-const createImgAltoTeor = (options: ICreateAltoTeorOptions, callback: (img: HTMLImageElement) => void) => {
-
+const createImgAltoTeor = (options: ICreateAltoTeorOptions): HTMLImageElement => {
     const imgSvgAltoTeorCreated = new Image();
     imgSvgAltoTeorCreated.src = options.imageSvg;
 
-    imgSvgAltoTeorCreated.onload = () => {
-        callback(imgSvgAltoTeorCreated);
-    };
+    return imgSvgAltoTeorCreated;
+};
 
-    imgSvgAltoTeorCreated.onerror = (error) => {
-        console.error("Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.", error);
-    };
-}
 
 export const imageAltoTeor = {drawAltoTeor};
