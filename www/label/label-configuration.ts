@@ -6560,9 +6560,9 @@ const METADADOS_ELEMENTOS: any[] = [
         ],
     },
     {
-        nome: "ras.ui.4g.etiqueta.configuracao.alto_teor",
+        nome: "ras4.ui.4g.etiqueta.configuracao.alto_teor",
         tipo: "altoTeor",
-        descricao: "ras.ui.4g.etiqueta.configuracao.alto_teor.descricao",
+        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.descricao",
         camposConfiguraveis: [
             {
                 nome: "ras.ui.4g.etiqueta.configuracao.posicao",
@@ -6572,7 +6572,7 @@ const METADADOS_ELEMENTOS: any[] = [
                 itens: [
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.alto_teor.posicao_horizontal.descricao",
+                        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.posicao_horizontal.descricao",
                         tipo: "NUMERIC",
                         categoria: "posicionamento",
                         obrigatorio: true,
@@ -6581,7 +6581,7 @@ const METADADOS_ELEMENTOS: any[] = [
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.alto_teor.posicao_vertical.descricao",
+                        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.posicao_vertical.descricao",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "posicao.yMm",
@@ -6589,7 +6589,7 @@ const METADADOS_ELEMENTOS: any[] = [
                     },
                     {
                         nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.alto_teor.rotacao.descricao",
+                        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.rotacao.descricao",
                         campo: "posicao.rotacao",
                         tipo: "OPTIONS",
                         opcoes: VALORES_ROTACAO,
@@ -6604,16 +6604,16 @@ const METADADOS_ELEMENTOS: any[] = [
                 campo: "dimensoes",
                 itens: [
                     {
-                        nome: "ras.ui.4g.etiqueta.configuracao.alto_teor.altura",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.alto_teor.altura",
+                        nome: "ras4.ui.4g.etiqueta.configuracao.alto_teor.altura",
+                        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.altura",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.alturaMm",
                         padrao: 30,
                     },
                     {
-                        nome: "ras.ui.4g.etiqueta.configuracao.alto_teor.largura",
-                        descricao: "ras.ui.4g.etiqueta.configuracao.alto_teor.largura",
+                        nome: "ras4.ui.4g.etiqueta.configuracao.alto_teor.largura",
+                        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.largura",
                         tipo: "NUMERIC",
                         obrigatorio: true,
                         campo: "dimensoes.larguraMm",
