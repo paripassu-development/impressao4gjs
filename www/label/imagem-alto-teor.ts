@@ -16,6 +16,7 @@ import {extraiPorcao} from "../core/util/tabela-nutricional-utils";
 interface IElementoAltoTeorModelPosicao {
     xMm: number;
     yMm: number;
+    rotacao: number;
 }
 
 interface IElementoAltoTeorModelDimensoes {
@@ -43,6 +44,7 @@ const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas
     const posicaoXMm = model.posicao.xMm;
     const alturaMm = model.dimensoes.alturaMm;
     const larguraMm = model.dimensoes.larguraMm;
+    const degrees = model.posicao.rotacao || 0;
     const {sodioQt100, acucaresAdicionadosQt100, gorduraSaturadaQt100} = textbindsTratada;
 
     createImgAltoTeor({
@@ -52,6 +54,7 @@ const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas
             gorduraSaturadaQt100: gorduraSaturadaQt100,
         }),
     }, (imgSvgAltoTeor) => {
+        ctx.rotate(degrees * Math.PI / 180);
         ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
     });
 }

@@ -352,6 +352,7 @@ export const MODEL_DEFAULT = {
             "posicao": {
                 "xMm": 0,
                 "yMm": 2,
+                "rotacao": 0,
             },
             "dimensoes": {
                 "alturaMm": 30,

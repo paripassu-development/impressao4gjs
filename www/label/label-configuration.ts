@@ -6586,7 +6586,15 @@ const METADADOS_ELEMENTOS: any[] = [
                         obrigatorio: true,
                         campo: "posicao.yMm",
                         padrao: 2,
-                    }
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
+                        descricao: "ras.ui.4g.etiqueta.configuracao.alto_teor.rotacao.descricao",
+                        campo: "posicao.rotacao",
+                        tipo: "OPTIONS",
+                        opcoes: VALORES_ROTACAO,
+                        obrigatorio: false,
+                    },
                 ],
             },
             {
