@@ -6,6 +6,8 @@
 
 
 import {
+    ALTO_TEOR_ACUCAR_GORDURA_SATURADA, ALTO_TEOR_ACUCAR_GORDURA_SATURADA_SODIO,
+    ALTO_TEOR_ACUCAR_SODIO, ALTO_TEOR_GORDURA_SATURADA_SODIO,
     ALTO_TEOR_UNICO_ACUCAR,
     ALTO_TEOR_UNICO_GORDURA_SATURADA,
     ALTO_TEOR_UNICO_SODIO,
@@ -21,21 +23,53 @@ interface IElementoAltoTeorModelNutricional {
     gorduraSaturadaQt100: number;
 }
 
-export const getPathAltoTeor = (nutricional: IElementoAltoTeorModelNutricional): string => {
-    // TODO: Melhorar validações
-    if (!nutricional) { return STRING_VAZIA; }
-    if (!nutricional.acucaresAdicionadosQt100) { return STRING_VAZIA; }
-    if (!nutricional.gorduraSaturadaQt100) { return STRING_VAZIA; }
-    if (!nutricional.sodioQt100) { return STRING_VAZIA; }
+const isNutricionalValid = (nutricional: IElementoAltoTeorModelNutricional): boolean => {
+    if (!nutricional) { return false; }
+    if (!nutricional.acucaresAdicionadosQt100) { return false; }
+    if (!nutricional.gorduraSaturadaQt100) { return false; }
+    if (!nutricional.sodioQt100) { return false; }
+
+    return true;
+};
+
+export const getNutricionalList = (nutricional: IElementoAltoTeorModelNutricional): string[] => {
+    const nutricionalList: string[] = [];
+
+    if (!isNutricionalValid(nutricional)) { return nutricionalList; }
 
     if (nutricional.sodioQt100 >= VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO) {
-        return ALTO_TEOR_UNICO_SODIO;
+        nutricionalList.push('itemSodio');
     }
     if (nutricional.acucaresAdicionadosQt100 >= VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO) {
-        return ALTO_TEOR_UNICO_ACUCAR;
+        nutricionalList.push('itemAcucar');
     }
     if (nutricional.gorduraSaturadaQt100 >= VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO) {
-        return ALTO_TEOR_UNICO_GORDURA_SATURADA;
+        nutricionalList.push('itemGorduraSaturada');
     }
-    return STRING_VAZIA;
+
+    return nutricionalList;
 };
+
+export const getTipoAltoTeor = (nutricionalList: string[]): string => {
+    const combinations: { [key: string]: string } = {
+        'itemSodio': ALTO_TEOR_UNICO_SODIO,
+        'itemAcucar': ALTO_TEOR_UNICO_ACUCAR,
+        'itemGorduraSaturada': ALTO_TEOR_UNICO_GORDURA_SATURADA,
+        'itemAcucar,itemSodio': ALTO_TEOR_ACUCAR_SODIO,
+        'itemGorduraSaturada,itemSodio': ALTO_TEOR_GORDURA_SATURADA_SODIO,
+        'itemAcucar,itemGorduraSaturada': ALTO_TEOR_ACUCAR_GORDURA_SATURADA,
+        'itemAcucar,itemGorduraSaturada,itemSodio': ALTO_TEOR_ACUCAR_GORDURA_SATURADA_SODIO,
+    };
+
+    nutricionalList.sort();
+
+    const key = nutricionalList.join(',');
+
+    console.log(`Chave gerada: ${key}`);
+    console.log(`Combinações disponíveis: ${Object.keys(combinations).join(', ')}`);
+
+    return combinations[key] || STRING_VAZIA;
+};
+
+
+

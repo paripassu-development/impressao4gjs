@@ -8,9 +8,8 @@
 
 
 import {fabric} from "fabric";
-import {getPathAltoTeor} from "../core/util/image-utils";
+import {getNutricionalList, getTipoAltoTeor} from "../core/util/image-utils";
 import {DADOS_DEFAULT} from "../default";
-import {extraiPorcao} from "../core/util/tabela-nutricional-utils";
 
 
 interface IElementoAltoTeorModelPosicao {
@@ -46,12 +45,18 @@ const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas
     const degrees = model.posicao.rotacao || 0;
     const { sodioQt100, acucaresAdicionadosQt100, gorduraSaturadaQt100 } = textbindsTratada;
 
+    const nutricionalList = getNutricionalList({
+        sodioQt100,
+        acucaresAdicionadosQt100,
+        gorduraSaturadaQt100
+    });
+
+    const imageType = getTipoAltoTeor(nutricionalList)
+    console.log(`Lista Nutricional: ${nutricionalList}`);
+    console.log(`Tipo de imagem: ${imageType}`);
+
     const imgSvgAltoTeor = createImgAltoTeor({
-        imageSvg: getPathAltoTeor({
-            sodioQt100: sodioQt100,
-            acucaresAdicionadosQt100: acucaresAdicionadosQt100,
-            gorduraSaturadaQt100: gorduraSaturadaQt100,
-        }),
+        imageSvg: imageType,
     });
 
     imgSvgAltoTeor.onload = () => {
