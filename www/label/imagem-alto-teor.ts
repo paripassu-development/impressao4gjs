@@ -8,7 +8,7 @@
 
 
 import {fabric} from "fabric";
-import {getNutricionalList, getTipoAltoTeor} from "../core/util/image-utils";
+import {validacaoListaNutricional, montagemTipoAltoTeor} from "../core/util/image-utils";
 import {DADOS_DEFAULT} from "../default";
 
 
@@ -45,18 +45,18 @@ const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas
     const degrees = model.posicao.rotacao || 0;
     const { sodioQt100, acucaresAdicionadosQt100, gorduraSaturadaQt100 } = textbindsTratada;
 
-    const nutricionalList = getNutricionalList({
+    const listaNutricional = validacaoListaNutricional({
         sodioQt100,
         acucaresAdicionadosQt100,
         gorduraSaturadaQt100
     });
 
-    const imageType = getTipoAltoTeor(nutricionalList)
-    console.log(`Lista Nutricional: ${nutricionalList}`);
-    console.log(`Tipo de imagem: ${imageType}`);
+    const tipoImagem = montagemTipoAltoTeor(listaNutricional)
+    console.log(`Lista Nutricional: ${listaNutricional}`);
+    console.log(`Tipo de imagem: ${tipoImagem}`);
 
     const imgSvgAltoTeor = createImgAltoTeor({
-        imageSvg: imageType,
+        imageSvg: tipoImagem,
     });
 
     imgSvgAltoTeor.onload = () => {

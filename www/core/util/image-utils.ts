@@ -23,7 +23,7 @@ interface IElementoAltoTeorModelNutricional {
     gorduraSaturadaQt100: number;
 }
 
-const isNutricionalValid = (nutricional: IElementoAltoTeorModelNutricional): boolean => {
+const isNutricionalValida = (nutricional: IElementoAltoTeorModelNutricional): boolean => {
     if (!nutricional) { return false; }
     if (!nutricional.acucaresAdicionadosQt100) { return false; }
     if (!nutricional.gorduraSaturadaQt100) { return false; }
@@ -32,26 +32,26 @@ const isNutricionalValid = (nutricional: IElementoAltoTeorModelNutricional): boo
     return true;
 };
 
-export const getNutricionalList = (nutricional: IElementoAltoTeorModelNutricional): string[] => {
-    const nutricionalList: string[] = [];
+export const validacaoListaNutricional = (nutricional: IElementoAltoTeorModelNutricional): string[] => {
+    const listaNutricional: string[] = [];
 
-    if (!isNutricionalValid(nutricional)) { return nutricionalList; }
+    if (!isNutricionalValida(nutricional)) { return listaNutricional; }
 
     if (nutricional.sodioQt100 >= VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO) {
-        nutricionalList.push('itemSodio');
+        listaNutricional.push('itemSodio');
     }
     if (nutricional.acucaresAdicionadosQt100 >= VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO) {
-        nutricionalList.push('itemAcucar');
+        listaNutricional.push('itemAcucar');
     }
     if (nutricional.gorduraSaturadaQt100 >= VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO) {
-        nutricionalList.push('itemGorduraSaturada');
+        listaNutricional.push('itemGorduraSaturada');
     }
 
-    return nutricionalList;
+    return listaNutricional;
 };
 
-export const getTipoAltoTeor = (nutricionalList: string[]): string => {
-    const combinations: { [key: string]: string } = {
+export const montagemTipoAltoTeor = (listaNutricional: string[]): string => {
+    const combinacoesAltoTeor: { [key: string]: string } = {
         'itemSodio': ALTO_TEOR_UNICO_SODIO,
         'itemAcucar': ALTO_TEOR_UNICO_ACUCAR,
         'itemGorduraSaturada': ALTO_TEOR_UNICO_GORDURA_SATURADA,
@@ -61,14 +61,14 @@ export const getTipoAltoTeor = (nutricionalList: string[]): string => {
         'itemAcucar,itemGorduraSaturada,itemSodio': ALTO_TEOR_ACUCAR_GORDURA_SATURADA_SODIO,
     };
 
-    nutricionalList.sort();
+    listaNutricional.sort();
 
-    const key = nutricionalList.join(',');
+    const key = listaNutricional.join(',');
 
     console.log(`Chave gerada: ${key}`);
-    console.log(`Combinações disponíveis: ${Object.keys(combinations).join(', ')}`);
+    console.log(`Combinações disponíveis: ${Object.keys(combinacoesAltoTeor).join(', ')}`);
 
-    return combinations[key] || STRING_VAZIA;
+    return combinacoesAltoTeor[key] || STRING_VAZIA;
 };
 
 
