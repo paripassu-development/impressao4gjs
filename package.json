@@ -6,6 +6,7 @@
     "build-prod": "webpack -p && npm run copy",
     "start": "webpack-dev-server && npm run copy",
     "copy": "node build/scripts/copy.js",
+    "gerar-maps": "tsc www/label/*.ts --sourceMap",
     "test": "jest"
   },
   "devDependencies": {
