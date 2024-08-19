@@ -1,11 +1,15 @@
-var constants_impressao_1 = require("./../core/constants/constants-impressao");
-var canvas_utils_1 = require("./../core/util/canvas-utils");
-var draw_utils_1 = require("./../core/util/draw-utils");
+"use strict";
+exports.__esModule = true;
+var constants_impressao_1 = require("../core/constants/constants-impressao");
+var canvas_utils_1 = require("../core/util/canvas-utils");
+var draw_utils_1 = require("../core/util/draw-utils");
 var mm_1 = require("./mm");
 var corPreta = "#000000";
 var drawBarraOrigemRastreada = function (id, ctx, dpi, model) {
     var mm = mm_1.mmPartial(dpi);
     ctx.save();
+    var degrees = model.posicao.rotacao || 0;
+    ctx.rotate(degrees * Math.PI / 180);
     var barraOrigemRastreada = createBarraOrigemRastreada(id, {
         corBarra: corPreta,
         alturaMm: mm(model.dimensoes.alturaMm),
@@ -29,7 +33,7 @@ var createBarraOrigemRastreada = function (id, options) {
     var taxaEscalaLargura = options.larguraMm / constants_impressao_1.barraOrigemRastreadaConstants.LARGURA_BARRA;
     ctx.scale(taxaEscalaLargura, taxaEscalaAltura);
     var drawUtils = new draw_utils_1.DrawUtils(ctx);
-    // Primeiro    
+    // Primeiro
     var coordenadas = [
         { x: 0, y: 0 },
         { x: 48, y: 0 },
@@ -38,7 +42,7 @@ var createBarraOrigemRastreada = function (id, options) {
         { x: 0, y: constants_impressao_1.barraOrigemRastreadaConstants.ALTURA_BARRA },
     ];
     drawUtils.polygon(coordenadas, options.corBarra);
-    // Segundo 
+    // Segundo
     var coordenadas2 = [
         { x: 502, y: 0 },
         { x: 534, y: 0 },
