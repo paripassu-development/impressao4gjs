@@ -98,7 +98,6 @@ function isFabricRequired(model: IEtiquetaDocModel, textBindings: any) {
     return markersRegex.test(JSON.stringify(model)) || markersRegex.test(JSON.stringify(textBindings));
 }
 
-// TODO - CRIAR README - Instalar typescript - Version 2.9.2 - npm i -g  typescript@2.9.2
 const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) => {
 
     let errors = new Array<Error>();
