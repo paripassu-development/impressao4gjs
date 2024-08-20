@@ -64,8 +64,5 @@ export const montagemTipoAltoTeor = (listaNutricional: string[]): string => {
 
     const key = listaNutricional.join(VIRGULA);
 
-    console.log(`Chave gerada: ${key}`);
-    console.log(`Combinações disponíveis: ${Object.keys(combinacoesAltoTeor).join(VIRGULA_ESPACO)}`);
-
     return combinacoesAltoTeor[key] || STRING_VAZIA;
 };

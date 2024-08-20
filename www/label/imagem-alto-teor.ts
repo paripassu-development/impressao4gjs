@@ -38,23 +38,21 @@ interface IElementoAltoTeorModel {
 
 const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
-    console.clear();
-    console.log(textbindsTratada);
-    console.log(textbindsTratada.parametrosPadroesNutricionalV2);
-    console.log(textbindsTratada.parametrosPadroesNutricionalV2[9]);
     const posicaoYMm = model.posicao.yMm;
     const posicaoXMm = model.posicao.xMm;
     const alturaMm = model.dimensoes.alturaMm;
     const larguraMm = model.dimensoes.larguraMm;
     const degrees = model.posicao.rotacao || 0;
 
-    // TODO: tratar os valores que ta vindo, para pegar sódio, acucaresAdicionadosQt100 e gorduraSaturada do atributo parametrosPadroesNutricionalV2
-    //  - pegar valor qt100 (exemplo gambiarra de baixo:
-    // const { sodioQt100, acucaresAdicionadosQt100, gorduraSaturadaQt100 } = textbindsTratada.parametrosPadroesNutricionalV2;
-    const sodioQt100 = textbindsTratada.parametrosPadroesNutricionalV2[9].qt100;
-    const acucaresAdicionadosQt100 = textbindsTratada.parametrosPadroesNutricionalV2[3].qt100;
-    const gorduraSaturadaQt100 = textbindsTratada.parametrosPadroesNutricionalV2[6].qt100;
+    const mapeiaNutrientes = textbindsTratada.parametrosPadroesNutricionalV2.reduce((mapa: any, item: any) => {
+        const rotuloLimpo = item.rotulo.trim();
+        mapa[rotuloLimpo] = item.qt100;
+        return mapa;
+    }, {});
 
+    const sodioQt100 = mapeiaNutrientes["Sódio (mg)"] || 0;
+    const acucaresAdicionadosQt100 = mapeiaNutrientes["Açúcares adicionados (g)"] || 0;
+    const gorduraSaturadaQt100 = mapeiaNutrientes["Gorduras saturadas (g)"] || 0;
 
     const listaNutricional = validacaoListaNutricional({
         sodioQt100,
@@ -63,8 +61,6 @@ const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas
     });
 
     const tipoImagem = montagemTipoAltoTeor(listaNutricional)
-    console.log(`Lista Nutricional: ${listaNutricional}`);
-    console.log(`Tipo de imagem: ${tipoImagem}`);
 
     const imgSvgAltoTeor = createImgAltoTeor({
         imageSvg: tipoImagem,
