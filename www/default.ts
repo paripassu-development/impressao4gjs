@@ -348,7 +348,7 @@ export const MODEL_DEFAULT = {
             "id": "8cd000cb-f2dd-4add-b930-50a1faa4a80f",
         },
         {
-            "tipo": "imageAltoTeor",
+            "tipo": "altoTeor",
             "posicao": {
                 "xMm": 500,
                 "yMm": 300,
