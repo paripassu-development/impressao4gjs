@@ -100,7 +100,7 @@ export const DADOS_DEFAULT = {
     sacDestino: "(48) 99999-9999",
     site: "paripassu.com.br",
     sodioQtPorcao: "4",
-    sodioQt100: "40",
+    sodioQt100: "800",
     sodioValDiario: "5",
     talhoesRastreamento: "Talhao1,Talhao2",
     telefoneMeuCadastro: "(48) 98888-8888",

@@ -38,12 +38,23 @@ interface IElementoAltoTeorModel {
 
 const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
+    console.clear();
+    console.log(textbindsTratada);
+    console.log(textbindsTratada.parametrosPadroesNutricionalV2);
+    console.log(textbindsTratada.parametrosPadroesNutricionalV2[9]);
     const posicaoYMm = model.posicao.yMm;
     const posicaoXMm = model.posicao.xMm;
     const alturaMm = model.dimensoes.alturaMm;
     const larguraMm = model.dimensoes.larguraMm;
     const degrees = model.posicao.rotacao || 0;
-    const { sodioQt100, acucaresAdicionadosQt100, gorduraSaturadaQt100 } = textbindsTratada;
+
+    // TODO: tratar os valores que ta vindo, para pegar sódio, acucaresAdicionadosQt100 e gorduraSaturada do atributo parametrosPadroesNutricionalV2
+    //  - pegar valor qt100 (exemplo gambiarra de baixo:
+    // const { sodioQt100, acucaresAdicionadosQt100, gorduraSaturadaQt100 } = textbindsTratada.parametrosPadroesNutricionalV2;
+    const sodioQt100 = textbindsTratada.parametrosPadroesNutricionalV2[9].qt100;
+    const acucaresAdicionadosQt100 = textbindsTratada.parametrosPadroesNutricionalV2[3].qt100;
+    const gorduraSaturadaQt100 = textbindsTratada.parametrosPadroesNutricionalV2[6].qt100;
+
 
     const listaNutricional = validacaoListaNutricional({
         sodioQt100,
