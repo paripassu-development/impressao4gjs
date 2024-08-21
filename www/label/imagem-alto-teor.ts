@@ -88,6 +88,7 @@ interface ICreateAltoTeorOptions {
     imageSvg: string;
 }
 
+
 const createImgAltoTeor = (options: ICreateAltoTeorOptions): HTMLImageElement => {
     const imgSvgAltoTeorCreated = new Image();
     imgSvgAltoTeorCreated.src = options.imageSvg;
