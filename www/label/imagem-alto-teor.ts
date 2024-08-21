@@ -71,17 +71,20 @@ const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas
         imageSvg: tipoImagem,
     });
 
-    imgSvgAltoTeor.onload = () => {
-        ctx.rotate((degrees * Math.PI) / 180);
-        ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
-    };
+    return new Promise((resolve) => {
+        imgSvgAltoTeor.onload = () => {
+            ctx.rotate((degrees * Math.PI) / 180);
+            ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
+        };
 
-    imgSvgAltoTeor.onerror = (error) => {
-        console.error(
-            "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.",
-            error,
-        );
-    };
+        // imgSvgAltoTeor.onerror = (error) => {
+        //     console.error(
+        //         "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.",
+        //         error,
+        //     );
+        // };
+    })
+
 };
 
 interface ICreateAltoTeorOptions {
