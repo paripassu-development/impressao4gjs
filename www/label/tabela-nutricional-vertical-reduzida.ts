@@ -10,12 +10,11 @@ import {
     alimentoProntoParaConsumo,
     calcularPosicaoCentralizadaTabelaNutricional,
     calcularPosicaoCentralizadaTextoQuantidadePorcao,
+    contemTodasRegrasTabelaSimplificada,
     extraiNutrientesVazios,
     extraiPorcao,
     montaRotuloDinamicoUnidadePorcaoTabelaVertical,
     montaTextoNaoContemQuantidadesSignificativasDe,
-    nutrienteZerado,
-    contemTodasRegrasTabelaSimplificada,
     setInformacoesV2PadraoZero,
 } from "../core/util/tabela-nutricional-utils";
 import {
@@ -174,6 +173,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
+    // @ts-ignore
     const informacoesNutricionaisTextoPorcao = [
         {
             id: 0,
@@ -452,6 +452,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
 
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}mm ${model.fonte.nome}`;
 
+    // @ts-ignore
     const informacoesAdicionais = [
         {
             id: "linhasInformacoesPercentual",

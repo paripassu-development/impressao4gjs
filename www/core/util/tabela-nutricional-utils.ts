@@ -10,14 +10,13 @@ import {
     MG,
     ML,
     NAO_CONTEM_QUANTIDADES_SIGNIFICATIVAS_DE,
-    PONTO_FINAL, REGEX_APENAS_NUMEROS,
+    PONTO_FINAL,
     REGEX_REMOVE_NUMEROS,
     REGEX_ULTIMA_VIRGULA,
-    STRING_VAZIA, VALOR_PORCAO_100,
+    STRING_VAZIA,
     VIRGULA,
     VIRGULA_ESPACO,
 } from "../../default";
-import {text} from "../../label/text";
 
 const informacoesPadraoZero = [
     "valorEnergeticoQtPorcao",

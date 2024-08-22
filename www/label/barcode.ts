@@ -324,6 +324,7 @@ const createBarcodeWithBwipJs = (options: ICreateBarcodeOptions, img: HTMLImageE
         bwipjs(canvas, buildOptionsBwipJs(options), (err: any) => {
             if (err) {
                 reject("Erro ao gerar o codigo de barras " + options.format);
+                // tslint:disable-next-line:no-console
                 console.log("Erro ao gerar o codigo de barras " + options.format);
             } else {
                 img.src = canvas.toDataURL("image/png");
@@ -332,6 +333,8 @@ const createBarcodeWithBwipJs = (options: ICreateBarcodeOptions, img: HTMLImageE
         });
     });
 };
+
+// @ts-ignore
 const createBarcodeWithBarcodeJs = (id: string, img: HTMLImageElement, options: ICreateBarcodeOptions, dpi: number): Promise<HTMLImageElement> => new Promise((resolve) => {
     JsBarcode("#" + BARCODE_IMG_ELEMENT_ID, options.text, buildOptionsJsBarcode(options, dpi));
     resolve(img);

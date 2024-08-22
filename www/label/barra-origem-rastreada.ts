@@ -1,7 +1,6 @@
 import {barraOrigemRastreadaConstants} from "../core/constants/constants-impressao";
 import {canvasUtils} from "../core/util/canvas-utils";
 import {DrawUtils} from "../core/util/draw-utils";
-import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
 
 const corPreta: string = "#000000";

@@ -13,7 +13,7 @@ import {
     CanvasTextAlign,
     splitLines,
     strokeAlignedText,
-    TextAlign, writeFabricText,
+    TextAlign,
 } from "../core/util/text-utils";
 import {
     ACUCARES,
@@ -86,6 +86,7 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     parametrosPadroesNutricionalV2: [any];
 }
 
+// @ts-ignore
 const nutrientes = [
     "valorEnergetico",
     "carboidratos",
@@ -165,6 +166,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // -----------------------------------------------------------------------------------------------------------------
     const porcaoLength: number = "Porções por embalagem: ".length + (fillTemplate(model.informacoesNutricionais.textoQuantidadeEmbalagem, textbindsTratada)).length;
 
+    // @ts-ignore
     const informacoesNutricionaisTextoPorcao = [
         {
             id: "Porções por embalagem: ",
@@ -435,6 +437,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
         ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}mm ${model.fonte.nome}`;
 
+        // @ts-ignore
         const informacoesAdicionais = [
             {
                 id: "linhasInformacoesPercentual",

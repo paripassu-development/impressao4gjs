@@ -170,6 +170,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
 
     // -----------------------------------------------------------------------------------------------------------------
     // Porções por embalagem / Porções:
+    // @ts-ignore
     const informacoesNutricionaisTextoPorcao = [
         {
             id: 0,
@@ -460,6 +461,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
 
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}mm ${model.fonte.nome}`;
 
+    // @ts-ignore
     const informacoesAdicionais = [
         {
             id: "linhasInformacoesPercentual",

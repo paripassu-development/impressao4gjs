@@ -1,3 +1,4 @@
+import {Canvas} from "fabric/fabric-impl";
 import * as Mustache from "mustache";
 import {
     CanvasTextAlign,
@@ -5,13 +6,9 @@ import {
     splitLines,
     splitLinesAutoSize,
     strokeAlignedText,
-    writeFabricText
+    writeFabricText,
 } from "../core/util/text-utils";
-import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
-import {Canvas} from "fabric/fabric-impl";
-import {calculaTamanhoFonteByAlturaMMEFontePadraoPT} from "../core/util/conversor-utils";
-import {TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT} from "../default";
 
 interface IElementoTextoModelPosicao {
     xMm: number;

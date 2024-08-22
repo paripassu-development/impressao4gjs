@@ -51,6 +51,7 @@ const createQrCode = (id: string, options: ICreateQrcodeOptions) => {
     qrcodeDiv.id = "qrcode-div";
     qrcodeDiv.style.display = "none";
     document.getElementById(id).appendChild(qrcodeDiv);
+    // @ts-ignore
     const qrcode = new QRCode("qrcode-div", {
         colorDark: "#000000",
         colorLight: "#ffffff",
