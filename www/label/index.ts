@@ -189,7 +189,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             },
             altoTeor: (): Promise<any> => {
                 return new Promise((resolve) => {
-                    altoTeor.drawAltoTeor(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    altoTeor.drawAltoTeor(id, ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     resolve();
                 });
             },

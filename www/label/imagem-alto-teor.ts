@@ -34,7 +34,7 @@ interface IElementoAltoTeorModel {
     nutricional: IElementoAltoTeorModelNutricional;
 }
 
-const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
+const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
     // TODO: remover os console logs inuteis
     console.log("Dentro do DrwaAltoTeor");
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
@@ -67,11 +67,12 @@ const drawAltoTeor = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas
 
     const tipoImagem = montagemTipoAltoTeor(listaNutricional)
 
-    const imgSvgAltoTeor = createImgAltoTeor({
+    const imgSvgAltoTeor = createImgAltoTeor(id, {
         imageSvg: tipoImagem,
     });
 
     imgSvgAltoTeor.onload = () => {
+        console.log(imgSvgAltoTeor);
         ctx.rotate((degrees * Math.PI) / 180);
         ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
     };
@@ -90,11 +91,23 @@ interface ICreateAltoTeorOptions {
 }
 
 
-const createImgAltoTeor = (options: ICreateAltoTeorOptions): HTMLImageElement => {
-    const imgSvgAltoTeorCreated = new Image();
-    imgSvgAltoTeorCreated.src = options.imageSvg;
+const createImgAltoTeor = (id: string, options: ICreateAltoTeorOptions): HTMLImageElement => {
+    const oldAltoTeorDiv = document.getElementById("altoTeor-div");
+    if (oldAltoTeorDiv) {
+        oldAltoTeorDiv.remove();
+    }
 
-    return imgSvgAltoTeorCreated;
+    const altoTeorDiv = document.createElement("div");
+    altoTeorDiv.id = "altoTeor-div";
+    altoTeorDiv.style.display = "none";
+    document.getElementById(id).appendChild(altoTeorDiv);
+
+    const imgAltoTeor = document.createElement("img") as HTMLImageElement;
+    imgAltoTeor.src = options.imageSvg;
+    altoTeorDiv.appendChild(imgAltoTeor);
+
+    return imgAltoTeor;
 };
+
 
 export const altoTeor = {drawAltoTeor};
