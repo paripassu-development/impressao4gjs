@@ -36,9 +36,8 @@ interface IElementoAltoTeorModel {
 
 const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
     // TODO: remover os console logs inuteis
-    console.log("Dentro do DrwaAltoTeor");
+    console.log("Dentro do DrwaAltoTeor", id);
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
-    console.log(textbindsTratada);
     const posicaoYMm = model.posicao.yMm;
     const posicaoXMm = model.posicao.xMm;
     const alturaMm = model.dimensoes.alturaMm;
@@ -72,18 +71,24 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
     });
 
     imgSvgAltoTeor.onload = () => {
-        console.log(imgSvgAltoTeor);
+        console.log("Estou dentro do onload", imgSvgAltoTeor);
+        ctx.save();
         ctx.rotate((degrees * Math.PI) / 180);
         ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
+        ctx.restore();
     };
 
+    console.log("imgSvgAltoTeor gerada: ", imgSvgAltoTeor);
+
     imgSvgAltoTeor.onerror = (error) => {
+        console.log("Estou dentro do onerror");
         console.error(
             "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.",
             error,
         );
     };
 
+    console.log("Passei pelo onload e onerror");
 };
 
 interface ICreateAltoTeorOptions {
@@ -92,6 +97,7 @@ interface ICreateAltoTeorOptions {
 
 
 const createImgAltoTeor = (id: string, options: ICreateAltoTeorOptions): HTMLImageElement => {
+    console.log("Entrei no createImg", id);
     const oldAltoTeorDiv = document.getElementById("altoTeor-div");
     if (oldAltoTeorDiv) {
         oldAltoTeorDiv.remove();
@@ -106,7 +112,10 @@ const createImgAltoTeor = (id: string, options: ICreateAltoTeorOptions): HTMLIma
     imgAltoTeor.src = options.imageSvg;
     altoTeorDiv.appendChild(imgAltoTeor);
 
-    return imgAltoTeor;
+    console.log("Div gerada: ", altoTeorDiv);
+    console.log("Ainda dentro do createAltoTeor", altoTeorDiv.getElementsByTagName("img")[0]);
+
+    return altoTeorDiv.getElementsByTagName("img")[0];
 };
 
 
