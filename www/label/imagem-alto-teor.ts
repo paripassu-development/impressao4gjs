@@ -35,8 +35,8 @@ interface IElementoAltoTeorModel {
 }
 
 const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
-    // TODO: remover os console logs inuteis
-    console.log("Dentro do DrwaAltoTeor", id);
+    //#TODO: REMOVER LOGS APÓS TESTES
+    console.log("Dentro do DrawAltoTeor", id);
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
     const posicaoYMm = model.posicao.yMm;
     const posicaoXMm = model.posicao.xMm;
@@ -54,9 +54,9 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
     const acucaresAdicionadosQt100 = mapeiaNutrientes["Açúcares adicionados (g)"] || 0;
     const gorduraSaturadaQt100 = mapeiaNutrientes["Gorduras saturadas (g)"] || 0;
 
-    console.log({sodioQt100});
-    console.log({acucaresAdicionadosQt100});
-    console.log({gorduraSaturadaQt100});
+    console.log({ sodioQt100 });
+    console.log({ acucaresAdicionadosQt100 });
+    console.log({ gorduraSaturadaQt100 });
 
     const listaNutricional = validacaoListaNutricional({
         sodioQt100,
@@ -64,39 +64,34 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
         gorduraSaturadaQt100,
     });
 
-    const tipoImagem = montagemTipoAltoTeor(listaNutricional)
+    const tipoImagem = montagemTipoAltoTeor(listaNutricional);
 
-    const imgSvgAltoTeor = createImgAltoTeor(id, {
-        imageSvg: tipoImagem,
-    });
-
-    imgSvgAltoTeor.onload = () => {
-        console.log("Estou dentro do onload", imgSvgAltoTeor);
-        ctx.save();
-        ctx.rotate((degrees * Math.PI) / 180);
-        ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
-        ctx.restore();
-    };
-
-    console.log("imgSvgAltoTeor gerada: ", imgSvgAltoTeor);
-
-    imgSvgAltoTeor.onerror = (error) => {
-        console.log("Estou dentro do onerror");
-        console.error(
-            "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.",
-            error,
-        );
-    };
-
-    console.log("Passei pelo onload e onerror");
+    createImgAltoTeor(
+        id,
+        { imageSvg: tipoImagem },
+        (imgSvgAltoTeor) => {
+            console.log("Estou dentro do onload", imgSvgAltoTeor);
+            ctx.save();
+            ctx.rotate((degrees * Math.PI) / 180);
+            ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
+            ctx.restore();
+            console.log("Imagem desenhada com sucesso", imgSvgAltoTeor);
+        },
+        (error) => {
+            console.log("Estou dentro do onerror");
+            console.error(
+                "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açúcar adicionado ou gordura saturada.",
+                error
+            );
+        }
+    );
 };
 
 interface ICreateAltoTeorOptions {
     imageSvg: string;
 }
 
-
-const createImgAltoTeor = (id: string, options: ICreateAltoTeorOptions): HTMLImageElement => {
+const createImgAltoTeor = (id: string, options: ICreateAltoTeorOptions, onSuccess: (img: HTMLImageElement) => void, onError: (error: any) => void): void => {
     console.log("Entrei no createImg", id);
     const oldAltoTeorDiv = document.getElementById("altoTeor-div");
     if (oldAltoTeorDiv) {
@@ -113,10 +108,20 @@ const createImgAltoTeor = (id: string, options: ICreateAltoTeorOptions): HTMLIma
     altoTeorDiv.appendChild(imgAltoTeor);
 
     console.log("Div gerada: ", altoTeorDiv);
-    console.log("Ainda dentro do createAltoTeor", altoTeorDiv.getElementsByTagName("img")[0]);
 
-    return altoTeorDiv.getElementsByTagName("img")[0];
+    imgAltoTeor.onload = () => {
+        console.log("Imagem carregada com sucesso", imgAltoTeor);
+        onSuccess(imgAltoTeor);
+    };
+
+    imgAltoTeor.onerror = (error) => {
+        console.log("Erro ao carregar a imagem");
+        console.error(
+            "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açúcar adicionado ou gordura saturada.",
+            error
+        );
+        onError(error);
+    };
 };
-
 
 export const altoTeor = {drawAltoTeor};
