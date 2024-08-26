@@ -36,8 +36,6 @@ interface IElementoAltoTeorModel {
 
 const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
     return new Promise ((resolve, reject) =>{
-        // TODO: remover os console logs inuteis
-        console.log("Dentro do DrwaAltoTeor", id);
         const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
         const posicaoYMm = model.posicao.yMm;
         const posicaoXMm = model.posicao.xMm;
@@ -55,10 +53,6 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
         const acucaresAdicionadosQt100 = mapeiaNutrientes["Açúcares adicionados (g)"] || 0;
         const gorduraSaturadaQt100 = mapeiaNutrientes["Gorduras saturadas (g)"] || 0;
 
-        console.log({sodioQt100});
-        console.log({acucaresAdicionadosQt100});
-        console.log({gorduraSaturadaQt100});
-
         const listaNutricional = validacaoListaNutricional({
             sodioQt100,
             acucaresAdicionadosQt100,
@@ -71,24 +65,20 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
             imageSvg: tipoImagem,
         });
 
-        console.log("final");
-
         imgSvgAltoTeor.onload = () => {
-            console.log("Estou dentro do onload", imgSvgAltoTeor);
             ctx.save();
             ctx.rotate((degrees * Math.PI) / 180);
             ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
             ctx.restore();
+            resolve();
         };
 
-        console.log("imgSvgAltoTeor gerada: ", imgSvgAltoTeor);
-
         imgSvgAltoTeor.onerror = (error) => {
-            console.log("Estou dentro do onerror");
             console.error(
                 "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.",
                 error,
             );
+            reject(error);
         };
     });
 };
@@ -98,7 +88,6 @@ interface ICreateAltoTeorOptions {
 }
 
 const createImgAltoTeor = (id: string, options: ICreateAltoTeorOptions): HTMLImageElement => {
-    console.log("Entrei no createImg", id);
     const oldAltoTeorDiv = document.getElementById("altoTeor-div");
     if (oldAltoTeorDiv) {
         oldAltoTeorDiv.remove();
@@ -112,9 +101,6 @@ const createImgAltoTeor = (id: string, options: ICreateAltoTeorOptions): HTMLIma
     const imgAltoTeor = document.createElement("img") as HTMLImageElement;
     imgAltoTeor.src = options.imageSvg;
     altoTeorDiv.appendChild(imgAltoTeor);
-
-    console.log("Div gerada: ", altoTeorDiv);
-    console.log("Ainda dentro do createAltoTeor", altoTeorDiv.getElementsByTagName("img")[0]);
 
     return altoTeorDiv.getElementsByTagName("img")[0];
 };
