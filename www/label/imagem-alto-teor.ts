@@ -35,66 +35,71 @@ interface IElementoAltoTeorModel {
 }
 
 const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
-    // TODO: remover os console logs inuteis
-    console.log("Dentro do DrwaAltoTeor", id);
-    const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
-    const posicaoYMm = model.posicao.yMm;
-    const posicaoXMm = model.posicao.xMm;
-    const alturaMm = model.dimensoes.alturaMm;
-    const larguraMm = model.dimensoes.larguraMm;
-    const degrees = model.posicao.rotacao || 0;
+    return new Promise ((resolve, reject) =>{
+        // TODO: remover os console logs inuteis
+        console.log("Dentro do DrwaAltoTeor", id);
+        const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
+        const posicaoYMm = model.posicao.yMm;
+        const posicaoXMm = model.posicao.xMm;
+        const alturaMm = model.dimensoes.alturaMm;
+        const larguraMm = model.dimensoes.larguraMm;
+        const degrees = model.posicao.rotacao || 0;
 
-    const mapeiaNutrientes = textbindsTratada.parametrosPadroesNutricionalV2.reduce((mapa: any, item: any) => {
-        const rotuloLimpo = item.rotulo.trim();
-        mapa[rotuloLimpo] = item.qt100;
-        return mapa;
-    }, {});
+        const mapeiaNutrientes = textbindsTratada.parametrosPadroesNutricionalV2.reduce((mapa: any, item: any) => {
+            const rotuloLimpo = item.rotulo.trim();
+            mapa[rotuloLimpo] = item.qt100;
+            return mapa;
+        }, {});
 
-    const sodioQt100 = mapeiaNutrientes["Sódio (mg)"] || 0;
-    const acucaresAdicionadosQt100 = mapeiaNutrientes["Açúcares adicionados (g)"] || 0;
-    const gorduraSaturadaQt100 = mapeiaNutrientes["Gorduras saturadas (g)"] || 0;
+        const sodioQt100 = mapeiaNutrientes["Sódio (mg)"] || 0;
+        const acucaresAdicionadosQt100 = mapeiaNutrientes["Açúcares adicionados (g)"] || 0;
+        const gorduraSaturadaQt100 = mapeiaNutrientes["Gorduras saturadas (g)"] || 0;
 
-    console.log({sodioQt100});
-    console.log({acucaresAdicionadosQt100});
-    console.log({gorduraSaturadaQt100});
+        console.log({sodioQt100});
+        console.log({acucaresAdicionadosQt100});
+        console.log({gorduraSaturadaQt100});
 
-    const listaNutricional = validacaoListaNutricional({
-        sodioQt100,
-        acucaresAdicionadosQt100,
-        gorduraSaturadaQt100,
+        const listaNutricional = validacaoListaNutricional({
+            sodioQt100,
+            acucaresAdicionadosQt100,
+            gorduraSaturadaQt100,
+        });
+
+        const tipoImagem = montagemTipoAltoTeor(listaNutricional)
+
+        const imgSvgAltoTeor = createImgAltoTeor(id, {
+            imageSvg: tipoImagem,
+        });
+
+        console.log("final");
+
+        imgSvgAltoTeor.onload = () => {
+            console.log("Estou dentro do onload", imgSvgAltoTeor);
+            ctx.save();
+            ctx.rotate((degrees * Math.PI) / 180);
+            ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
+            ctx.restore();
+        };
+
+        console.log("imgSvgAltoTeor gerada: ", imgSvgAltoTeor);
+
+        imgSvgAltoTeor.onerror = (error) => {
+            console.log("Estou dentro do onerror");
+            console.error(
+                "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.",
+                error,
+            );
+        };
     });
-
-    const tipoImagem = montagemTipoAltoTeor(listaNutricional)
-
-    const imgSvgAltoTeor = createImgAltoTeor(id, {
-        imageSvg: tipoImagem,
-    });
-
-    imgSvgAltoTeor.onload = () => {
-        console.log("Estou dentro do onload", imgSvgAltoTeor);
-        ctx.save();
-        ctx.rotate((degrees * Math.PI) / 180);
-        ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
-        ctx.restore();
-    };
-
-    console.log("imgSvgAltoTeor gerada: ", imgSvgAltoTeor);
-
-    imgSvgAltoTeor.onerror = (error) => {
-        console.log("Estou dentro do onerror");
-        console.error(
-            "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.",
-            error,
-        );
-    };
-
-    console.log("Passei pelo onload e onerror");
 };
 
 interface ICreateAltoTeorOptions {
     imageSvg: string;
 }
 
+setTimeout(() =>{
+
+});
 
 const createImgAltoTeor = (id: string, options: ICreateAltoTeorOptions): HTMLImageElement => {
     console.log("Entrei no createImg", id);
