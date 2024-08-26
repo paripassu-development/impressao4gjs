@@ -9,6 +9,7 @@
 import {fabric} from "fabric";
 import {montagemTipoAltoTeor, validacaoListaNutricional} from "../core/util/image-utils";
 import {DADOS_DEFAULT} from "../default";
+import {mmPartial} from "./mm";
 
 interface IElementoAltoTeorModelPosicao {
     xMm: number;
@@ -36,11 +37,12 @@ interface IElementoAltoTeorModel {
 
 const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
     return new Promise ((resolve, reject) =>{
+        const mm = mmPartial(dpi);
         const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
-        const posicaoYMm = model.posicao.yMm;
-        const posicaoXMm = model.posicao.xMm;
-        const alturaMm = model.dimensoes.alturaMm;
-        const larguraMm = model.dimensoes.larguraMm;
+        const posicaoYMm = mm (model.posicao.yMm);
+        const posicaoXMm = mm (model.posicao.xMm);
+        const alturaMm = mm (model.dimensoes.alturaMm);
+        const larguraMm = mm (model.dimensoes.larguraMm);
         const degrees = model.posicao.rotacao || 0;
 
         const mapeiaNutrientes = textbindsTratada.parametrosPadroesNutricionalV2.reduce((mapa: any, item: any) => {
