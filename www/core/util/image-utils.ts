@@ -6,7 +6,7 @@ import {
     ALTO_TEOR_ACUCAR_SODIO, ALTO_TEOR_GORDURA_SATURADA_SODIO,
     ALTO_TEOR_UNICO_ACUCAR,
     ALTO_TEOR_UNICO_GORDURA_SATURADA,
-    ALTO_TEOR_UNICO_SODIO,
+    ALTO_TEOR_UNICO_SODIO, APENAS_G,
     STRING_VAZIA, VALOR_MINIMO_ALTO_TEOR_ACUCAR_LIQUIDO,
     VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO, VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_LIQUIDO,
     VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO, VALOR_MINIMO_ALTO_TEOR_SODIO_LIQUIDO,
@@ -30,7 +30,7 @@ const isNutricionalValida = (nutricional: IElementoAltoTeorModelNutricional): bo
 };
 
 const isAlimentoSolido = (nutricional: IElementoAltoTeorModelNutricional): boolean =>{
-    if (nutricional.unidadeTratada === "g") {
+    if (nutricional.unidadeTratada === APENAS_G) {
         return true;
     }
     return false;

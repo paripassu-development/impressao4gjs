@@ -2,6 +2,7 @@ import {fabric} from "fabric";
 import {montagemTipoAltoTeor, validacaoListaNutricional} from "../core/util/image-utils";
 import {DADOS_DEFAULT} from "../default";
 import {mmPartial} from "./mm";
+import {extraiPorcao, substituiVirgulaPorPonto} from "../core/util/tabela-nutricional-utils";
 
 interface IElementoAltoTeorModelPosicao {
     xMm: number;
@@ -44,13 +45,10 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
             return mapa;
         }, {});
 
-        const sodioQt100 = mapeiaNutrientes["Sódio (mg)"] || 0;
-        const acucaresAdicionadosQt100 = mapeiaNutrientes["Açúcares adicionados (g)"] || 0;
-        const gorduraSaturadaQt100 = mapeiaNutrientes["Gorduras saturadas (g)"] || 0;
-
-        const porcaoNutricionalV2 = textbindsTratada.porcaoNutricionalV2 || "";
-
-        const unidadeTratada = porcaoNutricionalV2.replace(/[0-9]/g, "").trim();
+        const sodioQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Sódio (mg)"] || 0);
+        const acucaresAdicionadosQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Açúcares adicionados (g)"] || 0);
+        const gorduraSaturadaQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Gorduras saturadas (g)"] || 0);
+        const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
 
         const listaNutricional = validacaoListaNutricional({
             sodioQt100,
