@@ -1,11 +1,3 @@
-//#TODO: Criar metodo(s?) para desenho da imagem de alto teor (
-//#TODO: Usar o CanvasRenderingContext2D: drawImage() method (esta no draw-utils)
-//#TODO: primeiramemente o(s) metodo(s) de desenhar deve(m) pegar imagem de /assets/altoTeor/(tipo de alto teor)
-//#TODO: 1 desenho por vez no começo
-//#TODO: usar outros metodos para se basear -> /label
-//#TODO: Verificar como passar os parametros de dimensao para desenhar as imagens
-//#TODO: Criar os tokens no label-configuration.ts (verificar como cria-los no bd)
-
 import {fabric} from "fabric";
 import {montagemTipoAltoTeor, validacaoListaNutricional} from "../core/util/image-utils";
 import {DADOS_DEFAULT} from "../default";
@@ -26,6 +18,7 @@ interface IElementoAltoTeorModelNutricional {
     sodioQt100: number;
     acucaresAdicionadosQt100: number;
     gorduraSaturadaQt100: number;
+    unidadeTratada: string;
 }
 
 interface IElementoAltoTeorModel {
@@ -55,10 +48,15 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
         const acucaresAdicionadosQt100 = mapeiaNutrientes["Açúcares adicionados (g)"] || 0;
         const gorduraSaturadaQt100 = mapeiaNutrientes["Gorduras saturadas (g)"] || 0;
 
+        const porcaoNutricionalV2 = textbindsTratada.porcaoNutricionalV2 || "";
+
+        const unidadeTratada = porcaoNutricionalV2.replace(/[0-9]/g, "").trim();
+
         const listaNutricional = validacaoListaNutricional({
             sodioQt100,
             acucaresAdicionadosQt100,
             gorduraSaturadaQt100,
+            unidadeTratada,
         });
 
         const tipoImagem = montagemTipoAltoTeor(listaNutricional)
@@ -77,7 +75,7 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
 
         imgSvgAltoTeor.onerror = (error) => {
             console.error(
-                "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açucar adicionado ou gordura saturada.",
+                "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açúcar adicionado ou gordura saturada.",
                 error,
             );
             reject(error);

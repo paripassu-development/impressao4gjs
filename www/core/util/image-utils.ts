@@ -1,6 +1,3 @@
-//#TODO: Criar os métodos de validação/manipulação para as imagens de alto teor
-//#TODO: -> ex: caso a nutricional apontar qtd de acucar superior a 'x' valor a imagem de alto teor de acucar deve aparecer
-//#TODO: Deixar o mais generico possivel para servir para os 3 tipos de alto teor + suas possiveis combinações
 //#TODO: (posterior) -> uma vez selecionado alto teor em acucar o mesmo n deve aparecer novamente
 //#TODO: Verificar como validar diferentes unidades de medida (mg e g)
 
@@ -10,16 +7,17 @@ import {
     ALTO_TEOR_UNICO_ACUCAR,
     ALTO_TEOR_UNICO_GORDURA_SATURADA,
     ALTO_TEOR_UNICO_SODIO,
-    STRING_VAZIA,
-    VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO,
-    VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO,
-    VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO, VIRGULA, VIRGULA_ESPACO,
+    STRING_VAZIA, VALOR_MINIMO_ALTO_TEOR_ACUCAR_LIQUIDO,
+    VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO, VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_LIQUIDO,
+    VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO, VALOR_MINIMO_ALTO_TEOR_SODIO_LIQUIDO,
+    VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO, VIRGULA,
 } from "../../default";
 
 interface IElementoAltoTeorModelNutricional {
     sodioQt100: number;
     acucaresAdicionadosQt100: number;
     gorduraSaturadaQt100: number;
+    unidadeTratada: string;
 }
 
 const isNutricionalValida = (nutricional: IElementoAltoTeorModelNutricional): boolean => {
@@ -31,19 +29,38 @@ const isNutricionalValida = (nutricional: IElementoAltoTeorModelNutricional): bo
     return true;
 };
 
+const isAlimentoSolido = (nutricional: IElementoAltoTeorModelNutricional): boolean =>{
+    if (nutricional.unidadeTratada === "g") {
+        return true;
+    }
+    return false;
+};
+
 export const validacaoListaNutricional = (nutricional: IElementoAltoTeorModelNutricional): string[] => {
     const listaNutricional: string[] = [];
 
     if (!isNutricionalValida(nutricional)) { return listaNutricional; }
 
-    if (nutricional.sodioQt100 >= VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO) {
-        listaNutricional.push("itemSodio");
-    }
-    if (nutricional.acucaresAdicionadosQt100 >= VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO) {
-        listaNutricional.push("itemAcucar");
-    }
-    if (nutricional.gorduraSaturadaQt100 >= VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO) {
-        listaNutricional.push("itemGorduraSaturada");
+    if (isAlimentoSolido(nutricional)) {
+        if (nutricional.sodioQt100 >= VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO) {
+            listaNutricional.push("itemSodio");
+        }
+        if (nutricional.acucaresAdicionadosQt100 >= VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO) {
+            listaNutricional.push("itemAcucar");
+        }
+        if (nutricional.gorduraSaturadaQt100 >= VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO) {
+            listaNutricional.push("itemGorduraSaturada");
+        }
+    } else {
+        if (nutricional.sodioQt100 >= VALOR_MINIMO_ALTO_TEOR_SODIO_LIQUIDO) {
+            listaNutricional.push("itemSodio");
+        }
+        if (nutricional.acucaresAdicionadosQt100 >= VALOR_MINIMO_ALTO_TEOR_ACUCAR_LIQUIDO) {
+            listaNutricional.push("itemAcucar");
+        }
+        if (nutricional.gorduraSaturadaQt100 >= VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_LIQUIDO) {
+            listaNutricional.push("itemGorduraSaturada");
+        }
     }
 
     return listaNutricional;
