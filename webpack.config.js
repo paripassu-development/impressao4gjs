@@ -34,15 +34,13 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.svg$/,
-                include: [
-                    path.resolve(__dirname, "www/assets/images")
-                ],
+                test: /\.(png|svg)$/,
                 loader: "file-loader",
+                include: [
+                    path.resolve("www/images"),
+                ],
                 options: {
-                    name: "images/[name]--[hash].[ext]",
-                    outputPath: "images",
-                    publicPath: "/images"
+                    name: "styles/images/[name].[ext]"
                 }
             },
             {//fonts

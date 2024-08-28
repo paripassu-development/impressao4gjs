@@ -22,7 +22,7 @@ function run() {
         console.log(err);
     }
 
-    const imageFiles = klawSync("www/assets/images", {
+    const imageFiles = klawSync("www/images", {
         nodir: true,
         filter: (file) => /\.svg$/.test(file.path)
     });
@@ -31,7 +31,7 @@ function run() {
             if(!!file.path) {
                 const parts = file.path.split('\\');
                 const fileName = parts[parts.length - 1];
-                fs.copySync(file.path, "target/dist/images/" + fileName);
+                fs.copySync(file.path, "target/dist/styles/images/" + fileName);
             }
         });
     }catch (err) {
