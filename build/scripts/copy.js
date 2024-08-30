@@ -31,7 +31,7 @@ function run() {
             if(!!file.path) {
                 const parts = file.path.split('\\');
                 const fileName = parts[parts.length - 1];
-                fs.copySync(file.path, "target/dist/styles/images/" + fileName);
+                fs.copySync(file.path, "target/dist/images/" + fileName);
             }
         });
     }catch (err) {

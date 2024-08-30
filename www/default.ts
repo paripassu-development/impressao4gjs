@@ -558,12 +558,12 @@ export const VALOR_MINIMO_ALTO_TEOR_ACUCAR_LIQUIDO = 7.5;
 export const VALOR_MINIMO_ALTO_TEOR_SODIO_LIQUIDO = 300;
 export const VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_LIQUIDO = 3;
 
-export const ALTO_TEOR_UNICO_ACUCAR = "styles/images/alto-teor-unico-acucar.svg";
-export const ALTO_TEOR_UNICO_SODIO = "styles/images/alto-teor-unico-sodio.svg";
-export const ALTO_TEOR_UNICO_GORDURA_SATURADA = "styles/images/alto-teor-unico-gordura-saturada.svg";
-export const ALTO_TEOR_ACUCAR_SODIO = "styles/images/alto-teor-acucar-sodio.svg";
-export const ALTO_TEOR_ACUCAR_GORDURA_SATURADA = "styles/images/alto-teor-acucar-gordura-saturada.svg";
-export const ALTO_TEOR_GORDURA_SATURADA_SODIO = "styles/images/alto-teor-gordura-saturada-sodio.svg";
-export const ALTO_TEOR_ACUCAR_GORDURA_SATURADA_SODIO = "styles/images/alto-teor-acucar-gordura-saturada-sodio.svg";
+export const ALTO_TEOR_UNICO_ACUCAR = "images/alto-teor-unico-acucar.svg";
+export const ALTO_TEOR_UNICO_SODIO = "images/alto-teor-unico-sodio.svg";
+export const ALTO_TEOR_UNICO_GORDURA_SATURADA = "images/alto-teor-unico-gordura-saturada.svg";
+export const ALTO_TEOR_ACUCAR_SODIO = "images/alto-teor-acucar-sodio.svg";
+export const ALTO_TEOR_ACUCAR_GORDURA_SATURADA = "images/alto-teor-acucar-gordura-saturada.svg";
+export const ALTO_TEOR_GORDURA_SATURADA_SODIO = "images/alto-teor-gordura-saturada-sodio.svg";
+export const ALTO_TEOR_ACUCAR_GORDURA_SATURADA_SODIO = "images/alto-teor-acucar-gordura-saturada-sodio.svg";
 
 

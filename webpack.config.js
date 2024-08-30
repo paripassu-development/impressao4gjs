@@ -40,7 +40,7 @@ module.exports = {
                     path.resolve("www/images"),
                 ],
                 options: {
-                    name: "styles/images/[name].[ext]"
+                    name: "images/[name].[ext]"
                 }
             },
             {//fonts
