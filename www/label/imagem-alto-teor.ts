@@ -62,22 +62,25 @@ const drawAltoTeor = async (id: string, ctx: CanvasRenderingContext2D, fabricCan
         imageSvg: tipoImagem,
     });
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         imgSvgAltoTeor.onload = () => {
-            ctx.save();
-            ctx.rotate((degrees * Math.PI) / 180);
-            ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
-            ctx.restore();
-            resolve();
+            try {
+                ctx.save();
+                ctx.rotate((degrees * Math.PI) / 180);
+                ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
+                ctx.restore();
+                resolve();
+            } catch (error) {
+                console.error("Erro ao desenhar imagem.", error);
+                reject(error);
+            }
         };
-    });
 
-    return new Promise((reject) => {
-       imgSvgAltoTeor.onerror = (error) => {
-           // tslint:disable-next-line:no-console
-           console.error("Falhao ao processar imagem.", error);
-           reject(error);
-       };
+        imgSvgAltoTeor.onerror = (error) => {
+            // tslint:disable-next-line:no-console
+            console.error("Falha ao carregar a imagem.", error);
+            reject(error);
+        };
     });
 };
 
