@@ -306,7 +306,7 @@ export const extraiPorcao = (textoPorcao: string) => {
 };
 
 export const substituiVirgulaPorPonto = (valor: string | number): number => {
-    if (typeof valor === 'string') {
+    if (typeof valor === "string") {
         return parseFloat(valor.replace(VIRGULA, PONTO_FINAL));
     }
     return valor;

@@ -1,6 +1,3 @@
-//#TODO: (posterior) -> uma vez selecionado alto teor em acucar o mesmo n deve aparecer novamente
-//#TODO: Verificar como validar diferentes unidades de medida (mg e g)
-
 import {
     ALTO_TEOR_ACUCAR_GORDURA_SATURADA, ALTO_TEOR_ACUCAR_GORDURA_SATURADA_SODIO,
     ALTO_TEOR_ACUCAR_SODIO, ALTO_TEOR_GORDURA_SATURADA_SODIO,
@@ -20,16 +17,7 @@ interface IElementoAltoTeorModelNutricional {
     unidadeTratada: string;
 }
 
-const isNutricionalValida = (nutricional: IElementoAltoTeorModelNutricional): boolean => {
-    if (!nutricional) { return false; }
-    if (!nutricional.acucaresAdicionadosQt100) { return false; }
-    if (!nutricional.gorduraSaturadaQt100) { return false; }
-    if (!nutricional.sodioQt100) { return false; }
-
-    return true;
-};
-
-const isAlimentoSolido = (nutricional: IElementoAltoTeorModelNutricional): boolean =>{
+const isAlimentoSolido = (nutricional: IElementoAltoTeorModelNutricional): boolean => {
     if (nutricional.unidadeTratada === APENAS_G) {
         return true;
     }
@@ -39,7 +27,7 @@ const isAlimentoSolido = (nutricional: IElementoAltoTeorModelNutricional): boole
 export const validacaoListaNutricional = (nutricional: IElementoAltoTeorModelNutricional): string[] => {
     const listaNutricional: string[] = [];
 
-    if (!isNutricionalValida(nutricional)) { return listaNutricional; }
+    if (!nutricional) { return listaNutricional; }
 
     if (isAlimentoSolido(nutricional)) {
         if (nutricional.sodioQt100 >= VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO) {

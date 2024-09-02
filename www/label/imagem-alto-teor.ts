@@ -1,8 +1,8 @@
 import {fabric} from "fabric";
 import {montagemTipoAltoTeor, validacaoListaNutricional} from "../core/util/image-utils";
+import {extraiPorcao, substituiVirgulaPorPonto} from "../core/util/tabela-nutricional-utils";
 import {DADOS_DEFAULT} from "../default";
 import {mmPartial} from "./mm";
-import {extraiPorcao, substituiVirgulaPorPonto} from "../core/util/tabela-nutricional-utils";
 
 interface IElementoAltoTeorModelPosicao {
     xMm: number;
@@ -30,7 +30,7 @@ interface IElementoAltoTeorModel {
 }
 
 const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
-    return new Promise ((resolve, reject) =>{
+    return new Promise ((resolve, reject) => {
         const mm = mmPartial(dpi);
         const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
         const posicaoYMm = mm (model.posicao.yMm);
@@ -57,7 +57,7 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
             unidadeTratada,
         });
 
-        const tipoImagem = montagemTipoAltoTeor(listaNutricional)
+        const tipoImagem = montagemTipoAltoTeor(listaNutricional);
 
         const imgSvgAltoTeor = createImgAltoTeor(id, {
             imageSvg: tipoImagem,
@@ -72,6 +72,7 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
         };
 
         imgSvgAltoTeor.onerror = (error) => {
+            // tslint:disable-next-line:no-console
             console.error(
                 "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açúcar adicionado ou gordura saturada.",
                 error,
