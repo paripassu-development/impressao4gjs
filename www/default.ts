@@ -565,3 +565,7 @@ export const ALTO_TEOR_ACUCAR_SODIO = "images/alto-teor-acucar-sodio.svg";
 export const ALTO_TEOR_ACUCAR_GORDURA_SATURADA = "images/alto-teor-acucar-gordura-saturada.svg";
 export const ALTO_TEOR_GORDURA_SATURADA_SODIO = "images/alto-teor-gordura-saturada-sodio.svg";
 export const ALTO_TEOR_ACUCAR_GORDURA_SATURADA_SODIO = "images/alto-teor-acucar-gordura-saturada-sodio.svg";
+
+export const ITEM_SODIO: string = "itemSodio";
+export const ITEM_ACUCAR: string = "itemAcucar";
+export const ITEM_GORDURA_SATURADA: string = "itemGorduraSaturada";
