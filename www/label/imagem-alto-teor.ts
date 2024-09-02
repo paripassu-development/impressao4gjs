@@ -29,40 +29,40 @@ interface IElementoAltoTeorModel {
     nutricional: IElementoAltoTeorModelNutricional;
 }
 
-const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any) => {
-    return new Promise ((resolve, reject) => {
-        const mm = mmPartial(dpi);
-        const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
-        const posicaoYMm = mm (model.posicao.yMm);
-        const posicaoXMm = mm (model.posicao.xMm);
-        const alturaMm = mm (model.dimensoes.alturaMm);
-        const larguraMm = mm (model.dimensoes.larguraMm);
-        const degrees = model.posicao.rotacao || 0;
+const drawAltoTeor = async (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, dpi: number, model: IElementoAltoTeorModel, textBindings?: any): Promise<any> => {
+    const mm = mmPartial(dpi);
+    const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
+    const posicaoYMm = mm (model.posicao.yMm);
+    const posicaoXMm = mm (model.posicao.xMm);
+    const alturaMm = mm (model.dimensoes.alturaMm);
+    const larguraMm = mm (model.dimensoes.larguraMm);
+    const degrees = model.posicao.rotacao || 0;
 
-        const mapeiaNutrientes = textbindsTratada.parametrosPadroesNutricionalV2.reduce((mapa: any, item: any) => {
-            const rotuloLimpo = item.rotulo.trim();
-            mapa[rotuloLimpo] = item.qt100;
-            return mapa;
-        }, {});
+    const mapeiaNutrientes = textbindsTratada.parametrosPadroesNutricionalV2.reduce((mapa: any, item: any) => {
+        const rotuloLimpo = item.rotulo.trim();
+        mapa[rotuloLimpo] = item.qt100;
+        return mapa;
+    }, {});
 
-        const sodioQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Sódio (mg)"] || 0);
-        const acucaresAdicionadosQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Açúcares adicionados (g)"] || 0);
-        const gorduraSaturadaQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Gorduras saturadas (g)"] || 0);
-        const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
+    const sodioQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Sódio (mg)"] || 0);
+    const acucaresAdicionadosQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Açúcares adicionados (g)"] || 0);
+    const gorduraSaturadaQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Gorduras saturadas (g)"] || 0);
+    const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
 
-        const listaNutricional = validacaoListaNutricional({
-            sodioQt100,
-            acucaresAdicionadosQt100,
-            gorduraSaturadaQt100,
-            unidadeTratada,
-        });
+    const listaNutricional = validacaoListaNutricional({
+        sodioQt100,
+        acucaresAdicionadosQt100,
+        gorduraSaturadaQt100,
+        unidadeTratada,
+    });
 
-        const tipoImagem = montagemTipoAltoTeor(listaNutricional);
+    const tipoImagem = montagemTipoAltoTeor(listaNutricional);
 
-        const imgSvgAltoTeor = createImgAltoTeor(id, {
-            imageSvg: tipoImagem,
-        });
+    const imgSvgAltoTeor = createImgAltoTeor(id, {
+        imageSvg: tipoImagem,
+    });
 
+    return new Promise((resolve) => {
         imgSvgAltoTeor.onload = () => {
             ctx.save();
             ctx.rotate((degrees * Math.PI) / 180);
@@ -70,15 +70,14 @@ const drawAltoTeor = (id: string, ctx: CanvasRenderingContext2D, fabricCanvas: f
             ctx.restore();
             resolve();
         };
+    });
 
-        imgSvgAltoTeor.onerror = (error) => {
-            // tslint:disable-next-line:no-console
-            console.error(
-                "Falha ao carregar imagem ou alimento não possui quantidades significativas de sódio, açúcar adicionado ou gordura saturada.",
-                error,
-            );
-            reject(error);
-        };
+    return new Promise((reject) => {
+       imgSvgAltoTeor.onerror = (error) => {
+           // tslint:disable-next-line:no-console
+           console.error("Falhao ao processar imagem.", error);
+           reject(error);
+       };
     });
 };
 
