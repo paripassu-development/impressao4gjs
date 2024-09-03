@@ -38,9 +38,23 @@ const drawAltoTeor = async (id: string, ctx: CanvasRenderingContext2D, fabricCan
     const larguraMm = mm (model.dimensoes.larguraMm);
     const degrees = model.posicao.rotacao || 0;
 
+    //TODO: REMOVER LOGS
+    console.log("-----INICIO DO drawAltoTeor-----");
+    console.log("Valores de referencia:");
+    console.log("textbindsTratada: ", textbindsTratada);
+    console.log("posicaoYMm: ", posicaoYMm);
+    console.log("posicaoXMm: ", posicaoXMm);
+    console.log("alturaMm: ", alturaMm);
+    console.log("larguraMm: ", larguraMm);
+    console.log("degrees: ", degrees);
+
+
     const mapeiaNutrientes = textbindsTratada.parametrosPadroesNutricionalV2.reduce((mapa: any, item: any) => {
         const rotuloLimpo = item.rotulo.trim();
         mapa[rotuloLimpo] = item.qt100;
+        //#TODO: REMOVER LOGS
+        console.log("----Retorno da funcao de mapeamento de nutrientes-----");
+        console.log(mapa);
         return mapa;
     }, {});
 
@@ -48,6 +62,13 @@ const drawAltoTeor = async (id: string, ctx: CanvasRenderingContext2D, fabricCan
     const acucaresAdicionadosQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Açúcares adicionados (g)"] || 0);
     const gorduraSaturadaQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Gorduras saturadas (g)"] || 0);
     const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
+
+    //#TODO:REMOVER LOGS
+    console.log("-----LOGS DE ELEMENTOS NUTRICIONAIS-----");
+    console.log("sodio: ", sodioQt100);
+    console.log("acucar: ", acucaresAdicionadosQt100);
+    console.log("gorudura: ", gorduraSaturadaQt100);
+    console.log("unidade tratada: ", unidadeTratada);
 
     const listaNutricional = validacaoListaNutricional({
         sodioQt100,
@@ -58,13 +79,21 @@ const drawAltoTeor = async (id: string, ctx: CanvasRenderingContext2D, fabricCan
 
     const tipoImagem = montagemTipoAltoTeor(listaNutricional);
 
+    //#TODO: REMOVER LOGS
+    console.log("Retorno da montagem dentro do drawAltoTeor: ", tipoImagem);
+
     const imgSvgAltoTeor = createImgAltoTeor(id, {
         imageSvg: tipoImagem,
     });
 
+    console.log("Retorno da criação de imagem: ", imgSvgAltoTeor);
+
     return new Promise((resolve, reject) => {
         imgSvgAltoTeor.onload = () => {
             try {
+                //#TODO: REMOVER LOGS
+                console.log("-----DENTRO DO ONLOAD-----");
+                console.log("Img que será desenhada no drawImage: ", imgSvgAltoTeor);
                 ctx.save();
                 ctx.rotate((degrees * Math.PI) / 180);
                 ctx.drawImage(imgSvgAltoTeor, posicaoXMm, posicaoYMm, larguraMm, alturaMm);
@@ -102,6 +131,10 @@ const createImgAltoTeor = (id: string, options: ICreateAltoTeorOptions): HTMLIma
     const imgAltoTeor = document.createElement("img") as HTMLImageElement;
     imgAltoTeor.src = options.imageSvg;
     altoTeorDiv.appendChild(imgAltoTeor);
+
+    console.log("-----NO FINAL DO METODO DE CRIAR IMAGEM-----");
+    console.log("Div gerada para criação da imagem ", altoTeorDiv);
+    console.log("Imagem alto teor que será devolvida para o drawImage ", altoTeorDiv.getElementsByTagName("img")[0]);
 
     return altoTeorDiv.getElementsByTagName("img")[0];
 };
