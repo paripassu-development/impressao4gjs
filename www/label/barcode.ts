@@ -196,9 +196,10 @@ function normalizeType(tipoCodigoBarras: string): string {
     return tipoCodigoBarras;
 }
 
+// @ts-ignore
 function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefined, tipoCodigoBarras: string): Error[] {
     if (!textBindings) {
-        return;
+        return [];
     }
     let errors = Array<Error>();
     if (tipoCodigoBarras.toLowerCase() === GS1_128_DEFAULT || tipoCodigoBarras.toLowerCase() === GS1_DATABAR_EXPANDED_STACKED) {
@@ -347,6 +348,7 @@ const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions):
     const img = document.createElement("img");
     img.id = BARCODE_IMG_ELEMENT_ID;
     img.style.display = "none";
+    // @ts-ignore
     document.getElementById(id).appendChild(img);
 
     _.defaults(options, OPTIONS_DEFAULT);
