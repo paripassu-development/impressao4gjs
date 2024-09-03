@@ -50,6 +50,7 @@ const createQrCode = (id: string, options: ICreateQrcodeOptions) => {
     const qrcodeDiv = document.createElement("div");
     qrcodeDiv.id = "qrcode-div";
     qrcodeDiv.style.display = "none";
+    // @ts-ignore
     document.getElementById(id).appendChild(qrcodeDiv);
     // @ts-ignore
     const qrcode = new QRCode("qrcode-div", {
