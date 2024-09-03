@@ -56,8 +56,8 @@ interface ICreateBarraOrigemRastreadaOptions {
     alturaMm: number;
     larguraMm: number;
     valorTexto: string;
-    negrito: boolean;
-    forcaContorno: number;
+    negrito?: boolean;
+    forcaContorno?: number;
     nomeFonte: string;
 }
 
@@ -65,6 +65,7 @@ const createBarraOrigemRastreada = (id: string, options: ICreateBarraOrigemRastr
     const nomeElementoCanvas = "barra-origem-rastreada-img";
     const canvas = canvasUtils.createCanvas(nomeElementoCanvas, options.larguraMm, options.alturaMm);
     canvas.style.display = "none";
+    // @ts-ignore
     document.getElementById(id).appendChild(canvas);
     const ctx = canvasUtils.createContext(canvas);
     canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
