@@ -171,7 +171,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
         {
             id: "Porções por embalagem: ",
             value: model.informacoesNutricionais.textoQuantidadeEmbalagem,
-            caseira: null,
+            caseira: "",
             xMm: posicaoXPorcoesPorEmbalagem,
         },
         {
@@ -362,7 +362,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     valorMaximoPosicaoX = larguraMaxima - model.posicao.xMm;
                 }
             }
-
+            // @ts-ignore
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
 
                 if (verificaSeDesenhaQuadradoSeparador(elemento, index, array, elementosTextuais.quadradoVirtual)) {
@@ -479,7 +479,7 @@ const verificaSeCabeNaLinha = (valorTotalAtual: number, valorDoProximoElemento: 
     return (valorTotalAtual + valorDoProximoElemento) < valorMaximoPosicaoX;
 };
 
-const verificaSeContemNumeroPulandoDoisElementos = (array: string[], index: number): RegExpMatchArray => {
+const verificaSeContemNumeroPulandoDoisElementos = (array: string[], index: number): RegExpMatchArray | null => {
     const contemNumeros: RegExp = /[0-9]/;
     return array[index + 2].match(contemNumeros);
 };
@@ -675,11 +675,13 @@ const montaApenasEspaco = () => {
 const pegaUnidadeDoRotulo = (rotuloCompleto: string) => {
     const regexString = /\(([^()]+)\)/g;
     const regexParenteses = /[{()}]/g;
+    // @ts-ignore
     return rotuloCompleto.match(regexString)[0].replace(regexParenteses, "");
 };
 
 const pegaValorRotuloSemUnidade = (rotuloCompleto: string) => {
     const regexString = /(.+?)\s*\(.+?\)/;
+    // @ts-ignore
     return rotuloCompleto.match(regexString)[1];
 };
 
