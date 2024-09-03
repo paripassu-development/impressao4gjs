@@ -120,7 +120,7 @@ type ColunaNutricional = keyof typeof colunas;
 
 // tslint:disable-next-line:interface-name
 interface PosicoesCentralizadasTabelaNutricional {
-    [key: string]: number;
+    // [key: string]: number;
     "1": number;
     "2": number;
     "3": number;
@@ -128,6 +128,7 @@ interface PosicoesCentralizadasTabelaNutricional {
     "5": number;
     "6"?: number;
     "7"?: number;
+    "8"?: number;
 }
 
 // Função que centraliza apenas o textoQuantidadePorPorcao tabela nutricional normal e reduzida
@@ -136,6 +137,7 @@ export const calcularPosicaoCentralizadaTextoQuantidadePorcao = (parametroTipoTa
 
     const valoresPosicoes: PosicoesCentralizadasTabelaNutricional = posicoesCentralizadasTextoQuantidadePorcao(parametroTipoTabela);
 
+    // @ts-ignore
     return valoresPosicoes[lenghtTextoPorcao] ? larguraMaxima - valoresPosicoes[lenghtTextoPorcao] : larguraMaxima;
 };
 
@@ -175,6 +177,7 @@ export const calcularPosicaoCentralizadaTabelaNutricional = (parametroTipoTabela
             valoresPosicoesCentralizadasTabelaNutricionalReduzida(coluna, parametroQtString)
             : valoresPosicoesCentralizadasTabelaNutricional(coluna, parametroQtString);
 
+    // @ts-ignore
     return valorAlinhamento[tamanhoParametroQt.toString()] ? posicaoXg - valorAlinhamento[tamanhoParametroQt.toString()] : posicaoXg;
 };
 
@@ -204,17 +207,27 @@ const valoresPosicoesCentralizadasTabelaNutricional = (coluna: ColunaNutricional
         };
     }
 
-    if (coluna === colunas.valorDiario) {
-        return {
-            "1": + 2.5,
-            "2": + 1.9,
-            "3": + temPontoDecimal(parametroQt) ? 1.5 : 1.15,
-            "4": + 0.4,
-            "5": + 0.1,
-            "6": - 0.6,
-            "7": - 1.3,
-        };
-    }
+    // if (coluna === colunas.valorDiario) {
+    //     return {
+    //         "1": + 2.5,
+    //         "2": + 1.9,
+    //         "3": + temPontoDecimal(parametroQt) ? 1.5 : 1.15,
+    //         "4": + 0.4,
+    //         "5": + 0.1,
+    //         "6": - 0.6,
+    //         "7": - 1.3,
+    //     };
+    // }
+    // Valor Diario
+    return {
+        "1": + 2.5,
+        "2": + 1.9,
+        "3": + temPontoDecimal(parametroQt) ? 1.5 : 1.15,
+        "4": + 0.4,
+        "5": + 0.1,
+        "6": - 0.6,
+        "7": - 1.3,
+    };
 };
 
 const valoresPosicoesCentralizadasTabelaNutricionalReduzida = (coluna: ColunaNutricional, parametroQt: string): PosicoesCentralizadasTabelaNutricional => {
@@ -242,17 +255,27 @@ const valoresPosicoesCentralizadasTabelaNutricionalReduzida = (coluna: ColunaNut
         };
     }
 
-    if (coluna === colunas.valorDiario) {
-        return {
-            "1": + 1.6,
-            "2": + 1,
-            "3": + temPontoDecimal(parametroQt) ? 0.8 : 0.48,
-            "4": - 0.2,
-            "5": - 0.5,
-            "6": - 1.1,
-            "7": - 1.7,
-        };
-    }
+    // if (coluna === colunas.valorDiario) {
+    //     return {
+    //         "1": + 1.6,
+    //         "2": + 1,
+    //         "3": + temPontoDecimal(parametroQt) ? 0.8 : 0.48,
+    //         "4": - 0.2,
+    //         "5": - 0.5,
+    //         "6": - 1.1,
+    //         "7": - 1.7,
+    //     };
+    // }
+    // valor diario
+    return {
+        "1": + 1.6,
+        "2": + 1,
+        "3": + temPontoDecimal(parametroQt) ? 0.8 : 0.48,
+        "4": - 0.2,
+        "5": - 0.5,
+        "6": - 1.1,
+        "7": - 1.7,
+    };
 };
 
 function temPontoDecimal(numeroString: string): boolean {
