@@ -179,7 +179,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
             id: 0,
             titulo: "Porções por embalagem: ",
             value: model.informacoesNutricionais.textoQuantidadeEmbalagem,
-            caseira: null,
+            caseira: "",
         },
         {
             id: 1,
