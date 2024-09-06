@@ -1,4 +1,5 @@
 import {fabric} from "fabric";
+import {Canvas} from "fabric/fabric-impl";
 import * as _ from "lodash";
 import * as Mustache from "mustache";
 import {Error} from "../core/common/error";
@@ -6,16 +7,16 @@ import {canvasUtils} from "../core/util/canvas-utils";
 import {ErrorUtils} from "../core/util/error-utils";
 import {barcode} from "./barcode";
 import {barraOrigemRastreada} from "./barra-origem-rastreada";
+import {altoTeor} from "./imagem-alto-teor";
 import {mmPartial} from "./mm";
 import {qrcode} from "./qrcode";
 import {tabelaNutricional} from "./tabela-nutricional";
 import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
+import {tabelaNutricionalLinear} from "./tabela-nutricional-linear";
 import {tabelaNutricionalV2} from "./tabela-nutricional-v2";
 import {tabelaNutricionalVertical} from "./tabela-nutricional-vertical";
 import {tabelaNutricionalVerticalReduzida} from "./tabela-nutricional-vertical-reduzida";
 import {text} from "./text";
-import {Canvas} from "fabric/fabric-impl";
-import {tabelaNutricionalLinear} from "./tabela-nutricional-linear";
 
 export const GS1_DATE_PATTERN = "YYmmDD";
 export const BARCODE_IMG_ELEMENT_ID = "barcode-img";
@@ -185,6 +186,12 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
                     barraOrigemRastreada.drawBarraOrigemRastreada(id, ctx, model.impressao.resolucaoDpi, elemento);
                     resolve();
                 });
+            },
+            altoTeor: async (): Promise<any> => {
+                return altoTeor.drawAltoTeor(id, ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings)
+                    .catch((error) => {
+                        errors = _.union(errors, error);
+                    });
             },
         };
 

@@ -33,6 +33,16 @@ module.exports = {
                 loader: 'ts-loader',
                 exclude: /node_modules/,
             },
+            {
+                test: /\.(png|svg)$/,
+                loader: "file-loader",
+                include: [
+                    path.resolve("www/images"),
+                ],
+                options: {
+                    name: "images/[name].[ext]"
+                }
+            },
             {//fonts
                 test: /\.(eot|otf|svg|ttf|woff2?)($|\?)/,
                 loader: "file-loader",

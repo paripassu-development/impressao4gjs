@@ -21,4 +21,20 @@ function run() {
     } catch (err) {
         console.log(err);
     }
+
+    const imageFiles = klawSync("www/images", {
+        nodir: true,
+        filter: (file) => /\.svg$/.test(file.path)
+    });
+    try {
+        imageFiles.forEach((file) => {
+            if(!!file.path) {
+                const parts = file.path.split('\\');
+                const fileName = parts[parts.length - 1];
+                fs.copySync(file.path, "target/dist/images/" + fileName);
+            }
+        });
+    }catch (err) {
+        console.log(err);
+    }
 }
