@@ -1,10 +1,12 @@
-var createCanvas = function (nomeElementoCanvas, larguraMm, alturaMm) {
-    var oldCanvas = document.getElementById(nomeElementoCanvas);
+"use strict";
+exports.__esModule = true;
+var createCanvas = function (idElementoCanvas, larguraMm, alturaMm) {
+    var oldCanvas = document.getElementById(idElementoCanvas);
     if (oldCanvas) {
         oldCanvas.remove();
     }
     var canvas = document.createElement("canvas");
-    canvas.id = nomeElementoCanvas;
+    canvas.id = idElementoCanvas;
     canvas.width = larguraMm;
     canvas.height = alturaMm;
     canvas.style.width = (canvas.width) + "px";

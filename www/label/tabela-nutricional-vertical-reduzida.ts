@@ -1,4 +1,5 @@
 import {fabric} from "fabric";
+import _ from "lodash";
 import {
     calculaTamanhoFonteByAlturaMMEFontePadraoPT,
     converterPTparaMM,
@@ -9,16 +10,15 @@ import {
     alimentoProntoParaConsumo,
     calcularPosicaoCentralizadaTabelaNutricional,
     calcularPosicaoCentralizadaTextoQuantidadePorcao,
+    contemTodasRegrasTabelaSimplificada,
     extraiNutrientesVazios,
     extraiPorcao,
     montaRotuloDinamicoUnidadePorcaoTabelaVertical,
     montaTextoNaoContemQuantidadesSignificativasDe,
-    nutrienteZerado,
-    contemTodasRegrasTabelaSimplificada,
     setInformacoesV2PadraoZero,
 } from "../core/util/tabela-nutricional-utils";
 import {
-    adicionarEspacoEntreNumeroELetra,
+    adicionarEspacoEntreNumeroELetra, CanvasTextAlign,
     splitLines,
     strokeAlignedText,
     TextAlign,
@@ -173,12 +173,13 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
+    // @ts-ignore
     const informacoesNutricionaisTextoPorcao = [
         {
             id: 0,
             titulo: "Porções por embalagem: ",
             value: model.informacoesNutricionais.textoQuantidadeEmbalagem,
-            caseira: null,
+            caseira: "",
         },
         {
             id: 1,
@@ -217,7 +218,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     // 100 g 000 g e %VD*
     ctx.font = `bold ${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
-    ctx.textAlign = TextAlign.RIGHT;
+    ctx.textAlign = TextAlign.RIGHT as CanvasTextAlign;
     const valorPorcaoDefaultEdicao = (textBindings && textBindings.porcaoNutricionalV2) ? textBindings : DADOS_DEFAULT;
     let porcaoXTratada = adicionarEspacoEntreNumeroELetra(fillTemplate(model.informacoesNutricionais.textoQuantidadePorPorcao, valorPorcaoDefaultEdicao));
 
@@ -291,7 +292,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
                 obj.id = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
                 if (obj.id !== undefined) {
                     yMm += alturaLinhaMm / 1.7;
-                    ctx.textAlign = TextAlign.LEFT;
+                    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
 
                     const nomeNutriente = getOrDefault(obj.id, "nome");
                     if (!!fabricCanvas) {
@@ -319,7 +320,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
                 yMm += alturaLinhaMm / 1.7;
                 const yMmValores = yMm + valorEspacamentoYMmValores;
                 const yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
-                ctx.textAlign = TextAlign.LEFT;
+                ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
                 const porcaoNutricional = (textBindings && textBindings.porcaoNutricionalV2) ? textBindings.porcaoNutricionalV2 : DADOS_DEFAULT.porcaoNutricionalV2;
                 if (!!fabricCanvas) {
                     writeFabricText(fabricCanvas, ctx, montaRotuloDinamicoUnidadePorcaoTabelaVertical(nutriente.rotulo, porcaoNutricional), model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
@@ -353,7 +354,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
                 yMm += alturaLinhaMm / 1.7;
                 const yMmValores = yMm + valorEspacamentoYMmValores;
                 const yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
-                ctx.textAlign = TextAlign.LEFT;
+                ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
 
                 if (!!fabricCanvas) {
                     writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, {degrees});
@@ -451,6 +452,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
 
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}mm ${model.fonte.nome}`;
 
+    // @ts-ignore
     const informacoesAdicionais = [
         {
             id: "linhasInformacoesPercentual",
@@ -485,7 +487,7 @@ const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, text
 };
 
 const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any, espessuraLinha: number) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(espessuraLinha);
     // x, y, largura e altura
     ctx.strokeRect(
@@ -502,7 +504,7 @@ const desenharLinhaContornoHorizontal = (ctx: CanvasRenderingContext2D, model: I
     const espacoMargemInterna = converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT);
     const tamanhoLinhaContornoTotalMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * espacoMargemInterna);
 
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
 
     // x, y, largura e altura
     ctx.strokeRect(
@@ -515,7 +517,7 @@ const desenharLinhaContornoHorizontal = (ctx: CanvasRenderingContext2D, model: I
 };
 
 const desenharLinhaContornoVerticalDireita = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura
@@ -529,7 +531,7 @@ const desenharLinhaContornoVerticalDireita = (ctx: CanvasRenderingContext2D, mod
 };
 
 const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura
@@ -543,7 +545,7 @@ const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, mo
 };
 
 const desenharLinhaVertical = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura

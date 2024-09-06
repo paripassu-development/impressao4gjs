@@ -1,16 +1,14 @@
+import {Canvas} from "fabric/fabric-impl";
 import * as Mustache from "mustache";
 import {
+    CanvasTextAlign,
     ocultaCampoTextoComBaseNoValor,
     splitLines,
     splitLinesAutoSize,
     strokeAlignedText,
-    writeFabricText
+    writeFabricText,
 } from "../core/util/text-utils";
-import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {mmPartial} from "./mm";
-import {Canvas} from "fabric/fabric-impl";
-import {calculaTamanhoFonteByAlturaMMEFontePadraoPT} from "../core/util/conversor-utils";
-import {TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT} from "../default";
 
 interface IElementoTextoModelPosicao {
     xMm: number;
@@ -51,7 +49,7 @@ const drawText = (ctx: CanvasRenderingContext2D, fabricCanvas: Canvas, dpi: numb
         const mm = mmPartial(dpi);
         const degrees = model.posicao.rotacao || 0;
         ctx.save();
-        ctx.textAlign = model.posicao.alinhar || "start";
+        ctx.textAlign = model.posicao.alinhar as CanvasTextAlign || "start" as CanvasTextAlign;
         ctx.fillStyle = "#000000";
         ctx.strokeStyle = "#000000";
         ctx.rotate(degrees * Math.PI / 180);

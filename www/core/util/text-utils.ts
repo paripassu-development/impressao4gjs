@@ -1,10 +1,12 @@
-import {STRING_VAZIA, VALORES_PARA_OCULTAR} from "../../default";
-import {mmPartial} from "../../label/mm";
 import {fabric} from "fabric";
 import {
     Canvas,
-    TextOptions
+    TextOptions,
+// tslint:disable-next-line:no-submodule-imports
 } from "fabric/fabric-impl";
+import _ from "lodash";
+import {STRING_VAZIA, VALORES_PARA_OCULTAR} from "../../default";
+import {mmPartial} from "../../label/mm";
 
 interface IFabricTextLineStyle {
     [charIndex: number]: TextOptions
@@ -22,6 +24,8 @@ interface IFabricSubrangeStyles {
 interface IFabricTextOptions {
     degrees?: number;
 }
+
+export type CanvasTextAlign = "start" | "end" | "left" | "right" | "center";
 
 const TextAlign = {
     LEFT: "left",
@@ -181,7 +185,8 @@ const strokeAlignedText = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.C
     } else if (textAlign === TextAlign.JUSTIFY) {
         text = justifyText(ctx, mm(larguraMaxima), text);
     }
-    ctx.textAlign = textAlign;
+
+    ctx.textAlign = textAlign as CanvasTextAlign;
 
     if (!!fabricCanvas) {
         writeFabricText(fabricCanvas, ctx, text, x, yMm, larguraMaxima, mm, {degrees});
@@ -199,11 +204,23 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
     options = options||{};
     let larguraMaximaPx = mm(larguraMaximaMm);
     const fontProperties = /(bold)?\s?(\d+px)?\s?(.+)?$/.exec(ctx.font);
-    const font = {
-        weight: fontProperties[1],
-        size: Number((fontProperties[2]||"").replace("px","")),
-        name: fontProperties[3]
-    };
+    // const font = {
+    //     weight: fontProperties[1],
+    //     size: Number((fontProperties[2] || "").replace("px","")),
+    //     name: fontProperties[3],
+    // };
+    // TODO - Correção typescript para rastreador 5
+    const font = fontProperties
+        ? {
+            weight: fontProperties[1],
+            size: Number((fontProperties[2] || "").replace("px", "")),
+            name: fontProperties[3],
+        }
+        : {
+            weight: "",
+            size: 0,
+            name: "",
+        };
 
     const textAlign = ctx.textAlign;
     let maxTextWidth = larguraMaximaPx;
@@ -217,13 +234,16 @@ const writeFabricText = (fabricCanvas: Canvas, ctx: CanvasRenderingContext2D, te
 
     let top = mm(yMm) - font.size;
     let left = xPx;
+    // @ts-ignore
     if (options.degrees > 0 && options.degrees <= 90) {
         const newLeft = Math.abs(top);
         top = left;
         left = newLeft;
+        // @ts-ignore
     } else if (options.degrees > 90 && options.degrees <= 180){
         top = Math.abs(top);
         left = Math.abs(left);
+        // @ts-ignore
     } else if (options.degrees > 180 && options.degrees <= 270){
         const newTop = Math.abs(left);
         left = top;

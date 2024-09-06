@@ -1,10 +1,10 @@
 import {TipoError} from "../constants/constants-impressao";
 
 export class Error {
-    private _token: string;
-    private _name: string;
-    private _campo: string;
-    private _tipoError: TipoError;
+    private _token!: string;
+    private _name!: string;
+    private _campo?: string;
+    private _tipoError!: TipoError;
 
     get token(): string {
         return this._token;
@@ -14,7 +14,7 @@ export class Error {
         return this._name;
     }
 
-    get campo(): string {
+    get campo(): string | undefined {
         return this._campo;
     }
 

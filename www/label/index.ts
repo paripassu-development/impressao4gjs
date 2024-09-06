@@ -10,12 +10,11 @@ import {mmPartial} from "./mm";
 import {qrcode} from "./qrcode";
 import {tabelaNutricional} from "./tabela-nutricional";
 import {tabelaNutricionalInline} from "./tabela-nutricional-inline";
+import {tabelaNutricionalLinear} from "./tabela-nutricional-linear";
 import {tabelaNutricionalV2} from "./tabela-nutricional-v2";
 import {tabelaNutricionalVertical} from "./tabela-nutricional-vertical";
 import {tabelaNutricionalVerticalReduzida} from "./tabela-nutricional-vertical-reduzida";
 import {text} from "./text";
-import {Canvas} from "fabric/fabric-impl";
-import {tabelaNutricionalLinear} from "./tabela-nutricional-linear";
 
 export const GS1_DATE_PATTERN = "YYmmDD";
 export const BARCODE_IMG_ELEMENT_ID = "barcode-img";
@@ -109,16 +108,20 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
     const ctx = canvasUtils.createContext(canvas);
     const el = document.getElementById(id);
     const validacoes = _.indexBy(model.validacoes, "variavel") as any;
+    // @ts-ignore
     el.appendChild(canvas);
     const promises: Array<Promise<any>> = [];
     canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
 
     // fabricjs
+    // @ts-ignore
     let fabricCanvas: fabric.Canvas = null;
     if (isFabricRequired(model, textBindings)) {
         const canvas2 = canvasUtils.createCanvas(idElementoFabricCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
+        // @ts-ignore
         fabricCanvas = new fabric.Canvas(canvas2);
         canvas2.classList.add("fabric-canvas");
+        // @ts-ignore
         el.appendChild(canvas2);
     }
 
@@ -133,12 +136,14 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             qrcode: (): Promise<any> => {
                 return new Promise((resolve) => {
                     qrcode.drawQrcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             texto: (): Promise<any> => {
                 return new Promise((resolve) => {
                     text.drawText(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
@@ -147,42 +152,49 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             tabelaNutricional: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricional.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             tabelaNutricionalV2: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalV2.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             tabelaNutricionalVertical: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalVertical.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             tabelaNutricionalVerticalReduzida: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalVerticalReduzida.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             tabelaNutricionalLinear: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalLinear.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             tabelaNutricionalEmLinha: (): Promise<any> => {
                 return new Promise((resolve) => {
                     tabelaNutricionalInline.drawTable(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
+                    // @ts-ignore
                     resolve();
                 });
             },
             barraOrigemRastreada: (): Promise<any> => {
                 return new Promise((resolve) => {
                     barraOrigemRastreada.drawBarraOrigemRastreada(id, ctx, model.impressao.resolucaoDpi, elemento);
+                    // @ts-ignore
                     resolve();
                 });
             },
@@ -265,36 +277,44 @@ const exportCanvas = (id: string, orientationDegrees: number) => {
         canvasFinal.width = canvas.height;
         canvasFinal.height = canvas.width;
         const ctx = canvasFinal.getContext("2d");
-        ctx.save();
-        ctx.translate(canvasFinal.width, 0);
-        ctx.rotate(orientationDegrees * Math.PI / 180);
-        ctx.drawImage(canvas, 0, 0);
-        ctx.restore();
+        if (ctx) {
+            ctx.save();
+            ctx.translate(canvasFinal.width, 0);
+            ctx.rotate(orientationDegrees * Math.PI / 180);
+            ctx.drawImage(canvas, 0, 0);
+            ctx.restore();
+        }
     } else if (orientationDegrees === 180) {
         canvasFinal.width = canvas.width;
         canvasFinal.height = canvas.height;
         const ctx = canvasFinal.getContext("2d");
-        ctx.save();
-        ctx.translate(canvas.width, canvas.height);
-        ctx.rotate(orientationDegrees * Math.PI / 180);
-        ctx.drawImage(canvas, 0, 0);
-        ctx.restore();
+        if (ctx) {
+            ctx.save();
+            ctx.translate(canvas.width, canvas.height);
+            ctx.rotate(orientationDegrees * Math.PI / 180);
+            ctx.drawImage(canvas, 0, 0);
+            ctx.restore();
+        }
     } else if (orientationDegrees === 270) {
         canvasFinal.width = canvas.height;
         canvasFinal.height = canvas.width;
         const ctx = canvasFinal.getContext("2d");
-        ctx.save();
-        ctx.translate(0, canvas.width);
-        ctx.rotate(orientationDegrees * Math.PI / 180);
-        ctx.drawImage(canvas, 0, 0);
-        ctx.restore();
+        if (ctx) {
+            ctx.save();
+            ctx.translate(0, canvas.width);
+            ctx.rotate(orientationDegrees * Math.PI / 180);
+            ctx.drawImage(canvas, 0, 0);
+            ctx.restore();
+        }
     } else {
         canvasFinal.width = canvas.width;
         canvasFinal.height = canvas.height;
         const ctx = canvasFinal.getContext("2d");
-        ctx.save();
-        ctx.drawImage(canvas, 0, 0);
-        ctx.restore();
+        if (ctx) {
+            ctx.save();
+            ctx.drawImage(canvas, 0, 0);
+            ctx.restore();
+        }
     }
     return canvasFinal;
 };

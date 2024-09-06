@@ -1,9 +1,9 @@
 import * as _ from "lodash";
 import {labelConfiguration} from "../../label/label-configuration";
-import {TipoErro} from "../enum/tipo-erro-enum";
-import {EtiquetaUtils} from "./etiqueta-utils";
 import {intervaloTamanhoFonte} from "../constants/constants-impressao";
 import {TipoAlerta} from "../enum/tipo-alerta";
+import {TipoErro} from "../enum/tipo-erro-enum";
+import {EtiquetaUtils} from "./etiqueta-utils";
 
 export class ValidateModelUtils {
 
@@ -11,7 +11,7 @@ export class ValidateModelUtils {
     private static VARIAVEIS_PESO: string[] = [
         "campoPesoLiquidoNutricional",
         "pesoLiquidoNutricional",
-        "pesoLiquidoAgranelNutricional"
+        "pesoLiquidoAgranelNutricional",
     ];
 
     private static VARIAVEIS_NUTRICIONAIS: string[] = [
