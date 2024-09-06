@@ -1,7 +1,7 @@
 import {fabric} from "fabric";
 import {montagemTipoAltoTeor, validacaoListaNutricional} from "../core/util/image-utils";
 import {extraiPorcao, substituiVirgulaPorPonto} from "../core/util/tabela-nutricional-utils";
-import {DADOS_DEFAULT} from "../default";
+import {DADOS_DEFAULT, ROTULO_ACUCARES_ADICIONADOS, ROTULO_GORDURA_SATURADA, ROTULO_SODIO} from "../default";
 import {mmPartial} from "./mm";
 
 interface IElementoAltoTeorModelPosicao {
@@ -44,9 +44,9 @@ const drawAltoTeor = async (id: string, ctx: CanvasRenderingContext2D, fabricCan
         return mapa;
     }, {});
 
-    const sodioQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Sódio (mg)"] || 0);
-    const acucaresAdicionadosQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Açúcares adicionados (g)"] || 0);
-    const gorduraSaturadaQt100 = substituiVirgulaPorPonto(mapeiaNutrientes["Gorduras saturadas (g)"] || 0);
+    const sodioQt100 = substituiVirgulaPorPonto(mapeiaNutrientes[ROTULO_SODIO] || 0);
+    const acucaresAdicionadosQt100 = substituiVirgulaPorPonto(mapeiaNutrientes[ROTULO_ACUCARES_ADICIONADOS] || 0);
+    const gorduraSaturadaQt100 = substituiVirgulaPorPonto(mapeiaNutrientes[ROTULO_GORDURA_SATURADA] || 0);
     const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
 
     const listaNutricional = validacaoListaNutricional({
@@ -71,6 +71,7 @@ const drawAltoTeor = async (id: string, ctx: CanvasRenderingContext2D, fabricCan
                 ctx.restore();
                 resolve();
             } catch (error) {
+                // tslint:disable-next-line:no-console
                 console.error("Erro ao desenhar imagem.", error);
                 reject(error);
             }

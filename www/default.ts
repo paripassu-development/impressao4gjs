@@ -566,6 +566,10 @@ export const ALTO_TEOR_ACUCAR_GORDURA_SATURADA = "images/alto-teor-acucar-gordur
 export const ALTO_TEOR_GORDURA_SATURADA_SODIO = "images/alto-teor-gordura-saturada-sodio.svg";
 export const ALTO_TEOR_ACUCAR_GORDURA_SATURADA_SODIO = "images/alto-teor-acucar-gordura-saturada-sodio.svg";
 
+export const ROTULO_SODIO = "Sódio (mg)";
+export const ROTULO_ACUCARES_ADICIONADOS = "Açúcares adicionados (g)";
+export const ROTULO_GORDURA_SATURADA = "Gorduras saturadas (g)";
+
 export const ITEM_SODIO: string = "itemSodio";
 export const ITEM_ACUCAR: string = "itemAcucar";
 export const ITEM_GORDURA_SATURADA: string = "itemGorduraSaturada";
