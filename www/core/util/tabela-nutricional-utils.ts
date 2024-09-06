@@ -305,6 +305,13 @@ export const extraiPorcao = (textoPorcao: string) => {
     return textoPorcao.replace(REGEX_REMOVE_NUMEROS, STRING_VAZIA);
 };
 
+export const substituiVirgulaPorPonto = (valor: string | number): number => {
+    if (typeof valor === "string") {
+        return parseFloat(valor.replace(VIRGULA, PONTO_FINAL));
+    }
+    return valor;
+};
+
 export const montaRotuloDinamicoUnidadePorcaoTabelaVertical = (rotulo: string, unidadePorcao: string) => {
     return rotulo.replace(
         G,

@@ -6,7 +6,8 @@
     "build-prod": "webpack -p && npm run copy",
     "start": "webpack-dev-server && npm run copy",
     "copy": "node build/scripts/copy.js",
-    "test": "jest"
+    "test": "jest",
+    "dev": "npm run build && npm run start"
   },
   "devDependencies": {
     "@types/codemirror": "0.0.37",
