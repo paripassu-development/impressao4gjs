@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v1.38.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.38.0%0D1.37.1) (06/09/2024)
+
+### Adicionado
+* ([RST-8417](https://paripassu.atlassian.net/browse/RST-8417)): Adicionado elemento de "Aviso de Alto Teor" na etiqueta - rotulagem frontal.
+
 ## [v1.37.1](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.37.1%0D1.37.0) (27/06/2024)
 
 ### Atualizado
