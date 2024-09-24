@@ -1,6 +1,5 @@
 import {fillTemplate} from "../core/util/param-utils";
 import {setInformacoesPadraoZero} from "../core/util/tabela-nutricional-utils";
-import {ValidateModelUtils} from "../core/util/validate-model-utils";
 import {
     IElementoTextoModelmultiplasLinhas,
     text,
@@ -151,6 +150,7 @@ function mountTextTabelaNutricional(model: IElementoTabelaNutricionalInlineModel
     } else {
         const parametrosPadroes = !!textBindings ? textBindings.parametrosPadroes :  PARAMETROS_PADROES_NUTRICIONAL;
         parametrosPadroes.forEach((parametro: any) => {
+            // @ts-ignore
             const matchArray: any[] = parametro.qtPorcao.match(/[0-9]/mg, "");
             if (parametro.rotulo === "Gorduras trans") {
                 informacoes.push(parametro.rotulo + ` ` + parametro.qtPorcao.replace(/ +/g, "")  + ` (VD não estabelecido)`);

@@ -2,7 +2,7 @@ import * as Mustache from "mustache";
 import {mmPartial} from "./mm";
 
 declare var require: any;
-const QRCode: any = require("qrcodejs2");
+const QRCode: any = require("qrcodejs2-fixes");
 
 interface IElementoQrcodeModelPosicao {
     xMm: number;
@@ -50,7 +50,9 @@ const createQrCode = (id: string, options: ICreateQrcodeOptions) => {
     const qrcodeDiv = document.createElement("div");
     qrcodeDiv.id = "qrcode-div";
     qrcodeDiv.style.display = "none";
+    // @ts-ignore
     document.getElementById(id).appendChild(qrcodeDiv);
+    // @ts-ignore
     const qrcode = new QRCode("qrcode-div", {
         colorDark: "#000000",
         colorLight: "#ffffff",

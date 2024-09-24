@@ -1,4 +1,8 @@
+import JsBarcode from "jsbarcode";
+import moment from "moment";
 import * as Mustache from "mustache";
+import {Error} from "../core/common/error";
+import {ErrosPrefix, TipoError} from "../core/constants/constants-impressao";
 import {canvasUtils} from "../core/util/canvas-utils";
 import {
     AI_CONTEUDO, AI_GTIN,
@@ -18,11 +22,6 @@ import {
     ITF_DEFAULT,
 } from "./index";
 import {mmPartial} from "./mm";
-import JsBarcode = require("jsbarcode");
-import moment = require("moment");
-import {Error} from "../core/common/error";
-import {ErrosPrefix, TipoError} from "../core/constants/constants-impressao";
-
 const bwipjs: any = require("bwip-js");
 const _: any = require("lodash");
 
@@ -197,9 +196,10 @@ function normalizeType(tipoCodigoBarras: string): string {
     return tipoCodigoBarras;
 }
 
+// @ts-ignore
 function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefined, tipoCodigoBarras: string): Error[] {
     if (!textBindings) {
-        return;
+        return [];
     }
     let errors = Array<Error>();
     if (tipoCodigoBarras.toLowerCase() === GS1_128_DEFAULT || tipoCodigoBarras.toLowerCase() === GS1_DATABAR_EXPANDED_STACKED) {
@@ -271,6 +271,7 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
                 ctx.rotate(degrees * Math.PI / 180);
                 ctx.drawImage(barcodeImg, 0, 0, barcodeImg.width, barcodeImg.height, mm(model.posicao.xMm), mm(model.posicao.yMm), barcodeImg.width, barcodeImg.height);
                 ctx.restore();
+                // @ts-ignore
                 resolve();
             };
         });
@@ -324,6 +325,7 @@ const createBarcodeWithBwipJs = (options: ICreateBarcodeOptions, img: HTMLImageE
         bwipjs(canvas, buildOptionsBwipJs(options), (err: any) => {
             if (err) {
                 reject("Erro ao gerar o codigo de barras " + options.format);
+                // tslint:disable-next-line:no-console
                 console.log("Erro ao gerar o codigo de barras " + options.format);
             } else {
                 img.src = canvas.toDataURL("image/png");
@@ -332,6 +334,8 @@ const createBarcodeWithBwipJs = (options: ICreateBarcodeOptions, img: HTMLImageE
         });
     });
 };
+
+// @ts-ignore
 const createBarcodeWithBarcodeJs = (id: string, img: HTMLImageElement, options: ICreateBarcodeOptions, dpi: number): Promise<HTMLImageElement> => new Promise((resolve) => {
     JsBarcode("#" + BARCODE_IMG_ELEMENT_ID, options.text, buildOptionsJsBarcode(options, dpi));
     resolve(img);
@@ -344,6 +348,7 @@ const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions):
     const img = document.createElement("img");
     img.id = BARCODE_IMG_ELEMENT_ID;
     img.style.display = "none";
+    // @ts-ignore
     document.getElementById(id).appendChild(img);
 
     _.defaults(options, OPTIONS_DEFAULT);

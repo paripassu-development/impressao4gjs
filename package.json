@@ -6,6 +6,7 @@
     "build-prod": "webpack -p && npm run copy",
     "start": "webpack-dev-server && npm run copy",
     "copy": "node build/scripts/copy.js",
+    "generate-maps": "tsc www/label/*.ts --sourceMap",
     "test": "jest"
   },
   "devDependencies": {
@@ -13,7 +14,7 @@
     "@types/es6-promise": "0.0.32",
     "@types/fabric": "^4.5.1",
     "@types/jest": "^24.0.11",
-    "@types/lodash": "3.10.2",
+    "@types/lodash": "^3.10.2",
     "@types/mustache": "0.8.29",
     "@types/node": "^11.11.3",
     "babel-core": "^6.22.1",
@@ -45,7 +46,7 @@
     "lodash": "3.10.1",
     "moment": "^2.21.0",
     "mustache": "2.3.0",
-    "qrcodejs2": "0.0.2",
+    "qrcodejs2-fixes": "^0.0.2",
     "source-map-support": "^0.5.10"
   }
 }

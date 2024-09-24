@@ -10,9 +10,10 @@ import {
     setInformacoesV2PadraoZero,
 } from "../core/util/tabela-nutricional-utils";
 import {
+    CanvasTextAlign,
     splitLines,
     strokeAlignedText,
-    TextAlign, writeFabricText,
+    TextAlign,
 } from "../core/util/text-utils";
 import {
     ACUCARES,
@@ -85,6 +86,7 @@ interface IElementoTabelaNutricionalModelInformacoesNutricionais {
     parametrosPadroesNutricionalV2: [any];
 }
 
+// @ts-ignore
 const nutrientes = [
     "valorEnergetico",
     "carboidratos",
@@ -164,11 +166,12 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     // -----------------------------------------------------------------------------------------------------------------
     const porcaoLength: number = "Porções por embalagem: ".length + (fillTemplate(model.informacoesNutricionais.textoQuantidadeEmbalagem, textbindsTratada)).length;
 
+    // @ts-ignore
     const informacoesNutricionaisTextoPorcao = [
         {
             id: "Porções por embalagem: ",
             value: model.informacoesNutricionais.textoQuantidadeEmbalagem,
-            caseira: null,
+            caseira: "",
             xMm: posicaoXPorcoesPorEmbalagem,
         },
         {
@@ -359,7 +362,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                     valorMaximoPosicaoX = larguraMaxima - model.posicao.xMm;
                 }
             }
-
+            // @ts-ignore
             if (verificaSeCabeNaLinha((posicaoAtualCharNaLinha - (0.35 * contadorIndex)), verificaSeEhUltimoElemento(index, array) ? 0 : tamanhoProximoElemento, valorMaximoPosicaoX)) {
 
                 if (verificaSeDesenhaQuadradoSeparador(elemento, index, array, elementosTextuais.quadradoVirtual)) {
@@ -434,6 +437,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
 
         ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_INFORMACOES_ADICIONAIS_EM_PT)}mm ${model.fonte.nome}`;
 
+        // @ts-ignore
         const informacoesAdicionais = [
             {
                 id: "linhasInformacoesPercentual",
@@ -475,7 +479,7 @@ const verificaSeCabeNaLinha = (valorTotalAtual: number, valorDoProximoElemento: 
     return (valorTotalAtual + valorDoProximoElemento) < valorMaximoPosicaoX;
 };
 
-const verificaSeContemNumeroPulandoDoisElementos = (array: string[], index: number): RegExpMatchArray => {
+const verificaSeContemNumeroPulandoDoisElementos = (array: string[], index: number): RegExpMatchArray | null => {
     const contemNumeros: RegExp = /[0-9]/;
     return array[index + 2].match(contemNumeros);
 };
@@ -553,7 +557,7 @@ const separarNomesCompostosEmIndividuais = (nomeNutrienteFormatado: string, info
 };
 
 const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any, espessuraLinha: number) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(espessuraLinha);
     // x, y, largura e altura
     ctx.strokeRect(
@@ -566,7 +570,7 @@ const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutr
 };
 
 const desenharLinhaGrossa = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_GROSSA_EM_PT);
     // x, y, largura e altura
     ctx.strokeRect(
@@ -583,7 +587,7 @@ const desenharLinhaContornoHorizontal = (ctx: CanvasRenderingContext2D, model: I
     const espacoMargemInterna = converterPTparaMM(ESPACAMENTO_CONTORNO_TABELA_EM_PT);
     const tamanhoLinhaContornoTotalMM = model.dimensoes.larguraMaximaMm + (espacoDireitaEEsquerda * espacoMargemInterna);
 
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
 
     // x, y, largura e altura
     ctx.strokeRect(
@@ -596,7 +600,7 @@ const desenharLinhaContornoHorizontal = (ctx: CanvasRenderingContext2D, model: I
 };
 
 const desenharLinhaContornoVerticalDireita = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura
@@ -610,7 +614,7 @@ const desenharLinhaContornoVerticalDireita = (ctx: CanvasRenderingContext2D, mod
 };
 
 const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
-    ctx.textAlign = TextAlign.LEFT;
+    ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
 
     // x, y, largura e altura
@@ -671,11 +675,13 @@ const montaApenasEspaco = () => {
 const pegaUnidadeDoRotulo = (rotuloCompleto: string) => {
     const regexString = /\(([^()]+)\)/g;
     const regexParenteses = /[{()}]/g;
+    // @ts-ignore
     return rotuloCompleto.match(regexString)[0].replace(regexParenteses, "");
 };
 
 const pegaValorRotuloSemUnidade = (rotuloCompleto: string) => {
     const regexString = /(.+?)\s*\(.+?\)/;
+    // @ts-ignore
     return rotuloCompleto.match(regexString)[1];
 };
 
