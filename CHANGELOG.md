@@ -2,6 +2,12 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v2.0.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.0.0%0D1.37.1) (24/09/2024)
+
+### Adicionado
+* ([RST5-204](https://paripassu.atlassian.net/browse/RST5-204)): Adicionado suporte a impressão para RST5 e atualização de dependencias do projeto.
+
+
 ## [v1.37.1](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.37.1%0D1.37.0) (27/06/2024)
 
 ### Atualizado
