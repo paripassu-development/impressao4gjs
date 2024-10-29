@@ -154,6 +154,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     );
 
     // Linha normal ----------------------------------------------------------------------------------------------------
+    // Quadrado Informação Nutricional
     yMm += alturaLinhaMm / 2.8;
     desenharLinha(ctx, model, yMm, mm, ESPESSURA_LINHA_PADRAO_EM_PT);
     desenharLinhaContornoVerticalDireita(ctx, model, yMm - (ESPACAMENTO_CONTORNO_TABELA_EM_PT * 6), model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 4);
@@ -164,6 +165,7 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     ctx.font = `${calculaTamanhoFonteByAlturaMMEFontePadraoPT(model.fonte.alturaMm, TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT)}mm ${model.fonte.nome}`;
 
     // -----------------------------------------------------------------------------------------------------------------
+    // Porções por embalagem
     const porcaoLength: number = "Porções por embalagem: ".length + (fillTemplate(model.informacoesNutricionais.textoQuantidadeEmbalagem, textbindsTratada)).length;
 
     // @ts-ignore
@@ -207,7 +209,6 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
     yMm += alturaLinhaMm + 1;
 
     // -----------------------------------------------------------------------------------------------------------------
-
     // Informações nutricionais
     if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         // nutrientes.forEach((nutriente: any) => {
@@ -265,8 +266,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
             montarInformacoesNutricionais(parametro, elementosTextuais, informacoesNutricionaisDivididas, unidadeTratada);
 
             if (parametrosExtrasNutricionalV2.length === 0) {
-                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 18);
-                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21);
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 18 +  parametrosPadroesNutricionalV2.length);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21 +  parametrosPadroesNutricionalV2.length);
             }
         });
 
@@ -280,8 +281,8 @@ const drawTable = (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Canvas, d
                 desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 23.5);
                 desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 24);
             } else {
-                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 20.5);
-                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21.5);
+                desenharLinhaContornoVerticalDireita(ctx, model, yMm - 2, model.posicao.xMm + (ESPACAMENTO_100G_000G_VD + 0.3), mm, 21.5 + parametrosPadroesNutricionalV2.length);
+                desenharLinhaContornoVerticalEsquerda(ctx, model, yMm - 8, model.posicao.xMm - 0.2, mm, 21.5 + parametrosPadroesNutricionalV2.length);
             }
         });
 
@@ -616,7 +617,6 @@ const desenharLinhaContornoVerticalDireita = (ctx: CanvasRenderingContext2D, mod
 const desenharLinhaContornoVerticalEsquerda = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, xMm: number, mm: any, alturaLinhaVertical: number) => {
     ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
     ctx.lineWidth = converterPtParaPX(ESPESSURA_LINHA_CONTORNO_EM_PT);
-
     // x, y, largura e altura
     ctx.strokeRect(
         mm(xMm),
