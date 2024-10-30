@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v1.38.1](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.38.1%0D1.38.0) (30/10/2024)
+
+### Corrigido
+* ([RST-9279](https://paripassu.atlassian.net/browse/RST-9279)): Corrigida linhas verticais das tabelas em linha.
+
 ## [v1.38.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/1.38.0%0D1.37.1) (06/09/2024)
 
 ### Adicionado
