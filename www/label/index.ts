@@ -126,14 +126,17 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
     }
 
     model.desenho.elementos.forEach((elemento: any) => {
+        console.log("elemento", elemento);
         const tipos: any = {
             codigoBarras: async (): Promise<any> => {
+                console.log("entrou no codigoBarras");
                 return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings)
                     .catch((error) => {
                         errors = _.union(errors, error);
                     });
             },
             qrcode: (): Promise<any> => {
+                console.log("entrou no qrcode");
                 return new Promise((resolve) => {
                     qrcode.drawQrcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
                     // @ts-ignore
