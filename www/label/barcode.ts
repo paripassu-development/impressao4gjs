@@ -265,8 +265,6 @@ const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: numbe
         });
 
         return new Promise((resolve, reject) => {
-            reject("textBindings " + textBindings);
-            reject("model " + model);
             barcodeImg.onload = () => { // aguarda load da imagem no DOM
                 const degrees = model.posicao.rotacao || 0;
                 ctx.save();
