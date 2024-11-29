@@ -127,10 +127,13 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
 
     model.desenho.elementos.forEach((elemento: any) => {
         const teste = new Promise((resolve, reject) => {
+            // tslint:disable-next-line:no-console
             console.log("teste console");
             reject("teste reject");
-            resolve();
+            resolve(void 0);
         });
+        // tslint:disable-next-line:no-console
+        console.log(teste);
         const tipos: any = {
             codigoBarras: async (): Promise<any> => {
                 return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings)
