@@ -129,12 +129,15 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
 
         const tipos: any = {
             codigoBarras: async (): Promise<any> => {
-                // tslint:disable-next-line:no-console
-                console.log("codigoBarras");
-                return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings)
-                    .catch((error) => {
+                return new Promise((resolve) => {
+                    barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings).catch((error) => {
+                        // tslint:disable-next-line:no-console
+                        console.log("erro");
                         errors = _.union(errors, error);
                     });
+                    // @ts-ignore
+                    resolve();
+                });
             },
             qrcode: (): Promise<any> => {
                 // tslint:disable-next-line:no-console

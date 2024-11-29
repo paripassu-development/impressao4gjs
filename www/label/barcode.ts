@@ -242,6 +242,8 @@ function validate(model: IElementoCodigoBarrasModel, textBindings: any | undefin
 }
 
 const drawBarcode = async (id: string, ctx: CanvasRenderingContext2D, dpi: number, model: IElementoCodigoBarrasModel, textBindings?: any): Promise<any> => {
+    // tslint:disable-next-line:no-console
+    console.log("codigoBarras");
     const mm = mmPartial(dpi);
     let tipoCodigoBarras = mapLabelTypes(Mustache.render(model.tipoCodigoBarras, textBindings));
     tipoCodigoBarras = normalizeType(tipoCodigoBarras);
