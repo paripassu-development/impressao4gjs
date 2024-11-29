@@ -126,16 +126,19 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
     }
 
     model.desenho.elementos.forEach((elemento: any) => {
-        // tslint:disable-next-line:no-console
-        console.log(elemento);
+
         const tipos: any = {
             codigoBarras: async (): Promise<any> => {
+                // tslint:disable-next-line:no-console
+                console.log("codigoBarras");
                 return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings)
                     .catch((error) => {
                         errors = _.union(errors, error);
                     });
             },
             qrcode: (): Promise<any> => {
+                // tslint:disable-next-line:no-console
+                console.log("qrcode");
                 return new Promise((resolve) => {
                     qrcode.drawQrcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings);
                     // @ts-ignore
@@ -143,6 +146,8 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
                 });
             },
             texto: (): Promise<any> => {
+                // tslint:disable-next-line:no-console
+                console.log("texto");
                 return new Promise((resolve) => {
                     text.drawText(ctx, fabricCanvas, model.impressao.resolucaoDpi, elemento, textBindings);
                     // @ts-ignore
@@ -205,6 +210,8 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
         if (tipos[elemento.tipo]) {
             promises.push(tipos[elemento.tipo]());
         }
+        // tslint:disable-next-line:no-console
+        console.log(promises);
     });
 
     await Promise.all(promises)
