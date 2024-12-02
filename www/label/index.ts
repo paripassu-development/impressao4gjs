@@ -4,7 +4,7 @@ import * as Mustache from "mustache";
 import {Error} from "../core/common/error";
 import {canvasUtils} from "../core/util/canvas-utils";
 import {ErrorUtils} from "../core/util/error-utils";
-import {drawBarcode} from "./barcode";
+import {barcode} from "./barcode";
 import {barraOrigemRastreada} from "./barra-origem-rastreada";
 import {mmPartial} from "./mm";
 import {qrcode} from "./qrcode";
@@ -129,10 +129,10 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
 
         const tipos: any = {
             codigoBarras: async (): Promise<any> => {
-                return drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings)
+                return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings)
                     .catch((error) => {
                         // tslint:disable-next-line:no-console
-                        console.log("erro");
+                        console.log("erro + " + error);
                         errors = _.union(errors, error);
                     });
             },
