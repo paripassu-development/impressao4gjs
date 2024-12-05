@@ -131,8 +131,6 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
             codigoBarras: async (): Promise<any> => {
                 return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings)
                     .catch((error) => {
-                        // tslint:disable-next-line:no-console
-                        console.log("erro + " + error);
                         errors = _.union(errors, error);
                     });
             },
@@ -206,8 +204,6 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
         if (tipos[elemento.tipo]) {
             promises.push(tipos[elemento.tipo]());
         }
-        // tslint:disable-next-line:no-console
-        console.log(promises);
     });
 
     await Promise.all(promises)
