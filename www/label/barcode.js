@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 exports.__esModule = true;
-var jsbarcode_1 = require("jsbarcode");
+var JsBarcode = require("jsbarcode");
 var moment_1 = require("moment");
 var Mustache = require("mustache");
 var error_1 = require("../core/common/error");
@@ -168,9 +168,10 @@ function normalizeType(tipoCodigoBarras) {
     }
     return tipoCodigoBarras;
 }
+// @ts-ignore
 function validate(model, textBindings, tipoCodigoBarras) {
     if (!textBindings) {
-        return;
+        return [];
     }
     var errors = Array();
     if (tipoCodigoBarras.toLowerCase() === index_1.GS1_128_DEFAULT || tipoCodigoBarras.toLowerCase() === index_1.GS1_DATABAR_EXPANDED_STACKED) {
@@ -296,6 +297,7 @@ var createBarcodeWithBwipJs = function (options, img) {
         bwipjs(canvas, buildOptionsBwipJs(options), function (err) {
             if (err) {
                 reject("Erro ao gerar o codigo de barras " + options.format);
+                // tslint:disable-next-line:no-console
                 console.log("Erro ao gerar o codigo de barras " + options.format);
             }
             else {
@@ -305,9 +307,24 @@ var createBarcodeWithBwipJs = function (options, img) {
         });
     });
 };
-var createBarcodeWithBarcodeJs = function (id, img, options, dpi) { return new Promise(function (resolve) {
-    jsbarcode_1["default"]("#" + index_1.BARCODE_IMG_ELEMENT_ID, options.text, buildOptionsJsBarcode(options, dpi));
-    resolve(img);
+var createBarcodeWithBarcodeJs = function (
+// @ts-ignore
+id, img, options, dpi) { return new Promise(function (resolve, reject) {
+    try {
+        var selector = "#" + index_1.BARCODE_IMG_ELEMENT_ID;
+        var barcodeElement = document.querySelector(selector);
+        if (!barcodeElement) {
+            // @ts-ignore
+            throw new error_1.Error("Elemento com o seletor \"" + selector + "\" n\u00E3o encontrado no DOM.");
+        }
+        JsBarcode(selector, options.text, buildOptionsJsBarcode(options, dpi));
+        resolve(img);
+    }
+    catch (error) {
+        // tslint:disable-next-line:no-console
+        console.error("Erro ao gerar o código de barras:", error);
+        reject(error);
+    }
 }); };
 var createBarcode = function (id, dpi, options) {
     var oldImg = document.getElementById(index_1.BARCODE_IMG_ELEMENT_ID);
@@ -317,6 +334,7 @@ var createBarcode = function (id, dpi, options) {
     var img = document.createElement("img");
     img.id = index_1.BARCODE_IMG_ELEMENT_ID;
     img.style.display = "none";
+    // @ts-ignore
     document.getElementById(id).appendChild(img);
     _.defaults(options, OPTIONS_DEFAULT);
     if (options.format === index_1.GS1_128_DEFAULT || options.format === index_1.GS1_DATABAR_EXPANDED_STACKED) {

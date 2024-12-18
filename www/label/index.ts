@@ -126,6 +126,7 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
     }
 
     model.desenho.elementos.forEach((elemento: any) => {
+
         const tipos: any = {
             codigoBarras: async (): Promise<any> => {
                 return barcode.drawBarcode(id, ctx, model.impressao.resolucaoDpi, elemento, textBindings)
