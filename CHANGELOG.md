@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v2.0.2](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.0.2%0D2.0.1) (19/12/2024)
+
+### Corrigido
+* ([RST5-325](https://paripassu.atlassian.net/browse/RST5-325)): Corrigir problema do EAN/PLU na impressão JS dentro do RST 5G.
+
 ## [v2.0.1](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.0.1%0D2.0.0) (30/10/2024)
 
 ### Corrigido
