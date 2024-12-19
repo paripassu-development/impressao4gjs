@@ -1,4 +1,4 @@
-import JsBarcode from "jsbarcode";
+const JsBarcode = require("jsbarcode");
 import moment from "moment";
 import * as Mustache from "mustache";
 import {Error} from "../core/common/error";
@@ -335,11 +335,31 @@ const createBarcodeWithBwipJs = (options: ICreateBarcodeOptions, img: HTMLImageE
     });
 };
 
-// @ts-ignore
-const createBarcodeWithBarcodeJs = (id: string, img: HTMLImageElement, options: ICreateBarcodeOptions, dpi: number): Promise<HTMLImageElement> => new Promise((resolve) => {
-    JsBarcode("#" + BARCODE_IMG_ELEMENT_ID, options.text, buildOptionsJsBarcode(options, dpi));
-    resolve(img);
+const createBarcodeWithBarcodeJs = (
+    // @ts-ignore
+    id: string,
+    img: HTMLImageElement,
+    options: ICreateBarcodeOptions,
+    dpi: number,
+): Promise<HTMLImageElement> => new Promise((resolve, reject) => {
+    try {
+        const selector = "#" + BARCODE_IMG_ELEMENT_ID;
+        const barcodeElement = document.querySelector(selector);
+
+        if (!barcodeElement) {
+            // @ts-ignore
+            throw new Error(`Elemento com o seletor "${selector}" não encontrado no DOM.`);
+        }
+
+        JsBarcode(selector, options.text, buildOptionsJsBarcode(options, dpi));
+        resolve(img);
+    } catch (error) {
+        // tslint:disable-next-line:no-console
+        console.error("Erro ao gerar o código de barras:", error);
+        reject(error);
+    }
 });
+
 const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions): Promise<HTMLImageElement> => {
     const oldImg = document.getElementById(BARCODE_IMG_ELEMENT_ID);
     if (oldImg) {
@@ -359,7 +379,6 @@ const createBarcode = (id: string, dpi: number, options: ICreateBarcodeOptions):
     }
 };
 
-
 // extraido da biblioteca jsBarcode (src/barcodes/EAN_PC/EAN13)
 // https://en.wikipedia.org/wiki/International_Article_Number_(EAN)#Calculation_of_checksum_digit
 const checksumEan13 = (ean13: string): number => {
@@ -375,7 +394,6 @@ const checksumEan13 = (ean13: string): number => {
 
     return (10 - (result % 10)) % 10;
 };
-
 
 // extraido da biblioteca jsBarcode (src/barcodes/ITF14)
 const checksumDun14 = (dun14: string): number => {
@@ -411,7 +429,7 @@ const removeZerosEsquerda = (value: string): string => {
 
 //TODO trocar tipoCodigoBarras para ser um enum contendo os tipos de barra suportados afim de evitar erros
 const isValid = (tipoCodigoBarras: string, value: string) => {
-     if (!value || _.isEmpty(value) || !tipoCodigoBarras || _.isEmpty(tipoCodigoBarras)) {
+    if (!value || _.isEmpty(value) || !tipoCodigoBarras || _.isEmpty(tipoCodigoBarras)) {
         return false;
     }
     return removeZerosEsquerda(value) === removeZerosEsquerda(generateCodigoValue(tipoCodigoBarras, value));
