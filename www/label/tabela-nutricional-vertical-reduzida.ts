@@ -383,17 +383,14 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
             console.error("model", model);
             console.error("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
             console.error("texto", texto);
-            console.error("possuiAvisoNutricionaisZerados", !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto));
-            if (model.informacoesNutricionais.ocultarZerados) {
-                const naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter((parametro: any) =>
-                    parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
-                );
-                if (naoVisiveis.length > 0) {
-                    texto = texto.concat(naoVisiveis.map((parametro: any) => {
-                        return parametro.rotulo.toUpperCase();
-                    }).join(", ")).concat(". ");
-                    model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
-                }
+            const naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter((parametro: any) =>
+                parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
+            );
+            if (naoVisiveis.length > 0) {
+                texto = texto.concat(naoVisiveis.map((parametro: any) => {
+                    return parametro.rotulo.toUpperCase();
+                }).join(", ")).concat(". ");
+                model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
             }
         }
 
