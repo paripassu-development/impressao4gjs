@@ -383,7 +383,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
             console.log("model", model);
             console.log("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
             console.log(texto);
-            if (model.informacoesNutricionais.ocultarZerados && !_.includes(model.informacoesAdicionais.texto, texto)) {
+            if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
                 const naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter((parametro: any) =>
                     parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
                 );
@@ -479,18 +479,17 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     });
 
     // Contorno de baixo
-    console.log(ctx);
     desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
     yMm += lineStrokeGap;
     ctx.restore();
 };
 
-// const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
-//     console.log("textoInformacoesAdicionais", textoInformacoesAdicionais);
-//     console.log("texto", texto);
-//     console.log(_.includes(textoInformacoesAdicionais, texto));
-//     return _.includes(textoInformacoesAdicionais, texto);
-// };
+const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
+    if (!textoInformacoesAdicionais || !texto) {
+        return true;
+    }
+    return _.includes(textoInformacoesAdicionais, texto);
+};
 
 const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any, espessuraLinha: number) => {
     ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
