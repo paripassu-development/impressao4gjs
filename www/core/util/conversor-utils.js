@@ -19,4 +19,3 @@ var calculaTamanhoFonteByAlturaMMEFontePadraoPT = function (alturaMM, tamanhoPad
         : alturaMM * valorMMDaFonteEmPT;
 };
 exports.calculaTamanhoFonteByAlturaMMEFontePadraoPT = calculaTamanhoFonteByAlturaMMEFontePadraoPT;
-//# sourceMappingURL=conversor-utils.js.map

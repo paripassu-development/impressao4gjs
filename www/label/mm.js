@@ -8,4 +8,3 @@ var mmPartial = function (dpi) {
     };
 };
 exports.mmPartial = mmPartial;
-//# sourceMappingURL=mm.js.map

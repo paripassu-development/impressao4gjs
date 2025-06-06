@@ -134,6 +134,7 @@ exports.colunas = {
 exports.calcularPosicaoCentralizadaTextoQuantidadePorcao = function (parametroTipoTabela, larguraMaxima, textoPorcao) {
     var lenghtTextoPorcao = textoPorcao.length.toString();
     var valoresPosicoes = posicoesCentralizadasTextoQuantidadePorcao(parametroTipoTabela);
+    // @ts-ignore
     return valoresPosicoes[lenghtTextoPorcao] ? larguraMaxima - valoresPosicoes[lenghtTextoPorcao] : larguraMaxima;
 };
 var posicoesCentralizadasTextoQuantidadePorcao = function (parametroTipoTabela) {
@@ -166,6 +167,7 @@ exports.calcularPosicaoCentralizadaTabelaNutricional = function (parametroTipoTa
     var valorAlinhamento = parametroTipoTabela === exports.tipoTabela.v2Reduzida ?
         valoresPosicoesCentralizadasTabelaNutricionalReduzida(coluna, parametroQtString)
         : valoresPosicoesCentralizadasTabelaNutricional(coluna, parametroQtString);
+    // @ts-ignore
     return valorAlinhamento[tamanhoParametroQt.toString()] ? posicaoXg - valorAlinhamento[tamanhoParametroQt.toString()] : posicaoXg;
 };
 // Positivo posiciona os valores para esquerda - Negativo para direita
@@ -191,17 +193,27 @@ var valoresPosicoesCentralizadasTabelaNutricional = function (coluna, parametroQ
             "7": -1.10
         };
     }
-    if (coluna === exports.colunas.valorDiario) {
-        return {
-            "1": +2.5,
-            "2": +1.9,
-            "3": +temPontoDecimal(parametroQt) ? 1.5 : 1.15,
-            "4": +0.4,
-            "5": +0.1,
-            "6": -0.6,
-            "7": -1.3
-        };
-    }
+    // if (coluna === colunas.valorDiario) {
+    //     return {
+    //         "1": + 2.5,
+    //         "2": + 1.9,
+    //         "3": + temPontoDecimal(parametroQt) ? 1.5 : 1.15,
+    //         "4": + 0.4,
+    //         "5": + 0.1,
+    //         "6": - 0.6,
+    //         "7": - 1.3,
+    //     };
+    // }
+    // Valor Diario
+    return {
+        "1": +2.5,
+        "2": +1.9,
+        "3": +temPontoDecimal(parametroQt) ? 1.5 : 1.15,
+        "4": +0.4,
+        "5": +0.1,
+        "6": -0.6,
+        "7": -1.3
+    };
 };
 var valoresPosicoesCentralizadasTabelaNutricionalReduzida = function (coluna, parametroQt) {
     if (coluna === exports.colunas.qt100) {
@@ -226,17 +238,27 @@ var valoresPosicoesCentralizadasTabelaNutricionalReduzida = function (coluna, pa
             "7": -1.9
         };
     }
-    if (coluna === exports.colunas.valorDiario) {
-        return {
-            "1": +1.6,
-            "2": +1,
-            "3": +temPontoDecimal(parametroQt) ? 0.8 : 0.48,
-            "4": -0.2,
-            "5": -0.5,
-            "6": -1.1,
-            "7": -1.7
-        };
-    }
+    // if (coluna === colunas.valorDiario) {
+    //     return {
+    //         "1": + 1.6,
+    //         "2": + 1,
+    //         "3": + temPontoDecimal(parametroQt) ? 0.8 : 0.48,
+    //         "4": - 0.2,
+    //         "5": - 0.5,
+    //         "6": - 1.1,
+    //         "7": - 1.7,
+    //     };
+    // }
+    // valor diario
+    return {
+        "1": +1.6,
+        "2": +1,
+        "3": +temPontoDecimal(parametroQt) ? 0.8 : 0.48,
+        "4": -0.2,
+        "5": -0.5,
+        "6": -1.1,
+        "7": -1.7
+    };
 };
 function temPontoDecimal(numeroString) {
     var pontoIndex = numeroString.indexOf(".");
@@ -289,4 +311,3 @@ exports.contemTodasRegrasTabelaSimplificada = function (tabelaSimplificada) { re
         return [2 /*return*/, !!(tabelaSimplificada)];
     });
 }); };
-//# sourceMappingURL=tabela-nutricional-utils.js.map
