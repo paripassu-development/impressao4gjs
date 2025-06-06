@@ -119,7 +119,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     const textbindsTratada = textBindings ? textBindings : DADOS_DEFAULT;
     const unidadeTratada = extraiPorcao(textbindsTratada.porcaoNutricionalV2);
     const TABELA_SIMPLIFICADA = await contemTodasRegrasTabelaSimplificada(textbindsTratada.tabelaSimplificada);
-    await setInformacoesV2PadraoZero(textBindings);
+    setInformacoesV2PadraoZero(textBindings);
     const mm = mmPartial(dpi);
     ctx.save();
     const degrees = model.posicao.rotacao || 0;
@@ -380,10 +380,11 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
             });
             desenharLinha(ctx, model, yMm, mm, ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT);
             let texto = "";
-            console.log("model", model);
-            console.log("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
-            console.log(texto);
-            if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
+            console.error("model", model);
+            console.error("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
+            console.error("texto", texto);
+            console.error("possuiAvisoNutricionaisZerados", !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto));
+            if (model.informacoesNutricionais.ocultarZerados) {
                 const naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter((parametro: any) =>
                     parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
                 );
@@ -485,9 +486,8 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
 };
 
 const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
-    if (!textoInformacoesAdicionais || !texto) {
-        return true;
-    }
+    console.error("textoInformacoesAdicionais", textoInformacoesAdicionais);
+    console.error("texto", texto);
     return _.includes(textoInformacoesAdicionais, texto);
 };
 
