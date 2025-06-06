@@ -380,17 +380,19 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
             });
             desenharLinha(ctx, model, yMm, mm, ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT);
             let texto = "";
-            console.error("model", model);
-            console.error("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
-            console.error("texto", texto);
-            const naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter((parametro: any) =>
-                parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
-            );
-            if (naoVisiveis.length > 0) {
-                texto = texto.concat(naoVisiveis.map((parametro: any) => {
-                    return parametro.rotulo.toUpperCase();
-                }).join(", ")).concat(". ");
-                model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
+            console.log("model", model);
+            console.log("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
+            console.log(texto);
+            if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
+                const naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter((parametro: any) =>
+                    parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
+                );
+                if (naoVisiveis.length > 0) {
+                    texto = texto.concat(naoVisiveis.map((parametro: any) => {
+                        return parametro.rotulo.toUpperCase();
+                    }).join(", ")).concat(". ");
+                    model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
+                }
             }
         }
 
@@ -482,11 +484,11 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     ctx.restore();
 };
 
-// const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
-//     console.error("textoInformacoesAdicionais", textoInformacoesAdicionais);
-//     console.error("texto", texto);
-//     return _.includes(textoInformacoesAdicionais, texto);
-// };
+const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
+    console.log("dentro da funcao - textoInformacoesAdicionais", textoInformacoesAdicionais);
+    console.log("dentro da funcao - texto", texto);
+    return _.includes(textoInformacoesAdicionais, texto);
+};
 
 const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any, espessuraLinha: number) => {
     ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;

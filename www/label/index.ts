@@ -112,7 +112,6 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
     el.appendChild(canvas);
     const promises: Array<Promise<any>> = [];
     canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
-    console.error("criando");
     // fabricjs
     // @ts-ignore
     let fabricCanvas: fabric.Canvas = null;

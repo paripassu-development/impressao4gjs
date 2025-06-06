@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 exports.__esModule = true;
+var lodash_1 = require("lodash");
 var conversor_utils_1 = require("../core/util/conversor-utils");
 var param_utils_1 = require("../core/util/param-utils");
 var tabela_nutricional_utils_1 = require("../core/util/tabela-nutricional-utils");
@@ -271,17 +272,19 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                         });
                         desenharLinha(ctx, model, yMm, mm, default_1.ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT);
                         texto = "";
-                        console.error("model", model);
-                        console.error("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
-                        console.error("texto", texto);
-                        naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter(function (parametro) {
-                            return parametro.qtPorcao.match(/[0-9]/mg, "").every(function (elemento) { return elemento === "0"; });
-                        });
-                        if (naoVisiveis.length > 0) {
-                            texto = texto.concat(naoVisiveis.map(function (parametro) {
-                                return parametro.rotulo.toUpperCase();
-                            }).join(", ")).concat(". ");
-                            model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
+                        console.log("model", model);
+                        console.log("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
+                        console.log(texto);
+                        if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
+                            naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter(function (parametro) {
+                                return parametro.qtPorcao.match(/[0-9]/mg, "").every(function (elemento) { return elemento === "0"; });
+                            });
+                            if (naoVisiveis.length > 0) {
+                                texto = texto.concat(naoVisiveis.map(function (parametro) {
+                                    return parametro.rotulo.toUpperCase();
+                                }).join(", ")).concat(". ");
+                                model.informacoesAdicionais.texto = texto.concat(model.informacoesAdicionais.texto);
+                            }
                         }
                     }
                     listaNutrientesZerados = tabela_nutricional_utils_1.extraiNutrientesVazios(parametrosPadroesNutricionalV2);
@@ -333,11 +336,11 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
         }
     });
 }); };
-// const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
-//     console.error("textoInformacoesAdicionais", textoInformacoesAdicionais);
-//     console.error("texto", texto);
-//     return _.includes(textoInformacoesAdicionais, texto);
-// };
+var possuiAvisoNutricionaisZerados = function (textoInformacoesAdicionais, texto) {
+    console.log("dentro da funcao - textoInformacoesAdicionais", textoInformacoesAdicionais);
+    console.log("dentro da funcao - texto", texto);
+    return lodash_1["default"].includes(textoInformacoesAdicionais, texto);
+};
 var desenharLinha = function (ctx, model, yMm, mm, espessuraLinha) {
     ctx.textAlign = text_utils_1.TextAlign.LEFT;
     ctx.lineWidth = conversor_utils_1.converterPtParaPX(espessuraLinha);
