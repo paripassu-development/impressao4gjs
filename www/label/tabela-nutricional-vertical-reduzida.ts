@@ -380,9 +380,6 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
             });
             desenharLinha(ctx, model, yMm, mm, ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT);
             let texto = "";
-            console.log("model", model);
-            console.log("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
-            console.log(texto);
             if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
                 const naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter((parametro: any) =>
                     parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
@@ -485,8 +482,6 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
 };
 
 const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
-    console.log("dentro da funcao - textoInformacoesAdicionais", textoInformacoesAdicionais);
-    console.log("dentro da funcao - texto", texto);
     if (!textoInformacoesAdicionais || !texto) {
         return true;
     }

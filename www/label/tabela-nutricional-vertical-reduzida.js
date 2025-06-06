@@ -272,9 +272,6 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                         });
                         desenharLinha(ctx, model, yMm, mm, default_1.ESPESSURA_ULTIMA_LINHA_NUTRIENTES_EM_PT);
                         texto = "";
-                        console.log("model", model);
-                        console.log("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
-                        console.log(texto);
                         if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
                             naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter(function (parametro) {
                                 return parametro.qtPorcao.match(/[0-9]/mg, "").every(function (elemento) { return elemento === "0"; });
@@ -337,8 +334,6 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
     });
 }); };
 var possuiAvisoNutricionaisZerados = function (textoInformacoesAdicionais, texto) {
-    console.log("dentro da funcao - textoInformacoesAdicionais", textoInformacoesAdicionais);
-    console.log("dentro da funcao - texto", texto);
     if (!textoInformacoesAdicionais || !texto) {
         return true;
     }
