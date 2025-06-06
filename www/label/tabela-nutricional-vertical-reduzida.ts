@@ -383,7 +383,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
             console.log("model", model);
             console.log("model.informacoesAdicionais.texto", model.informacoesAdicionais.texto);
             console.log(texto);
-            if (model.informacoesNutricionais.ocultarZerados && !possuiAvisoNutricionaisZerados(model.informacoesAdicionais.texto, texto)) {
+            if (model.informacoesNutricionais.ocultarZerados && !_.includes(model.informacoesAdicionais.texto, texto)) {
                 const naoVisiveis = textBindings.parametrosPadroesNutricionalV2.filter((parametro: any) =>
                     parametro.qtPorcao.match(/[0-9]/mg, "").every((elemento: any) => elemento === "0"),
                 );
