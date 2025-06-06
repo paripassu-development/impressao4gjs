@@ -482,11 +482,11 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     ctx.restore();
 };
 
-const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
-    console.error("textoInformacoesAdicionais", textoInformacoesAdicionais);
-    console.error("texto", texto);
-    return _.includes(textoInformacoesAdicionais, texto);
-};
+// const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
+//     console.error("textoInformacoesAdicionais", textoInformacoesAdicionais);
+//     console.error("texto", texto);
+//     return _.includes(textoInformacoesAdicionais, texto);
+// };
 
 const desenharLinha = (ctx: CanvasRenderingContext2D, model: IElementoTabelaNutricionalModel, yMm: number, mm: any, espessuraLinha: number) => {
     ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
