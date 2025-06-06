@@ -487,6 +487,9 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
 const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
     console.log("dentro da funcao - textoInformacoesAdicionais", textoInformacoesAdicionais);
     console.log("dentro da funcao - texto", texto);
+    if (!textoInformacoesAdicionais || !texto) {
+        return true;
+    }
     return _.includes(textoInformacoesAdicionais, texto);
 };
 

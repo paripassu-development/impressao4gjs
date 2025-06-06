@@ -339,6 +339,9 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
 var possuiAvisoNutricionaisZerados = function (textoInformacoesAdicionais, texto) {
     console.log("dentro da funcao - textoInformacoesAdicionais", textoInformacoesAdicionais);
     console.log("dentro da funcao - texto", texto);
+    if (!textoInformacoesAdicionais || !texto) {
+        return true;
+    }
     return lodash_1["default"].includes(textoInformacoesAdicionais, texto);
 };
 var desenharLinha = function (ctx, model, yMm, mm, espessuraLinha) {
