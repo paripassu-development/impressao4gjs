@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v2.0.3](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.0.3%0D2.0.2) (09/06/2025)
+
+### Corrigido
+* ([RST5-784](https://paripassu.atlassian.net/browse/RST5-784)): Corrigido cenário onde informações adicionais na etiqueta nutricional não estavam sendo exibidas.
+
 ## [v2.0.2](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.0.2%0D2.0.1) (19/12/2024)
 
 ### Corrigido
