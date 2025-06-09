@@ -311,3 +311,4 @@ exports.contemTodasRegrasTabelaSimplificada = function (tabelaSimplificada) { re
         return [2 /*return*/, !!(tabelaSimplificada)];
     });
 }); };
+//# sourceMappingURL=tabela-nutricional-utils.js.map

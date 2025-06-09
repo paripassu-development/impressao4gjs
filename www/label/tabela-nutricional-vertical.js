@@ -43,6 +43,7 @@ var tabela_nutricional_utils_1 = require("../core/util/tabela-nutricional-utils"
 var text_utils_1 = require("../core/util/text-utils");
 var default_1 = require("../default");
 var mm_1 = require("./mm");
+var constants_impressao_1 = require("../core/constants/constants-impressao");
 var nutrientes = [
     "valorEnergetico",
     "carboidratos",
@@ -105,7 +106,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                         id: 0,
                         titulo: "Porções por embalagem: ",
                         value: model.informacoesNutricionais.textoQuantidadeEmbalagem,
-                        caseira: null
+                        caseira: ""
                     },
                     {
                         id: 1,
@@ -189,6 +190,10 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                 // Informações nutricionais
                 if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
                     nutrientes.forEach(function (nutriente) {
+                        if (lodash_1["default"].includes(nutriente.rotulo, constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                            calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 470) {
+                            nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
+                        }
                         textoCabecalhoMedidas.map(function (obj) {
                             // TODO Verificar como deixar responsivas as linhas verticais
                             var alturaLinhaVertical = conversor_utils_1.converterPTparaMM(default_1.TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT) + lineStrokeGap;
@@ -217,6 +222,10 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                 else {
                     parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : default_1.PARAMETROS_PADROES_NUTRICIONAL_V2;
                     parametrosPadroesNutricionalV2.forEach(function (nutriente) {
+                        if (lodash_1["default"].includes(nutriente.rotulo, constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                            calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 470) {
+                            nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
+                        }
                         var alturaLinhaVertical = conversor_utils_1.converterPTparaMM(default_1.TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT) + lineStrokeGap;
                         var matchArray = nutriente.qtPorcao.match(/[0-9]/mg, "");
                         if (!model.informacoesNutricionais.ocultarZerados || (matchArray && !matchArray.every(function (elemento) { return elemento === "0" || !elemento; }))) {
@@ -378,6 +387,20 @@ var desenharLinhaVertical = function (ctx, model, yMm, xMm, mm, alturaLinhaVerti
     // x, y, largura e altura
     ctx.strokeRect(mm((xMm + (model.dimensoes.larguraMaximaMm - default_1.TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT))), mm(yMm) - (model.fonte.alturaMm * default_1.TAMANHO_FONTE_PADRAO_INFORMACOES_EM_PT), 1, mm(alturaLinhaVertical));
     ctx.lineWidth = model.fonte.forcaContorno || 0;
+};
+var calcularDiferencaDpiLarguraMaximaMm = function (dpi, larguraMm) {
+    var mm = mm_1.mmPartial(dpi);
+    var larguraEmPixels = mm(larguraMm);
+    var larguraMinimaEmPixels = mm(1);
+    return lodash_1.round(larguraEmPixels - larguraMinimaEmPixels, 2);
+};
+var renomeioParaAbreviacao = function (texto) {
+    switch (texto.trim()) {
+        case constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal:
+            return constants_impressao_1.ABREVIACOES.acucaresAdicionados.abreviado;
+        default:
+            return texto;
+    }
 };
 exports.tabelaNutricionalVertical = { drawTable: drawTable };
 //# sourceMappingURL=tabela-nutricional-vertical.js.map

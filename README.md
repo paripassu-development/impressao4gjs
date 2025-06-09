@@ -34,8 +34,7 @@ Certifique-se de ter as seguintes versões instaladas:
     yarn start
 ```
 
-* Após execução do projeto abrir: [webpack-dev-server](http://localhost:8086/webpack-dev-server/
-  )
+* Após execução do projeto abrir: [webpack-dev-server](http://localhost:8086/webpack-dev-server/)
 
 
 ## Dicas ##
