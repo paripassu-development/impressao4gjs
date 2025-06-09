@@ -104,7 +104,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                         id: 0,
                         titulo: "Porções por embalagem: ",
                         value: model.informacoesNutricionais.textoQuantidadeEmbalagem,
-                        caseira: null
+                        caseira: ""
                     },
                     {
                         id: 1,
@@ -334,6 +334,9 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
     });
 }); };
 var possuiAvisoNutricionaisZerados = function (textoInformacoesAdicionais, texto) {
+    if (!textoInformacoesAdicionais || !texto) {
+        return true;
+    }
     return lodash_1["default"].includes(textoInformacoesAdicionais, texto);
 };
 var desenharLinha = function (ctx, model, yMm, mm, espessuraLinha) {
@@ -376,4 +379,3 @@ var desenharLinhaVertical = function (ctx, model, yMm, xMm, mm, alturaLinhaVerti
     ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
 exports.tabelaNutricionalVerticalReduzida = { drawTable: drawTable };
-//# sourceMappingURL=tabela-nutricional-vertical-reduzida.js.map

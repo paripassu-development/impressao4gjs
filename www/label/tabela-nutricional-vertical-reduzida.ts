@@ -478,11 +478,13 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     // Contorno de baixo
     desenharLinhaContornoHorizontal(ctx, model, yMm, mm);
     yMm += lineStrokeGap;
-
     ctx.restore();
 };
 
 const possuiAvisoNutricionaisZerados = (textoInformacoesAdicionais: string, texto: string) => {
+    if (!textoInformacoesAdicionais || !texto) {
+        return true;
+    }
     return _.includes(textoInformacoesAdicionais, texto);
 };
 

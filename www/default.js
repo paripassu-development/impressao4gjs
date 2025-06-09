@@ -525,4 +525,3 @@ exports.APENAS_MG = "mg";
 exports.VALOR_PORCAO_100 = "100";
 exports.VALORES_PARA_OCULTAR = ["NÃO SE APLICA"];
 exports.INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO = "**";
-//# sourceMappingURL=default.js.map

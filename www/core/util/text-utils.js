@@ -170,11 +170,23 @@ var writeFabricText = function (fabricCanvas, ctx, text, xMm, yMm, larguraMaxima
     options = options || {};
     var larguraMaximaPx = mm(larguraMaximaMm);
     var fontProperties = /(bold)?\s?(\d+px)?\s?(.+)?$/.exec(ctx.font);
-    var font = {
-        weight: fontProperties[1],
-        size: Number((fontProperties[2] || "").replace("px", "")),
-        name: fontProperties[3]
-    };
+    // const font = {
+    //     weight: fontProperties[1],
+    //     size: Number((fontProperties[2] || "").replace("px","")),
+    //     name: fontProperties[3],
+    // };
+    // TODO - Correção typescript para rastreador 5
+    var font = fontProperties
+        ? {
+            weight: fontProperties[1],
+            size: Number((fontProperties[2] || "").replace("px", "")),
+            name: fontProperties[3]
+        }
+        : {
+            weight: "",
+            size: 0,
+            name: ""
+        };
     var textAlign = ctx.textAlign;
     var maxTextWidth = larguraMaximaPx;
     var background = undefined;
@@ -187,14 +199,17 @@ var writeFabricText = function (fabricCanvas, ctx, text, xMm, yMm, larguraMaxima
     }
     var top = mm(yMm) - font.size;
     var left = xPx;
+    // @ts-ignore
     if (options.degrees > 0 && options.degrees <= 90) {
         var newLeft = Math.abs(top);
         top = left;
         left = newLeft;
+        // @ts-ignore
     }
     else if (options.degrees > 90 && options.degrees <= 180) {
         top = Math.abs(top);
         left = Math.abs(left);
+        // @ts-ignore
     }
     else if (options.degrees > 180 && options.degrees <= 270) {
         var newTop = Math.abs(left);
@@ -275,4 +290,3 @@ var ocultaCampoTextoComBaseNoValor = function (valor) {
     return valor;
 };
 exports.ocultaCampoTextoComBaseNoValor = ocultaCampoTextoComBaseNoValor;
-//# sourceMappingURL=text-utils.js.map
