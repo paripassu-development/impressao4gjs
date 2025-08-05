@@ -5,6 +5,12 @@ exports.barraOrigemRastreadaConstants = {
     LARGURA_BARRA: 776,
     ALTURA_BARRA: 32
 };
+exports.abreviacoes = {
+    acucaresAdicionados: {
+        nomeOriginal: "Açúcares adicionados (g)",
+        abreviado: "    Aç adicionados (g)"
+    }
+};
 exports.ErrosPrefix = {
     ERROR_CODIGO_BARRAS: "[Código de barras]",
     ERROR_OBRIGATORIEDADE: "[Campo obrigatório]"
@@ -76,12 +82,6 @@ exports.intervaloTamanhoFonte = {
         proporcaoTamanhoFonte3: { min: 5, max: 6, tamanhoFonte: 3 },
         proporcaoTamanhoFonte4: { min: 7, max: 9, tamanhoFonte: 4 },
         proporcaoTamanhoFonte6: { min: 10, max: Number.MAX_VALUE, tamanhoFonte: 6 }
-    }
-};
-exports.abreviacoes = {
-    acucaresAdicionados: {
-        nomeOriginal: "Açúcares adicionados (g)",
-        abreviado: "    Aç adicionados (g)"
     }
 };
 //# sourceMappingURL=constants-impressao.js.map
