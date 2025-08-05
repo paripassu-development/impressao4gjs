@@ -1,4 +1,6 @@
-var DrawUtils = (function () {
+"use strict";
+exports.__esModule = true;
+var DrawUtils = /** @class */ (function () {
     function DrawUtils(ctx) {
         this.ctx = ctx;
     }
@@ -12,8 +14,7 @@ var DrawUtils = (function () {
         this.ctx.fillStyle = corPreenchimento;
         this.ctx.fill();
     };
-    ;
     return DrawUtils;
-})();
+}());
 exports.DrawUtils = DrawUtils;
 //# sourceMappingURL=draw-utils.js.map
