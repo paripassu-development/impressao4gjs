@@ -78,7 +78,7 @@ exports.intervaloTamanhoFonte = {
         proporcaoTamanhoFonte6: { min: 10, max: Number.MAX_VALUE, tamanhoFonte: 6 }
     }
 };
-exports.ABREVIACOES = {
+exports.abreviacoes = {
     acucaresAdicionados: {
         nomeOriginal: "Açúcares adicionados (g)",
         abreviado: "    Aç adicionados (g)"

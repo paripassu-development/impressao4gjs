@@ -83,7 +83,7 @@ export const intervaloTamanhoFonte: any = {
     }, // proporção 1.666666666666667
 };
 
-export const ABREVIACOES = {
+export const abreviacoes = {
     acucaresAdicionados: {
         nomeOriginal: "Açúcares adicionados (g)",
         abreviado: "    Aç adicionados (g)",

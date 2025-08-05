@@ -1,6 +1,6 @@
 import {fabric} from "fabric";
 import _, {round} from "lodash";
-import {ABREVIACOES} from "../core/constants/constants-impressao";
+import {abreviacoes} from "../core/constants/constants-impressao";
 import {
     calculaTamanhoFonteByAlturaMMEFontePadraoPT,
     converterPTparaMM,
@@ -317,9 +317,9 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
         console.log(parametrosPadroesNutricionalV2);
         parametrosPadroesNutricionalV2.forEach((nutriente: any) => {
             console.log(nutriente);
-            console.log(ABREVIACOES.acucaresAdicionados.nomeOriginal)
+            console.log(abreviacoes.acucaresAdicionados.nomeOriginal);
             if (
-                _.includes(nutriente.rotulo, ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                _.includes(nutriente.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
                 calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400
             ) {
                 nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
@@ -367,7 +367,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
                 ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
 
                 if (
-                    _.includes(parametro.rotulo, ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                    _.includes(parametro.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
                     calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400
                 ) {
                     parametro.rotulo = renomeioParaAbreviacao(parametro.rotulo);
@@ -586,8 +586,8 @@ const calcularDiferencaDpiLarguraMaximaMm = (dpi: number, larguraMm: number): nu
 
 const renomeioParaAbreviacao = (texto: string) => {
     switch (texto.trim()) {
-        case ABREVIACOES.acucaresAdicionados.nomeOriginal:
-            return ABREVIACOES.acucaresAdicionados.abreviado;
+        case abreviacoes.acucaresAdicionados.nomeOriginal:
+            return abreviacoes.acucaresAdicionados.abreviado;
         default:
             return texto;
     }

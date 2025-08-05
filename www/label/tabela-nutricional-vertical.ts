@@ -1,7 +1,7 @@
 import {fabric} from "fabric";
 const _ = require("lodash");
 const {round} = require("lodash");
-import {ABREVIACOES} from "../core/constants/constants-impressao";
+import {abreviacoes} from "../core/constants/constants-impressao";
 import {
     calculaTamanhoFonteByAlturaMMEFontePadraoPT,
     converterPTparaMM,
@@ -296,7 +296,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         nutrientes.forEach((nutriente: any) => {
             if (
-                _.includes(nutriente.rotulo, ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                _.includes(nutriente.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
                 calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 470
             ) {
                 nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
@@ -330,7 +330,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
         parametrosPadroesNutricionalV2.forEach((nutriente: any) => {
             if (
-                _.includes(nutriente.rotulo, ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                _.includes(nutriente.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
                 calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 470
             ) {
                 nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
@@ -591,8 +591,8 @@ const calcularDiferencaDpiLarguraMaximaMm = (dpi: number, larguraMm: number): nu
 
 const renomeioParaAbreviacao = (texto: string) => {
     switch (texto.trim()) {
-        case ABREVIACOES.acucaresAdicionados.nomeOriginal:
-            return ABREVIACOES.acucaresAdicionados.abreviado;
+        case abreviacoes.acucaresAdicionados.nomeOriginal:
+            return abreviacoes.acucaresAdicionados.abreviado;
         default:
             return texto;
     }

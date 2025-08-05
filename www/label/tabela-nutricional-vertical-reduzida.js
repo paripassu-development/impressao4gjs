@@ -216,8 +216,8 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                     console.log(parametrosPadroesNutricionalV2);
                     parametrosPadroesNutricionalV2.forEach(function (nutriente) {
                         console.log(nutriente);
-                        console.log(constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal);
-                        if (lodash_1["default"].includes(nutriente.rotulo, constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                        console.log(constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal);
+                        if (lodash_1["default"].includes(nutriente.rotulo, constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal) &&
                             calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400) {
                             nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
                         }
@@ -258,7 +258,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                             var yMmValores = yMm + valorEspacamentoYMmValores;
                             var yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
                             ctx.textAlign = text_utils_1.TextAlign.LEFT;
-                            if (lodash_1["default"].includes(parametro.rotulo, constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                            if (lodash_1["default"].includes(parametro.rotulo, constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal) &&
                                 calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400) {
                                 parametro.rotulo = renomeioParaAbreviacao(parametro.rotulo);
                             }
@@ -398,8 +398,8 @@ var calcularDiferencaDpiLarguraMaximaMm = function (dpi, larguraMm) {
 };
 var renomeioParaAbreviacao = function (texto) {
     switch (texto.trim()) {
-        case constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal:
-            return constants_impressao_1.ABREVIACOES.acucaresAdicionados.abreviado;
+        case constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal:
+            return constants_impressao_1.abreviacoes.acucaresAdicionados.abreviado;
         default:
             return texto;
     }
