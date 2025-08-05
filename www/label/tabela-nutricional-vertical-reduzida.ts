@@ -1,5 +1,4 @@
 import {fabric} from "fabric";
-import _, {round} from "lodash";
 import {abreviacoes} from "../core/constants/constants-impressao";
 import {
     calculaTamanhoFonteByAlturaMMEFontePadraoPT,
@@ -40,6 +39,8 @@ import {
     TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT, TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT,
 } from "../default";
 import {mmPartial} from "./mm";
+
+const _ = require("lodash");
 
 interface IElementoTabelaNutricionalModelPosicao {
     xMm: number;
@@ -319,7 +320,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
             console.log(nutriente);
             console.log(abreviacoes.acucaresAdicionados.nomeOriginal);
             if (
-                _.includes(nutriente.rotulo, "Açúcares adicionados (g)") &&
+                _.includes(nutriente.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
                 calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400
             ) {
                 nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
@@ -367,7 +368,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
                 ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
 
                 if (
-                    _.includes(parametro.rotulo, "Açúcares adicionados (g)") &&
+                    _.includes(parametro.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
                     calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400
                 ) {
                     parametro.rotulo = renomeioParaAbreviacao(parametro.rotulo);
@@ -581,12 +582,12 @@ const calcularDiferencaDpiLarguraMaximaMm = (dpi: number, larguraMm: number): nu
     const mm = mmPartial(dpi);
     const larguraEmPixels = mm(larguraMm);
     const larguraMinimaEmPixels = mm(1);
-    return round(larguraEmPixels - larguraMinimaEmPixels, 2);
+    return larguraEmPixels - larguraMinimaEmPixels;
 };
 
 const renomeioParaAbreviacao = (texto: string) => {
     switch (texto.trim()) {
-        case "Açúcares adicionados (g)":
+        case abreviacoes.acucaresAdicionados.nomeOriginal:
             return abreviacoes.acucaresAdicionados.abreviado;
         default:
             return texto;

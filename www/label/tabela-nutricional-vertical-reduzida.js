@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 exports.__esModule = true;
-var lodash_1 = require("lodash");
 var constants_impressao_1 = require("../core/constants/constants-impressao");
 var conversor_utils_1 = require("../core/util/conversor-utils");
 var param_utils_1 = require("../core/util/param-utils");
@@ -44,6 +43,7 @@ var tabela_nutricional_utils_1 = require("../core/util/tabela-nutricional-utils"
 var text_utils_1 = require("../core/util/text-utils");
 var default_1 = require("../default");
 var mm_1 = require("./mm");
+var _ = require("lodash");
 var nutrientes = [
     "valorEnergetico",
     "carboidratos",
@@ -217,7 +217,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                     parametrosPadroesNutricionalV2.forEach(function (nutriente) {
                         console.log(nutriente);
                         console.log(constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal);
-                        if (lodash_1["default"].includes(nutriente.rotulo, "Açúcares adicionados (g)") &&
+                        if (_.includes(nutriente.rotulo, constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal) &&
                             calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400) {
                             nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
                         }
@@ -258,7 +258,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                             var yMmValores = yMm + valorEspacamentoYMmValores;
                             var yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
                             ctx.textAlign = text_utils_1.TextAlign.LEFT;
-                            if (lodash_1["default"].includes(parametro.rotulo, "Açúcares adicionados (g)") &&
+                            if (_.includes(parametro.rotulo, constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal) &&
                                 calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400) {
                                 parametro.rotulo = renomeioParaAbreviacao(parametro.rotulo);
                             }
@@ -349,7 +349,7 @@ var possuiAvisoNutricionaisZerados = function (textoInformacoesAdicionais, texto
     if (!textoInformacoesAdicionais || !texto) {
         return true;
     }
-    return lodash_1["default"].includes(textoInformacoesAdicionais, texto);
+    return _.includes(textoInformacoesAdicionais, texto);
 };
 var desenharLinha = function (ctx, model, yMm, mm, espessuraLinha) {
     ctx.textAlign = text_utils_1.TextAlign.LEFT;
@@ -394,11 +394,11 @@ var calcularDiferencaDpiLarguraMaximaMm = function (dpi, larguraMm) {
     var mm = mm_1.mmPartial(dpi);
     var larguraEmPixels = mm(larguraMm);
     var larguraMinimaEmPixels = mm(1);
-    return lodash_1.round(larguraEmPixels - larguraMinimaEmPixels, 2);
+    return larguraEmPixels - larguraMinimaEmPixels;
 };
 var renomeioParaAbreviacao = function (texto) {
     switch (texto.trim()) {
-        case "Açúcares adicionados (g)":
+        case constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal:
             return constants_impressao_1.abreviacoes.acucaresAdicionados.abreviado;
         default:
             return texto;
