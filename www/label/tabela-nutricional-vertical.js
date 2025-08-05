@@ -191,7 +191,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                 // Informações nutricionais
                 if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
                     nutrientes.forEach(function (nutriente) {
-                        if (_.includes(nutriente.rotulo, constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal) &&
+                        if (_.includes(nutriente.rotulo, "Açúcares adicionados (g)") &&
                             calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 470) {
                             nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
                         }
@@ -223,7 +223,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                 else {
                     parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : default_1.PARAMETROS_PADROES_NUTRICIONAL_V2;
                     parametrosPadroesNutricionalV2.forEach(function (nutriente) {
-                        if (_.includes(nutriente.rotulo, constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal) &&
+                        if (_.includes(nutriente.rotulo, "Açúcares adicionados (g)") &&
                             calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 470) {
                             nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
                         }
@@ -397,7 +397,7 @@ var calcularDiferencaDpiLarguraMaximaMm = function (dpi, larguraMm) {
 };
 var renomeioParaAbreviacao = function (texto) {
     switch (texto.trim()) {
-        case constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal:
+        case "Açúcares adicionados (g)":
             return constants_impressao_1.abreviacoes.acucaresAdicionados.abreviado;
         default:
             return texto;

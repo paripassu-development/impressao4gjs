@@ -296,7 +296,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         nutrientes.forEach((nutriente: any) => {
             if (
-                _.includes(nutriente.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
+                _.includes(nutriente.rotulo, "Açúcares adicionados (g)") &&
                 calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 470
             ) {
                 nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
@@ -330,7 +330,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
         parametrosPadroesNutricionalV2.forEach((nutriente: any) => {
             if (
-                _.includes(nutriente.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
+                _.includes(nutriente.rotulo, "Açúcares adicionados (g)") &&
                 calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 470
             ) {
                 nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
@@ -591,7 +591,7 @@ const calcularDiferencaDpiLarguraMaximaMm = (dpi: number, larguraMm: number): nu
 
 const renomeioParaAbreviacao = (texto: string) => {
     switch (texto.trim()) {
-        case abreviacoes.acucaresAdicionados.nomeOriginal:
+        case "Açúcares adicionados (g)":
             return abreviacoes.acucaresAdicionados.abreviado;
         default:
             return texto;

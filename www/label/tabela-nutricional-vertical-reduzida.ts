@@ -319,7 +319,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
             console.log(nutriente);
             console.log(abreviacoes.acucaresAdicionados.nomeOriginal);
             if (
-                _.includes(nutriente.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
+                _.includes(nutriente.rotulo, "Açúcares adicionados (g)") &&
                 calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400
             ) {
                 nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
@@ -367,7 +367,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
                 ctx.textAlign = TextAlign.LEFT as CanvasTextAlign;
 
                 if (
-                    _.includes(parametro.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
+                    _.includes(parametro.rotulo, "Açúcares adicionados (g)") &&
                     calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400
                 ) {
                     parametro.rotulo = renomeioParaAbreviacao(parametro.rotulo);
@@ -586,7 +586,7 @@ const calcularDiferencaDpiLarguraMaximaMm = (dpi: number, larguraMm: number): nu
 
 const renomeioParaAbreviacao = (texto: string) => {
     switch (texto.trim()) {
-        case abreviacoes.acucaresAdicionados.nomeOriginal:
+        case "Açúcares adicionados (g)":
             return abreviacoes.acucaresAdicionados.abreviado;
         default:
             return texto;
