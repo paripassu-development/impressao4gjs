@@ -216,6 +216,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                     console.log(parametrosPadroesNutricionalV2);
                     parametrosPadroesNutricionalV2.forEach(function (nutriente) {
                         console.log(nutriente);
+                        console.log(constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal);
                         if (lodash_1["default"].includes(nutriente.rotulo, constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
                             calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400) {
                             nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
