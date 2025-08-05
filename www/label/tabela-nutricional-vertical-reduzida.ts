@@ -315,10 +315,7 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
         });
     } else {
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
-        console.log(parametrosPadroesNutricionalV2);
         parametrosPadroesNutricionalV2.forEach((nutriente: any) => {
-            console.log(nutriente);
-            console.log(abreviacoes.acucaresAdicionados.nomeOriginal);
             if (
                 _.includes(nutriente.rotulo, abreviacoes.acucaresAdicionados.nomeOriginal) &&
                 calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400

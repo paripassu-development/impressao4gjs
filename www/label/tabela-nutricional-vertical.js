@@ -36,13 +36,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 exports.__esModule = true;
-var _ = require("lodash");
-var round = require("lodash").round;
 var constants_impressao_1 = require("../core/constants/constants-impressao");
 var conversor_utils_1 = require("../core/util/conversor-utils");
 var param_utils_1 = require("../core/util/param-utils");
 var tabela_nutricional_utils_1 = require("../core/util/tabela-nutricional-utils");
 var text_utils_1 = require("../core/util/text-utils");
+var _ = require("lodash");
 var default_1 = require("../default");
 var mm_1 = require("./mm");
 var nutrientes = [
@@ -393,7 +392,7 @@ var calcularDiferencaDpiLarguraMaximaMm = function (dpi, larguraMm) {
     var mm = mm_1.mmPartial(dpi);
     var larguraEmPixels = mm(larguraMm);
     var larguraMinimaEmPixels = mm(1);
-    return round(larguraEmPixels - larguraMinimaEmPixels, 2);
+    return larguraEmPixels - larguraMinimaEmPixels;
 };
 var renomeioParaAbreviacao = function (texto) {
     switch (texto.trim()) {

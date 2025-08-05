@@ -213,10 +213,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                 }
                 else {
                     parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : default_1.PARAMETROS_PADROES_NUTRICIONAL_V2;
-                    console.log(parametrosPadroesNutricionalV2);
                     parametrosPadroesNutricionalV2.forEach(function (nutriente) {
-                        console.log(nutriente);
-                        console.log(constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal);
                         if (_.includes(nutriente.rotulo, constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal) &&
                             calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400) {
                             nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);

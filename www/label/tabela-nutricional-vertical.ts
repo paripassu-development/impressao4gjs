@@ -1,6 +1,4 @@
 import {fabric} from "fabric";
-const _ = require("lodash");
-const {round} = require("lodash");
 import {abreviacoes} from "../core/constants/constants-impressao";
 import {
     calculaTamanhoFonteByAlturaMMEFontePadraoPT,
@@ -23,6 +21,9 @@ import {
     TextAlign,
     writeFabricText,
 } from "../core/util/text-utils";
+
+const _ = require("lodash");
+
 import {
     BLACK,
     DADOS_DEFAULT,
@@ -586,7 +587,7 @@ const calcularDiferencaDpiLarguraMaximaMm = (dpi: number, larguraMm: number): nu
     const mm = mmPartial(dpi);
     const larguraEmPixels = mm(larguraMm);
     const larguraMinimaEmPixels = mm(1);
-    return round(larguraEmPixels - larguraMinimaEmPixels, 2);
+    return larguraEmPixels - larguraMinimaEmPixels;
 };
 
 const renomeioParaAbreviacao = (texto: string) => {
