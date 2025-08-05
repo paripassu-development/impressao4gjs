@@ -37,13 +37,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 exports.__esModule = true;
 var lodash_1 = require("lodash");
+var constants_impressao_1 = require("../core/constants/constants-impressao");
 var conversor_utils_1 = require("../core/util/conversor-utils");
 var param_utils_1 = require("../core/util/param-utils");
 var tabela_nutricional_utils_1 = require("../core/util/tabela-nutricional-utils");
 var text_utils_1 = require("../core/util/text-utils");
 var default_1 = require("../default");
 var mm_1 = require("./mm");
-var constants_impressao_1 = require("../core/constants/constants-impressao");
 var nutrientes = [
     "valorEnergetico",
     "carboidratos",
@@ -213,7 +213,9 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                 }
                 else {
                     parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : default_1.PARAMETROS_PADROES_NUTRICIONAL_V2;
+                    console.log(parametrosPadroesNutricionalV2);
                     parametrosPadroesNutricionalV2.forEach(function (nutriente) {
+                        console.log(nutriente);
                         if (lodash_1["default"].includes(nutriente.rotulo, constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
                             calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400) {
                             nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);

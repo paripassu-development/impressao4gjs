@@ -36,14 +36,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 exports.__esModule = true;
-var lodash_1 = require("lodash");
+var _ = require("lodash");
+var round = require("lodash").round;
+var constants_impressao_1 = require("../core/constants/constants-impressao");
 var conversor_utils_1 = require("../core/util/conversor-utils");
 var param_utils_1 = require("../core/util/param-utils");
 var tabela_nutricional_utils_1 = require("../core/util/tabela-nutricional-utils");
 var text_utils_1 = require("../core/util/text-utils");
 var default_1 = require("../default");
 var mm_1 = require("./mm");
-var constants_impressao_1 = require("../core/constants/constants-impressao");
 var nutrientes = [
     "valorEnergetico",
     "carboidratos",
@@ -190,7 +191,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                 // Informações nutricionais
                 if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
                     nutrientes.forEach(function (nutriente) {
-                        if (lodash_1["default"].includes(nutriente.rotulo, constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                        if (_.includes(nutriente.rotulo, constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
                             calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 470) {
                             nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
                         }
@@ -222,7 +223,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                 else {
                     parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : default_1.PARAMETROS_PADROES_NUTRICIONAL_V2;
                     parametrosPadroesNutricionalV2.forEach(function (nutriente) {
-                        if (lodash_1["default"].includes(nutriente.rotulo, constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                        if (_.includes(nutriente.rotulo, constants_impressao_1.ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
                             calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 470) {
                             nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
                         }
@@ -347,7 +348,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
     });
 }); };
 var possuiAvisoNutricionaisZerados = function (textoInformacoesAdicionais, texto) {
-    return lodash_1["default"].includes(textoInformacoesAdicionais, texto);
+    return _.includes(textoInformacoesAdicionais, texto);
 };
 var desenharLinha = function (ctx, model, yMm, mm, espessuraLinha) {
     ctx.textAlign = text_utils_1.TextAlign.LEFT;
@@ -392,7 +393,7 @@ var calcularDiferencaDpiLarguraMaximaMm = function (dpi, larguraMm) {
     var mm = mm_1.mmPartial(dpi);
     var larguraEmPixels = mm(larguraMm);
     var larguraMinimaEmPixels = mm(1);
-    return lodash_1.round(larguraEmPixels - larguraMinimaEmPixels, 2);
+    return round(larguraEmPixels - larguraMinimaEmPixels, 2);
 };
 var renomeioParaAbreviacao = function (texto) {
     switch (texto.trim()) {

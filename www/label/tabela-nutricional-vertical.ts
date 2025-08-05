@@ -1,5 +1,6 @@
 import {fabric} from "fabric";
-import _, {round} from "lodash";
+const _ = require("lodash");
+const {round} = require("lodash");
 import {ABREVIACOES} from "../core/constants/constants-impressao";
 import {
     calculaTamanhoFonteByAlturaMMEFontePadraoPT,
