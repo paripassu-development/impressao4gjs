@@ -39,6 +39,8 @@ import {
     TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT, TAMANHO_FONTE_REDUZIDA_TITULO_EM_PT,
 } from "../default";
 import {mmPartial} from "./mm";
+import {ABREVIACOES} from "../core/constants/constants-impressao";
+import {round} from "lodash";
 
 interface IElementoTabelaNutricionalModelPosicao {
     xMm: number;
@@ -286,6 +288,12 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     // Informações nutricionais
     if (model.informacoesNutricionais !== undefined && model.informacoesNutricionais.informacoesNutrientesTabelaNutricional !== undefined) {
         nutrientes.forEach((nutriente: any) => {
+            if (
+                _.includes(nutriente.rotulo, ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400
+            ) {
+                nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
+            }
             textoCabecalhoMedidas.map((obj: any) => {
                 const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
                 obj.id = model.informacoesNutricionais.informacoesNutrientesTabelaNutricional[nutriente];
@@ -313,6 +321,12 @@ const drawTable = async (ctx: CanvasRenderingContext2D, fabricCanvas: fabric.Can
     } else {
         const parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : PARAMETROS_PADROES_NUTRICIONAL_V2;
         parametrosPadroesNutricionalV2.forEach((nutriente: any) => {
+            if (
+                _.includes(nutriente.rotulo, ABREVIACOES.acucaresAdicionados.nomeOriginal) &&
+                calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400
+            ) {
+                nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
+            }
             const alturaLinhaVertical = converterPTparaMM(TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
             const matchArray: any[] = nutriente.qtPorcao ? nutriente.qtPorcao.match(/[0-9]/mg, "") : "";
             if (!model.informacoesNutricionais.ocultarZerados || (matchArray && !matchArray.every((elemento: any) => elemento === "0" || !elemento))) {
@@ -554,6 +568,22 @@ const desenharLinhaVertical = (ctx: CanvasRenderingContext2D, model: IElementoTa
         mm(alturaLinhaVertical),
     );
     ctx.lineWidth = model.fonte.forcaContorno || 0;
+};
+
+const calcularDiferencaDpiLarguraMaximaMm = (dpi: number, larguraMm: number): number => {
+    const mm = mmPartial(dpi);
+    const larguraEmPixels = mm(larguraMm);
+    const larguraMinimaEmPixels = mm(1);
+    return round(larguraEmPixels - larguraMinimaEmPixels, 2);
+};
+
+const renomeioParaAbreviacao = (texto: string) => {
+    switch (texto.trim()) {
+        case ABREVIACOES.acucaresAdicionados.nomeOriginal:
+            return ABREVIACOES.acucaresAdicionados.abreviado;
+        default:
+            return texto;
+    }
 };
 
 export const tabelaNutricionalVerticalReduzida = {drawTable};
