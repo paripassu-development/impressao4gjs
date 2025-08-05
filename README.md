@@ -39,9 +39,10 @@ Certifique-se de ter as seguintes versões instaladas:
 
 ## Dicas ##
 * Ao gerar novas labels ao impressão4g, rodar o comando: 
-
+* Se estiver no Windows
+  * Abra o terminal do git bash
+  * Acessar o diretório do projeto
+  * Execute o comando abaixo
 ```markdown
-    yarn generate-maps
-    # ou
     tsc www/label/*.ts --sourceMap
  ```

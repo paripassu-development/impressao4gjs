@@ -24,7 +24,9 @@ var createQrCode = function (id, options) {
     var qrcodeDiv = document.createElement("div");
     qrcodeDiv.id = "qrcode-div";
     qrcodeDiv.style.display = "none";
+    // @ts-ignore
     document.getElementById(id).appendChild(qrcodeDiv);
+    // @ts-ignore
     var qrcode = new QRCode("qrcode-div", {
         colorDark: "#000000",
         colorLight: "#ffffff",

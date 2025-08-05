@@ -26,6 +26,7 @@ var createBarraOrigemRastreada = function (id, options) {
     var nomeElementoCanvas = "barra-origem-rastreada-img";
     var canvas = canvas_utils_1.canvasUtils.createCanvas(nomeElementoCanvas, options.larguraMm, options.alturaMm);
     canvas.style.display = "none";
+    // @ts-ignore
     document.getElementById(id).appendChild(canvas);
     var ctx = canvas_utils_1.canvasUtils.createContext(canvas);
     canvas_utils_1.canvasUtils.drawBackground(ctx, canvas.width, canvas.height);

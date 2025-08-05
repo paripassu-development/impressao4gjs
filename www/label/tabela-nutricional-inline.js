@@ -82,6 +82,7 @@ function mountTextTabelaNutricional(model, textBindings) {
     else {
         var parametrosPadroes = !!textBindings ? textBindings.parametrosPadroes : default_1.PARAMETROS_PADROES_NUTRICIONAL;
         parametrosPadroes.forEach(function (parametro) {
+            // @ts-ignore
             var matchArray = parametro.qtPorcao.match(/[0-9]/mg, "");
             if (parametro.rotulo === "Gorduras trans") {
                 informacoes.push(parametro.rotulo + " " + parametro.qtPorcao.replace(/ +/g, "") + " (VD n\u00E3o estabelecido)");

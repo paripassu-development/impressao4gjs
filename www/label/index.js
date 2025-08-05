@@ -94,14 +94,17 @@ var create = function (id, model, textBindings) { return __awaiter(_this, void 0
                 ctx = canvas_utils_1.canvasUtils.createContext(canvas);
                 el = document.getElementById(id);
                 validacoes = _.indexBy(model.validacoes, "variavel");
+                // @ts-ignore
                 el.appendChild(canvas);
                 promises = [];
                 canvas_utils_1.canvasUtils.drawBackground(ctx, canvas.width, canvas.height);
                 fabricCanvas = null;
                 if (isFabricRequired(model, textBindings)) {
                     canvas2 = canvas_utils_1.canvasUtils.createCanvas(idElementoFabricCanvas, mm(model.etiqueta.dimensoes.larguraMm), mm(model.etiqueta.dimensoes.alturaMm));
+                    // @ts-ignore
                     fabricCanvas = new fabric_1.fabric.Canvas(canvas2);
                     canvas2.classList.add("fabric-canvas");
+                    // @ts-ignore
                     el.appendChild(canvas2);
                 }
                 model.desenho.elementos.forEach(function (elemento) {
@@ -253,39 +256,47 @@ var exportCanvas = function (id, orientationDegrees) {
         canvasFinal.width = canvas.height;
         canvasFinal.height = canvas.width;
         var ctx = canvasFinal.getContext("2d");
-        ctx.save();
-        ctx.translate(canvasFinal.width, 0);
-        ctx.rotate(orientationDegrees * Math.PI / 180);
-        ctx.drawImage(canvas, 0, 0);
-        ctx.restore();
+        if (ctx) {
+            ctx.save();
+            ctx.translate(canvasFinal.width, 0);
+            ctx.rotate(orientationDegrees * Math.PI / 180);
+            ctx.drawImage(canvas, 0, 0);
+            ctx.restore();
+        }
     }
     else if (orientationDegrees === 180) {
         canvasFinal.width = canvas.width;
         canvasFinal.height = canvas.height;
         var ctx = canvasFinal.getContext("2d");
-        ctx.save();
-        ctx.translate(canvas.width, canvas.height);
-        ctx.rotate(orientationDegrees * Math.PI / 180);
-        ctx.drawImage(canvas, 0, 0);
-        ctx.restore();
+        if (ctx) {
+            ctx.save();
+            ctx.translate(canvas.width, canvas.height);
+            ctx.rotate(orientationDegrees * Math.PI / 180);
+            ctx.drawImage(canvas, 0, 0);
+            ctx.restore();
+        }
     }
     else if (orientationDegrees === 270) {
         canvasFinal.width = canvas.height;
         canvasFinal.height = canvas.width;
         var ctx = canvasFinal.getContext("2d");
-        ctx.save();
-        ctx.translate(0, canvas.width);
-        ctx.rotate(orientationDegrees * Math.PI / 180);
-        ctx.drawImage(canvas, 0, 0);
-        ctx.restore();
+        if (ctx) {
+            ctx.save();
+            ctx.translate(0, canvas.width);
+            ctx.rotate(orientationDegrees * Math.PI / 180);
+            ctx.drawImage(canvas, 0, 0);
+            ctx.restore();
+        }
     }
     else {
         canvasFinal.width = canvas.width;
         canvasFinal.height = canvas.height;
         var ctx = canvasFinal.getContext("2d");
-        ctx.save();
-        ctx.drawImage(canvas, 0, 0);
-        ctx.restore();
+        if (ctx) {
+            ctx.save();
+            ctx.drawImage(canvas, 0, 0);
+            ctx.restore();
+        }
     }
     return canvasFinal;
 };
