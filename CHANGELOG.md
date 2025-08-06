@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v2.1.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.1.0%0D2.0.3) (06/08/2025)
+
+### Adicionado
+* ([RST-9537](https://paripassu.atlassian.net/browse/RST-9537)): Abreviação automática de Açúcares adicionado quando passar da borda nas tabelas nutricionais verticais e reduzidas.
+
 ## [v2.0.3](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.0.3%0D2.0.2) (09/06/2025)
 
 ### Corrigido
