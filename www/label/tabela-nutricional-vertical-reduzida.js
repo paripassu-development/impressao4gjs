@@ -36,13 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 exports.__esModule = true;
-var lodash_1 = require("lodash");
+var constants_impressao_1 = require("../core/constants/constants-impressao");
 var conversor_utils_1 = require("../core/util/conversor-utils");
 var param_utils_1 = require("../core/util/param-utils");
 var tabela_nutricional_utils_1 = require("../core/util/tabela-nutricional-utils");
 var text_utils_1 = require("../core/util/text-utils");
 var default_1 = require("../default");
 var mm_1 = require("./mm");
+var _ = require("lodash");
 var nutrientes = [
     "valorEnergetico",
     "carboidratos",
@@ -213,6 +214,10 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                 else {
                     parametrosPadroesNutricionalV2 = !!textBindings ? textBindings.parametrosPadroesNutricionalV2 : default_1.PARAMETROS_PADROES_NUTRICIONAL_V2;
                     parametrosPadroesNutricionalV2.forEach(function (nutriente) {
+                        if (_.includes(nutriente.rotulo, constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal) &&
+                            calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400) {
+                            nutriente.rotulo = renomeioParaAbreviacao(nutriente.rotulo);
+                        }
                         var alturaLinhaVertical = conversor_utils_1.converterPTparaMM(default_1.TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT) + lineStrokeGap;
                         var matchArray = nutriente.qtPorcao ? nutriente.qtPorcao.match(/[0-9]/mg, "") : "";
                         if (!model.informacoesNutricionais.ocultarZerados || (matchArray && !matchArray.every(function (elemento) { return elemento === "0" || !elemento; }))) {
@@ -250,6 +255,10 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) { return 
                             var yMmValores = yMm + valorEspacamentoYMmValores;
                             var yMmTextoRotulo = yMm + valorEspacamentoYMmRotulos;
                             ctx.textAlign = text_utils_1.TextAlign.LEFT;
+                            if (_.includes(parametro.rotulo, constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal) &&
+                                calcularDiferencaDpiLarguraMaximaMm(dpi, model.dimensoes.larguraMaximaMm) < 400) {
+                                parametro.rotulo = renomeioParaAbreviacao(parametro.rotulo);
+                            }
                             if (!!fabricCanvas) {
                                 text_utils_1.writeFabricText(fabricCanvas, ctx, parametro.rotulo, model.posicao.xMm, yMm, larguraMaxima, mm, { degrees: degrees });
                             }
@@ -337,7 +346,7 @@ var possuiAvisoNutricionaisZerados = function (textoInformacoesAdicionais, texto
     if (!textoInformacoesAdicionais || !texto) {
         return true;
     }
-    return lodash_1["default"].includes(textoInformacoesAdicionais, texto);
+    return _.includes(textoInformacoesAdicionais, texto);
 };
 var desenharLinha = function (ctx, model, yMm, mm, espessuraLinha) {
     ctx.textAlign = text_utils_1.TextAlign.LEFT;
@@ -378,4 +387,19 @@ var desenharLinhaVertical = function (ctx, model, yMm, xMm, mm, alturaLinhaVerti
     ctx.strokeRect(mm((xMm + (model.dimensoes.larguraMaximaMm - default_1.TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT))), mm(yMm) - (model.fonte.alturaMm * default_1.TAMANHO_FONTE_REDUZIDA_INFORMACOES_EM_PT), 1, mm(alturaLinhaVertical));
     ctx.lineWidth = model.fonte.forcaContorno || 0;
 };
+var calcularDiferencaDpiLarguraMaximaMm = function (dpi, larguraMm) {
+    var mm = mm_1.mmPartial(dpi);
+    var larguraEmPixels = mm(larguraMm);
+    var larguraMinimaEmPixels = mm(1);
+    return larguraEmPixels - larguraMinimaEmPixels;
+};
+var renomeioParaAbreviacao = function (texto) {
+    switch (texto.trim()) {
+        case constants_impressao_1.abreviacoes.acucaresAdicionados.nomeOriginal:
+            return constants_impressao_1.abreviacoes.acucaresAdicionados.abreviado;
+        default:
+            return texto;
+    }
+};
 exports.tabelaNutricionalVerticalReduzida = { drawTable: drawTable };
+//# sourceMappingURL=tabela-nutricional-vertical-reduzida.js.map

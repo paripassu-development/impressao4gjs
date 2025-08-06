@@ -5,6 +5,12 @@ exports.barraOrigemRastreadaConstants = {
     LARGURA_BARRA: 776,
     ALTURA_BARRA: 32
 };
+exports.abreviacoes = {
+    acucaresAdicionados: {
+        nomeOriginal: "Açúcares adicionados (g)",
+        abreviado: "    Aç adicionados (g)"
+    }
+};
 exports.ErrosPrefix = {
     ERROR_CODIGO_BARRAS: "[Código de barras]",
     ERROR_OBRIGATORIEDADE: "[Campo obrigatório]"

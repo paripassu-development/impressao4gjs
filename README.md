@@ -34,15 +34,15 @@ Certifique-se de ter as seguintes versões instaladas:
     yarn start
 ```
 
-* Após execução do projeto abrir: [webpack-dev-server](http://localhost:8086/webpack-dev-server/
-  )
+* Após execução do projeto abrir: [webpack-dev-server](http://localhost:8086/webpack-dev-server/)
 
 
 ## Dicas ##
 * Ao gerar novas labels ao impressão4g, rodar o comando: 
-
+* Se estiver no Windows
+  * Abra o terminal do git bash
+  * Acessar o diretório do projeto
+  * Execute o comando abaixo
 ```markdown
-    yarn generate-maps
-    # ou
     tsc www/label/*.ts --sourceMap
  ```

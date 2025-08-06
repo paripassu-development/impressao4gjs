@@ -5,6 +5,13 @@ export const barraOrigemRastreadaConstants = {
     ALTURA_BARRA: 32,
 };
 
+export const abreviacoes = {
+    acucaresAdicionados: {
+        nomeOriginal: "Açúcares adicionados (g)",
+        abreviado: "    Aç adicionados (g)",
+    },
+};
+
 export const ErrosPrefix = {
     ERROR_CODIGO_BARRAS: "[Código de barras]",
     ERROR_OBRIGATORIEDADE: "[Campo obrigatório]",
