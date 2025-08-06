@@ -82,3 +82,10 @@ export const intervaloTamanhoFonte: any = {
         proporcaoTamanhoFonte6: {min: 10, max: Number.MAX_VALUE, tamanhoFonte: 6},
     }, // proporção 1.666666666666667
 };
+
+export const abreviacoes = {
+    acucaresAdicionados: {
+        nomeOriginal: "Açúcares adicionados (g)",
+        abreviado: "    Aç adicionados (g)",
+    },
+};
