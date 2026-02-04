@@ -296,6 +296,7 @@ var createBarcodeWithBwipJs = function (options, img) {
     return new Promise(function (resolve, reject) {
         bwipjs(canvas, buildOptionsBwipJs(options), function (err) {
             if (err) {
+                console.log(err);
                 reject("Erro ao gerar o codigo de barras " + options.format);
                 // tslint:disable-next-line:no-console
                 console.log("Erro ao gerar o codigo de barras " + options.format);
