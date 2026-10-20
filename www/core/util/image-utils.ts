@@ -113,3 +113,28 @@ export const montagemTipoAltoTeor = (listaNutricional: string[]): string => {
 
     return combinacoesAltoTeor[key] || STRING_VAZIA;
 };
+
+export interface IDimensoesEncaixeAltoTeor {
+    larguraMm: number;
+    alturaMm: number;
+}
+
+const REGEX_VIEWBOX_SVG = /viewBox="\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)\s*"/;
+
+export const extraiProporcaoSeloAltoTeor = (dataUriSvg: string): number => {
+    const viewBox = REGEX_VIEWBOX_SVG.exec(decodeURIComponent(dataUriSvg || STRING_VAZIA));
+    if (!viewBox) { return 0; }
+    const larguraViewBox = parseFloat(viewBox[1]);
+    const alturaViewBox = parseFloat(viewBox[2]);
+    return larguraViewBox > 0 ? alturaViewBox / larguraViewBox : 0;
+};
+
+export const calculaEncaixeSeloAltoTeor = (caixa: IDimensoesEncaixeAltoTeor, proporcao: number): IDimensoesEncaixeAltoTeor => {
+    if (!(proporcao > 0) || !(caixa.larguraMm > 0) || !(caixa.alturaMm > 0)) {
+        return caixa;
+    }
+    if (caixa.larguraMm * proporcao <= caixa.alturaMm) {
+        return {larguraMm: caixa.larguraMm, alturaMm: caixa.larguraMm * proporcao};
+    }
+    return {larguraMm: caixa.alturaMm / proporcao, alturaMm: caixa.alturaMm};
+};

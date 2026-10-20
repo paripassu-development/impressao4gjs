@@ -1,4 +1,10 @@
-import {buildNutricionalAltoTeor, montagemTipoAltoTeor, validacaoListaNutricional} from "../core/util/image-utils";
+import {
+    buildNutricionalAltoTeor,
+    calculaEncaixeSeloAltoTeor,
+    extraiProporcaoSeloAltoTeor,
+    montagemTipoAltoTeor,
+    validacaoListaNutricional,
+} from "../core/util/image-utils";
 import {DADOS_DEFAULT} from "../default";
 import {mmPartial} from "./mm";
 
@@ -30,8 +36,9 @@ const drawAltoTeor = async (ctx: CanvasRenderingContext2D, dpi: number, model: I
     const mm = mmPartial(dpi);
     const posicaoYMm = mm(model.posicao.yMm);
     const posicaoXMm = mm(model.posicao.xMm);
-    const alturaMm = mm(model.dimensoes.alturaMm);
-    const larguraMm = mm(model.dimensoes.larguraMm);
+    const encaixe = calculaEncaixeSeloAltoTeor(model.dimensoes, extraiProporcaoSeloAltoTeor(tipoImagem));
+    const alturaMm = mm(encaixe.alturaMm);
+    const larguraMm = mm(encaixe.larguraMm);
     const degrees = Number(model.posicao.rotacao) || 0;
 
     const imgSvgAltoTeor = new Image();

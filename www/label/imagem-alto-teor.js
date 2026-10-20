@@ -40,7 +40,7 @@ var image_utils_1 = require("../core/util/image-utils");
 var default_1 = require("../default");
 var mm_1 = require("./mm");
 var drawAltoTeor = function (ctx, dpi, model, textBindings) { return __awaiter(_this, void 0, void 0, function () {
-    var listaNutricional, tipoImagem, mm, posicaoYMm, posicaoXMm, alturaMm, larguraMm, degrees, imgSvgAltoTeor;
+    var listaNutricional, tipoImagem, mm, posicaoYMm, posicaoXMm, encaixe, alturaMm, larguraMm, degrees, imgSvgAltoTeor;
     return __generator(this, function (_a) {
         listaNutricional = image_utils_1.validacaoListaNutricional(image_utils_1.buildNutricionalAltoTeor(textBindings || default_1.DADOS_DEFAULT));
         tipoImagem = image_utils_1.montagemTipoAltoTeor(listaNutricional);
@@ -50,8 +50,9 @@ var drawAltoTeor = function (ctx, dpi, model, textBindings) { return __awaiter(_
         mm = mm_1.mmPartial(dpi);
         posicaoYMm = mm(model.posicao.yMm);
         posicaoXMm = mm(model.posicao.xMm);
-        alturaMm = mm(model.dimensoes.alturaMm);
-        larguraMm = mm(model.dimensoes.larguraMm);
+        encaixe = image_utils_1.calculaEncaixeSeloAltoTeor(model.dimensoes, image_utils_1.extraiProporcaoSeloAltoTeor(tipoImagem));
+        alturaMm = mm(encaixe.alturaMm);
+        larguraMm = mm(encaixe.larguraMm);
         degrees = Number(model.posicao.rotacao) || 0;
         imgSvgAltoTeor = new Image();
         return [2 /*return*/, new Promise(function (resolve, reject) {

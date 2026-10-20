@@ -81,4 +81,23 @@ exports.montagemTipoAltoTeor = function (listaNutricional) {
     var key = listaNutricional.slice().sort().join(default_1.VIRGULA);
     return combinacoesAltoTeor[key] || default_1.STRING_VAZIA;
 };
+var REGEX_VIEWBOX_SVG = /viewBox="\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)\s*"/;
+exports.extraiProporcaoSeloAltoTeor = function (dataUriSvg) {
+    var viewBox = REGEX_VIEWBOX_SVG.exec(decodeURIComponent(dataUriSvg || default_1.STRING_VAZIA));
+    if (!viewBox) {
+        return 0;
+    }
+    var larguraViewBox = parseFloat(viewBox[1]);
+    var alturaViewBox = parseFloat(viewBox[2]);
+    return larguraViewBox > 0 ? alturaViewBox / larguraViewBox : 0;
+};
+exports.calculaEncaixeSeloAltoTeor = function (caixa, proporcao) {
+    if (!(proporcao > 0) || !(caixa.larguraMm > 0) || !(caixa.alturaMm > 0)) {
+        return caixa;
+    }
+    if (caixa.larguraMm * proporcao <= caixa.alturaMm) {
+        return { larguraMm: caixa.larguraMm, alturaMm: caixa.larguraMm * proporcao };
+    }
+    return { larguraMm: caixa.alturaMm / proporcao, alturaMm: caixa.alturaMm };
+};
 //# sourceMappingURL=image-utils.js.map

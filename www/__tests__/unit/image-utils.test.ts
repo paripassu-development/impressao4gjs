@@ -1,6 +1,8 @@
 import {
     buildNutricionalAltoTeor,
+    calculaEncaixeSeloAltoTeor,
     converteQuantidadeNutricional,
+    extraiProporcaoSeloAltoTeor,
     extraiUnidadePorcao,
     montagemTipoAltoTeor,
     validacaoListaNutricional,
@@ -91,5 +93,35 @@ describe("alto teor - leitura dos dados nutricionais", () => {
         expect(extraiUnidadePorcao("100 g")).toBe("g");
         expect(extraiUnidadePorcao("200 ml")).toBe("ml");
         expect(extraiUnidadePorcao(undefined)).toBe("");
+    });
+});
+
+describe("alto teor - encaixe na caixa do elemento", () => {
+    it("lê a proporção de cada selo pelo viewBox do svg", () => {
+        expect(extraiProporcaoSeloAltoTeor(ALTO_TEOR_UNICO_SODIO)).toBeCloseTo(245.75 / 303.38, 5);
+        expect(extraiProporcaoSeloAltoTeor(ALTO_TEOR_ACUCAR_SODIO)).toBeCloseTo(362.67 / 308.99, 5);
+        expect(extraiProporcaoSeloAltoTeor(ALTO_TEOR_ACUCAR_GORDURA_SATURADA_SODIO)).toBeCloseTo(485.78 / 310.16, 5);
+    });
+
+    it("devolve zero para imagem sem viewBox", () => {
+        expect(extraiProporcaoSeloAltoTeor("")).toBe(0);
+        expect(extraiProporcaoSeloAltoTeor("data:image/svg+xml;charset=utf-8,%3Csvg%3E")).toBe(0);
+    });
+
+    it("limita pela largura quando a caixa é mais alta que o selo", () => {
+        expect(calculaEncaixeSeloAltoTeor({larguraMm: 10, alturaMm: 30}, 1.5)).toEqual({larguraMm: 10, alturaMm: 15});
+    });
+
+    it("limita pela altura quando a caixa é mais larga que o selo", () => {
+        expect(calculaEncaixeSeloAltoTeor({larguraMm: 30, alturaMm: 15}, 1.5)).toEqual({larguraMm: 10, alturaMm: 15});
+    });
+
+    it("preenche a caixa que já tem a proporção do selo", () => {
+        expect(calculaEncaixeSeloAltoTeor({larguraMm: 20, alturaMm: 30}, 1.5)).toEqual({larguraMm: 20, alturaMm: 30});
+    });
+
+    it("estica na caixa quando não conhece a proporção ou a caixa não tem medida", () => {
+        expect(calculaEncaixeSeloAltoTeor({larguraMm: 10, alturaMm: 30}, 0)).toEqual({larguraMm: 10, alturaMm: 30});
+        expect(calculaEncaixeSeloAltoTeor({larguraMm: 0, alturaMm: 30}, 1.5)).toEqual({larguraMm: 0, alturaMm: 30});
     });
 });

@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v2.2.1](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.2.1%0D2.2.0) (20/10/2026)
+
+### Alterado
+* ([RST5-2012](https://paripassu.atlassian.net/browse/RST5-2012)): O selo de alto teor é encaixado na caixa do elemento mantendo a proporção, a partir do canto superior esquerdo, em vez de esticado.
+
 ## [v2.2.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.2.0%0D2.1.0) (20/10/2026)
 
 ### Adicionado
