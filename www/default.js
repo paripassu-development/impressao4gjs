@@ -347,6 +347,18 @@ exports.MODEL_DEFAULT = {
                 },
                 "id": "8cd000cb-f2dd-4add-b930-50a1faa4a80f"
             },
+            {
+                "tipo": "altoTeor",
+                "posicao": {
+                    "xMm": 60,
+                    "yMm": 38,
+                    "rotacao": 0
+                },
+                "dimensoes": {
+                    "alturaMm": 10,
+                    "larguraMm": 10
+                }
+            },
         ]
     },
     "etiqueta": {
@@ -525,4 +537,17 @@ exports.APENAS_MG = "mg";
 exports.VALOR_PORCAO_100 = "100";
 exports.VALORES_PARA_OCULTAR = ["NÃO SE APLICA"];
 exports.INDICADOR_ALIMENTO_PRONTO_PARA_CONSUMO = "**";
+exports.VALOR_MINIMO_ALTO_TEOR_ACUCAR_SOLIDO = 15;
+exports.VALOR_MINIMO_ALTO_TEOR_SODIO_SOLIDO = 600;
+exports.VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_SOLIDO = 6;
+exports.VALOR_MINIMO_ALTO_TEOR_ACUCAR_LIQUIDO = 7.5;
+exports.VALOR_MINIMO_ALTO_TEOR_SODIO_LIQUIDO = 300;
+exports.VALOR_MINIMO_ALTO_TEOR_GORDURA_SATURADA_LIQUIDO = 3;
+exports.REGEX_REMOVE_QUANTIDADE_PORCAO = /[\d.,\s]/g;
+exports.ROTULO_SODIO = "Sódio (mg)";
+exports.ROTULO_ACUCARES_ADICIONADOS = "Açúcares adicionados (g)";
+exports.ROTULO_GORDURA_SATURADA = "Gorduras saturadas (g)";
+exports.ITEM_SODIO = "itemSodio";
+exports.ITEM_ACUCAR = "itemAcucar";
+exports.ITEM_GORDURA_SATURADA = "itemGorduraSaturada";
 //# sourceMappingURL=default.js.map

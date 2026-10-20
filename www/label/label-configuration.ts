@@ -6559,6 +6559,70 @@ const METADADOS_ELEMENTOS: any[] = [
             },
         ],
     },
+    {
+        nome: "ras4.ui.4g.etiqueta.configuracao.alto_teor",
+        tipo: "altoTeor",
+        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.descricao",
+        camposConfiguraveis: [
+            {
+                nome: "ras.ui.4g.etiqueta.configuracao.posicao",
+                tipo: "OBJECT",
+                obrigatorio: true,
+                campo: "posicao",
+                itens: [
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_horizontal",
+                        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.posicao_horizontal.descricao",
+                        tipo: "NUMERIC",
+                        categoria: "posicionamento",
+                        obrigatorio: true,
+                        campo: "posicao.xMm",
+                        padrao: 0,
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.posicao_vertical",
+                        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.posicao_vertical.descricao",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "posicao.yMm",
+                        padrao: 2,
+                    },
+                    {
+                        nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
+                        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.rotacao.descricao",
+                        campo: "posicao.rotacao",
+                        tipo: "OPTIONS",
+                        opcoes: VALORES_ROTACAO,
+                        obrigatorio: false,
+                    },
+                ],
+            },
+            {
+                nome: "ras.ui.4g.etiqueta.configuracao.rotacao",
+                tipo: "OBJECT",
+                obrigatorio: true,
+                campo: "dimensoes",
+                itens: [
+                    {
+                        nome: "ras4.ui.4g.etiqueta.configuracao.alto_teor.altura",
+                        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.altura",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "dimensoes.alturaMm",
+                        padrao: 30,
+                    },
+                    {
+                        nome: "ras4.ui.4g.etiqueta.configuracao.alto_teor.largura",
+                        descricao: "ras4.ui.4g.etiqueta.configuracao.alto_teor.largura",
+                        tipo: "NUMERIC",
+                        obrigatorio: true,
+                        campo: "dimensoes.larguraMm",
+                        padrao: 30,
+                    },
+                ],
+            },
+        ],
+    },
 ];
 
 const getMetadadosElementos = (): any[] => {

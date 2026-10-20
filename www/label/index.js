@@ -43,6 +43,7 @@ var canvas_utils_1 = require("../core/util/canvas-utils");
 var error_utils_1 = require("../core/util/error-utils");
 var barcode_1 = require("./barcode");
 var barra_origem_rastreada_1 = require("./barra-origem-rastreada");
+var imagem_alto_teor_1 = require("./imagem-alto-teor");
 var mm_1 = require("./mm");
 var qrcode_1 = require("./qrcode");
 var tabela_nutricional_1 = require("./tabela-nutricional");
@@ -180,7 +181,14 @@ var create = function (id, model, textBindings) { return __awaiter(_this, void 0
                                 // @ts-ignore
                                 resolve();
                             });
-                        }
+                        },
+                        altoTeor: function () { return __awaiter(_this, void 0, void 0, function () {
+                            return __generator(this, function (_a) {
+                                return [2 /*return*/, imagem_alto_teor_1.altoTeor.drawAltoTeor(ctx, model.impressao.resolucaoDpi, elemento, textBindings)["catch"](function (error) {
+                                        errors = _.union(errors, error);
+                                    })];
+                            });
+                        }); }
                     };
                     if (tipos[elemento.tipo]) {
                         promises.push(tipos[elemento.tipo]());
