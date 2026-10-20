@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v2.2.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.2.0%0D2.1.0) (20/10/2026)
+
+### Adicionado
+* ([RST5-2012](https://paripassu.atlassian.net/browse/RST5-2012)): Selo de alto teor (rotulagem frontal) na linha 2.x, escolhido pelos valores por 100 g/ml da tabela nutricional, com as imagens embutidas no pacote.
+
 ## [v2.1.0](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.1.0%0D2.0.3) (06/08/2025)
 
 ### Adicionado

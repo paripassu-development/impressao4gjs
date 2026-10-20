@@ -1,0 +1,82 @@
+Arguments: 
+  /Users/martinhomoreiradesouza/.nvm/versions/node/v16.14.0/bin/node /Users/martinhomoreiradesouza/.nvm/versions/node/v16.14.0/bin/yarn install
+
+PATH: 
+  /Users/martinhomoreiradesouza/.local/bin:/opt/homebrew/opt/llvm/bin:/Users/martinhomoreiradesouza/.sdkman/candidates/java/current/bin:/Users/martinhomoreiradesouza/.sdkman/candidates/gradle/current/bin:/opt/homebrew/opt/tomcat@9/libexec/bin:/opt/homebrew/opt/openjdk@11/bin:/opt/homebrew/opt/postgresql@15/bin:/opt/homebrew/opt/postgresql@15/bin:/Users/martinhomoreiradesouza/.cargo/bin:/opt/homebrew/opt/llvm/bin:/opt/homebrew/Cellar/llvm/19.1.2/bin:/opt/homebrew/opt/llvm/bin:/opt/homebrew/opt/llvm/bin:/Users/martinhomoreiradesouza/apache-maven-3.6.3/bin:/Users/martinhomoreiradesouza/.nvm/versions/node/v16.14.0/bin:/opt/homebrew/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/pmk/env/global/bin:/Users/martinhomoreiradesouza/.cargo/bin:/Users/martinhomoreiradesouza/dev/impressao4g/impressao4gjs/node_modules/.bin:/Users/martinhomoreiradesouza/Library/Application Support/JetBrains/Toolbox/scripts:/Users/martinhomoreiradesouza/.fzf/bin:/Users/martinhomoreiradesouza/Library/Android/sdk/platform-tools:/Users/martinhomoreiradesouza/Library/Android/sdk/tools:/Users/martinhomoreiradesouza/Library/Android/sdk/tools/bin:/Users/martinhomoreiradesouza/Library/Android/sdk/emulator
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.14.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  SyntaxError: /Users/martinhomoreiradesouza/dev/impressao4g/impressao4gjs/package.json: Unexpected token m in JSON at position 785
+      at JSON.parse (<anonymous>)
+      at /Users/martinhomoreiradesouza/.nvm/versions/node/v16.14.0/lib/node_modules/yarn/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/Users/martinhomoreiradesouza/.nvm/versions/node/v16.14.0/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /Users/martinhomoreiradesouza/.nvm/versions/node/v16.14.0/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "impressao4gjs",
+    "version": "2.1.0",
+    "scripts": {
+      "build": "webpack && npm run copy",
+      "build-prod": "webpack -p && npm run copy",
+      "start": "webpack-dev-server && npm run copy",
+      "copy": "node build/scripts/copy.js",
+      "generate-maps": "tsc www/label/*.ts --sourceMap",
+      "test": "jest"
+    },
+    "devDependencies": {
+      "@types/codemirror": "0.0.37",
+      "@types/es6-promise": "0.0.32",
+      "@types/fabric": "^4.5.1",
+      "@types/jest": "^24.0.11",
+      "@types/lodash": "^3.10.2",
+      "@types/mustache": "0.8.29",
+      "@types/node": "^11.11.3",
+      "babel-core": "^6.22.1",
+      "babel-loader": "^6.2.10",
+      "babel-preset-es2015": "^6.22.0",
+      "css-loader": "^0.26.1",
+      "extract-text-webpack-plugin": "^2.0.0-beta.5",
+      "file-loader": "^0.9.0",mrep
+      "fs-extra": "^5.0.0",
+      "jest": "^24.1.0",
+      "klaw-sync": "^3.0.2",
+      "source-map-loader": "^0.1.6",
+      "ts-jest": "^24.0.0",
+      "ts-loader": "^3.5.0",
+      "tslint": "^5.14.0",
+      "typescript": "^2.9.2",
+      "typescript-string-enums": "0.3.5",
+      "webpack": "^2.2.0",
+      "webpack-dev-server": "^1.16.2"
+    },
+    "dependencies": {
+      "babel-jest": "^22.4.4",
+      "bwip-js": "1.6.3",
+      "codemirror": "5.23.0",
+      "fabric": "^4.5.1",
+      "jest-runner": "^24.1.0",
+      "jquery": "^3.3.1",
+      "jsbarcode": "3.11.0",
+      "lodash": "3.10.1",
+      "moment": "^2.21.0",
+      "mustache": "2.3.0",
+      "qrcodejs2-fixes": "^0.0.2",
+      "source-map-support": "^0.5.10"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
