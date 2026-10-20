@@ -6,6 +6,7 @@ import {canvasUtils} from "../core/util/canvas-utils";
 import {ErrorUtils} from "../core/util/error-utils";
 import {barcode} from "./barcode";
 import {barraOrigemRastreada} from "./barra-origem-rastreada";
+import {altoTeor} from "./imagem-alto-teor";
 import {mmPartial} from "./mm";
 import {qrcode} from "./qrcode";
 import {tabelaNutricional} from "./tabela-nutricional";
@@ -197,6 +198,12 @@ const create = async (id: string, model: IEtiquetaDocModel, textBindings?: any) 
                     // @ts-ignore
                     resolve();
                 });
+            },
+            altoTeor: async (): Promise<any> => {
+                return altoTeor.drawAltoTeor(ctx, model.impressao.resolucaoDpi, elemento, textBindings)
+                    .catch((error) => {
+                        errors = _.union(errors, error);
+                    });
             },
         };
 
