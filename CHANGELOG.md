@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v2.3.0](https://github.com/paripassu-development/impressao4gjs/compare/2.2.1...2.3.0) (20/10/2026)
+
+### Adicionado
+* ([epic/RST5-2011](https://paripassu.atlassian.net/browse/epic/RST5-2011)): Adicionada estrutura a Alto Teor para o rastreadpor5g.
+
 ## [v2.2.1](https://bitbucket.org/paripassu/impressao4gjs/branches/compare/2.2.1%0D2.2.0) (20/10/2026)
 
 ### Alterado
