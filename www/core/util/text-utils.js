@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var fabric_1 = require("fabric");
-var lodash_1 = require("lodash");
+var _ = require("lodash");
 var default_1 = require("../../default");
 var mm_1 = require("../../label/mm");
 var TextAlign = {
@@ -110,12 +110,12 @@ function resolveCharStyles(text, markersConfig) {
     // mapeia o estilo de cada caractere
     var finalText = text;
     var lineStyle = markersConfig.reduce(function (mappedStyles, config) {
-        if (!lodash_1["default"].includes(text, config.marker)) {
+        if (!_.includes(text, config.marker)) {
             return mappedStyles;
         }
         var boldItalicRegExp = new RegExp(buildMarkersRegex(config));
         var cleanText = text;
-        lodash_1["default"].reject(markersConfig, config)
+        _.reject(markersConfig, config)
             .forEach(function (otherConfig) {
             cleanText = cleanText.replace(new RegExp(buildMarkersRegex(otherConfig), "g"), "$1");
         });
@@ -124,15 +124,15 @@ function resolveCharStyles(text, markersConfig) {
         var markedCharIndexes = [];
         while (match != null) {
             var endIndex = match.index + match[0].length - 2; // desconsidera marcadores
-            markedCharIndexes = markedCharIndexes.concat(lodash_1["default"].range(match.index, endIndex));
+            markedCharIndexes = markedCharIndexes.concat(_.range(match.index, endIndex));
             cleanText = cleanText.replace(boldItalicRegExp, "$1");
             match = boldItalicRegExp.exec(cleanText);
         }
         // seta estilos de cada char
-        lodash_1["default"].uniq(markedCharIndexes)
+        _.uniq(markedCharIndexes)
             .forEach(function (charIndex) {
             mappedStyles[charIndex] = mappedStyles[charIndex] || {};
-            lodash_1["default"].assign(mappedStyles[charIndex], config.textStyle);
+            _.assign(mappedStyles[charIndex], config.textStyle);
         });
         finalText = cleanText;
         return mappedStyles;
@@ -164,7 +164,7 @@ var strokeAlignedText = function (ctx, fabricCanvas, larguraMaxima, text, xMm, y
 };
 exports.strokeAlignedText = strokeAlignedText;
 function isBoldFont(fontName) {
-    return lodash_1["default"].includes(fontName.toLowerCase(), 'bold');
+    return _.includes(fontName.toLowerCase(), 'bold');
 }
 var writeFabricText = function (fabricCanvas, ctx, text, xMm, yMm, larguraMaximaMm, mm, options) {
     options = options || {};

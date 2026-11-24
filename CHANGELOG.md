@@ -2,6 +2,11 @@
 
 > Todas as alterações em novas versões do projeto serão documentadas neste arquivo.
 
+## [v2.3.1](https://github.com/paripassu-development/impressao4gjs/compare/2.3.0...2.3.1) (24/11/2026)
+
+### Corrigido
+* ([IM-514](https://paripassu.atlassian.net/browse/IM-514)): Etiquetas com marcadores de negrito (`^`) ou itálico (`~`) nos dados (ex.: parâmetro extra "Gorduras ~trans~" do nutricional) quebravam a montagem com `Cannot read properties of undefined (reading 'includes')`. O `import _ from "lodash"` de `text-utils`, `tabela-nutricional` e `tabela-nutricional-v2` compilava para `lodash_1["default"]`, que não existe no lodash 3 (CommonJS); passou a `import * as _ from "lodash"`.
+
 ## [v2.3.0](https://github.com/paripassu-development/impressao4gjs/compare/2.2.1...2.3.0) (20/10/2026)
 
 ### Adicionado
