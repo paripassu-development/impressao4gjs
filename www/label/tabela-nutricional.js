@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var lodash_1 = require("lodash");
+var _ = require("lodash");
 var param_utils_1 = require("../core/util/param-utils");
 var tabela_nutricional_utils_1 = require("../core/util/tabela-nutricional-utils");
 var text_utils_1 = require("../core/util/text-utils");
@@ -141,7 +141,7 @@ var drawTable = function (ctx, fabricCanvas, dpi, model, textBindings) {
     ctx.restore();
 };
 var possuiAvisoNutricionaisZerados = function (textoInformacoesAdicionais, texto) {
-    return lodash_1["default"].includes(textoInformacoesAdicionais, texto);
+    return _.includes(textoInformacoesAdicionais, texto);
 };
 var drawLine = function (ctx, model, yMm, mm) {
     if (model.opcoes != null && model.opcoes.ocultarLinhas) {
